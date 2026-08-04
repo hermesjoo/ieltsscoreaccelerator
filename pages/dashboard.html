@@ -215,7 +215,7 @@
     <a href="writing.html">Writing</a>
     <a href="speaking.html">Speaking</a>
     <a href="test.html" class="btn btn-outline">Placement Test</a>
-    <button class="logout-btn" onclick="handleLogout()">Logout</button>
+    <a href="register.html" class="btn btn-primary">Sign Up</a>
   </div>
 </nav>
 
@@ -399,31 +399,6 @@
   })();
 </script>
 
-<!-- Mobile Nav Toggle -->
-<script>
-(function() {
-  var nav = document.querySelector('.navbar');
-  if (!nav) return;
-  if (!nav.querySelector('.nav-toggle')) {
-    var toggle = document.createElement('button');
-    toggle.className = 'nav-toggle';
-    toggle.setAttribute('aria-label', 'Toggle navigation');
-    toggle.innerHTML = '<span class="hamburger"></span>';
-    var navLinks = nav.querySelector('.nav-links');
-    if (navLinks) nav.insertBefore(toggle, navLinks);
-    else nav.appendChild(toggle);
-  }
-  var backdrop = document.createElement('div');
-  backdrop.className = 'nav-backdrop';
-  document.body.appendChild(backdrop);
-  var toggleBtn = nav.querySelector('.nav-toggle');
-  var links = nav.querySelector('.nav-links');
-  function closeMenu() { toggleBtn.classList.remove('active'); links.classList.remove('open'); backdrop.classList.remove('open'); document.body.style.overflow = ''; }
-  function openMenu() { toggleBtn.classList.add('active'); links.classList.add('open'); backdrop.classList.add('open'); document.body.style.overflow = 'hidden'; }
-  toggleBtn.addEventListener('click', function() { links.classList.contains('open') ? closeMenu() : openMenu(); });
-  backdrop.addEventListener('click', closeMenu);
-  links.querySelectorAll('a').forEach(function(a) { a.addEventListener('click', closeMenu); });
-})();
-</script>
+<script src="../js/nav.js"></script>
 </body>
 </html>
