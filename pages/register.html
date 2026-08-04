@@ -9,16 +9,25 @@
     .auth-container { max-width: 450px; margin: 3rem auto; padding: 0 1rem; }
     .auth-box { background: var(--card); border-radius: var(--radius); padding: 2.5rem; border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
     .auth-tabs { display: flex; margin-bottom: 2rem; border-bottom: 2px solid var(--border); }
-    .auth-tab { flex: 1; padding: 0.8rem; text-align: center; cursor: pointer; font-weight: 600; color: var(--text-light); transition: all 0.2s; border-bottom: 2px solid transparent; margin-bottom: -2px; }
+    .auth-tab { flex: 1; padding: 0.8rem; text-align: center; cursor: pointer; font-weight: 600; color: var(--text-light); transition: color 160ms var(--ease-out), border-color 160ms var(--ease-out); border-bottom: 2px solid transparent; margin-bottom: -2px; }
     .auth-tab.active { color: var(--primary); border-bottom-color: var(--primary); }
     .form-group { margin-bottom: 1.2rem; }
     .form-group label { display: block; font-size: 0.9rem; font-weight: 500; margin-bottom: 0.4rem; color: var(--text-light); }
-    .form-group input, .form-group select { width: 100%; padding: 0.7rem 1rem; border: 2px solid var(--border); border-radius: 8px; font-size: 1rem; transition: border-color 0.2s; }
+    .form-group input, .form-group select { width: 100%; padding: 0.7rem 1rem; border: 2px solid var(--border); border-radius: 8px; font-size: 1rem; transition: border-color 160ms var(--ease-out); }
     .form-group input:focus { outline: none; border-color: var(--primary); }
     .form-group .error { color: #ef4444; font-size: 0.8rem; margin-top: 0.3rem; display: none; }
     .form-group input.invalid { border-color: #ef4444; }
     .auth-box .btn { width: 100%; padding: 0.9rem; font-size: 1.1rem; margin-top: 0.5rem; }
-    .auth-box .btn-outline { width: 100%; padding: 0.9rem; font-size: 1rem; margin-top: 0.5rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+    .google-btn {
+      width: 100%; padding: 0.9rem; font-size: 1rem; margin-top: 0.5rem;
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      background: #fff; border: 2px solid var(--border); border-radius: 8px;
+      font-weight: 600; cursor: pointer;
+      transition: transform 160ms var(--ease-out), border-color 160ms var(--ease-out);
+    }
+    .google-btn:active { transform: scale(0.97); }
+    .google-btn:hover { border-color: var(--primary); }
+    .google-btn svg { width: 20px; height: 20px; }
     .divider { text-align: center; margin: 1.5rem 0; color: var(--text-light); font-size: 0.85rem; position: relative; }
     .divider::before, .divider::after { content: ''; position: absolute; top: 50%; width: 40%; height: 1px; background: var(--border); }
     .divider::before { right: 0; }
@@ -29,6 +38,8 @@
     .success-msg p { color: var(--text-light); }
     .password-toggle { position: relative; }
     .password-toggle button { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 1.2rem; }
+    .loading-spinner { display: none; width: 20px; height: 20px; border: 2px solid #fff; border-top-color: transparent; border-radius: 50%; animation: spin 0.6s linear infinite; margin: 0 auto; }
+    @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
@@ -55,6 +66,14 @@
 
       <!-- Login Form -->
       <form id="loginForm" onsubmit="handleLogin(event)">
+        <button type="button" class="google-btn" onclick="handleGoogleSignIn()">
+          <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Continue with Google
+          <div class="loading-spinner" id="googleSpinner"></div>
+        </button>
+
+        <div class="divider">or</div>
+
         <div class="form-group">
           <label>Email</label>
           <input type="email" id="loginEmail" placeholder="you@example.com">
@@ -69,15 +88,18 @@
           <div class="error" id="loginPassError">Password is required</div>
         </div>
         <button type="submit" class="btn btn-primary">Login</button>
-        <div class="divider">or</div>
-        <button type="button" class="btn btn-outline">
-          <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-          Continue with Google
-        </button>
       </form>
 
       <!-- Register Form -->
       <form id="registerForm" style="display:none" onsubmit="handleRegister(event)">
+        <button type="button" class="google-btn" onclick="handleGoogleSignIn()">
+          <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Sign up with Google
+          <div class="loading-spinner" id="googleSpinnerReg"></div>
+        </button>
+
+        <div class="divider">or</div>
+
         <div class="form-group">
           <label>Full Name</label>
           <input type="text" id="regName" placeholder="John Doe">
@@ -116,11 +138,6 @@
           <div class="error" id="regPassConfirmError">Passwords do not match</div>
         </div>
         <button type="submit" class="btn btn-primary">Create Account</button>
-        <div class="divider">or</div>
-        <button type="button" class="btn btn-outline">
-          <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-          Sign up with Google
-        </button>
       </form>
 
       <!-- Success -->
@@ -129,81 +146,151 @@
         <h3 id="successTitle"></h3>
         <p id="successText"></p>
         <br>
-        <a href="../index.html" class="btn btn-primary">Back to Home</a>
+        <a href="dashboard.html" class="btn btn-primary">Go to Dashboard</a>
       </div>
     </div>
   </div>
 </div>
 
+<!-- Firebase SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+  import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword }
+    from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+  // TODO: Replace with your Firebase project config
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const provider = new GoogleAuthProvider();
+
+  // Save user to localStorage
+  function saveUser(user) {
+    const userData = {
+      uid: user.uid,
+      name: user.displayName || user.email?.split('@')[0] || 'Student',
+      email: user.email,
+      photo: user.photoURL || null
+    };
+    localStorage.setItem('user', JSON.stringify(userData));
+    return userData;
+  }
+
+  // Google Sign-In
+  window.handleGoogleSignIn = async function() {
+    const spinner = document.getElementById('googleSpinner') || document.getElementById('googleSpinnerReg');
+    if (spinner) spinner.style.display = 'inline-block';
+    try {
+      const result = await signInWithPopup(auth, provider);
+      saveUser(result.user);
+      window.location.href = 'dashboard.html';
+    } catch (error) {
+      if (spinner) spinner.style.display = 'none';
+      console.error('Google sign in error:', error);
+      if (error.code !== 'auth/popup-closed-by-user') {
+        alert('Sign in failed: ' + error.message);
+      }
+    }
+  };
+
+  // Email/Password Login
+  window.handleLogin = async function(e) {
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value;
+    const pass = document.getElementById('loginPass').value;
+    let valid = true;
+
+    ['loginEmailError','loginPassError'].forEach(id => document.getElementById(id).style.display = 'none');
+
+    if (!email || !email.includes('@')) { document.getElementById('loginEmailError').style.display = 'block'; valid = false; }
+    if (!pass) { document.getElementById('loginPassError').style.display = 'block'; valid = false; }
+
+    if (valid) {
+      try {
+        const result = await signInWithEmailAndPassword(auth, email, pass);
+        saveUser(result.user);
+        window.location.href = 'dashboard.html';
+      } catch (error) {
+        alert('Login failed: ' + error.message);
+      }
+    }
+  };
+
+  // Email/Password Register
+  window.handleRegister = async function(e) {
+    e.preventDefault();
+    const name = document.getElementById('regName').value;
+    const email = document.getElementById('regEmail').value;
+    const pass = document.getElementById('regPass').value;
+    const confirm = document.getElementById('regPassConfirm').value;
+    let valid = true;
+
+    ['regNameError','regEmailError','regPassError','regPassConfirmError'].forEach(id => document.getElementById(id).style.display = 'none');
+
+    if (!name) { document.getElementById('regNameError').style.display = 'block'; valid = false; }
+    if (!email || !email.includes('@')) { document.getElementById('regEmailError').style.display = 'block'; valid = false; }
+    if (!pass || pass.length < 8) { document.getElementById('regPassError').style.display = 'block'; valid = false; }
+    if (pass !== confirm) { document.getElementById('regPassConfirmError').style.display = 'block'; valid = false; }
+
+    if (valid) {
+      try {
+        const result = await createUserWithEmailAndPassword(auth, email, pass);
+        // Update display name
+        await result.user.updateProfile({ displayName: name });
+        saveUser(result.user);
+        // Show success
+        document.getElementById('loginForm').style.display = 'none';
+        document.getElementById('registerForm').style.display = 'none';
+        document.getElementById('successMsg').style.display = 'block';
+        document.getElementById('successTitle').textContent = 'Account Created!';
+        document.getElementById('successText').textContent = 'Welcome ' + name + '! Your account is ready.';
+        // Redirect after 2s
+        setTimeout(() => window.location.href = 'dashboard.html', 2000);
+      } catch (error) {
+        alert('Registration failed: ' + error.message);
+      }
+    }
+  };
+</script>
+
 <script>
-function switchTab(tab) {
-  document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
-  if(tab === 'login') {
-    document.querySelectorAll('.auth-tab')[0].classList.add('active');
-    document.getElementById('loginForm').style.display = 'block';
-    document.getElementById('registerForm').style.display = 'none';
-  } else {
-    document.querySelectorAll('.auth-tab')[1].classList.add('active');
-    document.getElementById('loginForm').style.display = 'none';
-    document.getElementById('registerForm').style.display = 'block';
+  // Tab switching (non-module)
+  function switchTab(tab) {
+    document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+    if (tab === 'login') {
+      document.querySelectorAll('.auth-tab')[0].classList.add('active');
+      document.getElementById('loginForm').style.display = 'block';
+      document.getElementById('registerForm').style.display = 'none';
+    } else {
+      document.querySelectorAll('.auth-tab')[1].classList.add('active');
+      document.getElementById('loginForm').style.display = 'none';
+      document.getElementById('registerForm').style.display = 'block';
+    }
+    document.getElementById('successMsg').style.display = 'none';
   }
-  document.getElementById('successMsg').style.display = 'none';
-}
 
-function togglePass(id) {
-  const input = document.getElementById(id);
-  input.type = input.type === 'password' ? 'text' : 'password';
-}
-
-function showError(id) { document.getElementById(id).style.display = 'block'; }
-function hideError(id) { document.getElementById(id).style.display = 'none'; }
-
-function handleLogin(e) {
-  e.preventDefault();
-  let valid = true;
-  const email = document.getElementById('loginEmail').value;
-  const pass = document.getElementById('loginPass').value;
-  
-  hideError('loginEmailError'); hideError('loginPassError');
-  
-  if(!email || !email.includes('@')) { showError('loginEmailError'); valid = false; }
-  if(!pass) { showError('loginPassError'); valid = false; }
-  
-  if(valid) {
-    document.getElementById('loginForm').style.display = 'none';
-    document.getElementById('registerForm').style.display = 'none';
-    document.getElementById('successMsg').style.display = 'block';
-    document.getElementById('successTitle').textContent = 'Login Successful!';
-    document.getElementById('successText').textContent = 'Welcome back! Redirecting to dashboard...';
+  function togglePass(id) {
+    const input = document.getElementById(id);
+    input.type = input.type === 'password' ? 'text' : 'password';
   }
-}
-
-function handleRegister(e) {
-  e.preventDefault();
-  let valid = true;
-  const name = document.getElementById('regName').value;
-  const email = document.getElementById('regEmail').value;
-  const pass = document.getElementById('regPass').value;
-  const confirm = document.getElementById('regPassConfirm').value;
-  
-  ['regNameError','regEmailError','regPassError','regPassConfirmError'].forEach(hideError);
-  
-  if(!name) { showError('regNameError'); valid = false; }
-  if(!email || !email.includes('@')) { showError('regEmailError'); valid = false; }
-  if(!pass || pass.length < 8) { showError('regPassError'); valid = false; }
-  if(pass !== confirm) { showError('regPassConfirmError'); valid = false; }
-  
-  if(valid) {
-    document.getElementById('loginForm').style.display = 'none';
-    document.getElementById('registerForm').style.display = 'none';
-    document.getElementById('successMsg').style.display = 'block';
-    document.getElementById('successTitle').textContent = 'Account Created!';
-    document.getElementById('successText').textContent = 'Your account has been set up. Check your email for verification.';
-  }
-}
 </script>
 
 <footer class="footer">
+  <div class="footer-links">
+    <a href="reading.html">Reading</a>
+    <a href="listening.html">Listening</a>
+    <a href="writing.html">Writing</a>
+    <a href="speaking.html">Speaking</a>
+    <a href="https://youtube.com/@ieltsscoreaccelerator" target="_blank">YouTube</a>
+  </div>
   <p>&copy; 2026 IELTS Score Accelerator. All rights reserved.</p>
 </footer>
 

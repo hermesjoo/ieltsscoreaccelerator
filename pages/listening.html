@@ -365,6 +365,60 @@
     html { scroll-behavior: smooth; }
     /* Nav active state */
     .nav-links a[href="listening.html"] { color: var(--primary); font-weight: 700; }
+    /* Vocabulary Section */
+    .vocab-section {
+      background: var(--card); border-radius: var(--radius);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06); border: 1px solid var(--border);
+      padding: 1.5rem; margin-bottom: 2rem;
+    }
+    .vocab-section h3 { font-size: 1.1rem; margin-bottom: 0.8rem; color: var(--primary); }
+    .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.8rem; }
+    .vocab-card {
+      background: #f8fafc; border: 1px solid var(--border); border-radius: 8px;
+      padding: 0.8rem 1rem; cursor: pointer; transition: all 0.2s;
+    }
+    .vocab-card:hover { border-color: var(--primary); background: #eff6ff; transform: translateY(-2px); }
+    .vocab-word { font-weight: 700; font-size: 0.95rem; color: var(--primary); margin-bottom: 0.2rem; }
+    .vocab-pos { font-size: 0.75rem; color: var(--text-light); font-style: italic; }
+    .vocab-def { font-size: 0.85rem; color: var(--text); margin-top: 0.3rem; line-height: 1.5; display: none; }
+    .vocab-card.expanded .vocab-def { display: block; }
+    .vocab-card .vocab-speak-btn {
+      display: inline-block; font-size: 0.75rem; color: var(--primary); margin-top: 0.3rem;
+      background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 4px; padding: 0.15rem 0.5rem;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .vocab-card .vocab-speak-btn:hover { background: var(--primary); color: #fff; }
+    /* Band Score Estimator */
+    .band-estimator {
+      background: linear-gradient(135deg, #ede9fe, #ddd6fe);
+      border-radius: var(--radius); padding: 2rem; margin-bottom: 2rem;
+      border: 2px solid #a78bfa;
+    }
+    .band-estimator h3 { font-size: 1.2rem; color: #5b21b6; margin-bottom: 1rem; text-align: center; }
+    .band-estimator-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; max-width: 600px; margin: 0 auto; }
+    .band-estimator-grid label { font-weight: 600; font-size: 0.9rem; color: #5b21b6; }
+    .band-estimator-grid input, .band-estimator-grid select {
+      width: 100%; padding: 0.6rem 1rem; border: 2px solid #c4b5fd; border-radius: 8px;
+      font-size: 0.9rem; font-family: inherit; background: #fff;
+    }
+    .band-estimator-grid input:focus, .band-estimator-grid select:focus {
+      outline: none; border-color: #7c3aed;
+    }
+    .band-result {
+      text-align: center; margin-top: 1.5rem; padding: 1.5rem;
+      background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(91,33,182,0.1);
+      display: none;
+    }
+    .band-result.show { display: block; }
+    .band-result .band-number { font-size: 3.5rem; font-weight: 800; color: #5b21b6; }
+    .band-result .band-label { font-size: 1rem; color: var(--text-light); margin-top: 0.3rem; }
+    .band-result .band-detail { font-size: 0.9rem; color: var(--text); margin-top: 0.8rem; line-height: 1.7; }
+    .btn-estimate {
+      display: block; margin: 1.5rem auto 0; padding: 0.7rem 2.5rem;
+      background: #7c3aed; color: #fff; border: none; border-radius: 8px;
+      font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-estimate:hover { background: #5b21b6; transform: translateY(-1px); }
   </style>
 </head>
 <body>
@@ -385,12 +439,12 @@
 <!-- Header -->
 <section class="listening-header">
   <h1>🎧 IELTS Listening Practice</h1>
-  <p>10 Listening exercises with full transcripts, audio playback, and varied questions. Listen to each exercise, answer the questions, and see your score.</p>
+  <p>15 Listening exercises with full transcripts, audio playback, vocabulary builder, and varied questions. Listen to each exercise, answer the questions, and see your estimated band score.</p>
   <div class="progress-bar-container">
     <div class="progress-bar-bg">
       <div class="progress-bar-fill" id="progressFill"></div>
     </div>
-    <div class="progress-text" id="progressText">0 of 10 exercises completed</div>
+    <div class="progress-text" id="progressText">0 of 15 exercises completed</div>
   </div>
 </section>
 
@@ -398,7 +452,7 @@
 
   <!-- Tips -->
   <div class="tips-section">
-    <h3>💡 Important Tips for IELTS Listening</h3>
+    <h3>💡 Tips for IELTS Listening</h3>
     <ul>
       <li>In the real exam, the audio is played only once. So take the exercises seriously.</li>
       <li>Before listening (or reading the transcript), read the questions in advance so you know what to look for.</li>
@@ -407,6 +461,32 @@
       <li>Don't ignore articles (a, an, the) next to the blanks — they guide the type of answer.</li>
       <li>🎵 Use the audio playback button to listen to the transcript like the real exam.</li>
     </ul>
+    <h3 style="margin-top:1.2rem;">🎯 Strategy Tips for Band 7+</h3>
+    <ul>
+      <li><strong>Part 1:</strong> This is usually a two-person conversation about everyday topics. Focus on names, numbers, and spelling. This is where you should score the most.</li>
+      <li><strong>Part 2:</strong> A monologue on a non-academic topic. Pay attention to maps, plans, or diagrams if shown. Visual cues help identify the section of audio.</li>
+      <li><strong>Part 3:</strong> An academic discussion between 2–4 people. Listen for opinions and agreements/disagreements. The speakers may contradict each other — that's often where answers lie.</li>
+      <li><strong>Part 4:</strong> An academic lecture. This is the hardest part — no breaks. Stay focused and use the time between sections to read ahead.</li>
+      <li><strong>Time management:</strong> You get about 30 seconds before each section to read questions. Use every second — underline key words in the questions.</li>
+      <li><strong>Transfer answers carefully:</strong> In the paper-based exam, you have 10 minutes at the end to transfer answers to the answer sheet. Double-check spelling and singular/plural forms.</li>
+      <li><strong>Don't get stuck:</strong> If you miss an answer, move on immediately. Dwelling on one question causes you to miss the next two or three.</li>
+      <li><strong>Use context clues:</strong> If the blank requires a noun, it will likely be preceded by "a," "an," "the," or an adjective. This narrows your options.</li>
+      <li><strong>Practice active listening daily:</strong> Listen to BBC Radio 4, TED Talks, or academic podcasts. This builds familiarity with different English accents (British, Australian, American).</li>
+    </ul>
+    <h3 style="margin-top:1.2rem;">⚡ Common Mistakes to Avoid</h3>
+    <ul>
+      <li>Writing more words than instructed (e.g., "NO MORE THAN TWO WORDS" means exactly that).</li>
+      <li>Confusing similar-sounding numbers: thirteen / thirty, fifteen / fifty, fourteen / forty.</li>
+      <li>Mixing up plurals — the answer might be "book" vs. "books." Listen for the article ("a book" vs. "some books").</li>
+      <li>Writing answers in the wrong order on the answer sheet — always check the question number.</li>
+      <li>Ignoring the instruction "write NO MORE THAN ONE WORD AND/OR A NUMBER" — extra words are wrong even if the content is correct.</li>
+    </ul>
+  </div>
+  <!-- Vocabulary Builder -->
+  <div class="vocab-section">
+    <h3>📚 IELTS Listening Vocabulary Builder</h3>
+    <p style="font-size:0.9rem; color:var(--text-light); margin-bottom:1rem;">Click any word to hear its pronunciation and see its definition.</p>
+    <div class="vocab-grid" id="vocabGrid"></div>
   </div>
 
   <!-- Score Panel (hidden initially) -->

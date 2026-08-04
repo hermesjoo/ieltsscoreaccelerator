@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Dashboard | IELTS Score Accelerator</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .dashboard { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+    .welcome-card {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #fff;
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+    .welcome-card h1 { font-size: 1.8rem; font-weight: 700; letter-spacing: -0.02em; }
+    .welcome-card p { opacity: 0.9; margin-top: 0.3rem; }
+    .avatar {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      border: 3px solid rgba(255,255,255,0.3);
+      object-fit: cover;
+    }
+    .welcome-right { display: flex; align-items: center; gap: 1.2rem; }
+    .welcome-right .user-name { font-size: 0.95rem; opacity: 0.9; }
+
+    /* Stats Row */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .stat-box {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      text-align: center;
+      border: 1px solid var(--border);
+      transition: transform 160ms var(--ease-out), box-shadow 160ms var(--ease-out);
+    }
+    .stat-box:active { transform: scale(0.97); }
+    .stat-box .icon { font-size: 1.8rem; margin-bottom: 0.5rem; }
+    .stat-box .value { font-size: 1.6rem; font-weight: 700; color: var(--primary); }
+    .stat-box .label { font-size: 0.8rem; color: var(--text-light); margin-top: 0.2rem; }
+
+    /* Quick Actions */
+    .section-heading { font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem; letter-spacing: -0.01em; }
+    .actions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .action-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      cursor: pointer;
+      transition: transform 160ms var(--ease-out), box-shadow 160ms var(--ease-out), border-color 160ms var(--ease-out);
+    }
+    .action-card:active { transform: scale(0.97); }
+    @media (hover: hover) and (pointer: fine) {
+      .action-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+        border-color: var(--primary);
+      }
+    }
+    .action-icon {
+      width: 48px; height: 48px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+    .action-card h3 { font-size: 1rem; margin-bottom: 0.15rem; }
+    .action-card p { font-size: 0.8rem; color: var(--text-light); }
+
+    /* Progress Section */
+    .progress-section {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 2rem;
+      border: 1px solid var(--border);
+      margin-bottom: 2rem;
+    }
+    .skill-progress {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .skill-progress:last-child { border-bottom: none; }
+    .skill-name { font-weight: 600; min-width: 100px; font-size: 0.95rem; }
+    .progress-bar-bg {
+      flex: 1;
+      background: #e2e8f0;
+      border-radius: 10px;
+      height: 10px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      border-radius: 10px;
+      transition: width 600ms var(--ease-out);
+    }
+    .progress-bar-fill.reading { background: #3b82f6; }
+    .progress-bar-fill.listening { background: #f59e0b; }
+    .progress-bar-fill.writing { background: #10b981; }
+    .progress-bar-fill.speaking { background: #ec4899; }
+    .progress-pct { min-width: 45px; text-align: right; font-weight: 600; font-size: 0.9rem; color: var(--text-light); }
+
+    /* YouTube CTA */
+    .yt-cta {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 2rem;
+      border: 1px solid #fee2e2;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .yt-icon { font-size: 2.5rem; }
+    .yt-cta h3 { font-size: 1.1rem; margin-bottom: 0.3rem; }
+    .yt-cta p { font-size: 0.9rem; color: var(--text-light); margin-bottom: 0.8rem; }
+    .yt-btn {
+      background: #ff0000;
+      color: #fff;
+      padding: 0.6rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: inline-block;
+      transition: transform 160ms var(--ease-out), background 160ms var(--ease-out);
+    }
+    .yt-btn:active { transform: scale(0.97); }
+    .yt-btn:hover { background: #cc0000; }
+
+    /* Recent Activity */
+    .activity-list { list-style: none; }
+    .activity-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .activity-item:last-child { border-bottom: none; }
+    .activity-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .activity-dot.done { background: var(--success); }
+    .activity-dot.pending { background: #f59e0b; }
+    .activity-text { flex: 1; font-size: 0.95rem; }
+    .activity-time { font-size: 0.8rem; color: var(--text-light); }
+
+    .logout-btn {
+      background: #fee2e2;
+      color: #dc2626;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 160ms var(--ease-out);
+    }
+    .logout-btn:active { transform: scale(0.97); }
+
+    @media (max-width: 768px) {
+      .welcome-card { flex-direction: column; text-align: center; gap: 1rem; }
+      .welcome-right { flex-direction: column; }
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="../index.html" class="logo"><img src="../images/logo-color.png" alt="IELTS Score Accelerator" style="height:48px"></a>
+  <div class="nav-links">
+    <a href="reading.html">Reading</a>
+    <a href="listening.html">Listening</a>
+    <a href="writing.html">Writing</a>
+    <a href="speaking.html">Speaking</a>
+    <a href="test.html" class="btn btn-outline">Placement Test</a>
+    <button class="logout-btn" onclick="handleLogout()">Logout</button>
+  </div>
+</nav>
+
+<div class="dashboard">
+  <!-- Welcome -->
+  <div class="welcome-card">
+    <div>
+      <h1>Welcome back! 👋</h1>
+      <p>Ready to continue your IELTS preparation?</p>
+    </div>
+    <div class="welcome-right">
+      <img id="userAvatar" class="avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23fff3'/>%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='40'%3E👤%3C/text%3E%3C/svg%3E" alt="avatar">
+      <div>
+        <div class="user-name" id="userName">Student</div>
+        <div style="font-size:0.8rem;opacity:0.7" id="userEmail"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat-box">
+      <div class="icon">📝</div>
+      <div class="value" id="totalTests">0</div>
+      <div class="label">Tests Taken</div>
+    </div>
+    <div class="stat-box">
+      <div class="icon">⏱</div>
+      <div class="value" id="studyHours">0h</div>
+      <div class="label">Study Time</div>
+    </div>
+    <div class="stat-box">
+      <div class="icon">🎯</div>
+      <div class="value" id="avgScore">-</div>
+      <div class="label">Average Band</div>
+    </div>
+    <div class="stat-box">
+      <div class="icon">🔥</div>
+      <div class="value" id="streak">0</div>
+      <div class="label">Day Streak</div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <h2 class="section-heading">Quick Access</h2>
+  <div class="actions-grid">
+    <a href="reading.html" class="action-card">
+      <div class="action-icon" style="background:#dbeafe">📖</div>
+      <div><h3>Reading Practice</h3><p>15 passages with 75 questions</p></div>
+    </a>
+    <a href="listening.html" class="action-card">
+      <div class="action-icon" style="background:#fef3c7">🎧</div>
+      <div><h3>Listening Practice</h3><p>15 audio exercises with transcripts</p></div>
+    </a>
+    <a href="writing.html" class="action-card">
+      <div class="action-icon" style="background:#d1fae5">✍️</div>
+      <div><h3>Writing Practice</h3><p>Sample answers & templates</p></div>
+    </a>
+    <a href="speaking.html" class="action-card">
+      <div class="action-icon" style="background:#fce7f3">🗣️</div>
+      <div><h3>Speaking Practice</h3><p>Part 1-3 questions & model answers</p></div>
+    </a>
+    <a href="test.html" class="action-card">
+      <div class="action-icon" style="background:#e0e7ff">🎯</div>
+      <div><h3>Placement Test</h3><p>Find your current band level</p></div>
+    </a>
+    <a href="https://youtube.com/@ieltsscoreaccelerator" target="_blank" class="action-card">
+      <div class="action-icon" style="background:#fee2e2">▶️</div>
+      <div><h3>YouTube Channel</h3><p>Video lessons & strategies</p></div>
+    </a>
+  </div>
+
+  <!-- Progress -->
+  <div class="progress-section">
+    <h2 class="section-heading">Your Progress</h2>
+    <div class="skill-progress">
+      <span class="skill-name">📖 Reading</span>
+      <div class="progress-bar-bg"><div class="progress-bar-fill reading" style="width:0%" id="progReading"></div></div>
+      <span class="progress-pct" id="pctReading">0%</span>
+    </div>
+    <div class="skill-progress">
+      <span class="skill-name">🎧 Listening</span>
+      <div class="progress-bar-bg"><div class="progress-bar-fill listening" style="width:0%" id="progListening"></div></div>
+      <span class="progress-pct" id="pctListening">0%</span>
+    </div>
+    <div class="skill-progress">
+      <span class="skill-name">✍️ Writing</span>
+      <div class="progress-bar-bg"><div class="progress-bar-fill writing" style="width:0%" id="progWriting"></div></div>
+      <span class="progress-pct" id="pctWriting">0%</span>
+    </div>
+    <div class="skill-progress">
+      <span class="skill-name">🗣️ Speaking</span>
+      <div class="progress-bar-bg"><div class="progress-bar-fill speaking" style="width:0%" id="progSpeaking"></div></div>
+      <span class="progress-pct" id="pctSpeaking">0%</span>
+    </div>
+  </div>
+
+  <!-- YouTube -->
+  <div class="yt-cta">
+    <div class="yt-icon">📺</div>
+    <div>
+      <h3>Watch Our YouTube Lessons</h3>
+      <p>Free video lessons covering all IELTS skills, strategies, and tips for Band 7-9</p>
+      <a href="https://youtube.com/@ieltsscoreaccelerator" target="_blank" class="yt-btn">▶ Subscribe on YouTube</a>
+    </div>
+  </div>
+
+  <!-- Recent Activity -->
+  <div class="progress-section">
+    <h2 class="section-heading">Recent Activity</h2>
+    <ul class="activity-list" id="activityList">
+      <li class="activity-item">
+        <span class="activity-dot done"></span>
+        <span class="activity-text">Welcome to IELTS Score Accelerator!</span>
+        <span class="activity-time">Just now</span>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-links">
+    <a href="reading.html">Reading</a>
+    <a href="listening.html">Listening</a>
+    <a href="writing.html">Writing</a>
+    <a href="speaking.html">Speaking</a>
+    <a href="https://youtube.com/@ieltsscoreaccelerator" target="_blank">YouTube</a>
+  </div>
+  <p>&copy; 2026 IELTS Score Accelerator. All rights reserved.</p>
+</footer>
+
+<script type="module">
+  import { getCurrentUser, logOut } from '../js/auth.js';
+
+  const user = getCurrentUser();
+  if (user) {
+    document.getElementById('userName').textContent = user.name || 'Student';
+    document.getElementById('userEmail').textContent = user.email || '';
+    if (user.photo) document.getElementById('userAvatar').src = user.photo;
+  }
+
+  // Load stats from localStorage
+  const stats = JSON.parse(localStorage.getItem('ielts_stats') || '{}');
+  document.getElementById('totalTests').textContent = stats.totalTests || 0;
+  document.getElementById('studyHours').textContent = (stats.studyHours || 0) + 'h';
+  document.getElementById('avgScore').textContent = stats.avgScore || '-';
+  document.getElementById('streak').textContent = stats.streak || 0;
+
+  // Load progress
+  const progress = JSON.parse(localStorage.getItem('ielts_progress') || '{}');
+  ['reading','listening','writing','speaking'].forEach(skill => {
+    const pct = progress[skill] || 0;
+    document.getElementById('prog' + skill.charAt(0).toUpperCase() + skill.slice(1)).style.width = pct + '%';
+    document.getElementById('pct' + skill.charAt(0).toUpperCase() + skill.slice(1)).textContent = pct + '%';
+  });
+
+  // Load activity
+  const activities = JSON.parse(localStorage.getItem('ielts_activity') || '[]');
+  if (activities.length > 0) {
+    const list = document.getElementById('activityList');
+    list.innerHTML = activities.slice(-10).reverse().map(a => `
+      <li class="activity-item">
+        <span class="activity-dot ${a.done ? 'done' : 'pending'}"></span>
+        <span class="activity-text">${a.text}</span>
+        <span class="activity-time">${a.time}</span>
+      </li>
+    `).join('');
+  }
+
+  window.handleLogout = function() {
+    localStorage.removeItem('user');
+    window.location.href = '../index.html';
+  };
+
+  // Animate progress bars on load
+  setTimeout(() => {
+    document.querySelectorAll('.progress-bar-fill').forEach(bar => {
+      bar.style.width = bar.style.width;
+    });
+  }, 300);
+</script>
+
+</body>
+</html>
