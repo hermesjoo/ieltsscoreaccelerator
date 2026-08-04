@@ -332,9 +332,9 @@
 </footer>
 
 <script type="module">
-  import { getCurrentUser, logOut } from '../js/auth.js';
+  import { getUser, signOut } from '../js/auth.js';
 
-  const user = getCurrentUser();
+  const user = await getUser();
   if (user) {
     document.getElementById('userName').textContent = user.name || 'Student';
     document.getElementById('userEmail').textContent = user.email || '';
@@ -371,7 +371,7 @@
 
   window.handleLogout = function() {
     localStorage.removeItem('user');
-    window.location.href = '../index.html';
+    signOut(); window.location.href = '../index.html';
   };
 
   // Animate progress bars on load

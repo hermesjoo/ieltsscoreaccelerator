@@ -1,63 +1,73 @@
-// Firebase Config — Replace with your project's config
-const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
-};
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
-// Initialize Firebase
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
-import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
+const supabaseUrl = 'https://nuvrlzxwijjwjycgmsrc.supabase.co'
+const supabaseKey = 'sb_publishable_W5eqkzt1JBFCEZLOayOcBA_Fg8HAmsR'
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
+const supabase = createClient(supabaseUrl, supabaseKey)
 
 // Google Sign-In
 async function signInWithGoogle() {
-  try {
-    const result = await signInWithPopup(auth, provider);
-    const user = result.user;
-    localStorage.setItem('user', JSON.stringify({
-      uid: user.uid,
-      name: user.displayName,
-      email: user.email,
-      photo: user.photoURL
-    }));
-    window.location.href = 'dashboard.html';
-  } catch (error) {
-    console.error('Sign in error:', error);
-    alert('Sign in failed. Please try again.');
-  }
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: window.location.origin + '/ieltsscoreaccelerator/pages/dashboard.html'
+    }
+  })
+  if (error) console.error('Google sign in error:', error)
+}
+
+// Email Sign-Up
+async function signUp(email, password, name) {
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: { data: { display_name: name } }
+  })
+  if (error) throw error
+  return data
+}
+
+// Email Login
+async function signIn(email, password) {
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password })
+  if (error) throw error
+  return data
 }
 
 // Sign Out
-async function logOut() {
-  await signOut(auth);
-  localStorage.removeItem('user');
-  window.location.href = '../index.html';
-}
-
-// Check Auth State
-function checkAuth(callback) {
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      callback(user);
-    } else {
-      const local = localStorage.getItem('user');
-      if (local) callback(JSON.parse(local));
-      else window.location.href = 'register.html';
-    }
-  });
+async function signOut() {
+  await supabase.auth.signOut()
+  localStorage.removeItem('user')
 }
 
 // Get current user
-function getCurrentUser() {
-  const local = localStorage.getItem('user');
-  return local ? JSON.parse(local) : null;
+async function getUser() {
+  const { data: { user } } = await supabase.auth.getUser()
+  if (user) {
+    const userData = {
+      uid: user.id,
+      name: user.user_metadata?.display_name || user.email?.split('@')[0] || 'Student',
+      email: user.email,
+      photo: user.user_metadata?.avatar_url || null
+    }
+    localStorage.setItem('user', JSON.stringify(userData))
+    return userData
+  }
+  const local = localStorage.getItem('user')
+  return local ? JSON.parse(local) : null
 }
 
-export { signInWithGoogle, logOut, checkAuth, getCurrentUser };
+// Listen for auth changes
+supabase.auth.onAuthStateChange((event, session) => {
+  if (session?.user) {
+    const user = session.user
+    localStorage.setItem('user', JSON.stringify({
+      uid: user.id,
+      name: user.user_metadata?.display_name || user.email?.split('@')[0] || 'Student',
+      email: user.email,
+      photo: user.user_metadata?.avatar_url || null
+    }))
+  }
+})
+
+export { signInWithGoogle, signUp, signIn, signOut, getUser }
