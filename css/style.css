@@ -417,7 +417,7 @@ ul { list-style: none; }
     position: fixed;
     inset: 0;
     background: rgba(0,0,0,0.4);
-    z-index: 190;
+    z-index: 50;
     -webkit-tap-highlight-color: transparent;
   }
   .nav-backdrop.open { display: block; }
