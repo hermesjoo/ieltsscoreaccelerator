@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IELTS Writing | آیلتس‌پرو</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .page-hero{background:linear-gradient(135deg,#065f46 0%,#10b981 60%,#34d399 100%);padding:4rem 2rem;text-align:center;color:#fff}
+    .page-hero h1{font-size:2.4rem;font-weight:800;margin-bottom:.5rem}
+    .page-hero p{font-size:1.1rem;opacity:.9}
+    .task-tabs{display:flex;justify-content:center;gap:1rem;margin:-1.5rem auto 2rem;position:relative;z-index:10}
+    .task-tab{padding:.8rem 2rem;border-radius:10px;font-weight:700;font-size:1rem;cursor:pointer;border:2px solid var(--border);background:var(--card);color:var(--text-light);transition:all .3s}
+    .task-tab.active,.task-tab:hover{background:var(--primary);color:#fff;border-color:var(--primary)}
+    .task-panel{display:none}.task-panel.active{display:block}
+    .example-card{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:2rem;margin-bottom:2rem;box-shadow:0 2px 12px rgba(0,0,0,.05)}
+    .example-card h3{font-size:1.2rem;color:var(--primary);margin-bottom:1rem;border-bottom:2px solid #eff6ff;padding-bottom:.5rem}
+    .band-label{display:inline-block;background:var(--primary);color:#fff;padding:.2rem .8rem;border-radius:20px;font-size:.8rem;margin-bottom:.5rem}
+    .sample-answer{background:#f8fafc;border-right:4px solid var(--primary);padding:1.5rem;border-radius:0 8px 8px 0;margin:1rem 0;line-height:2;font-size:.95rem}
+    .tip-box{background:#fffbeb;border:1px solid #fcd34d;border-radius:8px;padding:1.2rem;margin:1rem 0}
+    .tip-box h4{color:#b45309;margin-bottom:.5rem;font-size:1rem}
+    .tip-box ul{padding-right:1.2rem}.tip-box li{margin-bottom:.3rem;font-size:.9rem;color:#78350f}
+    .template-box{background:#ecfdf5;border:1px solid #6ee7b7;border-radius:8px;padding:1.2rem;margin:1rem 0}
+    .template-box h4{color:#065f46;margin-bottom:.5rem}
+    .template-box p{font-size:.9rem;color:#064e3b;line-height:1.8}
+    .vocab-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.8rem;margin:1rem 0}
+    .vocab-item{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:.8rem;font-size:.9rem}
+    .vocab-item strong{color:#166534}.vocab-item span{color:#6b7280;font-size:.85rem;display:block;margin-top:.2rem}
+    .scoring-guide{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin:2rem 0}
+    .score-card{background:var(--card);border-radius:var(--radius);padding:1.5rem;border:1px solid var(--border)}
+    .score-card h4{color:var(--primary);margin-bottom:.5rem}
+    .score-card .score-range{font-size:1.8rem;font-weight:800;color:var(--accent)}
+    .score-card ul{margin-top:.5rem;padding-right:1.2rem}.score-card li{font-size:.85rem;color:var(--text-light);margin-bottom:.3rem}
+    .criteria-table{width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:.9rem}
+    .criteria-table th{background:var(--primary);color:#fff;padding:.8rem;text-align:right}
+    .criteria-table td{padding:.7rem;border-bottom:1px solid var(--border)}
+    .criteria-table tr:nth-child(even){background:#f8fafc}
+    .interactive-scoring{background:var(--card);border-radius:var(--radius);padding:2rem;border:2px solid var(--accent);margin:2rem 0}
+    .slider-group{margin:1rem 0}.slider-group label{font-weight:600;display:block;margin-bottom:.3rem}
+    .slider-group input[type="range"]{width:100%;accent-color:var(--primary)}
+    .band-display{text-align:center;margin-top:1.5rem;padding:1.5rem;background:linear-gradient(135deg,var(--primary),var(--primary-dark));border-radius:12px;color:#fff}
+    .band-display .big-score{font-size:3rem;font-weight:800}
+    .timer-box{display:flex;gap:1rem;justify-content:center;margin:1rem 0;flex-wrap:wrap}
+    .timer-item{text-align:center;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.5rem}
+    .timer-item .time{font-size:1.5rem;font-weight:700;color:var(--primary)}
+    .timer-item .label{font-size:.8rem;color:var(--text-light)}
+    .section-divider{border:none;border-top:2px dashed var(--border);margin:3rem 0}
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="../index.html" class="logo">آیلتس<span>پرو</span></a>
+  <div class="nav-links">
+    <a href="reading.html">Reading</a>
+    <a href="listening.html">Listening</a>
+    <a href="writing.html">Writing</a>
+    <a href="speaking.html">Speaking</a>
+    <a href="test.html" class="btn btn-outline">آزمون تعیین سطح</a>
+    <a href="register.html" class="btn btn-primary">ورود / ثبت‌نام</a>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <h1>✍️ IELTS Writing</h1>
+  <p>نمونه جواب با نمره بالا، قالب‌های آماده، تکنیک‌ها و راهنمای نمره‌دهی</p>
+</section>
+
+<div class="section">
+  <div class="task-tabs">
+    <div class="task-tab active" onclick="switchTask(1)">Task 1 — توصیف نمودار</div>
+    <div class="task-tab" onclick="switchTask(2)">Task 2 — انشا</div>
+    <div class="task-tab" onclick="switchTask(3)">راهنمای نمره</div>
+  </div>
+
+  <!-- ==================== TASK 1 PANEL ==================== -->
+  <div class="task-panel active" id="task1-panel">
+    <section class="section" style="padding-top:1rem">
+    <h2 class="section-title">Task 1 — توصیف نمودار یا جدول</h2>
+    <p class="section-subtitle">حداقل ۱۵۰ کلمه • ۲۰ دقیقه • ۳۳٪ کل نمره Writing</p>
+
+    <div class="timer-box">
+      <div class="timer-item"><div class="time">۲۰</div><div class="label">دقیقه زمان</div></div>
+      <div class="timer-item"><div class="time">۱۵۰+</div><div class="label">حداقل کلمه</div></div>
+      <div class="timer-item"><div class="time">۳۳٪</div><div class="label">وزن نمره</div></div>
+    </div>
+
+    <div class="tip-box">
+      <h4>💡 نکات کلیدی Task 1</h4>
+      <ul>
+        <li>هرگز نظر شخصی ندهید — فقط واقعیات را گزارش کنید</li>
+        <li>پاراگراف معرفی (Introduction) را با تغییر لغات بازنویسی کنید</li>
+        <li>یک پاراگراف Overview داشته باشید (مهم‌ترین روندها)</li>
+        <li>داده‌های خاص با اعداد را ذکر کنید (حداقل ۲ مورد عددی)</li>
+        <li>از اتصال‌دهنده‌های توصیفی استفاده کنید</li>
+        <li>ساختار: Introduction → Overview → Body 1 → Body 2</li>
+      </ul>
+    </div>
+
+    <div class="template-box">
+      <h4>📝 قالب آماده Task 1</h4>
+      <p>
+        <strong>پاراگراف ۱ — معرفی:</strong> The chart/graph/table illustrates/shows…<br>
+        <strong>پاراگراف ۲ — مرور کلی:</strong> Overall, it is clear that… / The most striking trend is that…<br>
+        <strong>پاراگراف ۳ — جزئیات ۱:</strong> According to the data, [Subject] had the highest/lowest…<br>
+        <strong>پاراگراف ۴ — جزئیات ۲:</strong> In contrast, [Subject] showed a different pattern…
+      </p>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- SAMPLE 1: Line Graph -->
+    <div class="example-card">
+      <span class="band-label">Band 8.0 Sample</span>
+      <h3>📈 نمونه توصیف نمودار خطی — مصرف انرژی</h3>
+      <div class="sample-answer">
+        <p>The line graph illustrates changes in energy consumption across four different sources in the UK between 2000 and 2020.</p>
+        <p>Overall, it is evident that renewable energy sources experienced a dramatic rise over the period, while fossil fuel consumption declined steadily. Natural gas remained the most consumed source throughout, though its dominance narrowed considerably.</p>
+        <p>Beginning at approximately 40%, natural gas consumption peaked at 45% in 2005 before gradually falling to around 30% by 2020. Meanwhile, coal experienced the most significant decline, dropping from 35% in 2000 to just under 10% by the end of the period.</p>
+        <p>In contrast, renewable energy showed a remarkable upward trajectory. Starting from a mere 5% in 2000, it climbed steadily, surpassing coal by 2015 and reaching approximately 35% by 2020. Solar and wind power together accounted for the bulk of this growth, rising from 2% to 25% over the two decades.</p>
+      </div>
+    </div>
+
+    <!-- SAMPLE 2: Bar Chart -->
+    <div class="example-card">
+      <span class="band-label">Band 7.0 Sample</span>
+      <h3>📊 نمونه توصیف نمودار ستونی — هزینه تحصیل</h3>
+      <div class="sample-answer">
+        <p>The bar chart compares the average annual tuition fees in four countries for the years 2010 and 2020.</p>
+        <p>Overall, all four countries saw an increase in tuition fees over the decade. The USA consistently had the highest fees, whereas Germany remained the most affordable option.</p>
+        <p>In 2010, students in the USA paid approximately $20,000 per year, which rose to $30,000 by 2020. The UK followed a similar pattern, increasing from $15,000 to $22,000. Australia saw a more modest rise, going from $12,000 to $18,000. Germany, despite its increase from $500 to $3,000, remained significantly cheaper than the others.</p>
+      </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- TASK 1 VOCABULARY -->
+    <div class="example-card">
+      <h3>📖 واژگان ضروری Task 1</h3>
+      <h4 style="margin:1rem 0 .5rem;color:#065f46">روند صعودی</h4>
+      <div class="vocab-grid">
+        <div class="vocab-item"><strong>increase</strong> <span>افزایش</span></div>
+        <div class="vocab-item"><strong>rise sharply</strong> <span>افزایش شدید</span></div>
+        <div class="vocab-item"><strong>climb steadily</strong> <span>افزایش تدریجی</span></div>
+        <div class="vocab-item"><strong>surge</strong> <span>جهش / افزایش چشمگیر</span></div>
+        <div class="vocab-item"><strong>peak at</strong> <span>رسیدن به اوج</span></div>
+        <div class="vocab-item"><strong>soar</strong> <span>افزایش ناگهانی</span></div>
+      </div>
+      <h4 style="margin:1rem 0 .5rem;color:#065f46">روند نزولی</h4>
+      <div class="vocab-grid">
+        <div class="vocab-item"><strong>decrease</strong> <span>کاهش</span></div>
+        <div class="vocab-item"><strong>decline steadily</strong> <span>کاهش تدریجی</span></div>
+        <div class="vocab-item"><strong>drop significantly</strong> <span>کاهش قابل‌توجه</span></div>
+        <div class="vocab-item"><strong>plummet</strong> <span>سقوط آزاد</span></div>
+        <div class="vocab-item"><strong>hit a low</strong> <span>رسیدن به کمترین حد</span></div>
+        <div class="vocab-item"><strong>dwindle</strong> <span>کاهش تدریجی و پیوسته</span></div>
+      </div>
+      <h4 style="margin:1rem 0 .5rem;color:#065f46">ثبات و مقایسه</h4>
+      <div class="vocab-grid">
+        <div class="vocab-item"><strong>remain stable</strong> <span>ثابت ماندن</span></div>
+        <div class="vocab-item"><strong>level off</strong> <span>تثبیت شدن</span></div>
+        <div class="vocab-item"><strong>fluctuate</strong> <span>نوسان داشتن</span></div>
+        <div class="vocab-item"><strong>in contrast</strong> <span>در مقابل</span></div>
+        <div class="vocab-item"><strong>whereas</strong> <span>در حالی که</span></div>
+        <div class="vocab-item"><strong>by comparison</strong> <span>در مقایسه</span></div>
+      </div>
+    </div>
+  </section>
+  </div> <!-- end task1-panel -->
+
+  <!-- ==================== TASK 2 PANEL ==================== -->
+  <div class="task-panel" id="task2-panel">
+    <section class="section" style="padding-top:1rem">
+    <h2 class="section-title">Task 2 — انشا (Essay)</h2>
+    <p class="section-subtitle">حداقل ۲۵۰ کلمه • ۴۰ دقیقه • ۶۷٪ کل نمره Writing</p>
+
+    <div class="timer-box">
+      <div class="timer-item"><div class="time">۴۰</div><div class="label">دقیقه زمان</div></div>
+      <div class="timer-item"><div class="time">۲۵۰+</div><div class="label">حداقل کلمه</div></div>
+      <div class="timer-item"><div class="time">۶۷٪</div><div class="label">وزن نمره</div></div>
+    </div>
+
+    <div class="tip-box">
+      <h4>💡 نکات کلیدی Task 2</h4>
+      <ul>
+        <li>سوال را با دقت بخوانید — نوع سوال مشخص می‌کند چه جوابی بدهید</li>
+        <li>پاسخ شما باید مستقیماً به سوال پاسخ دهد (Task Response)</li>
+        <li>حداقل ۴ پاراگراف بنویسید: معرفی، ۲ بدنه، نتیجه‌گیری</li>
+        <li>از مثال‌های مشخص و واقعی استفاده کنید</li>
+        <li>پاراگراف بدنه با Topic Sentence شروع شود</li>
+        <li>از لغات و ساختارهای متنوع دستوری استفاده کنید</li>
+      </ul>
+    </div>
+
+    <div class="template-box">
+      <h4>📝 قالب آماده Task 2</h4>
+      <p>
+        <strong>مقدمه:</strong> It is often argued that… In my opinion…<br>
+        <strong>پاراگراف بدنه ۱:</strong> Topic sentence + توضیح + مثال + نتیجه موقت<br>
+        <strong>پاراگراف بدنه ۲:</strong> Topic sentence + توضیح + مثال + نتیجه موقت<br>
+        <strong>نتیجه‌گیری:</strong> In conclusion, although…, I firmly believe that…
+      </p>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- QUESTION TYPES TABLE -->
+    <div class="example-card">
+      <h3>📋 انواع سوالات Task 2</h3>
+      <table class="criteria-table">
+        <tr><th>نوع سوال</th><th>توضیح</th><th>قالب جواب</th></tr>
+        <tr><td><strong>Opinion (Agree/Disagree)</strong></td><td>آیا موافقید که…؟</td><td>مقدمه + موافق/مخالف + نتیجه‌گیری</td></tr>
+        <tr><td><strong>Discussion + Opinion</strong></td><td>هر دو دیدگاه را بررسی کنید</td><td>دیدگاه ۱ + دیدگاه ۲ + نظر شما + نتیجه</td></tr>
+        <tr><td><strong>Problem/Solution</strong></td><td>مشکل + راه‌حل</td><td>مشکل‌ها + راه‌حل‌ها + نتیجه</td></tr>
+        <tr><td><strong>Advantages/Disadvantages</strong></td><td>مزایا و معایب</td><td>مزایا + معایب + تعادل + نتیجه</td></tr>
+        <tr><td><strong>Two-part Question</strong></td><td>دو سوال جداگانه</td><td>پاسخ سوال ۱ + پاسخ سوال ۲ + نتیجه</td></tr>
+      </table>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- SAMPLE ESSAY 1: Opinion -->
+    <div class="example-card">
+      <span class="band-label">Band 8.0 Sample</span>
+      <h3>نمونه انشا — شبکه‌های اجتماعی (Opinion)</h3>
+      <p style="color:var(--text-light);font-style:italic;margin-bottom:1rem">Some people believe that social media has a negative impact on society. To what extent do you agree or disagree?</p>
+      <div class="sample-answer">
+        <p><strong>Introduction:</strong> In recent years, social media platforms have become an integral part of daily life for billions of people worldwide. While some argue that these platforms have a detrimental effect on society, I largely disagree with this view, as I believe the benefits of social media far outweigh its drawbacks.</p>
+        <p><strong>Body 1:</strong> One of the most compelling arguments in favour of social media is its ability to connect people across geographical boundaries. Platforms such as Instagram and Twitter enable individuals to maintain relationships regardless of distance. Furthermore, social media has proven to be a powerful tool for raising awareness about social issues. Movements like #MeToo gained momentum largely through viral posts, demonstrating their potential for positive societal change.</p>
+        <p><strong>Body 2:</strong> Admittedly, critics raise valid concerns regarding mental health, particularly among young people. Studies suggest a correlation between excessive screen time and increased rates of anxiety. However, I would argue that the issue lies not with the technology itself, but rather with how individuals choose to use it. With proper digital literacy education, these negative effects can be significantly mitigated.</p>
+        <p><strong>Conclusion:</strong> In conclusion, while social media is not without its challenges, I firmly believe that it serves as a net positive for society. The key lies in promoting responsible usage rather than demonising the platforms themselves.</p>
+      </div>
+    </div>
+
+    <!-- SAMPLE ESSAY 2: Discussion -->
+    <div class="example-card">
+      <span class="band-label">Band 7.5 Sample</span>
+      <h3>نمونه انشا — آموزش آنلاین (Discussion)</h3>
+      <p style="color:var(--text-light);font-style:italic;margin-bottom:1rem">Some people think that online learning is better than classroom learning. Discuss both views and give your opinion.</p>
+      <div class="sample-answer">
+        <p><strong>Introduction:</strong> The rise of digital technology has transformed the education sector, with online learning becoming increasingly popular. While some believe that virtual classrooms offer superior advantages, others maintain that traditional face-to-face learning remains more effective.</p>
+        <p><strong>Body 1:</strong> Proponents of online learning argue that it offers unparalleled flexibility. Students can access lectures at any time, which is particularly beneficial for those with work commitments. Moreover, online courses often cost less than traditional programmes, making education more accessible.</p>
+        <p><strong>Body 2:</strong> On the other hand, advocates of classroom learning emphasise the importance of direct interaction. The ability to ask questions in real-time and engage in group discussions fosters deeper understanding. Additionally, the structured environment helps many students maintain discipline and focus.</p>
+        <p><strong>Conclusion:</strong> In my opinion, the most effective approach combines both methods. Blended learning can harness the flexibility of digital platforms while preserving the social benefits of in-person education.</p>
+      </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- TASK 2 VOCABULARY -->
+    <div class="example-card">
+      <h3>📖 واژگان ضروری Task 2</h3>
+      <h4 style="margin:1rem 0 .5rem;color:#065f46">بیان نظر</h4>
+      <div class="vocab-grid">
+        <div class="vocab-item"><strong>I firmly believe</strong> <span>من قویاً معتقدم</span></div>
+        <div class="vocab-item"><strong>It is widely acknowledged</strong> <span>به طور گسترده پذیرفته شده</span></div>
+        <div class="vocab-item"><strong>I would argue</strong> <span>من استدلال می‌کنم</span></div>
+        <div class="vocab-item"><strong>From my perspective</strong> <span>از دیدگاه من</span></div>
+      </div>
+      <h4 style="margin:1rem 0 .5rem;color:#065f46">اتصال‌دهنده‌ها</h4>
+      <div class="vocab-grid">
+        <div class="vocab-item"><strong>Furthermore</strong> <span>علاوه بر این</span></div>
+        <div class="vocab-item"><strong>However</strong> <span>با این حال</span></div>
+        <div class="vocab-item"><strong>On the other hand</strong> <span>از طرف دیگر</span></div>
+        <div class="vocab-item"><strong>Consequently</strong> <span>در نتیجه</span></div>
+        <div class="vocab-item"><strong>Admittedly</strong> <span>باید اعتراف کرد</span></div>
+        <div class="vocab-item"><strong>Nevertheless</strong> <span>با این وجود</span></div>
+      </div>
+      <h4 style="margin:1rem 0 .5rem;color:#065f46">نتیجه‌گیری</h4>
+      <div class="vocab-grid">
+        <div class="vocab-item"><strong>In conclusion</strong> <span>در نتیجه</span></div>
+        <div class="vocab-item"><strong>To sum up</strong> <span>به طور خلاصه</span></div>
+        <div class="vocab-item"><strong>All things considered</strong> <span>با در نظر گرفتن همه چیز</span></div>
+        <div class="vocab-item"><strong>Taking everything into account</strong> <span>با لحاظ همه موارد</span></div>
+      </div>
+    </div>
+  </section>
+  </div> <!-- end task2-panel -->
+
+  <!-- ==================== SCORING GUIDE PANEL ==================== -->
+  <div class="task-panel" id="task3-panel">
+    <section class="section" style="padding-top:1rem">
+    <h2 class="section-title">راهنمای نمره‌دهی IELTS Writing</h2>
+    <p class="section-subtitle">آشنایی با معیارهای نمره‌دهی به شما کمک می‌کند دقیقاً بدانید روی چه چیزی کار کنید</p>
+
+    <div class="example-card">
+      <h3>📊 ۴ معیار اصلی نمره‌دهی</h3>
+      <table class="criteria-table">
+        <tr><th>معیار</th><th>وزن</th><th>توضیح</th></tr>
+        <tr><td><strong>Task Response</strong></td><td>۲۵٪</td><td>آیا کامل و مستقیماً به سوال پاسخ داده‌اید؟ آیا ایده‌های واضح و پشتیبانی‌شده دارید؟</td></tr>
+        <tr><td><strong>Coherence & Cohesion</strong></td><td>۲۵٪</td><td>آیا متن منطقی و ساختارمند است؟ آیا از اتصال‌دهنده‌ها درست استفاده کرده‌اید؟</td></tr>
+        <tr><td><strong>Lexical Resource</strong></td><td>۲۵٪</td><td>آیا از واژگان متنوع و دقیق استفاده کرده‌اید؟</td></tr>
+        <tr><td><strong>Grammar</strong></td><td>۲۵٪</td><td>آیا از ساختارهای متنوع دستوری استفاده کرده‌اید؟</td></tr>
+      </table>
+    </div>
+
+    <div class="scoring-guide">
+      <div class="score-card">
+        <div class="score-range">Band 9</div>
+        <h4>عالی</h4>
+        <ul>
+          <li>پاسخ کامل و دقیق به تمام بخش‌های سوال</li>
+          <li>ایده‌های کاملاً پشتیبانی‌شده</li>
+          <li>ساختار عالی و اتصال بی‌نقص</li>
+          <li>واژگان گسترده و دقیق</li>
+          <li>دستور کامل با انعطاف‌پذیری بالا</li>
+        </ul>
+      </div>
+      <div class="score-card">
+        <div class="score-range">Band 7-8</div>
+        <h4>خوب تا عالی</h4>
+        <ul>
+          <li>پاسخ کامل به تمام بخش‌های سوال</li>
+          <li>ایده‌ها واضح و منطقی</li>
+          <li>استفاده خوب از اتصال‌دهنده‌ها</li>
+          <li>واژگان متنوع با خطاهای جزئی</li>
+          <li>ساختارهای متنوع دستوری</li>
+        </ul>
+      </div>
+      <div class="score-card">
+        <div class="score-range">Band 5-6</div>
+        <h4>متوسط</h4>
+        <ul>
+          <li>پاسخ نسبی به سوال</li>
+          <li>ایده‌ها وجود دارند ولی کامل نیستند</li>
+          <li>ساختار منطقی اما با مشکلاتی</li>
+          <li>واژگان محدودتر</li>
+          <li>ساختارهای ساده‌تر دستوری</li>
+        </ul>
+      </div>
+      <div class="score-card">
+        <div class="score-range">Band 3-4</div>
+        <h4>ضعیف</h4>
+        <ul>
+          <li>پاسخ ناقص یا نامرتبط</li>
+          <li>ایده‌های مبهم و بدون پشتیبانی</li>
+          <li>عدم انسجام در متن</li>
+          <li>واژگان بسیار محدود</li>
+          <li>خطاهای دستوری زیاد</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <div class="interactive-scoring">
+      <h3 style="text-align:center;color:var(--primary);margin-bottom:1rem">🧮 محاسبه‌گر نمره تقریبی</h3>
+      <p style="text-align:center;color:var(--text-light);margin-bottom:1.5rem;font-size:.9rem">نمره هر معیار را با کشیدن اسلایدر مشخص کنید</p>
+      <div class="slider-group">
+        <label>Task Response (پاسخگویی): <span id="val1">6</span></label>
+        <input type="range" min="1" max="9" value="6" oninput="document.getElementById('val1').textContent=this.value; calcBand()">
+      </div>
+      <div class="slider-group">
+        <label>Coherence & Cohesion (انسجام): <span id="val2">6</span></label>
+        <input type="range" min="1" max="9" value="6" oninput="document.getElementById('val2').textContent=this.value; calcBand()">
+      </div>
+      <div class="slider-group">
+        <label>Lexical Resource (واژگان): <span id="val3">6</span></label>
+        <input type="range" min="1" max="9" value="6" oninput="document.getElementById('val3').textContent=this.value; calcBand()">
+      </div>
+      <div class="slider-group">
+        <label>Grammar (دستور زبان): <span id="val4">6</span></label>
+        <input type="range" min="1" max="9" value="6" oninput="document.getElementById('val4').textContent=this.value; calcBand()">
+      </div>
+      <div class="band-display">
+        <div>نمره تقریبی شما:</div>
+        <div class="big-score" id="finalBand">6.0</div>
+        <div style="margin-top:.5rem;font-size:.9rem;opacity:.8">میانگین چهار معیار</div>
+      </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <div class="example-card">
+      <h3>❌ اشتباهات رایج</h3>
+      <table class="criteria-table">
+        <tr><th>اشتباه</th><th>توضیح</th><th>راه‌حل</th></tr>
+        <tr><td>نظر شخصی در Task 1</td><td>نوشتن "I think" در توصیف نمودار</td><td>فقط واقعیات را گزارش کنید</td></tr>
+        <tr><td>کپی کردن سوال</td><td>کلمه به کلمه سوال را نوشتن</td><td>با تغییر لغات بازنویسی کنید</td></tr>
+        <tr><td>عدم نوشتن Overview</td><td>ندانستن مهم‌ترین روندها</td><td>حتماً پاراگراف Overview بنویسید</td></tr>
+        <tr><td>تعداد کلمات کم</td><td>کمتر از حداقل نوشتن</td><td>حداقل ۱۵۰ (T1) یا ۲۵۰ (T2)</td></tr>
+        <tr><td>تکرار لغات</td><td>استفاده مکرر از یک کلمه</td><td>از synonyms استفاده کنید</td></tr>
+        <tr><td>عدم مدیریت زمان</td><td>صرف بیش از حد زمان در Task 1</td><td>۲۰ دقیقه T1 + ۴۰ دقیقه T2</td></tr>
+      </table>
+    </div>
+
+  </section>
+  </div> <!-- end task3-panel -->
+
+</div> <!-- end section/tabs container -->
+
+<footer class="footer">
+  <div class="footer-links">
+    <a href="reading.html">Reading</a>
+    <a href="listening.html">Listening</a>
+    <a href="writing.html">Writing</a>
+    <a href="speaking.html">Speaking</a>
+  </div>
+  <p>© ۲۰۲۶ آیلتس‌پرو | تمامی حقوق محفوظ است</p>
+</footer>
+
+<script>
+function switchTask(num) {
+  document.querySelectorAll('.task-tab').forEach(function(t, i) {
+    t.classList.toggle('active', i === num - 1);
+  });
+  document.getElementById('task1-panel').classList.toggle('active', num === 1);
+  document.getElementById('task2-panel').classList.toggle('active', num === 2);
+  document.getElementById('task3-panel').classList.toggle('active', num === 3);
+}
+function calcBand() {
+  var v1 = parseInt(document.getElementById('val1').textContent);
+  var v2 = parseInt(document.getElementById('val2').textContent);
+  var v3 = parseInt(document.getElementById('val3').textContent);
+  var v4 = parseInt(document.getElementById('val4').textContent);
+  var avg = (v1 + v2 + v3 + v4) / 4;
+  var band = Math.round(avg * 2) / 2;
+  document.getElementById('finalBand').textContent = band.toFixed(1);
+}
+calcBand();
+</script>
+</body>
+</html>

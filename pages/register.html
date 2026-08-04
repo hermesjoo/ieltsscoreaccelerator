@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ورود / ثبت‌نام | IELTS Score Accelerator</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .auth-container { max-width: 450px; margin: 3rem auto; padding: 0 1rem; }
+    .auth-box { background: var(--card); border-radius: var(--radius); padding: 2.5rem; border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+    .auth-tabs { display: flex; margin-bottom: 2rem; border-bottom: 2px solid var(--border); }
+    .auth-tab { flex: 1; padding: 0.8rem; text-align: center; cursor: pointer; font-weight: 600; color: var(--text-light); transition: all 0.2s; border-bottom: 2px solid transparent; margin-bottom: -2px; }
+    .auth-tab.active { color: var(--primary); border-bottom-color: var(--primary); }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label { display: block; font-size: 0.9rem; font-weight: 500; margin-bottom: 0.4rem; color: var(--text-light); }
+    .form-group input, .form-group select { width: 100%; padding: 0.7rem 1rem; border: 2px solid var(--border); border-radius: 8px; font-size: 1rem; transition: border-color 0.2s; direction: rtl; }
+    .form-group input:focus { outline: none; border-color: var(--primary); }
+    .form-group .error { color: #ef4444; font-size: 0.8rem; margin-top: 0.3rem; display: none; }
+    .form-group input.invalid { border-color: #ef4444; }
+    .auth-box .btn { width: 100%; padding: 0.9rem; font-size: 1.1rem; margin-top: 0.5rem; }
+    .auth-box .btn-outline { width: 100%; padding: 0.9rem; font-size: 1rem; margin-top: 0.5rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+    .divider { text-align: center; margin: 1.5rem 0; color: var(--text-light); font-size: 0.85rem; position: relative; }
+    .divider::before, .divider::after { content: ''; position: absolute; top: 50%; width: 40%; height: 1px; background: var(--border); }
+    .divider::before { right: 0; }
+    .divider::after { left: 0; }
+    .success-msg { display: none; text-align: center; padding: 3rem 1rem; }
+    .success-msg .icon { font-size: 3rem; margin-bottom: 1rem; }
+    .success-msg h3 { margin-bottom: 0.5rem; }
+    .success-msg p { color: var(--text-light); }
+    .password-toggle { position: relative; }
+    .password-toggle button { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 1.2rem; }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="../index.html" class="logo"><img src="../images/logo-color.png" alt="IELTS Score Accelerator" style="height:48px"></a>
+  <div class="nav-links">
+    <a href="reading.html">Reading</a>
+    <a href="listening.html">Listening</a>
+    <a href="writing.html">Writing</a>
+    <a href="speaking.html">Speaking</a>
+    <a href="test.html" class="btn btn-outline">آزمون تعیین سطح</a>
+    <a href="register.html" class="btn btn-primary">ورود / ثبت‌نام</a>
+  </div>
+</nav>
+
+<div class="section">
+  <div class="auth-container">
+    <div class="auth-box">
+      <div class="auth-tabs">
+        <div class="auth-tab active" onclick="switchTab('login')">ورود</div>
+        <div class="auth-tab" onclick="switchTab('register')">ثبت‌نام</div>
+      </div>
+
+      <!-- Login Form -->
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label>ایمیل</label>
+          <input type="email" id="loginEmail" placeholder="example@email.com" dir="ltr">
+          <div class="error" id="loginEmailError">ایمیل معتبر وارد کنید</div>
+        </div>
+        <div class="form-group">
+          <label>رمز عبور</label>
+          <div class="password-toggle">
+            <input type="password" id="loginPass" placeholder="رمز عبور" dir="ltr">
+            <button type="button" onclick="togglePass('loginPass')">👁</button>
+          </div>
+          <div class="error" id="loginPassError">رمز عبور الزامی است</div>
+        </div>
+        <button type="submit" class="btn btn-primary">ورود</button>
+        <div class="divider">یا</div>
+        <button type="button" class="btn btn-outline">
+          <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          ورود با گوگل
+        </button>
+      </form>
+
+      <!-- Register Form -->
+      <form id="registerForm" style="display:none" onsubmit="handleRegister(event)">
+        <div class="form-group">
+          <label>نام کامل</label>
+          <input type="text" id="regName" placeholder="نام و نام خانوادگی">
+          <div class="error" id="regNameError">نام الزامی است</div>
+        </div>
+        <div class="form-group">
+          <label>ایمیل</label>
+          <input type="email" id="regEmail" placeholder="example@email.com" dir="ltr">
+          <div class="error" id="regEmailError">ایمیل معتبر وارد کنید</div>
+        </div>
+        <div class="form-group">
+          <label>سطح فعلی IELTS</label>
+          <select id="regLevel">
+            <option value="">انتخاب کنید...</option>
+            <option value="beginner">مبتدی (Band 1-3)</option>
+            <option value="intermediate">متوسط (Band 4-5)</option>
+            <option value="upper">بالاتر از متوسط (Band 5.5-6)</option>
+            <option value="advanced">پیشرفته (Band 6.5+)</option>
+            <option value="unknown">مطمئن نیستم</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>رمز عبور</label>
+          <div class="password-toggle">
+            <input type="password" id="regPass" placeholder="حداقل ۸ کاراکتر" dir="ltr">
+            <button type="button" onclick="togglePass('regPass')">👁</button>
+          </div>
+          <div class="error" id="regPassError">رمز عبور حداقل ۸ کاراکتر باشد</div>
+        </div>
+        <div class="form-group">
+          <label>تکرار رمز عبور</label>
+          <div class="password-toggle">
+            <input type="password" id="regPassConfirm" placeholder="تکرار رمز" dir="ltr">
+            <button type="button" onclick="togglePass('regPassConfirm')">👁</button>
+          </div>
+          <div class="error" id="regPassConfirmError">رمزها مطابقت ندارند</div>
+        </div>
+        <button type="submit" class="btn btn-primary">ثبت‌نام</button>
+        <div class="divider">یا</div>
+        <button type="button" class="btn btn-outline">
+          <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          ثبت‌نام با گوگل
+        </button>
+      </form>
+
+      <!-- Success -->
+      <div class="success-msg" id="successMsg">
+        <div class="icon">🎉</div>
+        <h3 id="successTitle"></h3>
+        <p id="successText"></p>
+        <br>
+        <a href="../index.html" class="btn btn-primary">بازگشت به صفحه اصلی</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function switchTab(tab) {
+  document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+  if(tab === 'login') {
+    document.querySelectorAll('.auth-tab')[0].classList.add('active');
+    document.getElementById('loginForm').style.display = 'block';
+    document.getElementById('registerForm').style.display = 'none';
+  } else {
+    document.querySelectorAll('.auth-tab')[1].classList.add('active');
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('registerForm').style.display = 'block';
+  }
+  document.getElementById('successMsg').style.display = 'none';
+}
+
+function togglePass(id) {
+  const input = document.getElementById(id);
+  input.type = input.type === 'password' ? 'text' : 'password';
+}
+
+function showError(id) { document.getElementById(id).style.display = 'block'; }
+function hideError(id) { document.getElementById(id).style.display = 'none'; }
+
+function handleLogin(e) {
+  e.preventDefault();
+  let valid = true;
+  const email = document.getElementById('loginEmail').value;
+  const pass = document.getElementById('loginPass').value;
+  
+  hideError('loginEmailError'); hideError('loginPassError');
+  
+  if(!email || !email.includes('@')) { showError('loginEmailError'); valid = false; }
+  if(!pass) { showError('loginPassError'); valid = false; }
+  
+  if(valid) {
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('registerForm').style.display = 'none';
+    document.getElementById('successMsg').style.display = 'block';
+    document.getElementById('successTitle').textContent = 'ورود موفق!';
+    document.getElementById('successText').textContent = 'خوش آمدید! در حال انتقال به داشبورد...';
+  }
+}
+
+function handleRegister(e) {
+  e.preventDefault();
+  let valid = true;
+  const name = document.getElementById('regName').value;
+  const email = document.getElementById('regEmail').value;
+  const pass = document.getElementById('regPass').value;
+  const confirm = document.getElementById('regPassConfirm').value;
+  
+  ['regNameError','regEmailError','regPassError','regPassConfirmError'].forEach(hideError);
+  
+  if(!name) { showError('regNameError'); valid = false; }
+  if(!email || !email.includes('@')) { showError('regEmailError'); valid = false; }
+  if(!pass || pass.length < 8) { showError('regPassError'); valid = false; }
+  if(pass !== confirm) { showError('regPassConfirmError'); valid = false; }
+  
+  if(valid) {
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('registerForm').style.display = 'none';
+    document.getElementById('successMsg').style.display = 'block';
+    document.getElementById('successTitle').textContent = 'ثبت‌نام موفق!';
+    document.getElementById('successText').textContent = 'حساب شما ساخته شد! ایمیل تأیید ارسال شد.';
+  }
+}
+</script>
+
+<footer class="footer">
+  <p>© ۲۰۲۶ IELTS Score Accelerator | تمامی حقوق محفوظ است</p>
+</footer>
+
+</body>
+</html>

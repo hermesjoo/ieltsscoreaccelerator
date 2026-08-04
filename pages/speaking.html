@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IELTS Speaking | آیلتس‌پرو</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .page-hero{background:linear-gradient(135deg,#831843 0%,#ec4899 60%,#f472b6 100%);padding:4rem 2rem;text-align:center;color:#fff}
+    .page-hero h1{font-size:2.4rem;font-weight:800;margin-bottom:.5rem}
+    .page-hero p{font-size:1.1rem;opacity:.9}
+    .part-tabs{display:flex;justify-content:center;gap:1rem;margin:-1.5rem auto 2rem;position:relative;z-index:10;flex-wrap:wrap}
+    .part-tab{padding:.8rem 1.8rem;border-radius:10px;font-weight:700;font-size:.95rem;cursor:pointer;border:2px solid var(--border);background:var(--card);color:var(--text-light);transition:all .3s}
+    .part-tab.active,.part-tab:hover{background:#ec4899;color:#fff;border-color:#ec4899}
+    .part-panel{display:none}.part-panel.active{display:block}
+    .example-card{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:2rem;margin-bottom:2rem;box-shadow:0 2px 12px rgba(0,0,0,.05)}
+    .example-card h3{font-size:1.2rem;color:var(--primary);margin-bottom:1rem;border-bottom:2px solid #fce7f3;padding-bottom:.5rem}
+    .band-label{display:inline-block;background:#ec4899;color:#fff;padding:.2rem .8rem;border-radius:20px;font-size:.8rem;margin-bottom:.5rem}
+    .sample-answer{background:#fdf2f8;border-right:4px solid #ec4899;padding:1.5rem;border-radius:0 8px 8px 0;margin:1rem 0;line-height:2;font-size:.95rem}
+    .question-list{margin:1rem 0}
+    .question-item{background:#fdf2f8;border:1px solid #fbcfe8;border-radius:8px;padding:1rem 1.2rem;margin-bottom:.8rem}
+    .question-item strong{color:#9d174d}
+    .question-item .answer{margin-top:.8rem;padding-top:.8rem;border-top:1px dashed #f9a8d4;font-size:.9rem;color:#4a1942}
+    .tip-box{background:#fffbeb;border:1px solid #fcd34d;border-radius:8px;padding:1.2rem;margin:1rem 0}
+    .tip-box h4{color:#b45309;margin-bottom:.5rem;font-size:1rem}
+    .tip-box ul{padding-right:1.2rem}.tip-box li{margin-bottom:.3rem;font-size:.9rem;color:#78350f}
+    .template-box{background:#ecfdf5;border:1px solid #6ee7b7;border-radius:8px;padding:1.2rem;margin:1rem 0}
+    .template-box h4{color:#065f46;margin-bottom:.5rem}
+    .template-box p{font-size:.9rem;color:#064e3b;line-height:1.8}
+    .info-box{background:#eff6ff;border:1px solid #93c5fd;border-radius:8px;padding:1.2rem;margin:1rem 0}
+    .info-box h4{color:#1e40af;margin-bottom:.5rem}
+    .info-box p,.info-box li{font-size:.9rem;color:#1e3a5f;line-height:1.8}
+    .info-box ul{padding-right:1.2rem}.info-box li{margin-bottom:.3rem}
+    .vocab-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.8rem;margin:1rem 0}
+    .vocab-item{background:#fdf2f8;border:1px solid #fbcfe8;border-radius:8px;padding:.8rem;font-size:.9rem}
+    .vocab-item strong{color:#9d174d}.vocab-item span{color:#6b7280;font-size:.85rem;display:block;margin-top:.2rem}
+    .timer-box{display:flex;gap:1rem;justify-content:center;margin:1rem 0;flex-wrap:wrap}
+    .timer-item{text-align:center;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.5rem}
+    .timer-item .time{font-size:1.5rem;font-weight:700;color:#ec4899}
+    .timer-item .label{font-size:.8rem;color:var(--text-light)}
+    .section-divider{border:none;border-top:2px dashed var(--border);margin:3rem 0}
+    .fill-blank{background:#fce7f3;padding:2px 8px;border-radius:4px;font-weight:600;color:#9d174d;cursor:pointer}
+    .fill-blank.revealed{background:#d1fae5;color:#065f46}
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="../index.html" class="logo">آیلتس<span>پرو</span></a>
+  <div class="nav-links">
+    <a href="reading.html">Reading</a>
+    <a href="listening.html">Listening</a>
+    <a href="writing.html">Writing</a>
+    <a href="speaking.html">Speaking</a>
+    <a href="test.html" class="btn btn-outline">آزمون تعیین سطح</a>
+    <a href="register.html" class="btn btn-primary">ورود / ثبت‌نام</a>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <h1>🗣️ IELTS Speaking</h1>
+  <p>سوالات رایج هر پارت، نمونه پاسخ‌ها، واژگان پرکاربرد و تکنیک‌های موفقیت</p>
+</section>
+
+<div class="section">
+  <div class="part-tabs">
+    <div class="part-tab active" onclick="switchPart(1)">Part 1 — مصاحبه</div>
+    <div class="part-tab" onclick="switchPart(2)">Part 2 — سخنرانی</div>
+    <div class="part-tab" onclick="switchPart(3)">Part 3 — بحث</div>
+    <div class="part-tab" onclick="switchPart(4)">نکات کلی</div>
+  </div>
+
+  <!-- ==================== PART 1 PANEL ==================== -->
+  <div class="part-panel active" id="part1-panel">
+    <section class="section" style="padding-top:1rem">
+      <h2 class="section-title">Part 1 — مصاحبه شخصی</h2>
+      <p class="section-subtitle">۴-۵ دقیقه • سوالات ساده درباره زندگی روزمره</p>
+
+      <div class="timer-box">
+        <div class="timer-item"><div class="time">۴-۵</div><div class="label">دقیقه</div></div>
+        <div class="timer-item"><div class="time">۱۰-۱۲</div><div class="label">سوال</div></div>
+        <div class="timer-item"><div class="time">۱۵-۳۰</div><div class="label">ثانیه پاسخ</div></div>
+      </div>
+
+      <div class="tip-box">
+        <h4>💡 نکات کلیدی Part 1</h4>
+        <ul>
+          <li>پاسخ‌های کوتاه اما کامل بدهید (۲-۳ جمله)</li>
+          <li>به سوال مستقیماً جواب بدهید، سپس توضیح دهید</li>
+          <li>از لغات متنوع استفاده کنید (جایگزین "I like")</li>
+          <li>طبیعی صحبت کنید — نه خیلی رسمی، نه خیلی عامیانه</li>
+          <li>اگر سوال را متوجه نشدید، بپرسید: "Sorry, could you repeat that?"</li>
+        </ul>
+      </div>
+
+      <div class="template-box">
+        <h4>📝 ساختار پاسخ Part 1</h4>
+        <p>
+          <strong>بله/خیر + توضیح + مثال:</strong><br>
+          "Yes, absolutely. I'm really into… For instance, I usually…"<br><br>
+          <strong>نه + توضیح + جایگزین:</strong><br>
+          "Not particularly, to be honest. I'd rather… because…"
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- PART 1 QUESTIONS: HOME -->
+      <div class="example-card">
+        <h3>🏠 خانه و محل زندگی (Home & Hometown)</h3>
+        <div class="question-list">
+          <div class="question-item">
+            <strong>Q: Do you live in a house or an apartment?</strong>
+            <div class="answer">
+              <strong>Sample:</strong> I currently live in a modern apartment in the city centre. It's a two-bedroom flat with a balcony that overlooks a small park. I chose it mainly because of its convenient location — it's just a five-minute walk from my office, which saves me a lot of commuting time.
+            </div>
+          </div>
+          <div class="question-item">
+            <strong>Q: What do you like most about your hometown?</strong>
+            <div class="answer">
+              <strong>Sample:</strong> What I love most about my hometown is its vibrant food scene. There's an incredible variety of restaurants, from traditional street food stalls to high-end dining. I'm particularly fond of the night market near the river, where you can try dozens of local delicacies at very reasonable prices.
+            </div>
+          </div>
+          <div class="question-item">
+            <strong>Q: Is there anything you would like to change about your home?</strong>
+            <div class="answer">
+              <strong>Sample:</strong> If I had the chance, I'd definitely love to have a bigger kitchen. The one I have now is quite compact, which makes it challenging when I try to cook elaborate meals. I'm quite passionate about cooking, so having more counter space and modern appliances would be a dream come true.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PART 1 QUESTIONS: WORK/STUDY -->
+      <div class="example-card">
+        <h3>💼 کار و تحصیل (Work & Study)</h3>
+        <div class="question-list">
+          <div class="question-item">
+            <strong>Q: Do you work or study?</strong>
+            <div class="answer">
+              <strong>Sample:</strong> I'm currently pursuing a master's degree in computer science at a university in Tehran. I chose this field because I've always been fascinated by how technology can solve real-world problems. This semester, I'm particularly enjoying a course on artificial intelligence, which has been both challenging and rewarding.
+            </div>
+          </div>
+          <div class="question-item">
+            <strong>Q: What do you do for work?</strong>
+            <div class="answer">
+              <strong>Sample:</strong> I work as a software engineer at a tech startup. My main responsibility is developing mobile applications. What I find most fulfilling is collaborating with a talented team of designers and developers to create products that genuinely improve people's daily lives. The work can be demanding, but it's incredibly stimulating.
+            </div>
+          </div>
+          <div class="question-item">
+            <strong>Q: Do you enjoy your job/studies?</strong>
+            <div class="answer">
+              <strong>Sample:</strong> Absolutely, I find my studies thoroughly engaging. What keeps me motivated is the diversity of topics we cover — one week it's machine learning algorithms, the next it's software architecture. The professors are also very approachable and encourage independent thinking, which I really appreciate.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PART 1 QUESTIONS: HOBBIES -->
+      <div class="example-card">
+        <h3>🎮 سرگرمی‌ها (Hobbies & Free Time)</h3>
+        <div class="question-list">
+          <div class="question-item">
+            <strong>Q: What do you do in your free time?</strong>
+            <div class="answer">
+              <strong>Sample:</strong> In my spare time, I'm quite keen on reading, especially non-fiction books about history and psychology. I also enjoy going for long walks in nature — there's a beautiful trail near my house that follows a river. It's a great way to clear my mind after a busy week.
+            </div>
+          </div>
+          <div class="question-item">
+            <strong>Q: Do you prefer spending time alone or with friends?</strong>
+            <div class="answer">
+              <strong>Sample:</strong> I'd say it depends on my mood. Generally, I'm more of an introvert, so I tend to recharge by spending time alone — perhaps reading or watching documentaries. However, I do value quality time with close friends, especially when we share a common interest like playing board games or discussing films.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- PART 1 VOCABULARY -->
+      <div class="example-card">
+        <h3>📖 واژگان کلیدی Part 1</h3>
+        <h4 style="margin:1rem 0 .5rem;color:#9d174d">جایگزین‌های "I like"</h4>
+        <div class="vocab-grid">
+          <div class="vocab-item"><strong>I'm really into</strong> <span>خیلی علاقه‌مندم به</span></div>
+          <div class="vocab-item"><strong>I'm fond of</strong> <span>عاشق هستم</span></div>
+          <div class="vocab-item"><strong>I'm keen on</strong> <span>علاقه زیادی دارم</span></div>
+          <div class="vocab-item"><strong>I'm passionate about</strong> <span>مشتاقانه علاقه‌مندم</span></div>
+          <div class="vocab-item"><strong>I'm into</strong> <span>علاقه‌مندم به</span></div>
+          <div class="vocab-item"><strong>I'm drawn to</strong> <span>جذبم می‌کند</span></div>
+        </div>
+        <h4 style="margin:1rem 0 .5rem;color:#9d174d">جایگزین‌های "I don't like"</h4>
+        <div class="vocab-grid">
+          <div class="vocab-item"><strong>I'm not really into</strong> <span>خیلی علاقه ندارم</span></div>
+          <div class="vocab-item"><strong>It's not really my thing</strong> <span>سبک من نیست</span></div>
+          <div class="vocab-item"><strong>I'm not particularly fond of</strong> <span>علاقه خاصی ندارم</span></div>
+          <div class="vocab-item"><strong>I'd rather not</strong> <span>ترجیح می‌دهم نه</span></div>
+        </div>
+        <h4 style="margin:1rem 0 .5rem;color:#9d174d">اتصال‌دهنده‌ها</h4>
+        <div class="vocab-grid">
+          <div class="vocab-item"><strong>Actually</strong> <span>در واقع</span></div>
+          <div class="vocab-item"><strong>To be honest</strong> <span>صادقانه بگم</span></div>
+          <div class="vocab-item"><strong>On top of that</strong> <span>علاوه بر این</span></div>
+          <div class="vocab-item"><strong>Having said that</strong> <span>با این حال</span></div>
+        </div>
+      </div>
+    </section>
+  </div> <!-- end part1-panel -->
+
+  <!-- ==================== PART 2 PANEL ==================== -->
+  <div class="part-panel" id="part2-panel">
+    <section class="section" style="padding-top:1rem">
+      <h2 class="section-title">Part 2 — سخنرانی طولانی (Cue Card)</h2>
+      <p class="section-subtitle">۱ دقیقه آماده‌سازی + ۲ دقیقه صحبت</p>
+
+      <div class="timer-box">
+        <div class="timer-item"><div class="time">۱</div><div class="label">دقیقه آماده</div></div>
+        <div class="timer-item"><div class="time">۲</div><div class="label">دقیقه صحبت</div></div>
+        <div class="timer-item"><div class="time">۴</div><div class="label">سوال</div></div>
+      </div>
+
+      <div class="tip-box">
+        <h4>💡 نکات کلیدی Part 2</h4>
+        <ul>
+          <li>از ۱ دقیقه آماده‌سازی نهایت استفاده را ببرید — نکات کلیدی را یادداشت کنید</li>
+          <li>از همه ۴ سوال روی کارت پاسخ دهید</li>
+          <li>حداقل ۱.۵ دقیقه صحبت کنید</li>
+          <li>از کلمات ربط استفاده کنید تا صحبت روان‌تر شود</li>
+          <li>اگر متوقف شدید، از عباراتی مثل "Let me think…" استفاده کنید</li>
+        </ul>
+      </div>
+
+      <div class="template-box">
+        <h4>📝 ساختار پاسخ Part 2</h4>
+        <p>
+          <strong>معرفی (۱۰ ثانیه):</strong> "I'd like to talk about…"<br>
+          <strong>سوال ۱ (۱۵ ثانیه):</strong> What/Who — توضیح اصلی<br>
+          <strong>سوال ۲ (۲۰ ثانیه):</strong> Where/When — جزئیات مکان و زمان<br>
+          <strong>سوال ۳ (۳۰ ثانیه):</strong> Why/How — دلیل و توضیح<br>
+          <strong>سوال ۴ (۲۰ ثانیه):</strong> How you feel — احساسات و تجربه<br>
+          <strong>جمع‌بندی (۱۰ ثانیه):</strong> "Overall, it was a wonderful…"
+        </p>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- CUE CARD 1 -->
+      <div class="example-card">
+        <span class="band-label">نمونه Cue Card — Band 8.0</span>
+        <h3> Describe a place you would like to visit</h3>
+        <div style="background:#fdf2f8;border:2px solid #f9a8d4;border-radius:12px;padding:1.5rem;margin:1rem 0">
+          <p style="font-weight:700;color:#9d174d;margin-bottom:.5rem">You should say:</p>
+          <ul style="padding-right:1.2rem;color:#4a1942">
+            <li>• where it is</li>
+            <li>• how you learned about it</li>
+            <li>• what you would do there</li>
+            <li>• and explain why you would like to visit this place</li>
+          </ul>
+        </div>
+        <div class="sample-answer">
+          <p><strong>Introduction:</strong> I'd like to talk about Japan, which has been at the top of my travel bucket list for years. More specifically, I'm dreaming of visiting Kyoto, the ancient capital known for its stunning temples and traditional culture.</p>
+          <p><strong>Where it is:</strong> Kyoto is located in the Kansai region of Japan, and it's famous for being one of the best-preserved cities in the country. Unlike the ultra-modern Tokyo, Kyoto is renowned for its classical Buddhist temples, as well as its beautiful gardens and traditional wooden houses.</p>
+          <p><strong>How I learned about it:</strong> I first became interested in Kyoto after watching a documentary about cherry blossom season. The images of pink petals falling along the Philosopher's Path were absolutely mesmerising. Since then, I've been reading extensively about Japanese culture and history.</p>
+          <p><strong>What I would do there:</strong> I'd love to visit the iconic Fushimi Inari Shrine with its thousands of vermillion torii gates. I'd also like to explore the bamboo grove in Arashiyama and perhaps attend a traditional tea ceremony. Additionally, I'm really keen on trying authentic Japanese cuisine, especially Kyoto-style kaiseki dining.</p>
+          <p><strong>Why I'd like to visit:</strong> What draws me most to Kyoto is its unique blend of ancient tradition and natural beauty. I think experiencing such a culturally rich environment firsthand would be incredibly enriching and would give me a deeper appreciation for Japanese philosophy and aesthetics.</p>
+        </div>
+      </div>
+
+      <!-- CUE CARD 2 -->
+      <div class="example-card">
+        <span class="band-label">نمونه Cue Card — Band 7.5</span>
+        <h3> Describe a skill you would like to learn</h3>
+        <div style="background:#fdf2f8;border:2px solid #f9a8d4;border-radius:12px;padding:1.5rem;margin:1rem 0">
+          <p style="font-weight:700;color:#9d174d;margin-bottom:.5rem">You should say:</p>
+          <ul style="padding-right:1.2rem;color:#4a1942">
+            <li>• what the skill is</li>
+            <li>• how you would learn it</li>
+            <li>• how long it would take</li>
+            <li>• and explain why you want to learn this skill</li>
+          </ul>
+        </div>
+        <div class="sample-answer">
+          <p><strong>Introduction:</strong> A skill I'd really love to develop is playing the piano. I've always admired people who can produce beautiful music with their fingers, and I think it would be a wonderful addition to my life.</p>
+          <p><strong>What the skill is:</strong> Playing the piano involves reading sheet music and coordinating both hands to create melodies and harmonies. It requires patience, practice, and a good sense of rhythm.</p>
+          <p><strong>How I'd learn it:</strong> I'd probably start by enrolling in a music school or finding a qualified tutor who can guide me through the basics. There are also excellent online platforms like Simply Piano that could supplement my learning.</p>
+          <p><strong>How long:</strong> I imagine it would take at least a year of regular practice — perhaps three or four sessions per week — to reach a decent level where I could play simple classical pieces.</p>
+          <p><strong>Why:</strong> Beyond the obvious enjoyment of making music, I believe learning piano would enhance my cognitive abilities and serve as a fantastic stress reliever after a long day at work.</p>
+        </div>
+      </div>
+    </section>
+  </div> <!-- end part2-panel -->

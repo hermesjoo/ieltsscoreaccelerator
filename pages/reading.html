@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IELTS Reading | تمرین ریدینگ آیلتس</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    /* ===== Page Header ===== */
+    .page-header {
+      background: linear-gradient(135deg, #1e3a5f, #2563eb);
+      color: #fff;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    .page-header h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
+    .page-header p { opacity: 0.9; font-size: 1.1rem; }
+
+    /* ===== Timer & Progress Bar ===== */
+    .quiz-toolbar {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      display: none;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 56px;
+      z-index: 55;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    .quiz-toolbar.visible { display: flex; }
+    .timer-display {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .timer-display.warning { color: #ef4444; animation: pulse 1s infinite; }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    .timer-icon { font-size: 1.4rem; }
+    .global-progress {
+      flex: 1;
+      max-width: 400px;
+      min-width: 150px;
+    }
+    .global-progress .label-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--text-light);
+      margin-bottom: 0.3rem;
+    }
+    .global-progress .bar-track {
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .global-progress .bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--success));
+      border-radius: 4px;
+      transition: width 0.4s ease;
+      width: 0%;
+    }
+    .toolbar-actions { display: flex; gap: 0.5rem; }
+    .toolbar-actions .btn { font-size: 0.85rem; padding: 0.4rem 1rem; }
+
+    /* ===== Passage Navigation ===== */
+    .passage-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      padding: 1.5rem 2rem;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 56px;
+      z-index: 50;
+    }
+    .passage-btn {
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      border: 2px solid var(--border);
+      background: #fff;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+    .passage-btn:hover { border-color: var(--primary); color: var(--primary); }
+    .passage-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .passage-btn.completed { border-color: var(--success); color: var(--success); background: #f0fdf4; }
+    .passage-btn.completed.active { background: var(--success); color: #fff; }
+
+    /* ===== Quiz Container ===== */
+    .quiz-container {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+
+    /* ===== Passage Card ===== */
+    .passage-card {
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      margin-bottom: 2rem;
+      border: 1px solid var(--border);
+      display: none;
+    }
+    .passage-card.active { display: block; }
+    .passage-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--primary);
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .passage-title { font-size: 1.4rem; font-weight: 700; color: var(--primary); }
+    .passage-difficulty {
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .diff-easy { background: #d1fae5; color: #065f46; }
+    .diff-medium { background: #fef3c7; color: #92400e; }
+    .diff-hard { background: #fee2e2; color: #991b1b; }
+
+    /* ===== Passage Text ===== */
+    .passage-text {
+      background: #f1f5f9;
+      padding: 1.5rem;
+      border-radius: 8px;
+      line-height: 2;
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      white-space: pre-wrap;
+      text-align: justify;
+      border-right: 4px solid var(--primary);
+      font-family: 'Georgia', 'Times New Roman', serif;
+      color: #334155;
+    }
+    .passage-paragraph {
+      margin-bottom: 1rem;
+    }
+    .passage-paragraph:last-child { margin-bottom: 0; }
+
+    /* ===== Section Divider ===== */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    .section-divider::before,
+    .section-divider::after {
+      content: '';
+      flex: 1;
+      height: 2px;
+      background: var(--border);
+    }
+    .section-divider span {
+      font-weight: 700;
+      color: var(--primary);
+      white-space: nowrap;
+    }
+
+    /* ===== Questions Section ===== */
+    .questions-section { margin-top: 1.5rem; }
+    .questions-section h3 {
+      font-size: 1.2rem;
+      color: var(--text);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--accent);
+      display: inline-block;
+    }
+    .question-block {
+      margin-bottom: 1.5rem;
+      padding: 1.2rem;
+      background: #fafbfc;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      transition: all 0.3s;
+    }
+    .question-block.correct {
+      border-color: var(--success);
+      background: #f0fdf4;
+    }
+    .question-block.incorrect {
+      border-color: #ef4444;
+      background: #fef2f2;
+    }
+    .question-block.unanswered {
+      border-color: #f59e0b;
+      background: #fffbeb;
+    }
+    .question-text {
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+    .question-type {
+      display: inline-block;
+      padding: 0.15rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .type-tf { background: #dbeafe; color: #1e40af; }
+    .type-mc { background: #fce7f3; color: #9d174d; }
+    .type-mh { background: #e0e7ff; color: #3730a3; }
+    .type-fb { background: #d1fae5; color: #065f46; }
+
+    /* ===== Options List ===== */
+    .options-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .options-list label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1rem;
+      background: #fff;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .options-list label:hover {
+      border-color: var(--primary);
+      background: #f0f7ff;
+    }
+    .options-list input[type="radio"] {
+      accent-color: var(--primary);
+      width: 18px;
+      height: 18px;
+    }
+    .options-list label.selected { border-color: var(--primary); background: #eff6ff; }
+    .options-list label.show-correct { border-color: var(--success); background: #f0fdf4; }
+    .options-list label.show-incorrect {
+      border-color: #ef4444;
+      background: #fef2f2;
+      text-decoration: line-through;
+      opacity: 0.7;
+    }
+
+    /* ===== Fill-in-the-blank ===== */
+    .fill-input {
+      padding: 0.5rem 1rem;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 1rem;
+      width: 100%;
+      max-width: 300px;
+      font-family: inherit;
+      transition: border-color 0.2s;
+      direction: ltr;
+      text-align: left;
+    }
+    .fill-input:focus { outline: none; border-color: var(--primary); }
+    .fill-input.show-correct { border-color: var(--success); background: #f0fdf4; }
+    .fill-input.show-incorrect { border-color: #ef4444; background: #fef2f2; }
+
+    /* ===== Matching Headings Select ===== */
+    .mh-select {
+      padding: 0.5rem 1rem;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: inherit;
+      background: #fff;
+      cursor: pointer;
+      min-width: 200px;
+    }
+    .mh-select:focus { outline: none; border-color: var(--primary); }
+    .mh-select.show-correct { border-color: var(--success); background: #f0fdf4; }
+    .mh-select.show-incorrect { border-color: #ef4444; background: #fef2f2; }
+
+    /* ===== Answer / Explanation ===== */
+    .correct-answer {
+      display: none;
+      margin-top: 0.7rem;
+      padding: 0.7rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+    .correct-answer.visible { display: block; }
+    .correct-answer.is-correct {
+      background: #f0fdf4;
+      color: #065f46;
+      border: 1px solid #bbf7d0;
+    }
+    .correct-answer.is-incorrect {
+      background: #fef2f2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+    }
+    .correct-answer.is-unanswered {
+      background: #fffbeb;
+      color: #92400e;
+      border: 1px solid #fde68a;
+    }
+    .explanation {
+      display: block;
+      margin-top: 0.4rem;
+      font-size: 0.85rem;
+      color: var(--text-light);
+      font-style: italic;
+      border-top: 1px solid rgba(0,0,0,0.1);
+      padding-top: 0.4rem;
+      margin-top: 0.5rem;
+    }
+
+    /* ===== Quiz Actions ===== */
+    .quiz-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+    }
+
+    /* ===== Score Panel ===== */
+    .score-panel {
+      background: linear-gradient(135deg, #1e3a5f, #2563eb);
+      color: #fff;
+      padding: 2.5rem;
+      border-radius: var(--radius);
+      text-align: center;
+      margin: 2rem 0;
+      display: none;
+    }
+    .score-panel.visible { display: block; }
+    .score-panel h2 { font-size: 1.8rem; margin-bottom: 1rem; }
+    .score-number { font-size: 4rem; font-weight: 800; margin: 1rem 0; }
+    .band-display {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0.5rem 0;
+      opacity: 0.9;
+    }
+    .score-details {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .score-item { text-align: center; }
+    .score-item .num { font-size: 1.5rem; font-weight: 700; }
+    .score-item .lbl { font-size: 0.85rem; opacity: 0.8; }
+    .score-panel .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 4px;
+      margin-top: 1.5rem;
+      overflow: hidden;
+    }
+    .score-panel .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 4px;
+      transition: width 1s ease;
+    }
+
+    /* ===== Per-Passage Score ===== */
+    .passage-score-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin: 1rem 0;
+      padding: 0.75rem 1rem;
+      background: #f8fafc;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    .passage-score-bar .label { font-size: 0.85rem; font-weight: 600; min-width: 80px; }
+    .passage-score-bar .mini-bar {
+      flex: 1;
+      height: 6px;
+      background: #e2e8f0;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .passage-score-bar .mini-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.6s ease;
+    }
+    .passage-score-bar .score-text {
+      font-size: 0.85rem;
+      font-weight: 700;
+      min-width: 40px;
+      text-align: center;
+    }
+
+    /* ===== Review Mode ===== */
+    .review-header {
+      text-align: center;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, #065f46, #10b981);
+      border-radius: var(--radius);
+      color: #fff;
+    }
+    .review-header h2 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+
+    /* ===== Question Number Badge ===== */
+    .q-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-left: 0.5rem;
+      flex-shrink: 0;
+    }
+    .q-number.correct { background: var(--success); color: #fff; }
+    .q-number.incorrect { background: #ef4444; color: #fff; }
+    .q-number.unanswered { background: #f59e0b; color: #fff; }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 768px) {
+      .passage-nav { top: 56px; padding: 1rem; }
+      .passage-card { padding: 1.2rem; }
+      .passage-text { padding: 1rem; font-size: 0.95rem; }
+      .passage-meta { flex-direction: column; gap: 0.5rem; }
+      .quiz-toolbar { top: 56px; padding: 0.75rem 1rem; }
+      .score-number { font-size: 3rem; }
+      .score-details { gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar">
+  <a href="../index.html" class="logo">آیلتس<span>پرو</span></a>
+  <div class="nav-links">
+    <a href="reading.html">Reading</a>
+    <a href="listening.html">Listening</a>
+    <a href="writing.html">Writing</a>
+    <a href="speaking.html">Speaking</a>
+    <a href="test.html" class="btn btn-outline">آزمون تعیین سطح</a>
+    <a href="register.html" class="btn btn-primary">ورود / ثبت‌نام</a>
+  </div>
+</nav>
+
+<!-- ===== PAGE HEADER ===== -->
+<div class="page-header">
+  <h1>📖 تمرین Reading آیلتس</h1>
+  <p>۱۰ متن تمرینی حرفه‌ای با انواع سوالات — True/False/Not Given, Multiple Choice, Matching Headings, Fill-in-the-blank</p>
+</div>
+
+<!-- ===== TIMER & GLOBAL PROGRESS TOOLBAR ===== -->
+<div class="quiz-toolbar" id="quizToolbar">
+  <div class="timer-display" id="timerDisplay">
+    <span class="timer-icon">⏱️</span>
+    <span id="timerText">۶۰:۰۰</span>
+  </div>
+  <div class="global-progress">
+    <div class="label-row">
+      <span id="answeredLabel">پاسخ داده شده: ۰/۵۰</span>
+      <span id="scoreLabel">امتیاز: ۰</span>
+    </div>
+    <div class="bar-track">
+      <div class="bar-fill" id="globalBarFill"></div>
+    </div>
+  </div>
+  <div class="toolbar-actions">
+    <button class="btn btn-primary" onclick="checkAllAnswers()">✅ بررسی</button>
+    <button class="btn btn-outline" onclick="showCorrectAnswers()">👁️ پاسخ صحیح</button>
+    <button class="btn btn-accent" onclick="resetQuiz()">🔄 شروع مجدد</button>
+  </div>
+</div>
+
+<!-- ===== PASSAGE NAVIGATION ===== -->
+<div class="passage-nav" id="passageNav">
+  <button class="passage-btn active" onclick="showPassage(0)" data-idx="0">۱. تغییرات اقلیمی</button>
+  <button class="passage-btn" onclick="showPassage(1)" data-idx="1">۲. هوش مصنوعی در آموزش</button>
+  <button class="passage-btn" onclick="showPassage(2)" data-idx="2">۳. برنامه‌ریزی شهری</button>
+  <button class="passage-btn" onclick="showPassage(3)" data-idx="3">۴. اکتشاف فضا</button>
+  <button class="passage-btn" onclick="showPassage(4)" data-idx="4">۵. حفاظت اقیانوس</button>
+  <button class="passage-btn" onclick="showPassage(5)" data-idx="5">۶. تمدن‌های باستان</button>
+  <button class="passage-btn" onclick="showPassage(6)" data-idx="6">۷. سلامت روان</button>
+  <button class="passage-btn" onclick="showPassage(7)" data-idx="7">۸. انرژی تجدیدپذیر</button>
+  <button class="passage-btn" onclick="showPassage(8)" data-idx="8">۹. میراث فرهنگی</button>
+  <button class="passage-btn" onclick="showPassage(9)" data-idx="9">۱۰. امنیت غذایی</button>
+</div>
+
+<!-- ===== QUIZ CONTAINER ===== -->
+<div class="quiz-container" id="quizContainer"></div>
+
+<!-- ===== SCORE PANEL ===== -->
+<div class="quiz-container">
+  <div class="score-panel" id="scorePanel">
+    <h2>📊 نتیجه نهایی شما</h2>
+    <div class="score-number" id="scoreNumber">۰/۵۰</div>
+    <div class="band-display" id="bandDisplay"></div>
+    <div class="progress-bar" style="background:rgba(255,255,255,0.2)">
+      <div class="progress-fill" id="scoreProgressFill" style="width:0%"></div>
+    </div>
+    <div class="score-details">
+      <div class="score-item"><div class="num" id="correctCount">۰</div><div class="lbl">صحیح ✓</div></div>
+      <div class="score-item"><div class="num" id="incorrectCount">۰</div><div class="lbl">نادرست ✗</div></div>
+      <div class="score-item"><div class="num" id="unansweredCount">۵۰</div><div class="lbl">بی‌پاسخ</div></div>
+    </div>
+    <!-- Per-passage breakdown -->
+    <div id="passageBreakdown" style="margin-top:1.5rem; text-align:right;"></div>
+  </div>
+
+  <div class="quiz-actions" id="quizActions">
+    <button class="btn btn-primary" onclick="checkAllAnswers()">✅ بررسی پاسخ‌ها</button>
+    <button class="btn btn-outline" onclick="showCorrectAnswers()">👁️ نمایش پاسخ صحیح</button>
+    <button class="btn btn-accent" onclick="resetQuiz()">🔄 شروع مجدد</button>
+    <button class="btn btn-primary" onclick="toggleReviewMode()" id="reviewBtn" style="display:none;">📋 مرور سوال به سوال</button>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer-links">
+    <a href="reading.html">Reading</a>
+    <a href="listening.html">Listening</a>
+    <a href="writing.html">Writing</a>
+    <a href="speaking.html">Speaking</a>
+  </div>
+  <p>© ۲۰۲۶ آیلتس‌پرو | تمامی حقوق محفوظ است</p>
+</footer>
+
+<script>
+// ======================================================================
+// IELTS READING QUIZ ENGINE — Production-Quality
+// ======================================================================
+
+// ----- PASSAGE DATA -----
+const passages = [
+  {
+    id: 0,
+    title: 'Climate Change and Coastal Communities',
+    emoji: '🌍',
+    topicFA: 'تغییرات اقلیمی',
+    difficulty: 'medium',
+    difficultyFA: 'متوسط',
+    text: [
+      "Climate change poses an existential threat to coastal communities worldwide. Rising sea levels, driven by thermal expansion of ocean water and the melting of polar ice sheets, are reshaping coastlines at an alarming rate. The Intergovernmental Panel on Climate Change (IPCC) has projected that global mean sea levels could rise by up to one metre by 2100 if greenhouse gas emissions continue unchecked. For low-lying nations such as the Maldives, Tuvalu, and Bangladesh, such projections are not abstract — they represent the potential loss of entire territories.",
+      "Beyond sea-level rise, coastal communities face intensifying storm surges and flooding. Warmer ocean temperatures fuel more powerful hurricanes and typhoons, causing billions of dollars in damage annually. In 2023 alone, climate-related disasters cost the global economy over 380 billion dollars, with coastal regions bearing the heaviest burden. Small island developing states (SIDS) contribute less than one percent of global emissions yet suffer disproportionately from their consequences, raising fundamental questions of climate justice.",
+      "Adaptation strategies are emerging across the globe. The Netherlands, with its centuries-old tradition of water management, has invested heavily in advanced flood defence systems, including the Delta Works — one of the largest engineering projects in history. Meanwhile, nature-based solutions such as mangrove restoration are gaining traction. Research published in Nature Climate Change demonstrated that mangrove forests can reduce wave energy by up to 66 percent, providing a cost-effective buffer against coastal erosion. However, critics argue that adaptation alone is insufficient without aggressive mitigation of carbon emissions at the source.",
+      "International cooperation remains pivotal. The Paris Agreement of 2015 set the goal of limiting warming to 1.5 degrees Celsius above pre-industrial levels, yet current national pledges put the world on track for approximately 2.5 degrees of warming. Bridging this gap will require unprecedented political will, massive investment in renewable energy, and a rethinking of development models that have historically prioritised economic growth over environmental sustainability."
+    ]
+  },
+  {
+    id: 1,
+    title: 'Artificial Intelligence in Education',
+    emoji: '🤖',
+    topicFA: 'هوش مصنوعی در آموزش',
+    difficulty: 'hard',
+    difficultyFA: 'دشوار',
+    text: [
+      "The integration of artificial intelligence into education represents one of the most significant transformations in the history of pedagogy. AI-powered adaptive learning platforms now analyse student performance in real time, identifying knowledge gaps and tailoring content to individual learning speeds. Systems such as Carnegie Learning and DreamBox have demonstrated measurable improvements in mathematics scores, with studies indicating gains of up to 30 percent compared to traditional instruction methods.",
+      "Natural language processing (NLP) has enabled the development of sophisticated tutoring chatbots capable of engaging students in Socratic dialogue. These tools can answer questions, provide feedback on written assignments, and guide learners through complex problem-solving processes around the clock. A 2024 study published in the Journal of Educational Psychology found that students who used AI tutoring assistants for just one hour per week improved their critical thinking scores by 18 percent over a semester.",
+      "However, the rise of AI in education also raises profound ethical concerns. Algorithmic bias — where AI systems inadvertently favour certain demographic groups — threatens to exacerbate existing inequalities. If an AI system is trained predominantly on data from affluent urban schools, it may fail to serve rural or disadvantaged students effectively. Furthermore, the collection of vast amounts of student data for AI training creates significant privacy risks, particularly for minors who may not fully understand the implications of data sharing.",
+      "Educators themselves face an uncertain future. While AI is unlikely to replace teachers entirely, it is reshaping the profession. Teachers are increasingly expected to function as facilitators and mentors rather than sole sources of knowledge. This shift demands new skills and training, and many teachers report feeling unprepared for the rapid pace of technological change. Policymakers must ensure that the deployment of AI in classrooms is accompanied by robust teacher training programmes and clear regulatory frameworks to protect student welfare."
+    ]
+  },
+  {
+    id: 2,
+    title: 'Urban Planning for Sustainable Cities',
+    emoji: '🏙️',
+    topicFA: 'برنامه‌ریزی شهری',
+    difficulty: 'medium',
+    difficultyFA: 'متوسط',
+    text: [
+      "As the world's urban population is expected to reach 6.7 billion by 2050, urban planning has become a discipline of critical importance. Cities currently occupy just three percent of the Earth's land surface yet account for over 70 percent of global carbon emissions. Redesigning urban spaces to be more sustainable, equitable, and livable is no longer optional — it is an imperative.",
+      "One of the most promising approaches is the concept of the '15-minute city', championed by Carlos Moreno, a professor at the Sorbonne in Paris. The idea is elegantly simple: all essential services — schools, shops, healthcare facilities, parks, and workplaces — should be accessible within a 15-minute walk or bicycle ride. Paris has been at the forefront of implementing this model, converting car lanes into cycling infrastructure and pedestrianising large sections of the city centre. Early results suggest a 25 percent reduction in vehicle traffic and a significant improvement in air quality.",
+      "Green infrastructure is another cornerstone of sustainable urban planning. Singapore's 'City in a Garden' initiative has transformed the city-state into a global model for urban greenery. The Gardens by the Bay project, featuring the iconic Supertree Grove, combines aesthetic beauty with environmental function — the supertrees harvest rainwater, generate solar energy, and serve as vertical gardens. Similar approaches are being adopted in cities as diverse as Melbourne, Medellín, and Seoul, where urban forests and green corridors are being woven into the fabric of existing neighbourhoods.",
+      "Nevertheless, sustainable urban planning faces significant obstacles. Property developers often resist green building requirements due to higher upfront costs. Gentrification can displace vulnerable communities from newly improved neighbourhoods, undermining social equity goals. And in many developing countries, rapid urbanisation occurs in the absence of any formal planning, resulting in sprawling informal settlements that lack basic services. Addressing these challenges requires a holistic approach that balances environmental, economic, and social considerations."
+    ]
+  },
+  {
+    id: 3,
+    title: 'The Future of Space Exploration',
+    emoji: '🚀',
+    topicFA: 'اکتشاف فضا',
+    difficulty: 'hard',
+    difficultyFA: 'دشوار',
+    text: [
+      "Humanity stands on the cusp of a new era in space exploration. After decades of government-dominated space programmes, the private sector has emerged as a formidable force. Companies such as SpaceX, Blue Origin, and Rocket Lab have dramatically reduced the cost of reaching orbit. SpaceX's reusable Falcon 9 rocket has cut launch costs by approximately 70 percent compared to the space shuttle era, making space more accessible to commercial enterprises, scientific research institutions, and even private citizens.",
+      "The Artemis programme, led by NASA in collaboration with the European Space Agency (ESA) and other international partners, aims to establish a sustained human presence on the Moon by the late 2020s. The Moon is viewed not merely as a scientific outpost but as a proving ground for technologies that will eventually enable crewed missions to Mars. NASA's long-term vision includes a crewed Mars landing tentatively scheduled for the late 2030s, a mission that would represent the greatest achievement in the history of exploration.",
+      "Space mining is another frontier attracting considerable attention. Asteroids are known to contain vast quantities of precious metals, including platinum, gold, and rare earth elements essential for electronics manufacturing. The asteroid 16 Psyche alone is estimated to contain iron and nickel worth approximately 10,000 quadrillion dollars. While the economic feasibility of asteroid mining remains unproven, companies such as AstroForge have already secured funding and plan to launch prospecting missions within the next few years.",
+      "Critics raise legitimate concerns about the commercialisation of space. The Kessler Syndrome — a theoretical scenario in which orbital debris cascades into ever more collisions, rendering low Earth orbit unusable — is a growing risk as more satellites are launched. Environmentalists also question the carbon footprint of rocket launches, which inject black carbon directly into the upper atmosphere where it can persist for years. Balancing the immense potential of space exploration with responsible stewardship of both Earth and orbital environments will be one of the defining challenges of the coming decades."
+    ]
+  },
+  {
+    id: 4,
+    title: 'Ocean Conservation and Marine Biodiversity',
+    emoji: '🌊',
+    topicFA: 'حفاظت اقیانوس',
+    difficulty: 'easy',
+    difficultyFA: 'آسان',
+    text: [
+      "The world's oceans cover over 71 percent of the planet's surface and harbour an extraordinary diversity of life. From the sunlit coral reefs of the tropics to the pitch-black hydrothermal vents of the deep sea, marine ecosystems support billions of people through food security, climate regulation, and economic activity. Yet these vital systems face unprecedented threats from human activity.",
+      "Overfishing stands as one of the most pressing challenges. According to the Food and Agriculture Organization (FAO), approximately 35 percent of global fish stocks are now overfished, a figure that has tripled since the 1970s. Destructive fishing practices such as bottom trawling devastate seafloor habitats, while illegal, unreported, and unregulated (IUU) fishing accounts for an estimated 11 to 26 million tonnes of catch annually — worth between 10 and 23 billion dollars.",
+      "Plastic pollution compounds these pressures. An estimated 11 million tonnes of plastic enter the oceans each year, breaking down into microplastics that infiltrate every level of the marine food web. A 2023 study in the journal Nature found microplastics in the tissue of every marine species tested, from microscopic plankton to blue whales. The health implications for both marine life and humans who consume seafood remain an active area of research.",
+      "Conservation efforts are yielding encouraging results. Marine protected areas (MPAs), where fishing and extractive activities are restricted, have been shown to increase fish biomass by an average of 670 percent within their boundaries. The High Seas Treaty, adopted by the United Nations in 2023, creates a legal framework for establishing MPAs in international waters for the first time. Combined with advances in satellite monitoring and DNA-based fisheries surveillance, these tools offer hope that the degradation of ocean ecosystems can be slowed — if not reversed."
+    ]
+  },
+  {
+    id: 5,
+    title: 'Ancient Civilisations and Their Legacies',
+    emoji: '🏛️',
+    topicFA: 'تمدن‌های باستان',
+    difficulty: 'medium',
+    difficultyFA: 'متوسط',
+    text: [
+      "The study of ancient civilisations offers profound insights into the origins of modern society. From the earliest Mesopotamian city-states to the vast empires of Rome and China, ancient peoples developed innovations in governance, engineering, agriculture, and philosophy that continue to shape the world today. Understanding these legacies requires both archaeological evidence and careful interpretation of textual sources.",
+      "Mesopotamia, often called the 'Cradle of Civilisation', flourished between the Tigris and Euphrates rivers in modern-day Iraq. The Sumerians, who emerged around 4500 BCE, invented one of the world's first writing systems — cuneiform — which was initially used for record-keeping but eventually became a vehicle for literature, law, and diplomacy. The Code of Hammurabi, dating to approximately 1754 BCE, represents one of the earliest written legal codes and established principles of justice and contractual obligation that resonate in modern legal systems.",
+      "The ancient Egyptians achieved remarkable feats in architecture, medicine, and mathematics. The Great Pyramid of Giza, constructed around 2560 BCE, remained the tallest man-made structure for nearly 4,000 years. Egyptian physicians performed surgical procedures, set broken bones, and developed pharmacological treatments that were documented in medical papyri. Recent CT scans of mummies have revealed that ancient Egyptians suffered from many of the same diseases — including atherosclerosis and cancer — that afflict modern populations.",
+      "In East Asia, ancient Chinese civilisation produced innovations of lasting global impact. Paper, gunpowder, the compass, and movable type printing — the 'Four Great Inventions' — fundamentally transformed civilisation worldwide. The Silk Road, which connected China to the Mediterranean for nearly two millennia, facilitated not only trade but also the exchange of ideas, religions, and technologies. Today, archaeological discoveries along these ancient routes continue to reshape our understanding of cross-cultural interaction in the premodern world."
+    ]
+  },
+  {
+    id: 6,
+    title: 'Mental Health in the Digital Age',
+    emoji: '🧠',
+    topicFA: 'سلامت روان',
+    difficulty: 'easy',
+    difficultyFA: 'آسان',
+    text: [
+      "The digital revolution has transformed nearly every aspect of human life, and mental health is no exception. While technology has improved access to mental health resources through teletherapy, mental health apps, and online support communities, it has also introduced new risk factors that are only beginning to be understood by researchers and clinicians.",
+      "Social media usage has attracted particular attention. A landmark study by the Royal Society for Public Health in the United Kingdom found that platforms such as Instagram and Snapchat were associated with increased rates of anxiety, depression, and poor body image among young people aged 14 to 24. The constant exposure to curated, idealised versions of others' lives can foster feelings of inadequacy and social comparison. Moreover, the addictive design of these platforms — featuring infinite scrolling, push notifications, and variable reward mechanisms — can lead to compulsive use patterns that disrupt sleep, exercise, and face-to-face social interaction.",
+      "On the positive side, digital technology has democratised access to mental health support. Teletherapy platforms have made counselling available to individuals in rural or underserved areas who might otherwise have no access to professional help. A 2024 meta-analysis published in The Lancet Psychiatry found that online cognitive behavioural therapy (CBT) was as effective as in-person therapy for mild to moderate depression, with recovery rates of approximately 50 percent. Mental health apps such as Headspace and Calm have introduced millions of users to mindfulness meditation, which has been shown to reduce symptoms of anxiety and stress.",
+      "The challenge lies in striking a balance. Digital tools can complement but not replace human connection, which remains fundamental to psychological wellbeing. Experts recommend establishing healthy boundaries around screen time, particularly for adolescents, and call on technology companies to design products that prioritise user welfare over engagement metrics."
+    ]
+  },
+  {
+    id: 7,
+    title: 'Renewable Energy and the Global Transition',
+    emoji: '⚡',
+    topicFA: 'انرژی تجدیدپذیر',
+    difficulty: 'hard',
+    difficultyFA: 'دشوار',
+    text: [
+      "The global energy landscape is undergoing a transformative shift. Renewable energy sources — solar, wind, hydropower, and geothermal — accounted for over 30 percent of global electricity generation in 2023, a figure that has doubled in the past decade. Solar photovoltaic (PV) technology has been the standout performer, with costs declining by over 90 percent since 2010, making it the cheapest source of new electricity generation in most regions of the world.",
+      "Wind energy has also experienced remarkable growth. Global wind capacity exceeded 1,000 gigawatts in 2023, with offshore wind emerging as a particularly promising frontier. The United Kingdom's Hornsea Wind Farm in the North Sea, with a capacity of 2.85 gigawatts, can power over 3 million homes. China dominates both onshore and offshore wind installations, accounting for nearly 60 percent of global additions in 2023. These developments have created millions of jobs worldwide and attracted hundreds of billions of dollars in investment annually.",
+      "Despite this progress, significant challenges remain. Energy storage is the most critical bottleneck. Solar and wind are intermittent — they produce electricity only when the sun shines or the wind blows — and current battery technology, while improving rapidly, cannot yet provide cost-effective grid-scale storage for extended periods. Lithium-ion batteries dominate the market, but concerns about lithium mining's environmental impact and supply chain concentration in a few countries have spurred research into alternative technologies such as solid-state batteries, flow batteries, and green hydrogen storage.",
+      "The transition also raises questions of energy equity. Many developing nations, particularly in sub-Saharan Africa and South Asia, still rely heavily on fossil fuels for economic development. The notion that these countries should leapfrog directly to renewables — without access to the capital and infrastructure that wealthy nations enjoy — is viewed by some as inequitable. International mechanisms such as the Green Climate Fund aim to address this imbalance, but funding commitments have consistently fallen short of what is needed to ensure a just and globally inclusive energy transition."
+    ]
+  },
+  {
+    id: 8,
+    title: 'Cultural Heritage Preservation',
+    emoji: '🏛️',
+    topicFA: 'میراث فرهنگی',
+    difficulty: 'medium',
+    difficultyFA: 'متوسط',
+    text: [
+      "Cultural heritage — the tangible and intangible legacy of human civilisation — faces threats from armed conflict, climate change, urban development, and neglect. UNESCO estimates that over 60 World Heritage Sites are currently classified as 'in danger', a figure that has risen steadily over the past two decades. Protecting these irreplaceable treasures requires innovative approaches that blend technology, community engagement, and international cooperation.",
+      "Digital technologies are revolutionising heritage preservation. 3D scanning and photogrammetry enable the creation of precise digital replicas of monuments and artefacts. When the Cathedral of Notre-Dame in Paris was devastated by fire in 2019, researchers were able to use previously captured 3D scans to guide the painstaking reconstruction effort. Similarly, the Smithsonian Institution has digitised millions of artefacts, making them accessible to researchers and the public worldwide through virtual platforms.",
+      "Community-based conservation has emerged as a powerful model. Rather than imposing top-down preservation strategies, organisations such as the World Monuments Fund work with local communities to identify heritage sites of greatest significance and develop culturally appropriate conservation plans. In Bhaktapur, Nepal, residents led the restoration of centuries-old temples following the devastating 2015 earthquake, combining traditional craftsmanship with modern structural engineering to ensure both authenticity and resilience.",
+      "Intangible cultural heritage — languages, oral traditions, performing arts, rituals, and craftsmanship — presents distinct preservation challenges. Of the approximately 7,000 languages spoken today, nearly half are projected to disappear by 2100. The loss of a language represents the loss of unique knowledge systems, worldviews, and cultural identities. UNESCO's Intangible Cultural Heritage programme and grassroots language revitalisation efforts, such as the revival of the Hawaiian language, offer models for safeguarding these intangible yet invaluable dimensions of human heritage."
+    ]
+  },
+  {
+    id: 9,
+    title: 'Global Food Security Challenges',
+    emoji: '🌾',
+    topicFA: 'امنیت غذایی',
+    difficulty: 'easy',
+    difficultyFA: 'آسان',
+    text: [
+      "Global food security is one of the defining challenges of the 21st century. The world must feed a projected population of 9.7 billion by 2050, an increase of approximately 2 billion people from today. This task is complicated by climate change, water scarcity, soil degradation, and the economic disruptions caused by geopolitical conflict. Achieving food security requires not only producing more food but ensuring it is accessible, affordable, and nutritious for all.",
+      "Agricultural innovation is central to meeting future demand. Precision farming — which uses GPS, sensors, and data analytics to optimise planting, irrigation, and harvesting — has been shown to increase crop yields by 15 to 20 percent while reducing water and pesticide use. Gene-editing technologies such as CRISPR-Cas9 are enabling the development of crop varieties that are more resistant to drought, disease, and extreme temperatures. A drought-tolerant wheat variety developed using CRISPR was field-tested in sub-Saharan Africa with promising results, potentially benefiting millions of smallholder farmers.",
+      "Food waste represents a paradox at the heart of the security crisis. Approximately one-third of all food produced globally — roughly 1.3 billion tonnes per year — is lost or wasted. In developed countries, the majority of waste occurs at the consumer level, while in developing nations, losses are concentrated in post-harvest storage and transportation. The United Nations Sustainable Development Goal 12.3 aims to halve food waste by 2030, and innovative solutions — from AI-powered inventory management in supermarkets to mobile apps connecting consumers with surplus food from restaurants — are making progress toward this target.",
+      "Ultimately, food security is inseparable from broader questions of equity and governance. Conflicts in Ukraine, Sudan, and other regions have disrupted food supply chains and pushed millions to the brink of famine. Climate-vulnerable nations in the Horn of Africa face recurring droughts that destroy crops and livestock. Addressing these systemic issues demands coordinated international action, investment in agricultural infrastructure, and policies that prioritise the most vulnerable populations."
+    ]
+  }
+];
+
+// ----- QUESTION DATA -----
+// Each passage has 5 questions: mix of TF (True/False/Not Given), MC (Multiple Choice),
+// MH (Matching Headings), FB (Fill-in-the-blank)
+const questionsData = [
+  // Passage 0: Climate Change
+  [
+    { id:'p0q1', type:'tf', text:'Global sea levels could rise by up to one metre by 2100 if emissions continue unchecked.', answer:'True',
+      explanation:'The passage states that the IPCC "projected that global mean sea levels could rise by up to one metre by 2100 if greenhouse gas emissions continue unchecked."' },
+    { id:'p0q2', type:'tf', text:'Small island developing states contribute more than 20 percent of global emissions.', answer:'False',
+      explanation:'The passage states SIDS "contribute less than one percent of global emissions," making this statement clearly false.' },
+    { id:'p0q3', type:'tf', text:'The Paris Agreement aims to limit warming to 2 degrees Celsius.', answer:'False',
+      explanation:'The passage states the goal is "limiting warming to 1.5 degrees Celsius above pre-industrial levels," not 2 degrees.' },
+    { id:'p0q4', type:'mc', text:'According to the passage, how much wave energy can mangrove forests reduce?',
+      options:['Up to 33 percent','Up to 50 percent','Up to 66 percent','Up to 80 percent'], answer:2,
+      explanation:'The passage states that "mangrove forests can reduce wave energy by up to 66 percent."' },
+    { id:'p0q5', type:'fb', text:'The ______ Works is one of the largest engineering projects in history, built by the Netherlands.', answer:'Delta',
+      explanation:'The passage mentions "the Delta Works — one of the largest engineering projects in history" as part of the Netherlands\' flood defence systems.' }
+  ],
+  // Passage 1: AI in Education
+  [
+    { id:'p1q1', type:'mh', text:'Which heading best summarises Paragraph 1?',
+      options:['The Dark Side of Classroom Technology','AI-Powered Adaptive Learning','Redefining the Teacher\'s Role','Regulating AI in Schools'], answer:1,
+      explanation:'Paragraph 1 discusses AI-powered adaptive learning platforms and their impact on student performance, making "AI-Powered Adaptive Learning" the best heading.' },
+    { id:'p1q2', type:'tf', text:'AI tutoring assistants improved critical thinking scores by 30 percent over a semester.', answer:'False',
+      explanation:'The passage states students "improved their critical thinking scores by 18 percent," not 30 percent.' },
+    { id:'p1q3', type:'mc', text:'What percentage improvement in mathematics scores has been linked to AI adaptive learning?',
+      options:['Up to 15 percent','Up to 20 percent','Up to 30 percent','Up to 45 percent'], answer:2,
+      explanation:'The passage states AI-powered systems "demonstrated measurable improvements in mathematics scores, with studies indicating gains of up to 30 percent."' },
+    { id:'p1q4', type:'fb', text:'If an AI system is trained predominantly on data from ______ urban schools, it may fail to serve rural students.', answer:'affluent',
+      explanation:'The passage warns of algorithmic bias when "an AI system is trained predominantly on data from affluent urban schools."' },
+    { id:'p1q5', type:'tf', text:'AI is expected to completely replace human teachers in the near future.', answer:'False',
+      explanation:'The passage explicitly states "AI is unlikely to replace teachers entirely, it is reshaping the profession."' }
+  ],
+  // Passage 2: Urban Planning
+  [
+    { id:'p2q1', type:'tf', text:'Cities account for over 70 percent of global carbon emissions.', answer:'True',
+      explanation:'The passage states "Cities currently occupy just three percent of the Earth\'s land surface yet account for over 70 percent of global carbon emissions."' },
+    { id:'p2q2', type:'mc', text:'Who championed the concept of the \'15-minute city\'?',
+      options:['A scientist at MIT','A professor at the Sorbonne in Paris','An urban planner in Tokyo','The mayor of Copenhagen'], answer:1,
+      explanation:'The passage identifies "Carlos Moreno, a professor at the Sorbonne in Paris" as the champion of the 15-minute city concept.' },
+    { id:'p2q3', type:'mh', text:'Which heading best summarises Paragraph 3?',
+      options:['The Cost of Green Buildings','Nature Meets Architecture in Urban Spaces','Resisting Sustainable Development','Global Warming and Cities'], answer:1,
+      explanation:'Paragraph 3 discusses green infrastructure initiatives like Singapore\'s \'City in a Garden\' and Gardens by the Bay, making the nature-meets-architecture heading most appropriate.' },
+    { id:'p2q4', type:'fb', text:'The Gardens by the Bay project features the iconic ______ Grove in Singapore.', answer:'Supertree',
+      explanation:'The passage describes "Gardens by the Bay, featuring the iconic Supertree Grove" as part of Singapore\'s green infrastructure.' },
+    { id:'p2q5', type:'tf', text:'Paris saw a 50 percent reduction in vehicle traffic after implementing cycling infrastructure.', answer:'False',
+      explanation:'The passage states "Early results suggest a 25 percent reduction in vehicle traffic," not 50 percent.' }
+  ],
+  // Passage 3: Space Exploration
+  [
+    { id:'p3q1', type:'tf', text:'SpaceX\'s Falcon 9 rocket has reduced launch costs by about 70 percent compared to the shuttle era.', answer:'True',
+      explanation:'The passage states "SpaceX\'s reusable Falcon 9 rocket has cut launch costs by approximately 70 percent compared to the space shuttle era."' },
+    { id:'p3q2', type:'mc', text:'What is the estimated value of iron and nickel in the asteroid 16 Psyche?',
+      options:['100 quadrillion dollars','1,000 quadrillion dollars','10,000 quadrillion dollars','100,000 quadrillion dollars'], answer:2,
+      explanation:'The passage states the asteroid "16 Psyche alone is estimated to contain iron and nickel worth approximately 10,000 quadrillion dollars."' },
+    { id:'p3q3', type:'mh', text:'Which heading best summarises Paragraph 4?',
+      options:['The Promise of Space Mining','A New Space Race','Environmental and Safety Concerns in Space','Mars: The Next Frontier'], answer:2,
+      explanation:'Paragraph 4 discusses the Kessler Syndrome, orbital debris, and the carbon footprint of rocket launches — all environmental and safety concerns.' },
+    { id:'p3q4', type:'fb', text:'The Kessler Syndrome is a theoretical scenario in which orbital ______ cascades into ever more collisions.', answer:'debris',
+      explanation:'The passage defines the Kessler Syndrome as "a theoretical scenario in which orbital debris cascades into ever more collisions."' },
+    { id:'p3q5', type:'tf', text:'NASA plans a crewed Mars landing for the early 2020s.', answer:'False',
+      explanation:'The passage states the mission is "tentatively scheduled for the late 2030s," not the early 2020s.' }
+  ],
+  // Passage 4: Ocean Conservation
+  [
+    { id:'p4q1', type:'tf', text:'Approximately 35 percent of global fish stocks are now overfished.', answer:'True',
+      explanation:'The passage states "approximately 35 percent of global fish stocks are now overfished."' },
+    { id:'p4q2', type:'mc', text:'By what percentage have fish biomass levels increased inside marine protected areas?',
+      options:['170 percent','370 percent','670 percent','970 percent'], answer:2,
+      explanation:'The passage states MPAs "have been shown to increase fish biomass by an average of 670 percent within their boundaries."' },
+    { id:'p4q3', type:'fb', text:'An estimated 11 million tonnes of ______ enter the oceans each year.', answer:'plastic',
+      explanation:'The passage states "An estimated 11 million tonnes of plastic enter the oceans each year."' },
+    { id:'p4q4', type:'tf', text:'The High Seas Treaty was adopted by the United Nations in 2022.', answer:'False',
+      explanation:'The passage states the treaty "was adopted by the United Nations in 2023," not 2022.' },
+    { id:'p4q5', type:'mh', text:'Which heading best summarises Paragraph 3?',
+      options:['Overfishing and Its Consequences','Plastic Pollution in the Marine Food Web','Marine Protected Areas','The Economics of Fishing'], answer:1,
+      explanation:'Paragraph 3 discusses plastic pollution, microplastics, and their infiltration into the marine food web.' }
+  ],
+  // Passage 5: Ancient Civilisations
+  [
+    { id:'p5q1', type:'tf', text:'The Great Pyramid of Giza was the tallest man-made structure for nearly 4,000 years.', answer:'True',
+      explanation:'The passage states "The Great Pyramid of Giza, constructed around 2560 BCE, remained the tallest man-made structure for nearly 4,000 years."' },
+    { id:'p5q2', type:'mc', text:'Around what date did the Sumerians emerge?',
+      options:['Around 6500 BCE','Around 4500 BCE','Around 2500 BCE','Around 1500 BCE'], answer:1,
+      explanation:'The passage states "The Sumerians, who emerged around 4500 BCE."' },
+    { id:'p5q3', type:'fb', text:'The Code of ______ represents one of the earliest written legal codes.', answer:'Hammurabi',
+      explanation:'The passage states "The Code of Hammurabi, dating to approximately 1754 BCE, represents one of the earliest written legal codes."' },
+    { id:'p5q4', type:'mh', text:'Which heading best summarises Paragraph 4?',
+      options:['Egyptian Medicine in the Ancient World','Chinese Inventions That Changed the World','The Fall of the Silk Road','Writing Systems of the Ancient Near East'], answer:1,
+      explanation:'Paragraph 4 discusses the Four Great Inventions of China and the Silk Road\'s role in spreading technology and ideas.' },
+    { id:'p5q5', type:'tf', text:'The Code of Hammurabi dates to approximately 2754 BCE.', answer:'False',
+      explanation:'The passage states it dates "to approximately 1754 BCE," not 2754 BCE.' }
+  ],
+  // Passage 6: Mental Health
+  [
+    { id:'p6q1', type:'mc', text:'Which age group did the UK Royal Society for Public Health study focus on?',
+      options:['10 to 20 years old','12 to 22 years old','14 to 24 years old','16 to 26 years old'], answer:2,
+      explanation:'The passage states the study found effects "among young people aged 14 to 24."' },
+    { id:'p6q2', type:'tf', text:'Online CBT was found to be less effective than in-person therapy.', answer:'False',
+      explanation:'The passage states online CBT "was as effective as in-person therapy for mild to moderate depression."' },
+    { id:'p6q3', type:'fb', text:'A 2024 meta-analysis found recovery rates of approximately ______ percent for online CBT.', answer:'50',
+      explanation:'The passage states "recovery rates of approximately 50 percent" for online cognitive behavioural therapy.' },
+    { id:'p6q4', type:'tf', text:'Social media platforms use design features that can encourage compulsive use.', answer:'True',
+      explanation:'The passage describes "addictive design of these platforms — featuring infinite scrolling, push notifications, and variable reward mechanisms."' },
+    { id:'p6q5', type:'mh', text:'Which heading best summarises Paragraph 4?',
+      options:['Social Media and Anxiety','The Need for Healthy Screen Habits','Finding the Right Balance','The Rise of Teletherapy'], answer:2,
+      explanation:'Paragraph 4 discusses the need to balance digital tools with human connection and establish healthy screen time boundaries.' }
+  ],
+  // Passage 7: Renewable Energy
+  [
+    { id:'p7q1', type:'tf', text:'Solar PV costs have declined by over 80 percent since 2010.', answer:'False',
+      explanation:'The passage states costs have "declining by over 90 percent since 2010," not 80 percent.' },
+    { id:'p7q2', type:'mc', text:'What was global wind capacity in 2023?',
+      options:['500 gigawatts','750 gigawatts','1,000 gigawatts','1,500 gigawatts'], answer:2,
+      explanation:'The passage states "Global wind capacity exceeded 1,000 gigawatts in 2023."' },
+    { id:'p7q3', type:'fb', text:'The most critical bottleneck for renewable energy is energy ______.', answer:'storage',
+      explanation:'The passage identifies "Energy storage is the most critical bottleneck" because solar and wind are intermittent.' },
+    { id:'p7q4', type:'mh', text:'Which heading best summarises Paragraph 4?',
+      options:['The Solar Revolution','Challenges of Energy Storage','Ensuring an Equitable Energy Transition','Wind Power in China'], answer:2,
+      explanation:'Paragraph 4 discusses energy equity, developing nations\' fossil fuel dependence, and the Green Climate Fund — all about equitable transition.' },
+    { id:'p7q5', type:'tf', text:'China accounts for nearly 60 percent of global wind energy additions in 2023.', answer:'True',
+      explanation:'The passage states "China dominates both onshore and offshore wind installations, accounting for nearly 60 percent of global additions in 2023."' }
+  ],
+  // Passage 8: Cultural Heritage
+  [
+    { id:'p8q1', type:'tf', text:'Over 60 World Heritage Sites are classified as \'in danger\' by UNESCO.', answer:'True',
+      explanation:'The passage states "UNESCO estimates that over 60 World Heritage Sites are currently classified as \'in danger\'."' },
+    { id:'p8q2', type:'mc', text:'What technology helped guide the reconstruction of Notre-Dame after the 2019 fire?',
+      options:['Satellite imagery','3D scans','Drone mapping','AI modelling'], answer:1,
+      explanation:'The passage states "researchers were able to use previously captured 3D scans to guide the painstaking reconstruction effort."' },
+    { id:'p8q3', type:'fb', text:'By 2100, nearly half of the world\'s ______ languages are projected to disappear.', answer:'7,000',
+      explanation:'The passage states "Of the approximately 7,000 languages spoken today, nearly half are projected to disappear by 2100."' },
+    { id:'p8q4', type:'mh', text:'Which heading best summarises Paragraph 3?',
+      options:['Digital Preservation Methods','Saving Languages from Extinction','Local Communities Leading Conservation','The Role of UNESCO'], answer:2,
+      explanation:'Paragraph 3 discusses community-based conservation models, the World Monuments Fund, and the Bhaktapur restoration in Nepal.' },
+    { id:'p8q5', type:'tf', text:'The Hawaiian language has been successfully revitalised as an example of heritage preservation.', answer:'True',
+      explanation:'The passage mentions "the revival of the Hawaiian language" as a model for safeguarding intangible cultural heritage.' }
+  ],
+  // Passage 9: Food Security
+  [
+    { id:'p9q1', type:'tf', text:'The world population is projected to reach 9.7 billion by 2050.', answer:'True',
+      explanation:'The passage states "The world must feed a projected population of 9.7 billion by 2050."' },
+    { id:'p9q2', type:'mc', text:'By how much can precision farming increase crop yields?',
+      options:['5 to 10 percent','15 to 20 percent','25 to 30 percent','35 to 40 percent'], answer:1,
+      explanation:'The passage states precision farming "has been shown to increase crop yields by 15 to 20 percent."' },
+    { id:'p9q3', type:'fb', text:'Approximately one-third of all food produced globally — roughly 1.3 billion ______ per year — is lost or wasted.', answer:'tonnes',
+      explanation:'The passage states "roughly 1.3 billion tonnes per year" of food is lost or wasted.' },
+    { id:'p9q4', type:'tf', text:'In developed countries, most food waste occurs at the production level.', answer:'False',
+      explanation:'The passage states "In developed countries, the majority of waste occurs at the consumer level," not the production level.' },
+    { id:'p9q5', type:'mh', text:'Which heading best summarises Paragraph 2?',
+      options:['The Cost of Food Production','Technology Driving Agricultural Innovation','Climate Change and Farming','World Population Growth'], answer:1,
+      explanation:'Paragraph 2 discusses precision farming, CRISPR gene editing, and crop variety development — all technological innovations in agriculture.' }
+  ]
+];
+
+// ===== UTILITIES =====
+function toFa(n) { return String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]); }
+
+let currentPassage = 0;
+let timerInterval = null;
+let totalSeconds = 60 * 60; // 60 minutes
+let timerRunning = false;
+let reviewMode = false;
+let currentReviewQ = 0;
+let hasBeenChecked = false;
+
+// ===== RENDER PASSAGES =====
+function renderAllPassages() {
+  const container = document.getElementById('quizContainer');
+  let html = '';
+
+  passages.forEach((p, pi) => {
+    html += `<div class="passage-card ${pi === 0 ? 'active' : ''}" data-passage="${pi}">`;
+    html += `<div class="passage-meta">`;
+    html += `<div class="passage-title">${p.emoji} Passage ${toFa(pi + 1)}: ${p.topicFA}</div>`;
+    const diffClass = p.difficulty === 'easy' ? 'diff-easy' : p.difficulty === 'medium' ? 'diff-medium' : 'diff-hard';
+    html += `<span class="passage-difficulty ${diffClass}">سطح: ${p.difficultyFA}</span>`;
+    html += `</div>`;
+
+    // Passage text with paragraphs
+    html += `<div class="passage-text">`;
+    p.text.forEach(para => {
+      html += `<div class="passage-paragraph">${para}</div>`;
+    });
+    html += `</div>`;
+
+    // Questions section
+    html += `<div class="questions-section" id="passage${pi}questions"></div>`;
+    html += `</div>`;
+  });
+
+  container.innerHTML = html;
+}
+
+// ===== RENDER QUESTIONS =====
+function renderQuestions() {
+  questionsData.forEach((passageQs, pi) => {
+    const container = document.getElementById(`passage${pi}questions`);
+    if (!container) return;
+
+    const types = {
+      tf: 'True / False / Not Given',
+      mc: 'Multiple Choice',
+      mh: 'Matching Headings',
+      fb: 'Fill in the Blank'
+    };
+    const typeCls = {
+      tf: 'type-tf',
+      mc: 'type-mc',
+      mh: 'type-mh',
+      fb: 'type-fb'
+    };
+
+    let html = `<div class="section-divider"><span>📝 سوالات تمرین</span></div>`;
+
+    passageQs.forEach((q, qi) => {
+      html += `<div class="question-block" id="qb-${q.id}">`;
+      html += `<div class="question-type ${typeCls[q.type]}">${types[q.type]}</div>`;
+      html += `<div class="question-text"><span class="q-number" id="qn-${q.id}">${qi + 1}</span>${q.text}</div>`;
+
+      if (q.type === 'tf') {
+        html += `<div class="options-list">`;
+        ['True', 'False', 'Not Given'].forEach(opt => {
+          html += `<label onclick="selectOption(this)"><input type="radio" name="${q.id}" value="${opt}"> ${opt}</label>`;
+        });
+        html += `</div>`;
+      } else if (q.type === 'mc') {
+        html += `<div class="options-list">`;
+        q.options.forEach((opt, oi) => {
+          html += `<label onclick="selectOption(this)"><input type="radio" name="${q.id}" value="${oi}"> ${opt}</label>`;
+        });
+        html += `</div>`;
+      } else if (q.type === 'mh') {
+        html += `<select class="mh-select" id="input-${q.id}" onchange="updateToolbar()">`;
+        html += `<option value="">— انتخاب عنوان —</option>`;
+        q.options.forEach((opt, oi) => {
+          html += `<option value="${oi}">${opt}</option>`;
+        });
+        html += `</select>`;
+      } else if (q.type === 'fb') {
+        html += `<input type="text" class="fill-input" id="input-${q.id}" placeholder="پاسخ خود را تایپ کنید..." oninput="updateToolbar()">`;
+      }
+
+      // Answer/explanation container (hidden by default)
+      html += `<div class="correct-answer" id="ans-${q.id}"></div>`;
+      html += `</div>`;
+    });
+
+    // Per-passage score bar
+    html += `<div class="passage-score-bar" id="psb-${pi}" style="display:none">`;
+    html += `<div class="label">نمره:</div>`;
+    html += `<div class="mini-bar"><div class="mini-fill" id="psf-${pi}" style="width:0%"></div></div>`;
+    html += `<div class="score-text" id="pst-${pi}">0/5</div>`;
+    html += `</div>`;
+
+    container.innerHTML = html;
+  });
+}
+
+function selectOption(label) {
+  const list = label.closest('.options-list');
+  list.querySelectorAll('label').forEach(l => l.classList.remove('selected'));
+  label.classList.add('selected');
+  updateToolbar();
+}
+
+// ===== PASSAGE NAVIGATION =====
+function showPassage(idx) {
+  currentPassage = idx;
+  document.querySelectorAll('.passage-card').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.passage-btn').forEach((b, i) => {
+    b.classList.remove('active');
+    if (i === idx) b.classList.add('active');
+  });
+  document.querySelector(`[data-passage="${idx}"]`).classList.add('active');
+  document.querySelector('.quiz-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ===== TIMER =====
+function startTimer() {
+  if (timerRunning) return;
+  timerRunning = true;
+  document.getElementById('quizToolbar').classList.add('visible');
+  timerInterval = setInterval(() => {
+    totalSeconds--;
+    if (totalSeconds <= 0) {
+      clearInterval(timerInterval);
+      totalSeconds = 0;
+      alert('زمان تمام شد!');
+      checkAllAnswers();
+    }
+    updateTimerDisplay();
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(totalSeconds / 60);
+  const s = totalSeconds % 60;
+  const display = document.getElementById('timerText');
+  display.textContent = toFa(`${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`);
+  const timerEl = document.getElementById('timerDisplay');
+  if (totalSeconds <= 300) {
+    timerEl.classList.add('warning');
+  } else {
+    timerEl.classList.remove('warning');
+  }
+}
+
+// ===== TOOLBAR UPDATE =====
+function updateToolbar() {
+  let answered = 0;
+  const flat = questionsData.flat();
+  flat.forEach(q => {
+    const userAnswer = getAnswer(q.id);
+    if (userAnswer !== null && userAnswer !== '') answered++;
+  });
+  document.getElementById('answeredLabel').textContent = `پاسخ داده شده: ${toFa(answered)}/${toFa(flat.length)}`;
+  const pct = Math.round((answered / flat.length) * 100);
+  document.getElementById('globalBarFill').style.width = pct + '%';
+}
+
+// ===== GET ANSWER =====
+function getAnswer(qid) {
+  const q = questionsData.flat().find(x => x.id === qid);
+  if (!q) return null;
+  if (q.type === 'tf' || q.type === 'mc') {
+    const sel = document.querySelector(`input[name="${qid}"]:checked`);
+    return sel ? sel.value : null;
+  } else {
+    const inp = document.getElementById(`input-${qid}`);
+    return inp ? inp.value.trim() : null;
+  }
+}
+
+// ===== CHECK ALL ANSWERS =====
+function checkAllAnswers() {
+  startTimer();
+  hasBeenChecked = true;
+  if (timerRunning) clearInterval(timerInterval);
+  timerRunning = false;
+
+  let correct = 0, incorrect = 0, unanswered = 0;
+  const passageScores = Array(10).fill(0);
+
+  questionsData.forEach((passageQs, pi) => {
+    passageQs.forEach((q, qi) => {
+      const userAnswer = getAnswer(q.id);
+      const qb = document.getElementById(`qb-${q.id}`);
+      const ansEl = document.getElementById(`ans-${q.id}`);
+      const qn = document.getElementById(`qn-${q.id}`);
+      qb.classList.remove('correct', 'incorrect', 'unanswered');
+
+      if (userAnswer === null || userAnswer === '') {
+        unanswered++;
+        qb.classList.add('unanswered');
+        qn.classList.add('unanswered');
+        ansEl.className = 'correct-answer visible is-unanswered';
+        ansEl.innerHTML = `⚠️ <strong>پاسخ داده نشده</strong> — پاسخ صحیح: ${getCorrectAnswerText(q)}<span class="explanation">💡 ${q.explanation}</span>`;
+        return;
+      }
+
+      let isCorrect = false;
+      if (q.type === 'mc' || q.type === 'mh') {
+        isCorrect = parseInt(userAnswer) === q.answer;
+      } else {
+        isCorrect = userAnswer.toLowerCase() === q.answer.toLowerCase();
+      }
+
+      if (isCorrect) {
+        correct++;
+        passageScores[pi]++;
+        qb.classList.add('correct');
+        qn.classList.add('correct');
+        ansEl.className = 'correct-answer visible is-correct';
+        ansEl.innerHTML = `✅ <strong>پاسخ صحیح!</strong><span class="explanation">💡 ${q.explanation}</span>`;
+        // Highlight selected answer
+        highlightSelectedAnswer(q, true);
+      } else {
+        incorrect++;
+        qb.classList.add('incorrect');
+        qn.classList.add('incorrect');
+        ansEl.className = 'correct-answer visible is-incorrect';
+        ansEl.innerHTML = `❌ <strong>پاسخ نادرست</strong> — پاسخ صحیح: ${getCorrectAnswerText(q)}<span class="explanation">💡 ${q.explanation}</span>`;
+        highlightSelectedAnswer(q, false);
+      }
+    });
+
+    // Show per-passage score bar
+    const psb = document.getElementById(`psb-${pi}`);
+    const psf = document.getElementById(`psf-${pi}`);
+    const pst = document.getElementById(`pst-${pi}`);
+    if (psb) {
+      psb.style.display = 'flex';
+      const pct = Math.round((passageScores[pi] / 5) * 100);
+      psf.style.width = pct + '%';
+      pst.textContent = `${toFa(passageScores[pi])}/۵`;
+      const color = pct >= 80 ? 'var(--success)' : pct >= 40 ? 'var(--accent)' : '#ef4444';
+      psf.style.background = color;
+    }
+  });
+
+  // Update score panel
+  const total = 50;
+  document.getElementById('scorePanel').classList.add('visible');
+  document.getElementById('scoreNumber').textContent = `${toFa(correct)}/${toFa(total)}`;
+  document.getElementById('correctCount').textContent = toFa(correct);
+  document.getElementById('incorrectCount').textContent = toFa(incorrect);
+  document.getElementById('unansweredCount').textContent = toFa(unanswered);
+  document.getElementById('scoreProgressFill').style.width = Math.round((correct / total) * 100) + '%';
+  document.getElementById('scoreLabel').textContent = `امتیاز: ${toFa(correct)}`;
+
+  // IELTS Band estimation
+  const pct = correct / total;
+  let band = '';
+  if (pct >= 0.95) band = 'Band 9.0 🏆';
+  else if (pct >= 0.90) band = 'Band 8.5 ⭐';
+  else if (pct >= 0.80) band = 'Band 8.0 ⭐';
+  else if (pct >= 0.70) band = 'Band 7.0 👍';
+  else if (pct >= 0.60) band = 'Band 6.0 ✓';
+  else if (pct >= 0.50) band = 'Band 5.0';
+  else if (pct >= 0.40) band = 'Band 4.0';
+  else band = 'Band 3.0 — نیاز به تمرین بیشتر';
+  document.getElementById('bandDisplay').textContent = band;
+
+  // Per-passage breakdown
+  const bdEl = document.getElementById('passageBreakdown');
+  let bdHtml = '<div style="font-weight:700;margin-bottom:0.5rem;text-align:center;">نتیجه هر متن:</div>';
+  passages.forEach((p, pi) => {
+    const color = passageScores[pi] >= 4 ? 'var(--success)' : passageScores[pi] >= 2 ? 'var(--accent)' : '#ef4444';
+    bdHtml += `<div style="display:flex;align-items:center;gap:0.5rem;margin:0.3rem 0;font-size:0.9rem;">`;
+    bdHtml += `<span style="min-width:120px;">${p.emoji} ${p.topicFA}</span>`;
+    bdHtml += `<div style="flex:1;height:6px;background:rgba(255,255,255,0.2);border-radius:3px;overflow:hidden;">`;
+    bdHtml += `<div style="width:${(passageScores[pi] / 5) * 100}%;height:100%;background:${color};border-radius:3px;"></div>`;
+    bdHtml += `</div>`;
+    bdHtml += `<span style="min-width:30px;font-weight:700;">${toFa(passageScores[pi])}/۵</span>`;
+    bdHtml += `</div>`;
+  });
+  bdEl.innerHTML = bdHtml;
+
+  document.getElementById('reviewBtn').style.display = 'inline-block';
+  document.getElementById('scorePanel').scrollIntoView({ behavior: 'smooth' });
+
+  // Mark completed passages
+  passages.forEach((p, pi) => {
+    const btn = document.querySelector(`.passage-btn[data-idx="${pi}"]`);
+    if (btn && passageScores[pi] > 0) btn.classList.add('completed');
+  });
+}
+
+function getCorrectAnswerText(q) {
+  if (q.type === 'tf') return `<strong>${q.answer}</strong>`;
+  if (q.type === 'mc') return `<strong>${q.options[q.answer]}</strong>`;
+  if (q.type === 'mh') return `<strong>${q.options[q.answer]}</strong>`;
+  return `<strong>${q.answer}</strong>`;
+}
+
+function highlightSelectedAnswer(q, isCorrect) {
+  if (q.type === 'tf' || q.type === 'mc' || q.type === 'mh') {
+    const qb = document.getElementById(`qb-${q.id}`);
+    qb.querySelectorAll('label').forEach(l => {
+      const inp = l.querySelector('input');
+      if (inp && inp.checked) {
+        if (isCorrect) {
+          l.classList.add('show-correct');
+        } else {
+          l.classList.add('show-incorrect');
+        }
+      }
+    });
+    // For MH, highlight the select
+    if (q.type === 'mh') {
+      const sel = document.getElementById(`input-${q.id}`);
+      if (sel) sel.classList.add(isCorrect ? 'show-correct' : 'show-incorrect');
+    }
+  } else if (q.type === 'fb') {
+    const inp = document.getElementById(`input-${q.id}`);
+    if (inp) inp.classList.add(isCorrect ? 'show-correct' : 'show-incorrect');
+  }
+}
+
+// ===== SHOW CORRECT ANSWERS =====
+function showCorrectAnswers() {
+  hasBeenChecked = true;
+  questionsData.flat().forEach(q => {
+    const qb = document.getElementById(`qb-${q.id}`);
+    const ansEl = document.getElementById(`ans-${q.id}`);
+    qb.classList.remove('incorrect', 'unanswered');
+    qb.classList.add('correct');
+    const qn = document.getElementById(`qn-${q.id}`);
+    qn.className = 'q-number correct';
+    ansEl.className = 'correct-answer visible is-correct';
+    ansEl.innerHTML = `✅ <strong>پاسخ صحیح: ${getCorrectAnswerText(q)}</strong><span class="explanation">💡 ${q.explanation}</span>`;
+
+    if (q.type === 'tf' || q.type === 'mc') {
+      qb.querySelectorAll('label').forEach(l => {
+        l.classList.remove('selected', 'show-incorrect');
+        const inp = l.querySelector('input');
+        const correctVal = q.type === 'mc' ? String(q.answer) : q.answer;
+        if (inp && inp.value === correctVal) l.classList.add('show-correct');
+      });
+    } else if (q.type === 'mh') {
+      const sel = document.getElementById(`input-${q.id}`);
+      if (sel) {
+        sel.value = q.answer;
+        sel.classList.add('show-correct');
+      }
+    } else {
+      const inp = document.getElementById(`input-${q.id}`);
+      if (inp) { inp.value = q.answer; inp.classList.add('show-correct'); }
+    }
+  });
+  document.getElementById('scorePanel').classList.add('visible');
+  document.getElementById('scoreProgressFill').style.width = '100%';
+  document.getElementById('scoreNumber').textContent = `${toFa(50)}/${toFa(50)}`;
+  document.getElementById('correctCount').textContent = toFa(50);
+  document.getElementById('incorrectCount').textContent = '۰';
+  document.getElementById('unansweredCount').textContent = '۰';
+  document.getElementById('bandDisplay').textContent = 'Band 9.0 🏆';
+  document.getElementById('reviewBtn').style.display = 'inline-block';
+}
+
+// ===== RESET QUIZ =====
+function resetQuiz() {
+  hasBeenChecked = false;
+  totalSeconds = 60 * 60;
+  timerRunning = false;
+  if (timerInterval) clearInterval(timerInterval);
+
+  questionsData.flat().forEach(q => {
+    const qb = document.getElementById(`qb-${q.id}`);
+    const ansEl = document.getElementById(`ans-${q.id}`);
+    const qn = document.getElementById(`qn-${q.id}`);
+    qb.classList.remove('correct', 'incorrect', 'unanswered');
+    qn.className = 'q-number';
+    ansEl.className = 'correct-answer';
+    if (q.type === 'tf' || q.type === 'mc') {
+      qb.querySelectorAll('input[type=radio]').forEach(inp => { inp.checked = false; });
+      qb.querySelectorAll('.options-list label').forEach(l => l.classList.remove('selected', 'show-correct', 'show-incorrect'));
+    } else if (q.type === 'mh') {
+      const sel = document.getElementById(`input-${q.id}`);
+      if (sel) { sel.value = ''; sel.classList.remove('show-correct', 'show-incorrect'); }
+    } else {
+      const inp = document.getElementById(`input-${q.id}`);
+      if (inp) { inp.value = ''; inp.classList.remove('show-correct', 'show-incorrect'); }
+    }
+  });
+
+  document.getElementById('scorePanel').classList.remove('visible');
+  document.getElementById('quizToolbar').classList.remove('visible');
+  document.getElementById('timerText').textContent = '۶۰:۰۰';
+  document.getElementById('timerDisplay').classList.remove('warning');
+  document.getElementById('globalBarFill').style.width = '0%';
+  document.getElementById('answeredLabel').textContent = 'پاسخ داده شده: ۰/۵۰';
+  document.getElementById('scoreLabel').textContent = 'امتیاز: ۰';
+  document.getElementById('reviewBtn').style.display = 'none';
+  document.querySelectorAll('.passage-score-bar').forEach(b => b.style.display = 'none');
+  document.querySelectorAll('.passage-btn').forEach(b => b.classList.remove('completed'));
+
+  reviewMode = false;
+  showPassage(0);
+}
+
+// ===== REVIEW MODE =====
+function toggleReviewMode() {
+  reviewMode = !reviewMode;
+  const btn = document.getElementById('reviewBtn');
+  if (reviewMode) {
+    btn.textContent = '📖 حالت عادی';
+    startReview();
+  } else {
+    btn.textContent = '📋 مرور سوال به سوال';
+    endReview();
+  }
+}
+
+function startReview() {
+  currentReviewQ = 0;
+  showReviewQuestion();
+}
+
+function showReviewQuestion() {
+  const flat = questionsData.flat();
+  if (currentReviewQ >= flat.length) {
+    currentReviewQ = flat.length - 1;
+  }
+
+  // Hide all passage cards
+  document.querySelectorAll('.passage-card').forEach(c => c.classList.remove('active'));
+
+  // Determine which passage this question belongs to
+  let qIndex = 0;
+  let passageIdx = 0;
+  let qIdxInPassage = 0;
+  for (let pi = 0; pi < questionsData.length; pi++) {
+    if (qIndex + questionsData[pi].length > currentReviewQ) {
+      passageIdx = pi;
+      qIdxInPassage = currentReviewQ - qIndex;
+      break;
+    }
+    qIndex += questionsData[pi].length;
+  }
+
+  // Show that passage
+  document.querySelector(`[data-passage="${passageIdx}"]`).classList.add('active');
+
+  // Scroll to question
+  const q = flat[currentReviewQ];
+  const qb = document.getElementById(`qb-${q.id}`);
+  if (qb) {
+    qb.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    qb.style.boxShadow = '0 0 0 3px var(--primary)';
+    setTimeout(() => { qb.style.boxShadow = ''; }, 2000);
+  }
+
+  // Update nav to show which passage
+  document.querySelectorAll('.passage-btn').forEach((b, i) => {
+    b.classList.remove('active');
+    if (i === passageIdx) b.classList.add('active');
+  });
+
+  // Add review navigation bar if not exists
+  let revBar = document.getElementById('reviewBar');
+  if (!revBar) {
+    revBar = document.createElement('div');
+    revBar.id = 'reviewBar';
+    revBar.style.cssText = 'position:sticky;top:120px;z-index:60;background:var(--primary);color:#fff;padding:0.75rem 1.5rem;display:flex;justify-content:space-between;align-items:center;border-radius:8px;margin-bottom:1rem;';
+    document.querySelector('.quiz-container').prepend(revBar);
+  }
+  revBar.style.display = 'flex';
+  revBar.innerHTML = `
+    <button class="btn" style="background:rgba(255,255,255,0.2);color:#fff;border:none;" onclick="reviewPrev()" ${currentReviewQ === 0 ? 'disabled style="opacity:0.3"' : ''}>◀ سوال قبلی</button>
+    <span style="font-weight:700;">سوال ${toFa(currentReviewQ + 1)} از ${toFa(flat.length)}</span>
+    <button class="btn" style="background:rgba(255,255,255,0.2);color:#fff;border:none;" onclick="reviewNext()" ${currentReviewQ >= flat.length - 1 ? 'disabled style="opacity:0.3"' : ''}>سوال بعدی ▶</button>
+  `;
+}
+
+function reviewNext() {
+  const flat = questionsData.flat();
+  if (currentReviewQ < flat.length - 1) {
+    currentReviewQ++;
+    showReviewQuestion();
+  }
+}
+
+function reviewPrev() {
+  if (currentReviewQ > 0) {
+    currentReviewQ--;
+    showReviewQuestion();
+  }
+}
+
+function endReview() {
+  const revBar = document.getElementById('reviewBar');
+  if (revBar) revBar.style.display = 'none';
+  showPassage(currentPassage);
+}
+
+// ===== INIT =====
+renderAllPassages();
+renderQuestions();
+</script>
+</body>
+</html>

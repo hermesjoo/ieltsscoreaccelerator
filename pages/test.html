@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>آزمون تعیین سطح | IELTS Score Accelerator</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .test-container { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+    .test-progress { background: var(--border); border-radius: 10px; height: 8px; margin-bottom: 2rem; overflow: hidden; }
+    .test-progress-bar { background: var(--primary); height: 100%; width: 0%; transition: width 0.4s; border-radius: 10px; }
+    .question-card { background: var(--card); border-radius: var(--radius); padding: 2rem; margin-bottom: 1.5rem; border: 1px solid var(--border); }
+    .question-card h3 { color: var(--primary); margin-bottom: 1rem; font-size: 0.9rem; }
+    .question-card p { font-size: 1.1rem; margin-bottom: 1.5rem; }
+    .options label { display: block; padding: 0.8rem 1rem; margin-bottom: 0.5rem; border: 2px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.2s; }
+    .options label:hover { border-color: var(--primary); background: #eff6ff; }
+    .options input[type="radio"] { margin-left: 0.5rem; }
+    .options input:checked + span { font-weight: 600; }
+    .result-box { background: var(--card); border-radius: var(--radius); padding: 3rem; text-align: center; border: 2px solid var(--primary); display: none; }
+    .result-box .band { font-size: 5rem; font-weight: 800; color: var(--primary); }
+    .result-box .band-label { font-size: 1.2rem; color: var(--text-light); margin-bottom: 2rem; }
+    .band-breakdown { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 2rem 0; text-align: right; }
+    .band-item { background: #f1f5f9; padding: 1rem; border-radius: 8px; }
+    .band-item strong { color: var(--primary); }
+    .timer { font-size: 1.2rem; color: var(--text-light); margin-bottom: 1rem; text-align: center; }
+    .category-badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; margin-bottom: 0.5rem; }
+    .cat-reading { background: #dbeafe; color: #1d4ed8; }
+    .cat-listening { background: #fef3c7; color: #92400e; }
+    .cat-writing { background: #d1fae5; color: #065f46; }
+    .cat-speaking { background: #fce7f3; color: #9d174d; }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="../index.html" class="logo"><img src="../images/logo-color.png" alt="IELTS Score Accelerator" style="height:48px"></a>
+  <div class="nav-links">
+    <a href="reading.html">Reading</a>
+    <a href="listening.html">Listening</a>
+    <a href="writing.html">Writing</a>
+    <a href="speaking.html">Speaking</a>
+    <a href="test.html" class="btn btn-outline">آزمون تعیین سطح</a>
+    <a href="register.html" class="btn btn-primary">ورود / ثبت‌نام</a>
+  </div>
+</nav>
+
+<div class="section">
+  <div class="test-container">
+    <h2 class="section-title">آزمون تعیین سطح IELTS</h2>
+    <p class="section-subtitle">۴۰ سوال از ۴ مهارت — حدود ۱۰ دقیقه</p>
+
+    <div class="timer" id="timer">⏱ ۱۰:۰۰</div>
+    <div class="test-progress"><div class="test-progress-bar" id="progressBar"></div></div>
+
+    <div id="quizContainer"></div>
+    <div class="result-box" id="resultBox">
+      <div class="band" id="totalBand">-</div>
+      <div class="band-label">Band Score تقریبی شما</div>
+      <div class="band-breakdown" id="bandBreakdown"></div>
+      <br>
+      <a href="register.html" class="btn btn-primary" style="margin:0.5rem">ثبت‌نام برای دوره</a>
+      <button class="btn btn-outline" onclick="resetQuiz()" style="margin:0.5rem">تکرار آزمون</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  // Reading (10)
+  {cat:'reading',q:'The word "ubiquitous" most nearly means:',opts:['Rare','Everywhere','Ancient','Tiny'],ans:1},
+  {cat:'reading',q:'In IELTS Reading, "skimming" means:',opts:['Reading every word carefully','Getting the main idea quickly','Translating the text','Memorizing details'],ans:1},
+  {cat:'reading',q:'Which is NOT a common IELTS Reading question type?',opts:['True/False/Not Given','Matching Headings','Oral Presentation','Fill in the Blanks'],ans:2},
+  {cat:'reading',q:'"The author implies that..." means you should look for:',opts:['Direct statements','Suggested meaning','The title','Page numbers'],ans:1},
+  {cat:'reading',q:'Time management in Reading: you should spend about _____ per passage.',opts:['10 minutes','20 minutes','40 minutes','60 minutes'],ans:1},
+  {cat:'reading',q:'If a statement contradicts the passage, the answer is:',opts:['True','False','Not Given','Maybe'],ans:1},
+  {cat:'reading',q:'What does "paraphrase" mean in IELTS?',opts:['Copying word for word','Saying the same thing differently','Ignoring the text','Speaking loudly'],ans:1},
+  {cat:'reading',q:'The best approach to unknown vocabulary is:',opts:['Stop reading','Guess from context','Use a dictionary immediately','Skip the question'],ans:1},
+  {cat:'reading',q:'Academic Reading passages are usually:',opts:['About personal stories','From books, journals, magazines','From social media','From children books'],ans:1},
+  {cat:'reading',q:'How many passages are in IELTS Academic Reading?',opts:['1','2','3','5'],ans:2},
+
+  // Listening (10)
+  {cat:'listening',q:'IELTS Listening has _____ sections.',opts:['2','3','4','5'],ans:2},
+  {cat:'listening',q:'In Section 1, you typically hear:',opts:['A lecture','A monologue','A conversation between two people','A news broadcast'],ans:2},
+  {cat:'listening',q:'You should read questions before listening because:',opts:['It wastes time','It helps you focus on key info','The audio is too fast','Questions are secret'],ans:1},
+  {cat:'listening',q:'Spelling matters in IELTS Listening?',opts:['No, never','Only for names','Yes, exact spelling is needed','Only in Writing'],ans:2},
+  {cat:'listening',q:'If you miss an answer, you should:',opts:['Rewind the audio','Skip and move on','Guess randomly','Stop the test'],ans:1},
+  {cat:'listening',q:'Section 4 of Listening is usually:',opts:['A casual chat','A monologue on an academic topic','A song','A phone call'],ans:1},
+  {cat:'listening',q:'British and American spelling differences are:',opts:['Always marked wrong','Both accepted in IELTS','Only American is accepted','Depends on the examiner'],ans:1},
+  {cat:'listening',q:'How many times do you hear the audio in IELTS?',opts:['3 times','2 times','1 time','4 times'],ans:2},
+  {cat:'listening',q:'Numbers and dates in Listening require:',opts:['Approximate answers','Exact figures','Roman numerals','Written out in words'],ans:1},
+  {cat:'listening',q:'Transfer time at the end of Listening is:',opts:['5 minutes','10 minutes','No transfer time (paper only)','20 minutes'],ans:2},
+
+  // Writing (10)
+  {cat:'writing',q:'IELTS Writing Task 1 (Academic) requires you to:',opts:['Write an essay','Describe a graph or diagram','Write a letter','Translate a passage'],ans:1},
+  {cat:'writing',q:'IELTS Writing Task 2 is worth:',opts:['Same as Task 1','Less than Task 1','More than Task 1','Double Task 1'],ans:2},
+  {cat:'writing',q:'Minimum word count for Writing Task 2 is:',opts:['150 words','200 words','250 words','300 words'],ans:2},
+  {cat:'writing',q:'A good essay should have:',opts:['Only one paragraph','An introduction, body, conclusion','Bullet points','No structure needed'],ans:1},
+  {cat:'writing',q:'Using informal language in Academic Writing is:',opts:['Recommended','Acceptable','Penalized','Required'],ans:2},
+  {cat:'writing',q:'What does "coherence" mean in Writing?',opts:['Using hard words','Logical flow and connection of ideas','Writing quickly','Using complex grammar'],ans:1},
+  {cat:'writing',q:'Task 1 word count minimum is:',opts:['100 words','150 words','200 words','250 words'],ans:1},
+  {cat:'writing',q:'Which is better for a high Writing score?',opts:['Very long sentences','Variety of vocabulary and grammar','Simple words only','No paragraphs'],ans:1},
+  {cat:'writing',q:'In Task 2, "discuss both views" means:',opts:['Only agree','Present both sides then give opinion','Ignore one side','Write a poem'],ans:1},
+  {cat:'writing',q:'Time recommended for Writing Task 2:',opts:['20 minutes','30 minutes','40 minutes','60 minutes'],ans:2},
+
+  // Speaking (10)
+  {cat:'speaking',q:'IELTS Speaking has _____ parts.',opts:['2','3','4','5'],ans:1},
+  {cat:'speaking',q:'Part 1 of Speaking lasts about:',opts:['1-2 minutes','4-5 minutes','10 minutes','20 minutes'],ans:1},
+  {cat:'speaking',q:'In Part 2, you get a cue card and must:',opts:['Draw a picture','Speak for 1-2 minutes after 1 min prep','Sing a song','Write an essay'],ans:1},
+  {cat:'speaking',q:'Which is NOT a Part 2 cue card topic?',opts:['Describe a place','Describe a person','Write a report','Describe an experience'],ans:2},
+  {cat:'speaking',q:'Using fillers like "um" and "uh" constantly:',opts:['Shows fluency','Is penalized slightly','Is recommended','Doesn\'t matter at all'],ans:1},
+  {cat:'speaking',q:'"Band 7" speaking means:',opts:['No mistakes ever','Good vocabulary, few errors, fluent','Only basic words','Reading from paper'],ans:1},
+  {cat:'speaking',q:'Part 3 questions are about:',opts:['Your personal life','Abstract ideas and opinions','Your name','The weather'],ans:1},
+  {cat:'speaking',q:'Pronunciation is scored on:',opts:['Accent perfection','Intelligibility and features of pronunciation','Speaking loudly','Number of words'],ans:1},
+  {cat:'speaking',q:'How long is the entire Speaking test?',opts:['5 minutes','11-14 minutes','30 minutes','1 hour'],ans:1},
+  {cat:'speaking',q:'The Speaking test is:',opts:['Always with other candidates','Recorded and played back','One-on-one with an examiner','Done online only'],ans:2},
+];
+
+let current = 0, score = 0, answers = [], timerInterval, timeLeft = 600;
+
+function shuffleByCategory() {
+  const cats = ['reading','listening','writing','speaking'];
+  const shuffled = [];
+  cats.forEach(cat => {
+    const items = questions.filter(q => q.cat === cat);
+    shuffled.push(...items);
+  });
+  return shuffled;
+}
+
+const quiz = shuffleByCategory();
+
+function renderQuiz() {
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = '';
+  quiz.forEach((q, i) => {
+    const catLabels = {reading:'Reading',listening:'Listening',writing:'Writing',speaking:'Speaking'};
+    const catClass = {reading:'cat-reading',listening:'cat-listening',writing:'cat-writing',speaking:'cat-speaking'};
+    const div = document.createElement('div');
+    div.className = 'question-card';
+    div.innerHTML = `
+      <span class="category-badge ${catClass[q.cat]}">${catLabels[q.cat]}</span>
+      <h3>سوال ${i+1} از ${quiz.length}</h3>
+      <p>${q.q}</p>
+      <div class="options">
+        ${q.opts.map((o,j) => `
+          <label><input type="radio" name="q${i}" value="${j}" onchange="checkAnswer(${i},${j})"><span>${o}</span></label>
+        `).join('')}
+      </div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function checkAnswer(i, selected) {
+  answers[i] = selected;
+  const correct = quiz[i].ans === selected;
+  const labels = document.querySelectorAll(`input[name="q${i}"]`);
+  labels.forEach((l,j) => {
+    l.disabled = true;
+    const parent = l.parentElement;
+    if(j === quiz[i].ans) parent.style.background = '#d1fae5';
+    else if(j === selected && !correct) parent.style.background = '#fee2e2';
+  });
+  updateProgress();
+}
+
+function updateProgress() {
+  const answered = answers.filter(a => a !== undefined).length;
+  document.getElementById('progressBar').style.width = (answered/quiz.length*100)+'%';
+  if(answered === quiz.length) showResults();
+}
+
+function showResults() {
+  clearInterval(timerInterval);
+  score = 0;
+  const catScores = {reading:0,listening:0,writing:0,speaking:0};
+  const catCounts = {reading:0,listening:0,writing:0,speaking:0};
+  quiz.forEach((q,i) => {
+    catCounts[q.cat]++;
+    if(answers[i] === q.ans) { score++; catScores[q.cat]++; }
+  });
+  const totalBand = Math.round((score / quiz.length) * 9 * 2) / 2;
+  const bands = {};
+  ['reading','listening','writing','speaking'].forEach(c => {
+    bands[c] = Math.round((catScores[c] / catCounts[c]) * 9 * 2) / 2;
+  });
+  document.getElementById('quizContainer').style.display = 'none';
+  const box = document.getElementById('resultBox');
+  box.style.display = 'block';
+  document.getElementById('totalBand').textContent = totalBand;
+  const names = {reading:'Reading',listening:'Listening',writing:'Writing',speaking:'Speaking'};
+  document.getElementById('bandBreakdown').innerHTML = Object.entries(bands).map(([k,v]) =>
+    `<div class="band-item"><strong>${names[k]}:</strong> ${v}</div>`
+  ).join('');
+}
+
+function startTimer() {
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    const m = Math.floor(timeLeft/60), s = timeLeft%60;
+    document.getElementById('timer').textContent = `⏱ ${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    if(timeLeft <= 0) showResults();
+  }, 1000);
+}
+
+function resetQuiz() {
+  current = 0; score = 0; answers = []; timeLeft = 600;
+  document.getElementById('quizContainer').style.display = 'block';
+  document.getElementById('resultBox').style.display = 'none';
+  renderQuiz();
+  startTimer();
+}
+
+renderQuiz();
+startTimer();
+</script>
+
+<footer class="footer">
+  <p>© ۲۰۲۶ IELTS Score Accelerator | تمامی حقوق محفوظ است</p>
+</footer>
+
+</body>
+</html>
