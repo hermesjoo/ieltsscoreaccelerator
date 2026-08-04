@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IELTS Reading Practice</title>
+  <title>IELTS Reading Practice — 15 Passages</title>
   <link rel="stylesheet" href="../css/style.css">
   <style>
     /* ===== Page Header ===== */
@@ -15,6 +15,122 @@
     }
     .page-header h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
     .page-header p { opacity: 0.9; font-size: 1.1rem; }
+
+    /* ===== Tips Section ===== */
+    .tips-section {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+    .tips-card {
+      background: linear-gradient(135deg, #f0fdf4, #ecfdf5);
+      border: 2px solid #bbf7d0;
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .tips-card h2 {
+      font-size: 1.4rem;
+      color: #065f46;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .tips-list {
+      list-style: none;
+      counter-reset: tip-counter;
+    }
+    .tips-list li {
+      counter-increment: tip-counter;
+      padding: 0.8rem 1rem 0.8rem 3rem;
+      position: relative;
+      line-height: 1.7;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .tips-list li:last-child { border-bottom: none; }
+    .tips-list li::before {
+      content: counter(tip-counter);
+      position: absolute;
+      left: 0;
+      top: 0.8rem;
+      width: 28px;
+      height: 28px;
+      background: #065f46;
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+    .tips-list li strong { color: #065f46; }
+    .tips-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background: #065f46;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: background 0.2s;
+    }
+    .tips-toggle:hover { background: #047857; }
+
+    /* ===== Band Score Guide ===== */
+    .band-guide {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+    .band-guide-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .band-guide-card h2 {
+      font-size: 1.4rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+    .band-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .band-table th {
+      background: var(--primary);
+      color: #fff;
+      padding: 0.7rem 1rem;
+      text-align: left;
+    }
+    .band-table td {
+      padding: 0.6rem 1rem;
+      border-bottom: 1px solid var(--border);
+      line-height: 1.6;
+    }
+    .band-table tr:nth-child(even) { background: #f8fafc; }
+    .band-table .band-badge {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+    .band-9 { background: #d1fae5; color: #065f46; }
+    .band-8 { background: #dbeafe; color: #1e40af; }
+    .band-7 { background: #e0e7ff; color: #3730a3; }
+    .band-6 { background: #fef3c7; color: #92400e; }
+    .band-5 { background: #fed7aa; color: #9a3412; }
+    .band-4 { background: #fecaca; color: #991b1b; }
 
     /* ===== Timer & Progress Bar ===== */
     .quiz-toolbar {
@@ -45,6 +161,8 @@
       50% { opacity: 0.5; }
     }
     .timer-icon { font-size: 1.4rem; }
+    .timer-controls { display: flex; gap: 0.3rem; }
+    .timer-controls .btn { font-size: 0.75rem; padding: 0.3rem 0.6rem; }
     .global-progress {
       flex: 1;
       max-width: 400px;
@@ -158,6 +276,49 @@
       margin-bottom: 1rem;
     }
     .passage-paragraph:last-child { margin-bottom: 0; }
+
+    /* ===== Vocabulary Box ===== */
+    .vocab-box {
+      background: linear-gradient(135deg, #eff6ff, #f0f7ff);
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .vocab-box h4 {
+      font-size: 1.05rem;
+      color: #1e40af;
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .vocab-item {
+      padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .vocab-item:last-child { border-bottom: none; }
+    .vocab-word {
+      font-weight: 700;
+      color: #1e40af;
+      font-size: 0.95rem;
+    }
+    .vocab-pos {
+      font-style: italic;
+      color: #6b7280;
+      font-size: 0.85rem;
+      margin-left: 0.3rem;
+    }
+    .vocab-def {
+      font-size: 0.9rem;
+      color: #334155;
+      margin: 0.2rem 0;
+    }
+    .vocab-ex {
+      font-size: 0.85rem;
+      color: #6b7280;
+      font-style: italic;
+    }
 
     /* ===== Section Divider ===== */
     .section-divider {
@@ -416,6 +577,56 @@
       text-align: center;
     }
 
+    /* ===== Results Summary ===== */
+    .results-summary {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin: 2rem 0;
+      display: none;
+    }
+    .results-summary.visible { display: block; }
+    .results-summary h2 {
+      font-size: 1.4rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .result-stat {
+      background: #f8fafc;
+      padding: 1.2rem;
+      border-radius: 8px;
+      text-align: center;
+      border: 1px solid var(--border);
+    }
+    .result-stat .stat-num {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+    .result-stat .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-top: 0.3rem;
+    }
+    .results-tips {
+      margin-top: 1.5rem;
+      padding: 1rem 1.2rem;
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: 8px;
+    }
+    .results-tips h4 { color: #92400e; margin-bottom: 0.5rem; }
+    .results-tips ul { padding-left: 1.2rem; }
+    .results-tips li { color: #78350f; line-height: 1.7; font-size: 0.9rem; }
+
     /* ===== Review Mode ===== */
     .review-header {
       text-align: center;
@@ -453,6 +664,9 @@
       .quiz-toolbar { top: 56px; padding: 0.75rem 1rem; }
       .score-number { font-size: 3rem; }
       .score-details { gap: 1rem; }
+      .band-table { font-size: 0.8rem; }
+      .band-table th, .band-table td { padding: 0.5rem 0.6rem; }
+      .results-grid { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
@@ -474,18 +688,42 @@
 <!-- ===== PAGE HEADER ===== -->
 <div class="page-header">
   <h1>📖 IELTS Reading Practice</h1>
-  <p>10 professional practice passages with various question types — True/False/Not Given, Multiple Choice, Matching Headings, Fill-in-the-blank</p>
+  <p>15 professional practice passages with various question types — True/False/Not Given, Multiple Choice, Matching Headings, Fill-in-the-blank</p>
+</div>
+
+<!-- ===== TIPS FOR READING ===== -->
+<div class="tips-section">
+  <div class="tips-card" id="tipsCard">
+    <h2>💡 Tips for IELTS Reading — 5 Essential Strategies</h2>
+    <p style="margin-bottom:1rem; color:#334155;">Master these strategies to maximise your IELTS Reading band score. Click the button below to expand or collapse.</p>
+    <button class="tips-toggle" onclick="toggleTips()" id="tipsToggleBtn">▼ Show Tips</button>
+    <div id="tipsContent" style="display:none;">
+      <ol class="tips-list" style="margin-top:1rem;">
+        <li><strong>Skim first, then scan for details.</strong> Spend 2–3 minutes skimming each passage to understand the main idea and structure. Then read the questions and scan for specific information. This saves time and improves accuracy compared to reading every word carefully.</li>
+        <li><strong>Watch for synonyms and paraphrasing.</strong> IELTS examiners rarely use the exact words from the passage in the questions. Train yourself to recognise paraphrased versions — for example, "significant" in a question may correspond to "considerable" or "substantial" in the passage.</li>
+        <li><strong>Manage your time — aim for 20 minutes per passage.</strong> The IELTS Reading test gives you 60 minutes for 3 passages. Allocate roughly 20 minutes per passage, spending more time on harder ones. If a question takes more than 2 minutes, mark your best guess and move on.</li>
+        <li><strong>Read the questions before the passage.</strong> Underlining key words in the questions helps you know exactly what to look for. This targeted approach prevents wasted time on irrelevant information and reduces the chance of misreading.</li>
+        <li><strong>Don't get stuck on unknown words.</strong> Every passage contains unfamiliar vocabulary, and that's by design. Use context clues to guess the meaning. Often, the surrounding sentences provide enough information to answer questions correctly without understanding every single word.</li>
+      </ol>
+    </div>
+  </div>
 </div>
 
 <!-- ===== TIMER & GLOBAL PROGRESS TOOLBAR ===== -->
 <div class="quiz-toolbar" id="quizToolbar">
-  <div class="timer-display" id="timerDisplay">
-    <span class="timer-icon">⏱️</span>
-    <span id="timerText">60:00</span>
+  <div style="display:flex;align-items:center;gap:0.75rem;">
+    <div class="timer-display" id="timerDisplay">
+      <span class="timer-icon">⏱️</span>
+      <span id="timerText">60:00</span>
+    </div>
+    <div class="timer-controls">
+      <button class="btn btn-outline" onclick="pauseTimer()" id="pauseBtn" title="Pause">⏸</button>
+      <button class="btn btn-outline" onclick="resumeTimer()" id="resumeBtn" title="Resume" style="display:none;">▶</button>
+    </div>
   </div>
   <div class="global-progress">
     <div class="label-row">
-      <span id="answeredLabel">Answered: 0/50</span>
+      <span id="answeredLabel">Answered: 0/75</span>
       <span id="scoreLabel">Score: 0</span>
     </div>
     <div class="bar-track">
@@ -501,16 +739,21 @@
 
 <!-- ===== PASSAGE NAVIGATION ===== -->
 <div class="passage-nav" id="passageNav">
-  <button class="passage-btn active" onclick="showPassage(0)" data-idx="0">1. Climate Change</button>
-  <button class="passage-btn" onclick="showPassage(1)" data-idx="1">2. AI in Education</button>
-  <button class="passage-btn" onclick="showPassage(2)" data-idx="2">3. Urban Planning</button>
-  <button class="passage-btn" onclick="showPassage(3)" data-idx="3">4. Space Exploration</button>
-  <button class="passage-btn" onclick="showPassage(4)" data-idx="4">5. Ocean Conservation</button>
-  <button class="passage-btn" onclick="showPassage(5)" data-idx="5">6. Ancient Civilisations</button>
-  <button class="passage-btn" onclick="showPassage(6)" data-idx="6">7. Mental Health</button>
-  <button class="passage-btn" onclick="showPassage(7)" data-idx="7">8. Renewable Energy</button>
-  <button class="passage-btn" onclick="showPassage(8)" data-idx="8">9. Cultural Heritage</button>
-  <button class="passage-btn" onclick="showPassage(9)" data-idx="9">10. Food Security</button>
+  <button class="passage-btn active" onclick="showPassage(0)" data-idx="0">1</button>
+  <button class="passage-btn" onclick="showPassage(1)" data-idx="1">2</button>
+  <button class="passage-btn" onclick="showPassage(2)" data-idx="2">3</button>
+  <button class="passage-btn" onclick="showPassage(3)" data-idx="3">4</button>
+  <button class="passage-btn" onclick="showPassage(4)" data-idx="4">5</button>
+  <button class="passage-btn" onclick="showPassage(5)" data-idx="5">6</button>
+  <button class="passage-btn" onclick="showPassage(6)" data-idx="6">7</button>
+  <button class="passage-btn" onclick="showPassage(7)" data-idx="7">8</button>
+  <button class="passage-btn" onclick="showPassage(8)" data-idx="8">9</button>
+  <button class="passage-btn" onclick="showPassage(9)" data-idx="9">10</button>
+  <button class="passage-btn" onclick="showPassage(10)" data-idx="10">11</button>
+  <button class="passage-btn" onclick="showPassage(11)" data-idx="11">12</button>
+  <button class="passage-btn" onclick="showPassage(12)" data-idx="12">13</button>
+  <button class="passage-btn" onclick="showPassage(13)" data-idx="13">14</button>
+  <button class="passage-btn" onclick="showPassage(14)" data-idx="14">15</button>
 </div>
 
 <!-- ===== QUIZ CONTAINER ===== -->
@@ -520,7 +763,7 @@
 <div class="quiz-container">
   <div class="score-panel" id="scorePanel">
     <h2>📊 Your Final Results</h2>
-    <div class="score-number" id="scoreNumber">0/50</div>
+    <div class="score-number" id="scoreNumber">0/75</div>
     <div class="band-display" id="bandDisplay"></div>
     <div class="progress-bar" style="background:rgba(255,255,255,0.2)">
       <div class="progress-fill" id="scoreProgressFill" style="width:0%"></div>
@@ -528,9 +771,8 @@
     <div class="score-details">
       <div class="score-item"><div class="num" id="correctCount">0</div><div class="lbl">Correct ✓</div></div>
       <div class="score-item"><div class="num" id="incorrectCount">0</div><div class="lbl">Incorrect ✗</div></div>
-      <div class="score-item"><div class="num" id="unansweredCount">50</div><div class="lbl">Unanswered</div></div>
+      <div class="score-item"><div class="num" id="unansweredCount">75</div><div class="lbl">Unanswered</div></div>
     </div>
-    <!-- Per-passage breakdown -->
     <div id="passageBreakdown" style="margin-top:1.5rem; text-align:left;"></div>
   </div>
 
@@ -539,6 +781,59 @@
     <button class="btn btn-outline" onclick="showCorrectAnswers()">👁️ Show Correct Answers</button>
     <button class="btn btn-accent" onclick="resetQuiz()">🔄 Reset</button>
     <button class="btn btn-primary" onclick="toggleReviewMode()" id="reviewBtn" style="display:none;">📋 Review Questions</button>
+  </div>
+
+  <!-- ===== RESULTS SUMMARY ===== -->
+  <div class="results-summary" id="resultsSummary">
+    <h2>📋 Detailed Results Summary</h2>
+    <div class="results-grid" id="resultsGrid"></div>
+    <div class="results-tips" id="resultsTips"></div>
+  </div>
+</div>
+
+<!-- ===== BAND SCORE GUIDE ===== -->
+<div class="band-guide">
+  <div class="band-guide-card">
+    <h2>🎯 IELTS Reading Band Score Guide</h2>
+    <p style="margin-bottom:1rem;color:#6b7280;">Understanding how your raw score translates to an IELTS band score helps you set realistic targets.</p>
+    <table class="band-table">
+      <thead>
+        <tr><th>Band Score</th><th>Correct Answers (out of 75)</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="band-badge band-9">Band 9</span></td>
+          <td>71–75 (95–100%)</td>
+          <td><strong>Expert User</strong> — Has fully operational command of the language. Appropriate, accurate and fluent with complete understanding.</td>
+        </tr>
+        <tr>
+          <td><span class="band-badge band-8">Band 8.0–8.5</span></td>
+          <td>63–70 (84–94%)</td>
+          <td><strong>Very Good User</strong> — Has fully operational command with only occasional unsystematic inaccuracies and inappropriate usage.</td>
+        </tr>
+        <tr>
+          <td><span class="band-badge band-7">Band 7.0–7.5</span></td>
+          <td>53–62 (71–83%)</td>
+          <td><strong>Good User</strong> — Has operational command, though with occasional inaccuracies and misunderstandings in some situations.</td>
+        </tr>
+        <tr>
+          <td><span class="band-badge band-6">Band 6.0–6.5</span></td>
+          <td>41–52 (55–70%)</td>
+          <td><strong>Competent User</strong> — Generally has effective command despite some inaccuracies and misunderstandings.</td>
+        </tr>
+        <tr>
+          <td><span class="band-badge band-5">Band 5.0–5.5</span></td>
+          <td>30–40 (40–54%)</td>
+          <td><strong>Modest User</strong> — Has partial command, coping with overall meaning in most situations, though likely to make many mistakes.</td>
+        </tr>
+        <tr>
+          <td><span class="band-badge band-4">Band 4.0–4.5</span></td>
+          <td>16–29 (21–39%)</td>
+          <td><strong>Limited User</strong> — Basic competence is limited to familiar situations. Frequent problems in understanding and expression.</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="margin-top:1rem;font-size:0.85rem;color:#6b7280;">Note: The actual IELTS band-to-score conversion can vary slightly between test administrations. These figures are approximate guidelines based on recent official conversions.</p>
   </div>
 </div>
 
@@ -549,13 +844,14 @@
     <a href="listening.html">Listening</a>
     <a href="writing.html">Writing</a>
     <a href="speaking.html">Speaking</a>
+    <a href="https://youtube.com/@ieltsscoreaccelerator" target="_blank" rel="noopener noreferrer">📺 YouTube</a>
   </div>
   <p>© 2026 IELTS Pro | All Rights Reserved</p>
 </footer>
 
 <script>
 // ======================================================================
-// IELTS READING QUIZ ENGINE — Production-Quality
+// IELTS READING QUIZ ENGINE — Production-Quality (15 Passages, 75 Questions)
 // ======================================================================
 
 // ----- PASSAGE DATA -----
@@ -563,7 +859,7 @@ const passages = [
   {
     id: 0,
     title: 'Climate Change and Coastal Communities',
-    emoji: '🌍',
+    emoji: '\u{1F30D}',
     topicEN: 'Climate Change',
     difficulty: 'medium',
     difficultyEN: 'Medium',
@@ -572,12 +868,19 @@ const passages = [
       "Beyond sea-level rise, coastal communities face intensifying storm surges and flooding. Warmer ocean temperatures fuel more powerful hurricanes and typhoons, causing billions of dollars in damage annually. In 2023 alone, climate-related disasters cost the global economy over 380 billion dollars, with coastal regions bearing the heaviest burden. Small island developing states (SIDS) contribute less than one percent of global emissions yet suffer disproportionately from their consequences, raising fundamental questions of climate justice.",
       "Adaptation strategies are emerging across the globe. The Netherlands, with its centuries-old tradition of water management, has invested heavily in advanced flood defence systems, including the Delta Works — one of the largest engineering projects in history. Meanwhile, nature-based solutions such as mangrove restoration are gaining traction. Research published in Nature Climate Change demonstrated that mangrove forests can reduce wave energy by up to 66 percent, providing a cost-effective buffer against coastal erosion. However, critics argue that adaptation alone is insufficient without aggressive mitigation of carbon emissions at the source.",
       "International cooperation remains pivotal. The Paris Agreement of 2015 set the goal of limiting warming to 1.5 degrees Celsius above pre-industrial levels, yet current national pledges put the world on track for approximately 2.5 degrees of warming. Bridging this gap will require unprecedented political will, massive investment in renewable energy, and a rethinking of development models that have historically prioritised economic growth over environmental sustainability."
+    ],
+    vocab: [
+      { word: 'existential', pos: 'adjective', def: 'Relating to existence or survival; posing a fundamental threat.', ex: 'Climate change poses an existential threat to coastal communities.' },
+      { word: 'thermal expansion', pos: 'noun phrase', def: 'The tendency of matter to change in volume in response to a change in temperature.', ex: 'Rising sea levels are driven partly by the thermal expansion of ocean water.' },
+      { word: 'disproportionately', pos: 'adverb', def: 'To a degree that is larger or smaller than what is expected or appropriate.', ex: 'SIDS suffer disproportionately from the consequences of emissions.' },
+      { word: 'mitigation', pos: 'noun', def: 'The action of reducing the severity, seriousness, or painfulness of something.', ex: 'Adaptation alone is insufficient without aggressive mitigation of carbon emissions.' },
+      { word: 'pivotal', pos: 'adjective', def: 'Of crucial importance in relation to the development or success of something.', ex: 'International cooperation remains pivotal in addressing climate change.' }
     ]
   },
   {
     id: 1,
     title: 'Artificial Intelligence in Education',
-    emoji: '🤖',
+    emoji: '\u{1F916}',
     topicEN: 'AI in Education',
     difficulty: 'hard',
     difficultyEN: 'Hard',
@@ -586,26 +889,40 @@ const passages = [
       "Natural language processing (NLP) has enabled the development of sophisticated tutoring chatbots capable of engaging students in Socratic dialogue. These tools can answer questions, provide feedback on written assignments, and guide learners through complex problem-solving processes around the clock. A 2024 study published in the Journal of Educational Psychology found that students who used AI tutoring assistants for just one hour per week improved their critical thinking scores by 18 percent over a semester.",
       "However, the rise of AI in education also raises profound ethical concerns. Algorithmic bias — where AI systems inadvertently favour certain demographic groups — threatens to exacerbate existing inequalities. If an AI system is trained predominantly on data from affluent urban schools, it may fail to serve rural or disadvantaged students effectively. Furthermore, the collection of vast amounts of student data for AI training creates significant privacy risks, particularly for minors who may not fully understand the implications of data sharing.",
       "Educators themselves face an uncertain future. While AI is unlikely to replace teachers entirely, it is reshaping the profession. Teachers are increasingly expected to function as facilitators and mentors rather than sole sources of knowledge. This shift demands new skills and training, and many teachers report feeling unprepared for the rapid pace of technological change. Policymakers must ensure that the deployment of AI in classrooms is accompanied by robust teacher training programmes and clear regulatory frameworks to protect student welfare."
+    ],
+    vocab: [
+      { word: 'pedagogy', pos: 'noun', def: 'The method and practice of teaching, especially as an academic subject.', ex: 'AI represents one of the most significant transformations in pedagogy.' },
+      { word: 'adaptive', pos: 'adjective', def: 'Able to adjust to new conditions; changing in response to needs.', ex: 'AI-powered adaptive learning platforms tailor content to individual learning speeds.' },
+      { word: 'algorithmic bias', pos: 'noun phrase', def: 'Systematic and repeatable errors in a computer system that create unfair outcomes.', ex: 'Algorithmic bias threatens to exacerbate existing inequalities in education.' },
+      { word: 'exacerbate', pos: 'verb', def: 'To make a problem, bad situation, or negative feeling worse.', ex: 'Bias threatens to exacerbate existing inequalities.' },
+      { word: 'facilitator', pos: 'noun', def: 'A person who makes a process or action easier or more effective.', ex: 'Teachers are increasingly expected to function as facilitators and mentors.' }
     ]
   },
   {
     id: 2,
     title: 'Urban Planning for Sustainable Cities',
-    emoji: '🏙️',
+    emoji: '\u{1F3D9}\uFE0F',
     topicEN: 'Urban Planning',
     difficulty: 'medium',
     difficultyEN: 'Medium',
     text: [
       "As the world's urban population is expected to reach 6.7 billion by 2050, urban planning has become a discipline of critical importance. Cities currently occupy just three percent of the Earth's land surface yet account for over 70 percent of global carbon emissions. Redesigning urban spaces to be more sustainable, equitable, and livable is no longer optional — it is an imperative.",
       "One of the most promising approaches is the concept of the '15-minute city', championed by Carlos Moreno, a professor at the Sorbonne in Paris. The idea is elegantly simple: all essential services — schools, shops, healthcare facilities, parks, and workplaces — should be accessible within a 15-minute walk or bicycle ride. Paris has been at the forefront of implementing this model, converting car lanes into cycling infrastructure and pedestrianising large sections of the city centre. Early results suggest a 25 percent reduction in vehicle traffic and a significant improvement in air quality.",
-      "Green infrastructure is another cornerstone of sustainable urban planning. Singapore's 'City in a Garden' initiative has transformed the city-state into a global model for urban greenery. The Gardens by the Bay project, featuring the iconic Supertree Grove, combines aesthetic beauty with environmental function — the supertrees harvest rainwater, generate solar energy, and serve as vertical gardens. Similar approaches are being adopted in cities as diverse as Melbourne, Medellín, and Seoul, where urban forests and green corridors are being woven into the fabric of existing neighbourhoods.",
+      "Green infrastructure is another cornerstone of sustainable urban planning. Singapore's 'City in a Garden' initiative has transformed the city-state into a global model for urban greenery. The Gardens by the Bay project, featuring the iconic Supertree Grove, combines aesthetic beauty with environmental function — the supertrees harvest rainwater, generate solar energy, and serve as vertical gardens. Similar approaches are being adopted in cities as diverse as Melbourne, Medellin, and Seoul, where urban forests and green corridors are being woven into the fabric of existing neighbourhoods.",
       "Nevertheless, sustainable urban planning faces significant obstacles. Property developers often resist green building requirements due to higher upfront costs. Gentrification can displace vulnerable communities from newly improved neighbourhoods, undermining social equity goals. And in many developing countries, rapid urbanisation occurs in the absence of any formal planning, resulting in sprawling informal settlements that lack basic services. Addressing these challenges requires a holistic approach that balances environmental, economic, and social considerations."
+    ],
+    vocab: [
+      { word: 'imperative', pos: 'noun', def: 'An essential or urgent thing; something that must be done.', ex: 'Redesigning urban spaces is no longer optional — it is an imperative.' },
+      { word: 'pedestrianise', pos: 'verb', def: 'To restrict a street or area to pedestrians only, removing motor vehicles.', ex: 'Paris has been pedestrianising large sections of the city centre.' },
+      { word: 'cornerstone', pos: 'noun', def: 'A fundamental, essential part of something upon which the rest depends.', ex: 'Green infrastructure is a cornerstone of sustainable urban planning.' },
+      { word: 'gentrification', pos: 'noun', def: 'The process of renovating and improving a neighbourhood to conform to middle-class taste, displacing lower-income residents.', ex: 'Gentrification can displace vulnerable communities.' },
+      { word: 'holistic', pos: 'adjective', def: 'Characterised by treating the whole rather than individual parts.', ex: 'A holistic approach balances environmental, economic, and social considerations.' }
     ]
   },
   {
     id: 3,
     title: 'The Future of Space Exploration',
-    emoji: '🚀',
+    emoji: '\u{1F680}',
     topicEN: 'Space Exploration',
     difficulty: 'hard',
     difficultyEN: 'Hard',
@@ -614,12 +931,19 @@ const passages = [
       "The Artemis programme, led by NASA in collaboration with the European Space Agency (ESA) and other international partners, aims to establish a sustained human presence on the Moon by the late 2020s. The Moon is viewed not merely as a scientific outpost but as a proving ground for technologies that will eventually enable crewed missions to Mars. NASA's long-term vision includes a crewed Mars landing tentatively scheduled for the late 2030s, a mission that would represent the greatest achievement in the history of exploration.",
       "Space mining is another frontier attracting considerable attention. Asteroids are known to contain vast quantities of precious metals, including platinum, gold, and rare earth elements essential for electronics manufacturing. The asteroid 16 Psyche alone is estimated to contain iron and nickel worth approximately 10,000 quadrillion dollars. While the economic feasibility of asteroid mining remains unproven, companies such as AstroForge have already secured funding and plan to launch prospecting missions within the next few years.",
       "Critics raise legitimate concerns about the commercialisation of space. The Kessler Syndrome — a theoretical scenario in which orbital debris cascades into ever more collisions, rendering low Earth orbit unusable — is a growing risk as more satellites are launched. Environmentalists also question the carbon footprint of rocket launches, which inject black carbon directly into the upper atmosphere where it can persist for years. Balancing the immense potential of space exploration with responsible stewardship of both Earth and orbital environments will be one of the defining challenges of the coming decades."
+    ],
+    vocab: [
+      { word: 'cusp', pos: 'noun', def: 'The point of beginning or the moment when something starts to happen.', ex: 'Humanity stands on the cusp of a new era in space exploration.' },
+      { word: 'formidable', pos: 'adjective', def: 'Inspiring fear or respect through being impressively powerful or capable.', ex: 'The private sector has emerged as a formidable force in space.' },
+      { word: 'feasibility', pos: 'noun', def: 'The state or degree of being easily or conveniently done.', ex: 'The economic feasibility of asteroid mining remains unproven.' },
+      { word: 'stewardship', pos: 'noun', def: 'The job of supervising or taking care of something; responsible management.', ex: 'Responsible stewardship of orbital environments is essential.' },
+      { word: 'outpost', pos: 'noun', def: 'A small human settlement at the edge of an area of settlement or control.', ex: 'The Moon is viewed not merely as a scientific outpost.' }
     ]
   },
   {
     id: 4,
     title: 'Ocean Conservation and Marine Biodiversity',
-    emoji: '🌊',
+    emoji: '\u{1F30A}',
     topicEN: 'Ocean Conservation',
     difficulty: 'easy',
     difficultyEN: 'Easy',
@@ -628,12 +952,19 @@ const passages = [
       "Overfishing stands as one of the most pressing challenges. According to the Food and Agriculture Organization (FAO), approximately 35 percent of global fish stocks are now overfished, a figure that has tripled since the 1970s. Destructive fishing practices such as bottom trawling devastate seafloor habitats, while illegal, unreported, and unregulated (IUU) fishing accounts for an estimated 11 to 26 million tonnes of catch annually — worth between 10 and 23 billion dollars.",
       "Plastic pollution compounds these pressures. An estimated 11 million tonnes of plastic enter the oceans each year, breaking down into microplastics that infiltrate every level of the marine food web. A 2023 study in the journal Nature found microplastics in the tissue of every marine species tested, from microscopic plankton to blue whales. The health implications for both marine life and humans who consume seafood remain an active area of research.",
       "Conservation efforts are yielding encouraging results. Marine protected areas (MPAs), where fishing and extractive activities are restricted, have been shown to increase fish biomass by an average of 670 percent within their boundaries. The High Seas Treaty, adopted by the United Nations in 2023, creates a legal framework for establishing MPAs in international waters for the first time. Combined with advances in satellite monitoring and DNA-based fisheries surveillance, these tools offer hope that the degradation of ocean ecosystems can be slowed — if not reversed."
+    ],
+    vocab: [
+      { word: 'unprecedented', pos: 'adjective', def: 'Never done or known before; without previous instance.', ex: 'Marine ecosystems face unprecedented threats from human activity.' },
+      { word: 'bottom trawling', pos: 'noun phrase', def: 'A fishing method that involves dragging heavy nets along the ocean floor.', ex: 'Bottom trawling devastates seafloor habitats.' },
+      { word: 'infiltrate', pos: 'verb', def: 'To gain access to or enter a place or organisation secretly or stealthily.', ex: 'Microplastics infiltrate every level of the marine food web.' },
+      { word: 'biomass', pos: 'noun', def: 'The total mass of organisms in a given area or volume.', ex: 'MPAs increase fish biomass by an average of 670 percent.' },
+      { word: 'surveillance', pos: 'noun', def: 'Close observation of a person or group, especially one under suspicion.', ex: 'DNA-based fisheries surveillance helps combat illegal fishing.' }
     ]
   },
   {
     id: 5,
     title: 'Ancient Civilisations and Their Legacies',
-    emoji: '🏛️',
+    emoji: '\u{1F3DB}\uFE0F',
     topicEN: 'Ancient Civilisations',
     difficulty: 'medium',
     difficultyEN: 'Medium',
@@ -642,12 +973,19 @@ const passages = [
       "Mesopotamia, often called the 'Cradle of Civilisation', flourished between the Tigris and Euphrates rivers in modern-day Iraq. The Sumerians, who emerged around 4500 BCE, invented one of the world's first writing systems — cuneiform — which was initially used for record-keeping but eventually became a vehicle for literature, law, and diplomacy. The Code of Hammurabi, dating to approximately 1754 BCE, represents one of the earliest written legal codes and established principles of justice and contractual obligation that resonate in modern legal systems.",
       "The ancient Egyptians achieved remarkable feats in architecture, medicine, and mathematics. The Great Pyramid of Giza, constructed around 2560 BCE, remained the tallest man-made structure for nearly 4,000 years. Egyptian physicians performed surgical procedures, set broken bones, and developed pharmacological treatments that were documented in medical papyri. Recent CT scans of mummies have revealed that ancient Egyptians suffered from many of the same diseases — including atherosclerosis and cancer — that afflict modern populations.",
       "In East Asia, ancient Chinese civilisation produced innovations of lasting global impact. Paper, gunpowder, the compass, and movable type printing — the 'Four Great Inventions' — fundamentally transformed civilisation worldwide. The Silk Road, which connected China to the Mediterranean for nearly two millennia, facilitated not only trade but also the exchange of ideas, religions, and technologies. Today, archaeological discoveries along these ancient routes continue to reshape our understanding of cross-cultural interaction in the premodern world."
+    ],
+    vocab: [
+      { word: 'cuneiform', pos: 'noun', def: 'An ancient wedge-shaped writing system used in Mesopotamia.', ex: 'The Sumerians invented cuneiform, one of the world\'s first writing systems.' },
+      { word: 'archaeological', pos: 'adjective', def: 'Relating to archaeology or the study of human history through excavation.', ex: 'Understanding legacies requires archaeological evidence.' },
+      { word: 'pharmacological', pos: 'adjective', def: 'Relating to medicinal drugs or their use, effects, or development.', ex: 'Egyptian physicians developed pharmacological treatments documented in papyri.' },
+      { word: 'millennia', pos: 'noun (plural)', def: 'A period of one thousand years.', ex: 'The Silk Road connected China to the Mediterranean for nearly two millennia.' },
+      { word: 'resonate', pos: 'verb', def: 'To have qualities that are sympathetic or appealing; to have a continuing influence.', ex: 'Principles of justice established in ancient codes resonate in modern legal systems.' }
     ]
   },
   {
     id: 6,
     title: 'Mental Health in the Digital Age',
-    emoji: '🧠',
+    emoji: '\u{1F9E0}',
     topicEN: 'Mental Health',
     difficulty: 'easy',
     difficultyEN: 'Easy',
@@ -656,12 +994,19 @@ const passages = [
       "Social media usage has attracted particular attention. A landmark study by the Royal Society for Public Health in the United Kingdom found that platforms such as Instagram and Snapchat were associated with increased rates of anxiety, depression, and poor body image among young people aged 14 to 24. The constant exposure to curated, idealised versions of others' lives can foster feelings of inadequacy and social comparison. Moreover, the addictive design of these platforms — featuring infinite scrolling, push notifications, and variable reward mechanisms — can lead to compulsive use patterns that disrupt sleep, exercise, and face-to-face social interaction.",
       "On the positive side, digital technology has democratised access to mental health support. Teletherapy platforms have made counselling available to individuals in rural or underserved areas who might otherwise have no access to professional help. A 2024 meta-analysis published in The Lancet Psychiatry found that online cognitive behavioural therapy (CBT) was as effective as in-person therapy for mild to moderate depression, with recovery rates of approximately 50 percent. Mental health apps such as Headspace and Calm have introduced millions of users to mindfulness meditation, which has been shown to reduce symptoms of anxiety and stress.",
       "The challenge lies in striking a balance. Digital tools can complement but not replace human connection, which remains fundamental to psychological wellbeing. Experts recommend establishing healthy boundaries around screen time, particularly for adolescents, and call on technology companies to design products that prioritise user welfare over engagement metrics."
+    ],
+    vocab: [
+      { word: 'teletherapy', pos: 'noun', def: 'The delivery of therapy services through digital communication tools such as video calls.', ex: 'Technology has improved access to mental health resources through teletherapy.' },
+      { word: 'curated', pos: 'adjective', def: 'Carefully selected and organised; presented in a particular way for a specific audience.', ex: 'Constant exposure to curated, idealised versions of others\' lives fosters inadequacy.' },
+      { word: 'compulsive', pos: 'adjective', def: 'Relating to an irresistible urge to behave in a certain way, especially against one\'s conscious wishes.', ex: 'Addictive design features lead to compulsive use patterns.' },
+      { word: 'democratised', pos: 'verb', def: 'Made accessible or available to everyone, not just privileged groups.', ex: 'Digital technology has democratised access to mental health support.' },
+      { word: 'wellbeing', pos: 'noun', def: 'The state of being comfortable, healthy, or happy.', ex: 'Human connection remains fundamental to psychological wellbeing.' }
     ]
   },
   {
     id: 7,
     title: 'Renewable Energy and the Global Transition',
-    emoji: '⚡',
+    emoji: '\u26A1',
     topicEN: 'Renewable Energy',
     difficulty: 'hard',
     difficultyEN: 'Hard',
@@ -670,12 +1015,19 @@ const passages = [
       "Wind energy has also experienced remarkable growth. Global wind capacity exceeded 1,000 gigawatts in 2023, with offshore wind emerging as a particularly promising frontier. The United Kingdom's Hornsea Wind Farm in the North Sea, with a capacity of 2.85 gigawatts, can power over 3 million homes. China dominates both onshore and offshore wind installations, accounting for nearly 60 percent of global additions in 2023. These developments have created millions of jobs worldwide and attracted hundreds of billions of dollars in investment annually.",
       "Despite this progress, significant challenges remain. Energy storage is the most critical bottleneck. Solar and wind are intermittent — they produce electricity only when the sun shines or the wind blows — and current battery technology, while improving rapidly, cannot yet provide cost-effective grid-scale storage for extended periods. Lithium-ion batteries dominate the market, but concerns about lithium mining's environmental impact and supply chain concentration in a few countries have spurred research into alternative technologies such as solid-state batteries, flow batteries, and green hydrogen storage.",
       "The transition also raises questions of energy equity. Many developing nations, particularly in sub-Saharan Africa and South Asia, still rely heavily on fossil fuels for economic development. The notion that these countries should leapfrog directly to renewables — without access to the capital and infrastructure that wealthy nations enjoy — is viewed by some as inequitable. International mechanisms such as the Green Climate Fund aim to address this imbalance, but funding commitments have consistently fallen short of what is needed to ensure a just and globally inclusive energy transition."
+    ],
+    vocab: [
+      { word: 'transformative', pos: 'adjective', def: 'Causing a marked change in someone or something.', ex: 'The global energy landscape is undergoing a transformative shift.' },
+      { word: 'intermittent', pos: 'adjective', def: 'Occurring at irregular intervals; not continuous or steady.', ex: 'Solar and wind are intermittent — they produce electricity only when conditions permit.' },
+      { word: 'bottleneck', pos: 'noun', def: 'A point of congestion or blockage that causes an overall reduction in speed or efficiency.', ex: 'Energy storage is the most critical bottleneck in the renewable transition.' },
+      { word: 'leapfrog', pos: 'verb', def: 'To skip over intermediate stages and go directly from a less advanced state to a more advanced one.', ex: 'Many nations leapfrog directly to renewables without going through fossil fuel stages.' },
+      { word: 'inequitable', pos: 'adjective', def: 'Not fair or just; characterised by unfairness or inequality.', ex: 'The expectation that developing nations leapfrog to renewables is viewed as inequitable.' }
     ]
   },
   {
     id: 8,
     title: 'Cultural Heritage Preservation',
-    emoji: '🏛️',
+    emoji: '\u{1F3DB}\uFE0F',
     topicEN: 'Cultural Heritage',
     difficulty: 'medium',
     difficultyEN: 'Medium',
@@ -684,12 +1036,19 @@ const passages = [
       "Digital technologies are revolutionising heritage preservation. 3D scanning and photogrammetry enable the creation of precise digital replicas of monuments and artefacts. When the Cathedral of Notre-Dame in Paris was devastated by fire in 2019, researchers were able to use previously captured 3D scans to guide the painstaking reconstruction effort. Similarly, the Smithsonian Institution has digitised millions of artefacts, making them accessible to researchers and the public worldwide through virtual platforms.",
       "Community-based conservation has emerged as a powerful model. Rather than imposing top-down preservation strategies, organisations such as the World Monuments Fund work with local communities to identify heritage sites of greatest significance and develop culturally appropriate conservation plans. In Bhaktapur, Nepal, residents led the restoration of centuries-old temples following the devastating 2015 earthquake, combining traditional craftsmanship with modern structural engineering to ensure both authenticity and resilience.",
       "Intangible cultural heritage — languages, oral traditions, performing arts, rituals, and craftsmanship — presents distinct preservation challenges. Of the approximately 7,000 languages spoken today, nearly half are projected to disappear by 2100. The loss of a language represents the loss of unique knowledge systems, worldviews, and cultural identities. UNESCO's Intangible Cultural Heritage programme and grassroots language revitalisation efforts, such as the revival of the Hawaiian language, offer models for safeguarding these intangible yet invaluable dimensions of human heritage."
+    ],
+    vocab: [
+      { word: 'photogrammetry', pos: 'noun', def: 'The science of making measurements from photographs, especially for surveying terrain.', ex: '3D scanning and photogrammetry enable creation of precise digital replicas.' },
+      { word: 'irreplaceable', pos: 'adjective', def: 'Not able to be replaced; too valuable or important to do without.', ex: 'Protecting these irreplaceable treasures requires innovative approaches.' },
+      { word: 'painstaking', pos: 'adjective', def: 'Done with great care and thoroughness.', ex: 'Researchers used 3D scans to guide the painstaking reconstruction effort.' },
+      { word: 'grassroots', pos: 'adjective', def: 'Of or relating to the ordinary people, as the foundation of a movement or initiative.', ex: 'Grassroots language revitalisation efforts offer models for heritage preservation.' },
+      { word: 'intangible', pos: 'adjective', def: 'Unable to be touched or grasped; not having physical presence but still real or significant.', ex: 'Intangible cultural heritage presents distinct preservation challenges.' }
     ]
   },
   {
     id: 9,
     title: 'Global Food Security Challenges',
-    emoji: '🌾',
+    emoji: '\u{1F33E}',
     topicEN: 'Food Security',
     difficulty: 'easy',
     difficultyEN: 'Easy',
@@ -698,13 +1057,125 @@ const passages = [
       "Agricultural innovation is central to meeting future demand. Precision farming — which uses GPS, sensors, and data analytics to optimise planting, irrigation, and harvesting — has been shown to increase crop yields by 15 to 20 percent while reducing water and pesticide use. Gene-editing technologies such as CRISPR-Cas9 are enabling the development of crop varieties that are more resistant to drought, disease, and extreme temperatures. A drought-tolerant wheat variety developed using CRISPR was field-tested in sub-Saharan Africa with promising results, potentially benefiting millions of smallholder farmers.",
       "Food waste represents a paradox at the heart of the security crisis. Approximately one-third of all food produced globally — roughly 1.3 billion tonnes per year — is lost or wasted. In developed countries, the majority of waste occurs at the consumer level, while in developing nations, losses are concentrated in post-harvest storage and transportation. The United Nations Sustainable Development Goal 12.3 aims to halve food waste by 2030, and innovative solutions — from AI-powered inventory management in supermarkets to mobile apps connecting consumers with surplus food from restaurants — are making progress toward this target.",
       "Ultimately, food security is inseparable from broader questions of equity and governance. Conflicts in Ukraine, Sudan, and other regions have disrupted food supply chains and pushed millions to the brink of famine. Climate-vulnerable nations in the Horn of Africa face recurring droughts that destroy crops and livestock. Addressing these systemic issues demands coordinated international action, investment in agricultural infrastructure, and policies that prioritise the most vulnerable populations."
+    ],
+    vocab: [
+      { word: 'scarcity', pos: 'noun', def: 'The state of being insufficient or short in supply; a lack of something.', ex: 'Water scarcity complicates the task of feeding the growing global population.' },
+      { word: 'precision farming', pos: 'noun phrase', def: 'A farming management concept using digital techniques to observe and respond to crop variability.', ex: 'Precision farming uses GPS and sensors to optimise planting and irrigation.' },
+      { word: 'paradox', pos: 'noun', def: 'A seemingly absurd or contradictory statement that may be true; a contradictory situation.', ex: 'Food waste represents a paradox at the heart of the security crisis.' },
+      { word: 'inseparable', pos: 'adjective', def: 'So closely connected that they cannot be separated.', ex: 'Food security is inseparable from broader questions of equity.' },
+      { word: 'geopolitical', pos: 'adjective', def: 'Relating to the interaction of geography and politics; involving political activity influenced by geography.', ex: 'Economic disruptions are caused by geopolitical conflict.' }
+    ]
+  },
+  // ===== NEW PASSAGES 11-15 =====
+  {
+    id: 10,
+    title: 'Neuroscience and the Science of Learning',
+    emoji: '\u{1F9EC}',
+    topicEN: 'Neuroscience',
+    difficulty: 'hard',
+    difficultyEN: 'Hard',
+    text: [
+      "Recent advances in neuroscience have fundamentally reshaped our understanding of how the brain learns, remembers, and processes new information. Neuroplasticity — the brain's remarkable ability to reorganise itself by forming new neural connections throughout life — has overturned the long-held belief that the adult brain is essentially fixed and unchangeable. This discovery has profound implications for education, rehabilitation, and lifelong learning.",
+      "Research into memory consolidation has revealed that sleep plays a far more active role in learning than previously understood. During deep sleep stages, the hippocampus 'replays' experiences from the day, transferring information to the neocortex for long-term storage. A 2024 study at the University of Chicago found that students who reviewed material before sleeping scored 23 percent higher on recall tests than those who studied the same material in the morning. These findings suggest that traditional study schedules may be suboptimal for academic performance.",
+      "The concept of 'desirable difficulty' has gained traction among cognitive scientists. First proposed by Robert Bjork at UCLA, it suggests that learning is deepened when the material is presented in ways that require effortful processing — such as spacing out study sessions, interleaving different topics, and testing oneself rather than passively re-reading notes. While these strategies feel harder and may initially lead to more errors, they produce stronger long-term retention. Educators are increasingly incorporating these evidence-based principles into curricula, though resistance remains among those accustomed to more traditional pedagogical methods.",
+      "Brain-computer interfaces (BCIs) represent the cutting edge of neuroscience applications. Researchers at Stanford University have developed a BCI system that enables paralysed patients to control computer cursors using only their thoughts, achieving typing speeds of approximately 90 characters per minute. While still in experimental stages, BCIs hold transformative potential for individuals with severe disabilities, and some researchers speculate that in the distant future, such technology could augment normal human cognitive abilities."
+    ],
+    vocab: [
+      { word: 'neuroplasticity', pos: 'noun', def: 'The brain\'s ability to change and adapt by forming new neural connections throughout life.', ex: 'Neuroplasticity has overturned the belief that the adult brain is essentially fixed.' },
+      { word: 'consolidation', pos: 'noun', def: 'The process by which memories are stabilised after initial acquisition.', ex: 'Research into memory consolidation has revealed sleep\'s active role in learning.' },
+      { word: 'interleaving', pos: 'noun', def: 'A learning strategy where different topics or subjects are mixed together during study sessions.', ex: 'Interleaving different topics deepens learning through desirable difficulty.' },
+      { word: 'suboptimal', pos: 'adjective', def: 'Less than the best or ideal; not fully optimal.', ex: 'Traditional study schedules may be suboptimal for academic performance.' },
+      { word: 'augment', pos: 'verb', def: 'To make something greater by adding to it; to increase or enhance.', ex: 'BCIs could eventually augment normal human cognitive abilities.' }
+    ]
+  },
+  {
+    id: 11,
+    title: 'The Future of Work and Automation',
+    emoji: '\u{1F4BB}',
+    topicEN: 'Future of Work',
+    difficulty: 'medium',
+    difficultyEN: 'Medium',
+    text: [
+      "The world of work is undergoing a transformation as dramatic as any in human history. Automation, artificial intelligence, and digital platforms are reshaping industries at unprecedented speed, creating new categories of employment while rendering others obsolete. The World Economic Forum has estimated that by 2027, approximately 23 percent of global jobs will have undergone significant change due to technology adoption.",
+      "The concept of the 'gig economy' — characterised by short-term, flexible work arrangements mediated by digital platforms — has expanded rapidly. Platforms such as Uber, TaskRabbit, and Upwork have created opportunities for millions of workers worldwide, offering flexibility and accessibility that traditional employment structures often lack. However, this shift has also generated significant controversy. Gig workers typically lack the benefits, job security, and legal protections afforded to traditional employees, prompting calls for new regulatory frameworks.",
+      "Remote work, catalysed by the COVID-19 pandemic, has become a permanent feature of many industries. A 2024 survey by McKinsey found that 58 percent of employed Americans had the option to work from home at least one day per week, while 35 percent could work remotely full-time. This shift has had cascading effects on urban planning, real estate markets, and social dynamics. Companies report that remote workers are, on average, 13 percent more productive than their in-office counterparts, though concerns about isolation, blurred work-life boundaries, and reduced innovation persist.",
+      "Preparing the workforce for this new landscape requires substantial investment in reskilling and education. The Organisation for Economic Co-operation and Development (OECD) has warned that approximately one in five workers in member countries currently holds a job at high risk of automation. Countries such as Denmark and Singapore have invested heavily in lifelong learning programmes and transition support systems. The question of how to distribute the economic gains from automation more equitably remains one of the defining policy challenges of the era."
+    ],
+    vocab: [
+      { word: 'obsolete', pos: 'adjective', def: 'No longer produced or used; out of date; no longer useful.', ex: 'Technology is rendering some job categories entirely obsolete.' },
+      { word: 'mediated', pos: 'verb', def: 'Facilitated or enabled by an intermediary or platform.', ex: 'The gig economy is characterised by work arrangements mediated by digital platforms.' },
+      { word: 'cascading', pos: 'adjective', def: 'Occurring or overlapping in a sequence; having a progressive, compounding effect.', ex: 'Remote work has had cascading effects on urban planning and social dynamics.' },
+      { word: 'reskilling', pos: 'noun', def: 'The process of learning new skills or teaching workers new skills for different types of employment.', ex: 'Preparing the workforce requires substantial investment in reskilling.' },
+      { word: 'equitably', pos: 'adverb', def: 'In a fair and impartial manner; distributing resources justly.', ex: 'Distributing economic gains from automation more equitably remains a key challenge.' }
+    ]
+  },
+  {
+    id: 12,
+    title: 'The Science of Sleep and Circadian Rhythms',
+    emoji: '\u{1F319}',
+    topicEN: 'Sleep Science',
+    difficulty: 'medium',
+    difficultyEN: 'Medium',
+    text: [
+      "Sleep is one of the most fundamental biological processes, yet it remains one of the least understood. Humans spend roughly one-third of their lives asleep — approximately 26 years over an average lifespan — and the consequences of sleep deprivation are both severe and wide-ranging. The World Health Organization has described the sleep loss epidemic in industrialised nations as a public health crisis.",
+      "The science of circadian rhythms — the roughly 24-hour internal clock that governs sleep-wake cycles, hormone release, and body temperature — has advanced significantly in recent decades. The 2017 Nobel Prize in Physiology or Medicine was awarded to Jeffrey Hall, Michael Rosbash, and Michael Young for their discoveries of the molecular mechanisms controlling circadian rhythms. These biological clocks are synchronised primarily by light exposure, which is why the proliferation of artificial light — particularly blue light from screens — has such a disruptive effect on modern sleep patterns.",
+      "Chronic sleep deprivation has been linked to a startling range of health problems. Research has shown that consistently sleeping fewer than seven hours per night increases the risk of cardiovascular disease by 48 percent, obesity by 55 percent, and type 2 diabetes by 37 percent. A landmark study by Matthew Walker at the University of California, Berkeley, found that a single night of sleep deprivation can reduce the activity of natural killer cells — a critical component of the immune system — by up to 70 percent, temporarily weakening the body's defences against cancer and infections.",
+      "Sleep architecture — the pattern of sleep stages throughout the night — is itself remarkably complex. Healthy adults cycle through four to six sleep cycles per night, each lasting approximately 90 minutes, alternating between non-rapid eye movement (NREM) sleep and rapid eye movement (REM) sleep. NREM sleep dominates the first half of the night and is essential for physical restoration, while REM sleep, which is concentrated in the latter half, is critical for emotional regulation and memory consolidation. Disruptions to this architecture, whether from sleep disorders, medications, or irregular schedules, can have cumulative negative effects on cognitive and physical health."
+    ],
+    vocab: [
+      { word: 'circadian', pos: 'adjective', def: 'Relating to or affecting a roughly 24-hour biological cycle.', ex: 'Circadian rhythms govern sleep-wake cycles, hormone release, and body temperature.' },
+      { word: 'deprivation', pos: 'noun', def: 'The lack or denial of something considered necessary; deprivation by state or circumstance.', ex: 'The consequences of sleep deprivation are severe and wide-ranging.' },
+      { word: 'proliferation', pos: 'noun', def: 'Rapid increase in numbers; widespread growth or expansion.', ex: 'The proliferation of artificial light has disrupted modern sleep patterns.' },
+      { word: 'cumulative', pos: 'adjective', def: 'Increasing or increased in quantity by successive additions; building up over time.', ex: 'Disruptions to sleep architecture can have cumulative negative effects on health.' },
+      { word: 'consolidation', pos: 'noun', def: 'The process of stabilising a memory trace after initial learning or experience.', ex: 'REM sleep is critical for memory consolidation.' }
+    ]
+  },
+  {
+    id: 13,
+    title: 'Water Scarcity and Global Solutions',
+    emoji: '\u{1F4A7}',
+    topicEN: 'Water Scarcity',
+    difficulty: 'easy',
+    difficultyEN: 'Easy',
+    text: [
+      "Water is the most essential resource for human survival, yet access to clean, safe drinking water remains one of the most pressing global challenges. According to the United Nations, approximately 2.2 billion people worldwide lack access to safely managed drinking water services, and water-related diseases claim an estimated 485,000 lives each year. By 2025, half of the world's population is projected to live in water-stressed areas.",
+      "Agriculture is by far the largest consumer of freshwater, accounting for approximately 70 percent of global withdrawals. In many developing countries, outdated irrigation methods waste enormous quantities of water — flood irrigation, for instance, has an efficiency rate of only 30 to 40 percent compared to drip irrigation systems, which can achieve rates above 90 percent. The transition to more efficient irrigation technologies is critical, particularly in arid regions where water resources are already stretched to their limits.",
+      "Desalination technology — the process of removing salt and impurities from seawater to produce freshwater — has become increasingly important. Countries such as Israel, Saudi Arabia, and Australia have invested heavily in desalination infrastructure. Israel now derives approximately 60 percent of its domestic water supply from desalination, a transformation that has turned the water-scarce nation into a global leader in water technology. However, desalination remains energy-intensive and expensive, with significant environmental concerns related to the disposal of brine concentrate into the ocean.",
+      "Innovative solutions are emerging from both high technology and traditional practices. Rainwater harvesting, which has been practised for thousands of years in regions from India to Peru, is experiencing a renaissance as cities seek sustainable water sources. Singapore's NEWater programme treats reclaimed wastewater to ultra-high standards, producing water that meets or exceeds drinking water requirements. Meanwhile, atmospheric water generators — devices that extract moisture from humid air — are being deployed in water-scarce communities across sub-Saharan Africa and South Asia, offering a potentially transformative solution to local water access challenges."
+    ],
+    vocab: [
+      { word: 'water-stressed', pos: 'adjective', def: 'Describing a region or area where available freshwater resources are insufficient to meet demands.', ex: 'Half of the world\'s population is projected to live in water-stressed areas.' },
+      { word: 'desalination', pos: 'noun', def: 'The process of removing salt and other minerals from seawater to make it suitable for drinking.', ex: 'Desalination has become increasingly important for water-scarce countries.' },
+      { word: 'brine', pos: 'noun', def: 'A high-concentration solution of salt in water, typically produced as a by-product of desalination.', ex: 'Significant environmental concerns relate to brine disposal into the ocean.' },
+      { word: 'arid', pos: 'adjective', def: 'Having little or no rain; too dry or barren to support vegetation.', ex: 'The transition to efficient irrigation is critical in arid regions.' },
+      { word: 'renaissance', pos: 'noun', def: 'A revival or renewed interest in something after a period of inactivity or neglect.', ex: 'Rainwater harvesting is experiencing a renaissance as cities seek sustainable sources.' }
+    ]
+  },
+  {
+    id: 14,
+    title: 'Ethical Artificial Intelligence',
+    emoji: '\u{1F9D1}\u200D\u{1F4BB}',
+    topicEN: 'Ethical AI',
+    difficulty: 'hard',
+    difficultyEN: 'Hard',
+    text: [
+      "As artificial intelligence systems become increasingly powerful and pervasive, the question of ethics has moved from academic debate to urgent practical concern. AI now makes or influences decisions in hiring, lending, criminal sentencing, medical diagnosis, and content recommendation, yet many of these systems operate as 'black boxes' — their internal decision-making processes opaque even to their creators.",
+      "Algorithmic bias remains one of the most widely discussed ethical challenges. Studies have repeatedly demonstrated that AI systems trained on historical data can perpetuate and amplify existing social biases. A well-known example involves facial recognition technology, which research by MIT computer scientist Joy Buolamwini found to have error rates of up to 34.7 percent for dark-skinned women compared to just 0.8 percent for light-skinned men. Such disparities have serious implications when facial recognition is deployed in law enforcement, border control, or hiring processes.",
+      "The European Union has taken the most comprehensive regulatory approach to AI governance. The EU AI Act, which entered into force in 2024, establishes a risk-based classification system for AI applications, with the strictest requirements imposed on 'high-risk' uses such as critical infrastructure, education, and law enforcement. The Act mandates transparency requirements, human oversight provisions, and prohibitions on certain AI practices deemed incompatible with fundamental rights, including social scoring systems and real-time biometric surveillance in public spaces.",
+      "Beyond regulation, a growing movement advocates for the responsible development and deployment of AI through what are known as AI ethics principles. Major technology companies including Google, Microsoft, and OpenAI have published their own sets of ethical guidelines, though critics argue that voluntary commitments lack enforcement mechanisms and are insufficient to prevent harm. The global nature of AI development complicates regulatory efforts, as a practice prohibited in one jurisdiction may be permissible in another. Finding a balance between fostering innovation and protecting individuals from the harms of poorly designed AI systems is the central challenge facing policymakers, technologists, and society at large."
+    ],
+    vocab: [
+      { word: 'opaque', pos: 'adjective', def: 'Not able to be seen through; not transparent; difficult to understand or explain.', ex: 'Many AI systems operate as black boxes, their processes opaque even to their creators.' },
+      { word: 'perpetuate', pos: 'verb', def: 'To cause something to continue indefinitely; to make something continue for a long time.', ex: 'AI systems trained on historical data can perpetuate existing social biases.' },
+      { word: 'biometric', pos: 'adjective', def: 'Relating to the measurement and analysis of unique physical characteristics such as fingerprints or facial features.', ex: 'The EU Act prohibits real-time biometric surveillance in public spaces.' },
+      { word: 'jurisdiction', pos: 'noun', def: 'An area or territory under the control of a particular legal system or authority.', ex: 'A practice prohibited in one jurisdiction may be permissible in another.' },
+      { word: 'mandate', pos: 'verb', def: 'To require or make compulsory; to officially order or insist upon.', ex: 'The Act mandates transparency requirements for high-risk AI systems.' }
     ]
   }
 ];
 
 // ----- QUESTION DATA -----
-// Each passage has 5 questions: mix of TF (True/False/Not Given), MC (Multiple Choice),
-// MH (Matching Headings), FB (Fill-in-the-blank)
+// Each passage has 5 questions
 const questionsData = [
   // Passage 0: Climate Change
   [
@@ -854,11 +1325,90 @@ const questionsData = [
     { id:'p9q5', type:'mh', text:'Which heading best summarises Paragraph 2?',
       options:['The Cost of Food Production','Technology Driving Agricultural Innovation','Climate Change and Farming','World Population Growth'], answer:1,
       explanation:'Paragraph 2 discusses precision farming, CRISPR gene editing, and crop variety development — all technological innovations in agriculture.' }
+  ],
+  // Passage 10: Neuroscience
+  [
+    { id:'p10q1', type:'tf', text:'Neuroplasticity refers to the brain\'s ability to reorganise itself by forming new neural connections throughout life.', answer:'True',
+      explanation:'The passage defines neuroplasticity as "the brain\'s remarkable ability to reorganise itself by forming new neural connections throughout life."' },
+    { id:'p10q2', type:'mc', text:'By how much did students who reviewed material before sleeping score higher on recall tests?',
+      options:['10 percent','15 percent','23 percent','35 percent'], answer:2,
+      explanation:'The passage states "students who reviewed material before sleeping scored 23 percent higher on recall tests."' },
+    { id:'p10q3', type:'mh', text:'Which heading best summarises Paragraph 3?',
+      options:['How Sleep Aids Memory','Making Learning Harder to Learn It Better','The Future of Brain Research','Teaching Methods of the Past'], answer:1,
+      explanation:'Paragraph 3 discusses desirable difficulty — the concept that making learning more effortful produces stronger long-term retention.' },
+    { id:'p10q4', type:'fb', text:'The concept of "______ difficulty" suggests learning is deepened when material requires effortful processing.', answer:'desirable',
+      explanation:'The passage introduces "desirable difficulty" — the concept proposed by Robert Bjork at UCLA.' },
+    { id:'p10q5', type:'tf', text:'Stanford researchers achieved typing speeds of 200 characters per minute with their brain-computer interface.', answer:'False',
+      explanation:'The passage states they achieved "typing speeds of approximately 90 characters per minute," not 200.' }
+  ],
+  // Passage 11: Future of Work
+  [
+    { id:'p11q1', type:'tf', text:'The World Economic Forum estimates that by 2027, approximately 23 percent of global jobs will have undergone significant change.', answer:'True',
+      explanation:'The passage states "the World Economic Forum has estimated that by 2027, approximately 23 percent of global jobs will have undergone significant change."' },
+    { id:'p11q2', type:'mc', text:'What percentage of employed Americans could work remotely full-time according to the 2024 McKinsey survey?',
+      options:['25 percent','35 percent','45 percent','55 percent'], answer:1,
+      explanation:'The passage states "35 percent could work remotely full-time."' },
+    { id:'p11q3', type:'fb', text:'Remote workers are, on average, ______ percent more productive than their in-office counterparts.', answer:'13',
+      explanation:'The passage states "remote workers are, on average, 13 percent more productive."' },
+    { id:'p11q4', type:'mh', text:'Which heading best summarises Paragraph 2?',
+      options:['The Rise of Remote Work','Automation Threatens Jobs','The Gig Economy and Worker Rights','Preparing for the Future'], answer:2,
+      explanation:'Paragraph 2 discusses the gig economy, its expansion, flexibility benefits, and controversy over worker protections.' },
+    { id:'p11q5', type:'tf', text:'The OECD has warned that approximately one in two workers in member countries hold jobs at high risk of automation.', answer:'False',
+      explanation:'The passage states "approximately one in five workers," not one in two.' }
+  ],
+  // Passage 12: Sleep Science
+  [
+    { id:'p12q1', type:'tf', text:'Humans spend roughly one-third of their lives asleep.', answer:'True',
+      explanation:'The passage states "Humans spend roughly one-third of their lives asleep — approximately 26 years over an average lifespan."' },
+    { id:'p12q2', type:'mc', text:'How much does sleeping fewer than seven hours increase the risk of cardiovascular disease?',
+      options:['28 percent','38 percent','48 percent','58 percent'], answer:2,
+      explanation:'The passage states it "increases the risk of cardiovascular disease by 48 percent."' },
+    { id:'p12q3', type:'fb', text:'The 2017 Nobel Prize in Physiology or Medicine was awarded for discoveries of the molecular mechanisms controlling ______ rhythms.', answer:'circadian',
+      explanation:'The 2017 Nobel Prize was awarded "for their discoveries of the molecular mechanisms controlling circadian rhythms."' },
+    { id:'p12q4', type:'mh', text:'Which heading best summarises Paragraph 4?',
+      options:['Why We Need Sleep','The Brain\'s Nightly Maintenance','Understanding Sleep Stages','Sleep Disorders Explained'], answer:2,
+      explanation:'Paragraph 4 explains sleep architecture, NREM and REM cycles, and how disruptions affect health.' },
+    { id:'p12q5', type:'tf', text:'A single night of sleep deprivation can reduce natural killer cell activity by up to 70 percent.', answer:'True',
+      explanation:'The passage states "a single night of sleep deprivation can reduce the activity of natural killer cells... by up to 70 percent."' }
+  ],
+  // Passage 13: Water Scarcity
+  [
+    { id:'p13q1', type:'tf', text:'Approximately 2.2 billion people worldwide lack access to safely managed drinking water.', answer:'True',
+      explanation:'The passage states "approximately 2.2 billion people worldwide lack access to safely managed drinking water services."' },
+    { id:'p13q2', type:'mc', text:'What percentage of global freshwater withdrawals is used for agriculture?',
+      options:['50 percent','60 percent','70 percent','80 percent'], answer:2,
+      explanation:'The passage states agriculture "accounts for approximately 70 percent of global withdrawals."' },
+    { id:'p13q3', type:'fb', text:'Israel now derives approximately ______ percent of its domestic water supply from desalination.', answer:'60',
+      explanation:'The passage states "Israel now derives approximately 60 percent of its domestic water supply from desalination."' },
+    { id:'p13q4', type:'mh', text:'Which heading best summarises Paragraph 4?',
+      options:['The Future of Desalination','Agriculture\'s Water Usage','Innovative Solutions for Water Access','The Global Water Crisis'], answer:2,
+      explanation:'Paragraph 4 discusses rainwater harvesting, Singapore\'s NEWater programme, and atmospheric water generators — all innovative solutions.' },
+    { id:'p13q5', type:'tf', text:'Flood irrigation has an efficiency rate of approximately 80 percent.', answer:'False',
+      explanation:'The passage states flood irrigation "has an efficiency rate of only 30 to 40 percent," not 80 percent.' }
+  ],
+  // Passage 14: Ethical AI
+  [
+    { id:'p14q1', type:'tf', text:'The EU AI Act, which entered into force in 2024, establishes a risk-based classification system for AI applications.', answer:'True',
+      explanation:'The passage states "The EU AI Act, which entered into force in 2024, establishes a risk-based classification system for AI applications."' },
+    { id:'p14q2', type:'mc', text:'What error rate did facial recognition technology show for dark-skinned women according to Joy Buolamwini\'s research?',
+      options:['Up to 3.4 percent','Up to 14.7 percent','Up to 24.7 percent','Up to 34.7 percent'], answer:3,
+      explanation:'The passage states the technology had "error rates of up to 34.7 percent for dark-skinned women."' },
+    { id:'p14q3', type:'fb', text:'Many AI systems operate as "black boxes" — their internal decision-making processes are ______ even to their creators.', answer:'opaque',
+      explanation:'The passage describes many AI systems as "black boxes" whose "decision-making processes [are] opaque even to their creators."' },
+    { id:'p14q4', type:'mh', text:'Which heading best summarises Paragraph 3?',
+      options:['The Problem with AI Bias','EU Regulation of Artificial Intelligence','Global Tech Company Ethics','Why Black Boxes Are Dangerous'], answer:1,
+      explanation:'Paragraph 3 discusses the EU AI Act, its risk-based classification, and specific regulatory requirements.' },
+    { id:'p14q5', type:'tf', text:'The OECD regulates AI development globally with mandatory compliance standards.', answer:'False',
+      explanation:'The passage discusses the EU AI Act and voluntary company guidelines, not OECD-mandated AI regulations. The global nature of AI complicates regulatory efforts.' }
   ]
 ];
 
 // ===== UTILITIES =====
 function toFa(n) { return String(n); }
+
+const TOTAL_PASSAGES = passages.length;  // 15
+const Q_PER_PASSAGE = 5;
+const TOTAL_QUESTIONS = TOTAL_PASSAGES * Q_PER_PASSAGE;  // 75
 
 let currentPassage = 0;
 let timerInterval = null;
@@ -867,6 +1417,19 @@ let timerRunning = false;
 let reviewMode = false;
 let currentReviewQ = 0;
 let hasBeenChecked = false;
+
+// ===== TIPS TOGGLE =====
+function toggleTips() {
+  const content = document.getElementById('tipsContent');
+  const btn = document.getElementById('tipsToggleBtn');
+  if (content.style.display === 'none') {
+    content.style.display = 'block';
+    btn.textContent = '▲ Hide Tips';
+  } else {
+    content.style.display = 'none';
+    btn.textContent = '▼ Show Tips';
+  }
+}
 
 // ===== RENDER PASSAGES =====
 function renderAllPassages() {
@@ -890,6 +1453,22 @@ function renderAllPassages() {
 
     // Questions section
     html += `<div class="questions-section" id="passage${pi}questions"></div>`;
+
+    // Vocabulary section
+    if (p.vocab && p.vocab.length > 0) {
+      html += `<div class="section-divider"><span>📚 Key Vocabulary</span></div>`;
+      html += `<div class="vocab-box">`;
+      html += `<h4>📖 Essential Vocabulary for This Passage</h4>`;
+      p.vocab.forEach(v => {
+        html += `<div class="vocab-item">`;
+        html += `<div><span class="vocab-word">${v.word}</span><span class="vocab-pos">(${v.pos})</span></div>`;
+        html += `<div class="vocab-def">${v.def}</div>`;
+        html += `<div class="vocab-ex">"${v.ex}"</div>`;
+        html += `</div>`;
+      });
+      html += `</div>`;
+    }
+
     html += `</div>`;
   });
 
@@ -984,17 +1563,31 @@ function showPassage(idx) {
 function startTimer() {
   if (timerRunning) return;
   timerRunning = true;
+  document.getElementById('pauseBtn').style.display = '';
+  document.getElementById('resumeBtn').style.display = 'none';
   document.getElementById('quizToolbar').classList.add('visible');
   timerInterval = setInterval(() => {
     totalSeconds--;
     if (totalSeconds <= 0) {
       clearInterval(timerInterval);
       totalSeconds = 0;
-      alert('Time is up!');
+      alert('Time is up! Checking your answers...');
       checkAllAnswers();
     }
     updateTimerDisplay();
   }, 1000);
+}
+
+function pauseTimer() {
+  if (!timerRunning) return;
+  clearInterval(timerInterval);
+  timerRunning = false;
+  document.getElementById('pauseBtn').style.display = 'none';
+  document.getElementById('resumeBtn').style.display = '';
+}
+
+function resumeTimer() {
+  startTimer();
 }
 
 function updateTimerDisplay() {
@@ -1018,8 +1611,8 @@ function updateToolbar() {
     const userAnswer = getAnswer(q.id);
     if (userAnswer !== null && userAnswer !== '') answered++;
   });
-  document.getElementById('answeredLabel').textContent = `Answered: ${toFa(answered)}/${toFa(flat.length)}`;
-  const pct = Math.round((answered / flat.length) * 100);
+  document.getElementById('answeredLabel').textContent = `Answered: ${toFa(answered)}/${toFa(TOTAL_QUESTIONS)}`;
+  const pct = Math.round((answered / TOTAL_QUESTIONS) * 100);
   document.getElementById('globalBarFill').style.width = pct + '%';
 }
 
@@ -1042,9 +1635,12 @@ function checkAllAnswers() {
   hasBeenChecked = true;
   if (timerRunning) clearInterval(timerInterval);
   timerRunning = false;
+  document.getElementById('pauseBtn').style.display = 'none';
+  document.getElementById('resumeBtn').style.display = 'none';
 
   let correct = 0, incorrect = 0, unanswered = 0;
-  const passageScores = Array(10).fill(0);
+  const passageScores = Array(TOTAL_PASSAGES).fill(0);
+  const questionDetails = []; // For results summary
 
   questionsData.forEach((passageQs, pi) => {
     passageQs.forEach((q, qi) => {
@@ -1060,6 +1656,7 @@ function checkAllAnswers() {
         qn.classList.add('unanswered');
         ansEl.className = 'correct-answer visible is-unanswered';
         ansEl.innerHTML = `⚠️ <strong>Unanswered</strong> — Correct answer: ${getCorrectAnswerText(q)}<span class="explanation">💡 ${q.explanation}</span>`;
+        questionDetails.push({ passage: pi, question: qi, status: 'unanswered' });
         return;
       }
 
@@ -1077,8 +1674,8 @@ function checkAllAnswers() {
         qn.classList.add('correct');
         ansEl.className = 'correct-answer visible is-correct';
         ansEl.innerHTML = `✅ <strong>Correct!</strong><span class="explanation">💡 ${q.explanation}</span>`;
-        // Highlight selected answer
         highlightSelectedAnswer(q, true);
+        questionDetails.push({ passage: pi, question: qi, status: 'correct' });
       } else {
         incorrect++;
         qb.classList.add('incorrect');
@@ -1086,6 +1683,7 @@ function checkAllAnswers() {
         ansEl.className = 'correct-answer visible is-incorrect';
         ansEl.innerHTML = `❌ <strong>Incorrect</strong> — Correct answer: ${getCorrectAnswerText(q)}<span class="explanation">💡 ${q.explanation}</span>`;
         highlightSelectedAnswer(q, false);
+        questionDetails.push({ passage: pi, question: qi, status: 'incorrect' });
       }
     });
 
@@ -1104,27 +1702,28 @@ function checkAllAnswers() {
   });
 
   // Update score panel
-  const total = 50;
   document.getElementById('scorePanel').classList.add('visible');
-  document.getElementById('scoreNumber').textContent = `${toFa(correct)}/${toFa(total)}`;
+  document.getElementById('scoreNumber').textContent = `${toFa(correct)}/${toFa(TOTAL_QUESTIONS)}`;
   document.getElementById('correctCount').textContent = toFa(correct);
   document.getElementById('incorrectCount').textContent = toFa(incorrect);
   document.getElementById('unansweredCount').textContent = toFa(unanswered);
-  document.getElementById('scoreProgressFill').style.width = Math.round((correct / total) * 100) + '%';
+  document.getElementById('scoreProgressFill').style.width = Math.round((correct / TOTAL_QUESTIONS) * 100) + '%';
   document.getElementById('scoreLabel').textContent = `Score: ${toFa(correct)}`;
 
   // IELTS Band estimation
-  const pct = correct / total;
-  let band = '';
-  if (pct >= 0.95) band = 'Band 9.0 🏆';
-  else if (pct >= 0.90) band = 'Band 8.5 ⭐';
-  else if (pct >= 0.80) band = 'Band 8.0 ⭐';
-  else if (pct >= 0.70) band = 'Band 7.0 👍';
-  else if (pct >= 0.60) band = 'Band 6.0 ✓';
-  else if (pct >= 0.50) band = 'Band 5.0';
-  else if (pct >= 0.40) band = 'Band 4.0';
-  else band = 'Band 3.0 — Needs more practice';
-  document.getElementById('bandDisplay').textContent = band;
+  const pct = correct / TOTAL_QUESTIONS;
+  let band = '', bandDescription = '';
+  if (pct >= 0.95) { band = 'Band 9.0 🏆'; bandDescription = 'Expert User'; }
+  else if (pct >= 0.90) { band = 'Band 8.5 ⭐'; bandDescription = 'Very Good User'; }
+  else if (pct >= 0.80) { band = 'Band 8.0 ⭐'; bandDescription = 'Very Good User'; }
+  else if (pct >= 0.70) { band = 'Band 7.0 👍'; bandDescription = 'Good User'; }
+  else if (pct >= 0.60) { band = 'Band 6.5'; bandDescription = 'Competent User'; }
+  else if (pct >= 0.55) { band = 'Band 6.0 ✓'; bandDescription = 'Competent User'; }
+  else if (pct >= 0.50) { band = 'Band 5.5'; bandDescription = 'Modest User'; }
+  else if (pct >= 0.40) { band = 'Band 5.0'; bandDescription = 'Modest User'; }
+  else if (pct >= 0.30) { band = 'Band 4.0'; bandDescription = 'Limited User'; }
+  else { band = 'Band 3.0 — Keep Practising!'; bandDescription = 'Needs more practice'; }
+  document.getElementById('bandDisplay').textContent = `${band} — ${bandDescription}`;
 
   // Per-passage breakdown
   const bdEl = document.getElementById('passageBreakdown');
@@ -1132,7 +1731,7 @@ function checkAllAnswers() {
   passages.forEach((p, pi) => {
     const color = passageScores[pi] >= 4 ? 'var(--success)' : passageScores[pi] >= 2 ? 'var(--accent)' : '#ef4444';
     bdHtml += `<div style="display:flex;align-items:center;gap:0.5rem;margin:0.3rem 0;font-size:0.9rem;">`;
-    bdHtml += `<span style="min-width:120px;">${p.emoji} ${p.topicEN}</span>`;
+    bdHtml += `<span style="min-width:150px;">${p.emoji} ${p.topicEN}</span>`;
     bdHtml += `<div style="flex:1;height:6px;background:rgba(255,255,255,0.2);border-radius:3px;overflow:hidden;">`;
     bdHtml += `<div style="width:${(passageScores[pi] / 5) * 100}%;height:100%;background:${color};border-radius:3px;"></div>`;
     bdHtml += `</div>`;
@@ -1140,6 +1739,9 @@ function checkAllAnswers() {
     bdHtml += `</div>`;
   });
   bdEl.innerHTML = bdHtml;
+
+  // ===== RESULTS SUMMARY =====
+  renderResultsSummary(correct, incorrect, unanswered, passageScores, band, bandDescription);
 
   document.getElementById('reviewBtn').style.display = 'inline-block';
   document.getElementById('scorePanel').scrollIntoView({ behavior: 'smooth' });
@@ -1149,6 +1751,58 @@ function checkAllAnswers() {
     const btn = document.querySelector(`.passage-btn[data-idx="${pi}"]`);
     if (btn && passageScores[pi] > 0) btn.classList.add('completed');
   });
+}
+
+// ===== RESULTS SUMMARY =====
+function renderResultsSummary(correct, incorrect, unanswered, passageScores, band, bandDescription) {
+  const summaryEl = document.getElementById('resultsSummary');
+  summaryEl.classList.add('visible');
+  const grid = document.getElementById('resultsGrid');
+  const pctCorrect = Math.round((correct / TOTAL_QUESTIONS) * 100);
+  const avgPerPassage = (correct / TOTAL_PASSAGES).toFixed(1);
+
+  // Find weakest and strongest passages
+  let bestPassage = 0, worstPassage = 0;
+  for (let i = 0; i < TOTAL_PASSAGES; i++) {
+    if (passageScores[i] > passageScores[bestPassage]) bestPassage = i;
+    if (passageScores[i] < passageScores[worstPassage]) worstPassage = i;
+  }
+
+  grid.innerHTML = `
+    <div class="result-stat"><div class="stat-num">${pctCorrect}%</div><div class="stat-label">Overall Accuracy</div></div>
+    <div class="result-stat"><div class="stat-num">${avgPerPassage}</div><div class="stat-label">Avg. per Passage</div></div>
+    <div class="result-stat"><div class="stat-num">${correct}</div><div class="stat-label">Correct Answers</div></div>
+    <div class="result-stat"><div class="stat-num">${incorrect}</div><div class="stat-label">Incorrect Answers</div></div>
+    <div class="result-stat"><div class="stat-num">${unanswered}</div><div class="stat-label">Unanswered</div></div>
+    <div class="result-stat"><div class="stat-num">${band}</div><div class="stat-label">Estimated Band</div></div>
+  `;
+
+  // Generate personalised tips
+  const tipsEl = document.getElementById('resultsTips');
+  let tipsHtml = '<h4>💡 Personalised Recommendations</h4><ul>';
+
+  if (pctCorrect >= 80) {
+    tipsHtml += '<li><strong>Excellent performance!</strong> You demonstrate strong reading comprehension. Focus on speed to increase your confidence during the actual test.</li>';
+  } else if (pctCorrect >= 60) {
+    tipsHtml += '<li><strong>Good foundation.</strong> You\'re on track for Band 6-7. Work on identifying paraphrased vocabulary to improve accuracy further.</li>';
+  } else if (pctCorrect >= 40) {
+    tipsHtml += '<li><strong>Room for improvement.</strong> Focus on skimming and scanning techniques. Practice reading the questions before the passage to guide your search.</li>';
+  } else {
+    tipsHtml += '<li><strong>Keep practising!</strong> Start with easier passages and gradually increase difficulty. Build your vocabulary with our vocabulary lists above each passage\'s questions.</li>';
+  }
+
+  if (unanswered > 5) {
+    tipsHtml += `<li><strong>Time management:</strong> You left ${unanswered} questions unanswered. Practice with a timer and move on if a question takes more than 2 minutes.</li>`;
+  }
+
+  if (incorrect > unanswered && incorrect > 5) {
+    tipsHtml += '<li><strong>Review explanations:</strong> Your incorrect answers suggest some comprehension gaps. Re-read the passages and study the explanations carefully.</li>';
+  }
+
+  tipsHtml += `<li><strong>Strongest topic:</strong> ${passages[bestPassage].emoji} ${passages[bestPassage].topicEN} (${passageScores[bestPassage]}/5) — build on this strength.</li>`;
+  tipsHtml += `<li><strong>Weakest topic:</strong> ${passages[worstPassage].emoji} ${passages[worstPassage].topicEN} (${passageScores[worstPassage]}/5) — revisit this passage and its vocabulary.</li>`;
+  tipsHtml += '</ul>';
+  tipsEl.innerHTML = tipsHtml;
 }
 
 function getCorrectAnswerText(q) {
@@ -1215,11 +1869,11 @@ function showCorrectAnswers() {
   });
   document.getElementById('scorePanel').classList.add('visible');
   document.getElementById('scoreProgressFill').style.width = '100%';
-  document.getElementById('scoreNumber').textContent = `${toFa(50)}/${toFa(50)}`;
-  document.getElementById('correctCount').textContent = toFa(50);
+  document.getElementById('scoreNumber').textContent = `${toFa(TOTAL_QUESTIONS)}/${toFa(TOTAL_QUESTIONS)}`;
+  document.getElementById('correctCount').textContent = toFa(TOTAL_QUESTIONS);
   document.getElementById('incorrectCount').textContent = '0';
   document.getElementById('unansweredCount').textContent = '0';
-  document.getElementById('bandDisplay').textContent = 'Band 9.0 🏆';
+  document.getElementById('bandDisplay').textContent = 'Band 9.0 🏆 — Expert User';
   document.getElementById('reviewBtn').style.display = 'inline-block';
 }
 
@@ -1250,13 +1904,16 @@ function resetQuiz() {
   });
 
   document.getElementById('scorePanel').classList.remove('visible');
+  document.getElementById('resultsSummary').classList.remove('visible');
   document.getElementById('quizToolbar').classList.remove('visible');
   document.getElementById('timerText').textContent = '60:00';
   document.getElementById('timerDisplay').classList.remove('warning');
   document.getElementById('globalBarFill').style.width = '0%';
-  document.getElementById('answeredLabel').textContent = 'Answered: 0/50';
+  document.getElementById('answeredLabel').textContent = `Answered: 0/${TOTAL_QUESTIONS}`;
   document.getElementById('scoreLabel').textContent = 'Score: 0';
   document.getElementById('reviewBtn').style.display = 'none';
+  document.getElementById('pauseBtn').style.display = '';
+  document.getElementById('resumeBtn').style.display = 'none';
   document.querySelectorAll('.passage-score-bar').forEach(b => b.style.display = 'none');
   document.querySelectorAll('.passage-btn').forEach(b => b.classList.remove('completed'));
 

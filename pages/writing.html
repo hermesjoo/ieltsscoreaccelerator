@@ -9,13 +9,14 @@
     .page-hero{background:linear-gradient(135deg,#065f46 0%,#10b981 60%,#34d399 100%);padding:4rem 2rem;text-align:center;color:#fff}
     .page-hero h1{font-size:2.4rem;font-weight:800;margin-bottom:.5rem}
     .page-hero p{font-size:1.1rem;opacity:.9}
-    .task-tabs{display:flex;justify-content:center;gap:1rem;margin:-1.5rem auto 2rem;position:relative;z-index:10}
-    .task-tab{padding:.8rem 2rem;border-radius:10px;font-weight:700;font-size:1rem;cursor:pointer;border:2px solid var(--border);background:var(--card);color:var(--text-light);transition:all .3s}
+    .task-tabs{display:flex;justify-content:center;gap:.6rem;margin:-1.5rem auto 2rem;position:relative;z-index:10;flex-wrap:wrap}
+    .task-tab{padding:.7rem 1.5rem;border-radius:10px;font-weight:700;font-size:.9rem;cursor:pointer;border:2px solid var(--border);background:var(--card);color:var(--text-light);transition:all .3s}
     .task-tab.active,.task-tab:hover{background:var(--primary);color:#fff;border-color:var(--primary)}
     .task-panel{display:none}.task-panel.active{display:block}
     .example-card{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:2rem;margin-bottom:2rem;box-shadow:0 2px 12px rgba(0,0,0,.05)}
     .example-card h3{font-size:1.2rem;color:var(--primary);margin-bottom:1rem;border-bottom:2px solid #eff6ff;padding-bottom:.5rem}
     .band-label{display:inline-block;background:var(--primary);color:#fff;padding:.2rem .8rem;border-radius:20px;font-size:.8rem;margin-bottom:.5rem}
+    .band-label.b7{background:#6366f1}.band-label.b6{background:#8b5cf6}.band-label.b5{background:#a855f7}
     .sample-answer{background:#f8fafc;border-left:4px solid var(--primary);padding:1.5rem;border-radius:0 8px 8px 0;margin:1rem 0;line-height:2;font-size:.95rem}
     .tip-box{background:#fffbeb;border:1px solid #fcd34d;border-radius:8px;padding:1.2rem;margin:1rem 0}
     .tip-box h4{color:#b45309;margin-bottom:.5rem;font-size:1rem}
@@ -45,6 +46,43 @@
     .timer-item .time{font-size:1.5rem;font-weight:700;color:var(--primary)}
     .timer-item .label{font-size:.8rem;color:var(--text-light)}
     .section-divider{border:none;border-top:2px dashed var(--border);margin:3rem 0}
+    .expand-btn{background:none;border:2px solid var(--primary);color:var(--primary);padding:.6rem 1.2rem;border-radius:8px;cursor:pointer;font-weight:600;font-size:.85rem;transition:all .3s;margin:.5rem 0}
+    .expand-btn:hover{background:var(--primary);color:#fff}
+    .collapsed .sample-answer{display:none}
+    .collapse-note{color:var(--text-light);font-size:.85rem;font-style:italic}
+    /* Writing Tips section */
+    .tips-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin:2rem 0}
+    .tip-card{background:var(--card);border-radius:var(--radius);padding:1.5rem;border:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,.04)}
+    .tip-card h4{color:var(--primary);margin-bottom:.6rem;font-size:1rem}
+    .tip-card p{font-size:.9rem;color:var(--text-light);line-height:1.7}
+    .tip-card ul{padding-left:1.2rem;margin-top:.5rem}
+    .tip-card li{font-size:.88rem;color:var(--text-light);margin-bottom:.3rem;line-height:1.6}
+    .mistake-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin:1.5rem 0}
+    .mistake-card{background:#fef2f2;border-left:4px solid #ef4444;border-radius:0 8px 8px 0;padding:1.2rem}
+    .mistake-card h5{color:#dc2626;font-size:.95rem;margin-bottom:.4rem}
+    .mistake-card .wrong{color:#991b1b;font-size:.88rem;text-decoration:line-through;margin:.3rem 0}
+    .mistake-card .right{color:#166534;font-size:.88rem;font-weight:600;margin:.3rem 0}
+    .mistake-card .explain{color:#6b7280;font-size:.82rem;margin-top:.3rem}
+    /* Template Generator */
+    .generator-box{background:var(--card);border-radius:var(--radius);padding:2rem;border:2px solid var(--primary);margin:2rem 0}
+    .generator-box h3{color:var(--primary);margin-bottom:1rem}
+    .gen-field{margin-bottom:1.2rem}
+    .gen-field label{display:block;font-weight:600;margin-bottom:.4rem;font-size:.9rem}
+    .gen-field select,.gen-field input,.gen-field textarea{width:100%;padding:.7rem;border:1px solid var(--border);border-radius:8px;font-size:.9rem;font-family:inherit}
+    .gen-field textarea{min-height:80px;resize:vertical}
+    .gen-output{background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:1.5rem;margin-top:1.5rem;line-height:1.9;font-size:.93rem;white-space:pre-wrap;min-height:120px}
+    .gen-output.has-content{border-left:4px solid var(--success)}
+    .gen-btn{background:var(--primary);color:#fff;border:none;padding:.8rem 2rem;border-radius:8px;font-weight:700;cursor:pointer;font-size:1rem;transition:all .3s}
+    .gen-btn:hover{background:var(--primary-dark);transform:translateY(-1px)}
+    .copy-btn{background:none;border:1px solid var(--primary);color:var(--primary);padding:.5rem 1.2rem;border-radius:8px;cursor:pointer;font-weight:600;font-size:.85rem;margin-top:.8rem;transition:all .3s}
+    .copy-btn:hover{background:var(--primary);color:#fff}
+    .resource-link{display:inline-flex;align-items:center;gap:.5rem;background:#fee2e2;color:#dc2626;padding:.5rem 1rem;border-radius:8px;font-weight:600;font-size:.9rem;text-decoration:none;transition:all .3s;margin-top:.5rem}
+    .resource-link:hover{background:#ef4444;color:#fff}
+    .phase-box{background:var(--card);border-radius:var(--radius);padding:1.5rem;border:1px solid var(--border);margin:1rem 0}
+    .phase-box h4{color:var(--primary);margin-bottom:.6rem;font-size:1rem}
+    .phase-box ol{padding-left:1.5rem;margin-top:.5rem}
+    .phase-box li{font-size:.9rem;color:var(--text-light);margin-bottom:.4rem;line-height:1.6}
+    .phase-box li strong{color:var(--text)}
   </style>
 </head>
 <body>
@@ -63,20 +101,21 @@
 
 <section class="page-hero">
   <h1>✍️ IELTS Writing</h1>
-  <p>High-scoring sample answers, ready-made templates, techniques, and scoring guide</p>
+  <p>High-scoring sample answers, templates, techniques, vocabulary banks, and scoring guide</p>
 </section>
 
 <div class="section">
   <div class="task-tabs">
-    <div class="task-tab active" onclick="switchTask(1)">Task 1 — Chart Description</div>
+    <div class="task-tab active" onclick="switchTask(1)">Task 1 — Describing</div>
     <div class="task-tab" onclick="switchTask(2)">Task 2 — Essay</div>
     <div class="task-tab" onclick="switchTask(3)">Scoring Guide</div>
+    <div class="task-tab" onclick="switchTask(4)">Writing Tips</div>
   </div>
 
   <!-- ==================== TASK 1 PANEL ==================== -->
   <div class="task-panel active" id="task1-panel">
     <section class="section" style="padding-top:1rem">
-    <h2 class="section-title">Task 1 — Describing a Chart or Table</h2>
+    <h2 class="section-title">Task 1 — Describing a Chart, Table, or Diagram</h2>
     <p class="section-subtitle">Minimum 150 words • 20 minutes • 33% of total Writing score</p>
 
     <div class="timer-box">
@@ -91,53 +130,144 @@
         <li>Never give personal opinions — only report the facts</li>
         <li>Paraphrase the introduction paragraph using different words</li>
         <li>Include an Overview paragraph (the most important trends)</li>
-        <li>Mention specific data with numbers (at least 2 numerical references)</li>
-        <li>Use descriptive linking words</li>
+        <li>Reference specific data with numbers (at least 2 numerical references)</li>
+        <li>Use descriptive linking words and varied sentence structures</li>
         <li>Structure: Introduction → Overview → Body 1 → Body 2</li>
+        <li>Spend about 3 minutes planning, 15 minutes writing, 2 minutes checking</li>
       </ul>
     </div>
 
     <div class="template-box">
       <h4>📝 Ready-Made Template for Task 1</h4>
       <p>
-        <strong>Paragraph 1 — Introduction:</strong> The chart/graph/table illustrates/shows…<br>
+        <strong>Paragraph 1 — Introduction:</strong> The chart/graph/table illustrates/shows/presents [what the data is about] in/on [place] between [time period].<br>
         <strong>Paragraph 2 — Overview:</strong> Overall, it is clear that… / The most striking trend is that…<br>
-        <strong>Paragraph 3 — Details 1:</strong> According to the data, [Subject] had the highest/lowest…<br>
-        <strong>Paragraph 4 — Details 2:</strong> In contrast, [Subject] showed a different pattern…
+        <strong>Paragraph 3 — Details 1:</strong> According to the data, [Subject] had the highest/lowest… rising from X to Y over the period.<br>
+        <strong>Paragraph 4 — Details 2:</strong> In contrast, [Subject] showed a different pattern, with a notable [increase/decrease] from X to Y.
       </p>
     </div>
 
     <hr class="section-divider">
 
-    <!-- SAMPLE 1: Line Graph -->
-    <div class="example-card">
-      <span class="band-label">Band 8.0 Sample</span>
-      <h3>📈 Sample Line Graph Description — Energy Consumption</h3>
+    <!-- ==================== TASK 1 SAMPLE 1: Line Graph ==================== -->
+    <div class="example-card" id="t1-s1">
+      <span class="band-label">Band 8.5 Sample</span>
+      <h3>📈 Line Graph — Energy Consumption in the UK (2000–2020)</h3>
+      <p class="collapse-note">Click to expand full answer</p>
+      <button class="expand-btn" onclick="toggleAnswer('t1-s1')">Show Full Answer ▼</button>
       <div class="sample-answer">
-        <p>The line graph illustrates changes in energy consumption across four different sources in the UK between 2000 and 2020.</p>
-        <p>Overall, it is evident that renewable energy sources experienced a dramatic rise over the period, while fossil fuel consumption declined steadily. Natural gas remained the most consumed source throughout, though its dominance narrowed considerably.</p>
-        <p>Beginning at approximately 40%, natural gas consumption peaked at 45% in 2005 before gradually falling to around 30% by 2020. Meanwhile, coal experienced the most significant decline, dropping from 35% in 2000 to just under 10% by the end of the period.</p>
+        <p>The line graph illustrates changes in energy consumption across four different sources in the United Kingdom between the years 2000 and 2020.</p>
+        <p>Overall, it is evident that renewable energy sources experienced a dramatic rise over the period, while fossil fuel consumption declined steadily. Natural gas remained the most consumed source throughout, though its dominance narrowed considerably by the end of the period.</p>
+        <p>Beginning at approximately 40%, natural gas consumption peaked at 45% in 2005 before gradually falling to around 30% by 2020. Meanwhile, coal experienced the most significant decline, dropping from 35% in 2000 to just under 10% by the end of the period, making it the least-used energy source by 2020.</p>
         <p>In contrast, renewable energy showed a remarkable upward trajectory. Starting from a mere 5% in 2000, it climbed steadily, surpassing coal by 2015 and reaching approximately 35% by 2020. Solar and wind power together accounted for the bulk of this growth, rising from 2% to 25% over the two decades.</p>
       </div>
     </div>
 
-    <!-- SAMPLE 2: Bar Chart -->
-    <div class="example-card">
-      <span class="band-label">Band 7.0 Sample</span>
-      <h3>📊 Sample Bar Chart Description — Tuition Costs</h3>
+    <!-- ==================== TASK 1 SAMPLE 2: Bar Chart ==================== -->
+    <div class="example-card" id="t1-s2">
+      <span class="band-label">Band 7.5 Sample</span>
+      <h3>📊 Bar Chart — Tuition Fees by Country (2010 vs 2020)</h3>
+      <p class="collapse-note">Click to expand full answer</p>
+      <button class="expand-btn" onclick="toggleAnswer('t1-s2')">Show Full Answer ▼</button>
       <div class="sample-answer">
         <p>The bar chart compares the average annual tuition fees in four countries for the years 2010 and 2020.</p>
-        <p>Overall, all four countries saw an increase in tuition fees over the decade. The USA consistently had the highest fees, whereas Germany remained the most affordable option.</p>
-        <p>In 2010, students in the USA paid approximately $20,000 per year, which rose to $30,000 by 2020. The UK followed a similar pattern, increasing from $15,000 to $22,000. Australia saw a more modest rise, going from $12,000 to $18,000. Germany, despite its increase from $500 to $3,000, remained significantly cheaper than the others.</p>
+        <p>Overall, all four countries saw an increase in tuition fees over the decade. The USA consistently had the highest fees, whereas Germany remained the most affordable option throughout the period.</p>
+        <p>In 2010, students in the USA paid approximately $20,000 per year, which rose to $30,000 by 2020 — an increase of 50%. The UK followed a similar pattern, increasing from $15,000 to $22,000 over the same period. Australia saw a more modest rise, going from $12,000 to $18,000.</p>
+        <p>Germany, despite its increase from $500 to $3,000, remained significantly cheaper than the other three nations. This represents a six-fold increase, making it the country with the largest proportional growth, even though the absolute figures remained the lowest.</p>
+      </div>
+    </div>
+
+    <!-- ==================== TASK 1 SAMPLE 3: Pie Chart ==================== -->
+    <div class="example-card" id="t1-s3">
+      <span class="band-label">Band 8.0 Sample</span>
+      <h3>🥧 Pie Chart — Household Expenditure (2005 vs 2015)</h3>
+      <p class="collapse-note">Click to expand full answer</p>
+      <button class="expand-btn" onclick="toggleAnswer('t1-s3')">Show Full Answer ▼</button>
+      <div class="sample-answer">
+        <p>The two pie charts show the distribution of household spending across five categories in 2005 and 2015.</p>
+        <p>Overall, the proportion of expenditure on housing remained relatively stable, while spending on technology increased considerably. Food and transportation accounted for the majority of household budgets in both years.</p>
+        <p>In 2005, food represented the largest share of household expenditure at 35%, followed by housing at 25% and transportation at 20%. Entertainment and technology together made up the remaining 20%, with entertainment at 15% and technology at just 5%.</p>
+        <p>By 2015, a noticeable shift had occurred. While food spending decreased to 28%, technology expenditure surged to 15%, tripling its initial share. Housing remained virtually unchanged at 24%, whereas transportation dropped slightly to 18%. Entertainment also saw a modest decline, falling from 15% to 10%.</p>
+      </div>
+    </div>
+
+    <!-- ==================== TASK 1 SAMPLE 4: Table ==================== -->
+    <div class="example-card" id="t1-s4">
+      <span class="band-label b7">Band 7.0 Sample</span>
+      <h3>📋 Table — University Graduates by Field of Study</h3>
+      <p class="collapse-note">Click to expand full answer</p>
+      <button class="expand-btn" onclick="toggleAnswer('t1-s4')">Show Full Answer ▼</button>
+      <div class="sample-answer">
+        <p>The table presents data on the number of graduates in five fields of study across three universities in 2019.</p>
+        <p>Overall, Business Studies produced the highest number of graduates at all three institutions, while Engineering had the fewest graduates across the board.</p>
+        <p>At University A, Business Studies attracted 3,200 graduates, which was substantially higher than the 1,800 who studied Medicine. The remaining fields saw considerably lower numbers, with Computer Science at 1,400, Arts at 900, and Engineering at just 600 graduates.</p>
+        <p>University B showed a similar trend, with Business Studies leading at 2,800 graduates, followed by Medicine at 2,100. However, this university had more Engineering graduates (1,200) compared to University A. At University C, the figures were generally lower across all fields, with Business Studies at 2,000 and Engineering at 500 — the lowest figure in the entire table.</p>
+      </div>
+    </div>
+
+    <!-- ==================== TASK 1 SAMPLE 5: Process Diagram ==================== -->
+    <div class="example-card" id="t1-s5">
+      <span class="band-label">Band 8.0 Sample</span>
+      <h3>🔄 Process — Water Treatment and Distribution</h3>
+      <p class="collapse-note">Click to expand full answer</p>
+      <button class="expand-btn" onclick="toggleAnswer('t1-s5')">Show Full Answer ▼</button>
+      <div class="sample-answer">
+        <p>The diagram illustrates the process by which water is treated and distributed for public consumption.</p>
+        <p>Overall, the process involves seven main stages, beginning with the collection of raw water from a reservoir and ending with the distribution of treated water to households. The majority of the process focuses on filtration and chemical treatment.</p>
+        <p>Initially, raw water is drawn from a reservoir and pumped into a sedimentation tank, where large particles are allowed to settle. The partially clarified water then passes through a sand filter, which removes finer impurities. Following this, the water undergoes chemical treatment, during which chlorine is added to eliminate harmful bacteria and microorganisms.</p>
+        <p>Once treated, the purified water is stored in a clean-water reservoir before being distributed through an extensive network of underground pipes to residential and commercial properties. The entire process is continuously monitored to ensure that the water meets safety standards before reaching consumers.</p>
+      </div>
+    </div>
+
+    <!-- ==================== TASK 1 SAMPLE 6: Map ==================== -->
+    <div class="example-card" id="t1-s6">
+      <span class="band-label b7">Band 7.5 Sample</span>
+      <h3>🗺️ Map — Changes to Greenfield Town (2000 vs 2020)</h3>
+      <p class="collapse-note">Click to expand full answer</p>
+      <button class="expand-btn" onclick="toggleAnswer('t1-s6')">Show Full Answer ▼</button>
+      <div class="sample-answer">
+        <p>The two maps show the changes that have taken place in Greenfield Town between 2000 and 2020.</p>
+        <p>Overall, the town has undergone significant modernisation, with several new developments replacing former green spaces and agricultural land. The most notable changes include the construction of a shopping mall and the expansion of the residential area.</p>
+        <p>In 2000, Greenfield Town was predominantly rural, with large farmlands occupying the northern section and a small park located near the town centre. By 2020, the farmlands had been replaced by a large shopping complex and a car park. Additionally, a new hospital was built in the northeast corner, where there had previously been open fields.</p>
+        <p>The residential area in the south has expanded considerably, with many new houses constructed along the previously undeveloped eastern road. The original park remains, though it has been reduced in size to accommodate a new sports centre. Finally, a bypass road has been added around the western edge of the town to ease traffic congestion.</p>
+      </div>
+    </div>
+
+    <!-- ==================== TASK 1 SAMPLE 7: Mixed Graph ==================== -->
+    <div class="example-card" id="t1-s7">
+      <span class="band-label">Band 8.0 Sample</span>
+      <h3>📈📊 Mixed — Internet Users & Sales Growth (2010–2020)</h3>
+      <p class="collapse-note">Click to expand full answer</p>
+      <button class="expand-btn" onclick="toggleAnswer('t1-s7')">Show Full Answer ▼</button>
+      <div class="sample-answer">
+        <p>The bar chart shows the number of internet users in millions across five countries, while the line graph depicts the annual growth rate of online retail sales from 2010 to 2020.</p>
+        <p>Overall, the USA had the highest number of internet users throughout the period, and online retail sales experienced steady growth, with a particularly sharp rise between 2015 and 2018.</p>
+        <p>In terms of internet users, the USA led with 300 million in 2020, followed by China at 250 million and India at 180 million. Brazil and Germany trailed with 150 million and 75 million respectively. Notably, China and India showed the most significant growth over the decade, with both countries roughly doubling their user base.</p>
+        <p>Regarding online retail sales, the growth rate remained modest at approximately 5% annually between 2010 and 2014. This figure accelerated to 12% by 2016 and reached a peak of 18% in 2018 before moderating to 14% in 2020. The period of rapid acceleration coincided with increased smartphone penetration globally.</p>
+      </div>
+    </div>
+
+    <!-- ==================== TASK 1 SAMPLE 8: Histogram ==================== -->
+    <div class="example-card" id="t1-s8">
+      <span class="band-label b7">Band 7.0 Sample</span>
+      <h3>📊 Histogram — Age Distribution of Theatre Goers</h3>
+      <p class="collapse-note">Click to expand full answer</p>
+      <button class="expand-btn" onclick="toggleAnswer('t1-s8')">Show Full Answer ▼</button>
+      <div class="sample-answer">
+        <p>The histogram illustrates the age distribution of audience members attending a local theatre over a twelve-month period in 2019.</p>
+        <p>Overall, middle-aged adults formed the largest proportion of theatre-goers, while children under 10 and elderly people over 70 represented the smallest groups. The 31–40 age bracket was the most frequent visitors.</p>
+        <p>The 31–40 age group accounted for the highest attendance, with approximately 4,500 visits over the year. This was followed by the 41–50 age bracket at 3,800 visits and the 21–30 group at 3,200. The 51–60 age range also showed strong attendance with 2,900 visits.</p>
+        <p>At the extremes, children under 10 made up just 800 visits, while those over 70 accounted for 1,200. The 11–20 age group showed relatively low attendance at 1,500 visits, suggesting that teenagers are less likely to attend the theatre compared to other age groups.</p>
       </div>
     </div>
 
     <hr class="section-divider">
 
-    <!-- TASK 1 VOCABULARY -->
+    <!-- ==================== TASK 1 EXPANDED VOCABULARY ==================== -->
     <div class="example-card">
       <h3>📖 Essential Vocabulary for Task 1</h3>
-      <h4 style="margin:1rem 0 .5rem;color:#065f46">Upward Trends</h4>
+
+      <h4 style="margin:1.2rem 0 .5rem;color:#065f46">Upward Trends</h4>
       <div class="vocab-grid">
         <div class="vocab-item"><strong>increase</strong> <span>to go up / rise</span></div>
         <div class="vocab-item"><strong>rise sharply</strong> <span>to increase rapidly</span></div>
@@ -145,8 +275,13 @@
         <div class="vocab-item"><strong>surge</strong> <span>sudden and large increase</span></div>
         <div class="vocab-item"><strong>peak at</strong> <span>to reach the highest point</span></div>
         <div class="vocab-item"><strong>soar</strong> <span>to increase very quickly</span></div>
+        <div class="vocab-item"><strong>rocket</strong> <span>to rise very quickly and suddenly</span></div>
+        <div class="vocab-item"><strong>grow exponentially</strong> <span>to increase at an accelerating rate</span></div>
+        <div class="vocab-item"><strong>experience an upturn</strong> <span>to begin to increase</span></div>
+        <div class="vocab-item"><strong>triple / quadruple</strong> <span>to increase threefold / fourfold</span></div>
       </div>
-      <h4 style="margin:1rem 0 .5rem;color:#065f46">Downward Trends</h4>
+
+      <h4 style="margin:1.2rem 0 .5rem;color:#065f46">Downward Trends</h4>
       <div class="vocab-grid">
         <div class="vocab-item"><strong>decrease</strong> <span>to go down / reduce</span></div>
         <div class="vocab-item"><strong>decline steadily</strong> <span>to decrease gradually</span></div>
@@ -154,24 +289,68 @@
         <div class="vocab-item"><strong>plummet</strong> <span>to fall very sharply</span></div>
         <div class="vocab-item"><strong>hit a low</strong> <span>to reach the lowest point</span></div>
         <div class="vocab-item"><strong>dwindle</strong> <span>to gradually and continuously decrease</span></div>
+        <div class="vocab-item"><strong>slump</strong> <span>a sudden, large fall</span></div>
+        <div class="vocab-item"><strong>shrink</strong> <span>to become smaller in amount</span></div>
+        <div class="vocab-item"><strong>halve</strong> <span>to reduce by 50%</span></div>
+        <div class="vocab-item"><strong>undergo a downturn</strong> <span>to start declining</span></div>
       </div>
-      <h4 style="margin:1rem 0 .5rem;color:#065f46">Stability & Comparison</h4>
+
+      <h4 style="margin:1.2rem 0 .5rem;color:#065f46">Stability & Fluctuation</h4>
       <div class="vocab-grid">
         <div class="vocab-item"><strong>remain stable</strong> <span>to stay the same</span></div>
         <div class="vocab-item"><strong>level off</strong> <span>to become stable after change</span></div>
         <div class="vocab-item"><strong>fluctuate</strong> <span>to go up and down irregularly</span></div>
+        <div class="vocab-item"><strong>plateau</strong> <span>to remain at a constant level</span></div>
+        <div class="vocab-item"><strong>hold steady</strong> <span>to maintain the same figure</span></div>
+        <div class="vocab-item"><strong>oscillate</strong> <span>to alternate between two levels</span></div>
+        <div class="vocab-item"><strong>hover around</strong> <span>to stay close to a specific value</span></div>
+        <div class="vocab-item"><strong>stabilise at</strong> <span>to become constant at a point</span></div>
+      </div>
+
+      <h4 style="margin:1.2rem 0 .5rem;color:#065f46">Comparison & Contrast</h4>
+      <div class="vocab-grid">
         <div class="vocab-item"><strong>in contrast</strong> <span>on the other hand / conversely</span></div>
         <div class="vocab-item"><strong>whereas</strong> <span>while / but</span></div>
         <div class="vocab-item"><strong>by comparison</strong> <span>when compared</span></div>
+        <div class="vocab-item"><strong>account for</strong> <span>to make up / represent</span></div>
+        <div class="vocab-item"><strong>the lion's share</strong> <span>the largest proportion</span></div>
+        <div class="vocab-item"><strong>marginally higher</strong> <span>slightly greater</span></div>
+        <div class="vocab-item"><strong>roughly equivalent</strong> <span>approximately the same</span></div>
+        <div class="vocab-item"><strong>outnumber</strong> <span>to exceed in number</span></div>
+      </div>
+
+      <h4 style="margin:1.2rem 0 .5rem;color:#065f46">Time Expressions</h4>
+      <div class="vocab-grid">
+        <div class="vocab-item"><strong>over the period</strong> <span>during the timeframe</span></div>
+        <div class="vocab-item"><strong>between X and Y</strong> <span>from year X to year Y</span></div>
+        <div class="vocab-item"><strong>by 2020</strong> <span>at the end of the period</span></div>
+        <div class="vocab-item"><strong>initially</strong> <span>at the beginning</span></div>
+        <div class="vocab-item"><strong>subsequently</strong> <span>after that / later</span></div>
+        <div class="vocab-item"><strong>in the ensuing years</strong> <span>in the following years</span></div>
+        <div class="vocab-item"><strong>throughout the period</strong> <span>during the whole time</span></div>
+        <div class="vocab-item"><strong>by the end of</strong> <span>at the conclusion of</span></div>
+      </div>
+
+      <h4 style="margin:1.2rem 0 .5rem;color:#065f46">Data References</h4>
+      <div class="vocab-grid">
+        <div class="vocab-item"><strong>approximately</strong> <span>roughly / about / around</span></div>
+        <div class="vocab-item"><strong>just under</strong> <span>slightly less than</span></div>
+        <div class="vocab-item"><strong>just over</strong> <span>slightly more than</span></div>
+        <div class="vocab-item"><strong>in excess of</strong> <span>more than</span></div>
+        <div class="vocab-item"><strong>a mere</strong> <span>only a small amount</span></div>
+        <div class="vocab-item"><strong>a staggering</strong> <span>an impressively large</span></div>
+        <div class="vocab-item"><strong>respectively</strong> <span>in the order mentioned</span></div>
+        <div class="vocab-item"><strong>at par with</strong> <span>equal to / the same as</span></div>
       </div>
     </div>
+
   </section>
   </div> <!-- end task1-panel -->
 
   <!-- ==================== TASK 2 PANEL ==================== -->
   <div class="task-panel" id="task2-panel">
     <section class="section" style="padding-top:1rem">
-    <h2 class="section-title">Task 2 — Essay</h2>
+    <h2 class="section-title">Task 2 — Essay Writing</h2>
     <p class="section-subtitle">Minimum 250 words • 40 minutes • 67% of total Writing score</p>
 
     <div class="timer-box">
@@ -184,18 +363,19 @@
       <h4>💡 Key Tips for Task 2</h4>
       <ul>
         <li>Read the question carefully — the question type determines your response</li>
-        <li>Your answer must directly address the question (Task Response)</li>
+        <li>Your answer must directly address every part of the question (Task Response)</li>
         <li>Write at least 4 paragraphs: Introduction, 2 Body paragraphs, Conclusion</li>
-        <li>Use specific, real-world examples</li>
-        <li>Each body paragraph should begin with a Topic Sentence</li>
+        <li>Use specific, real-world examples to support your ideas</li>
+        <li>Each body paragraph should begin with a clear Topic Sentence</li>
         <li>Use a variety of vocabulary and grammatical structures</li>
+        <li>Don't spend more than 5 minutes planning, and always leave 2–3 minutes to proofread</li>
       </ul>
     </div>
 
     <div class="template-box">
       <h4>📝 Ready-Made Template for Task 2</h4>
       <p>
-        <strong>Introduction:</strong> It is often argued that… In my opinion…<br>
+        <strong>Introduction:</strong> It is often argued that… / The question of whether… has sparked considerable debate. In my opinion, I believe that…<br>
         <strong>Body Paragraph 1:</strong> Topic sentence + explanation + example + mini-conclusion<br>
         <strong>Body Paragraph 2:</strong> Topic sentence + explanation + example + mini-conclusion<br>
         <strong>Conclusion:</strong> In conclusion, although…, I firmly believe that…
@@ -209,21 +389,24 @@
       <h3>📋 Task 2 Question Types</h3>
       <table class="criteria-table">
         <tr><th>Question Type</th><th>Description</th><th>Answer Format</th></tr>
-        <tr><td><strong>Opinion (Agree/Disagree)</strong></td><td>Do you agree that…?</td><td>Introduction + Agree/Disagree + Conclusion</td></tr>
-        <tr><td><strong>Discussion + Opinion</strong></td><td>Discuss both viewpoints</td><td>Viewpoint 1 + Viewpoint 2 + Your opinion + Conclusion</td></tr>
-        <tr><td><strong>Problem/Solution</strong></td><td>Problem + Solution</td><td>Problems + Solutions + Conclusion</td></tr>
-        <tr><td><strong>Advantages/Disadvantages</strong></td><td>Pros and cons</td><td>Advantages + Disadvantages + Balance + Conclusion</td></tr>
-        <tr><td><strong>Two-part Question</strong></td><td>Two separate questions</td><td>Answer Q1 + Answer Q2 + Conclusion</td></tr>
+        <tr><td><strong>Opinion (Agree/Disagree)</strong></td><td>Do you agree or disagree that…?</td><td>Introduction + Agree/Disagree + Conclusion</td></tr>
+        <tr><td><strong>Discussion + Opinion</strong></td><td>Discuss both viewpoints and give your opinion</td><td>Viewpoint 1 + Viewpoint 2 + Your opinion + Conclusion</td></tr>
+        <tr><td><strong>Problem/Solution</strong></td><td>What are the problems? What solutions can you suggest?</td><td>Problems + Solutions + Conclusion</td></tr>
+        <tr><td><strong>Advantages/Disadvantages</strong></td><td>Do the advantages outweigh the disadvantages?</td><td>Advantages + Disadvantages + Balance + Conclusion</td></tr>
+        <tr><td><strong>Two-Part Question</strong></td><td>Why is this happening? Is this a positive or negative development?</td><td>Answer Q1 + Answer Q2 + Conclusion</td></tr>
+        <tr><td><strong>Positive or Negative Development</strong></td><td>Is this a positive or negative development?</td><td>State position + Supporting points + Counterpoint + Conclusion</td></tr>
       </table>
     </div>
 
     <hr class="section-divider">
 
-    <!-- SAMPLE ESSAY 1: Opinion -->
-    <div class="example-card">
-      <span class="band-label">Band 8.0 Sample</span>
-      <h3>Sample Essay — Social Media (Opinion)</h3>
+    <!-- ==================== TASK 2 SAMPLE 1: Opinion ==================== -->
+    <div class="example-card" id="t2-s1">
+      <span class="band-label">Band 8.5 Sample</span>
+      <h3>Sample Essay — Social Media (Opinion: Agree/Disagree)</h3>
       <p style="color:var(--text-light);font-style:italic;margin-bottom:1rem">Some people believe that social media has a negative impact on society. To what extent do you agree or disagree?</p>
+      <p class="collapse-note">Click to expand full answer</p>
+      <button class="expand-btn" onclick="toggleAnswer('t2-s1')">Show Full Answer ▼</button>
       <div class="sample-answer">
         <p><strong>Introduction:</strong> In recent years, social media platforms have become an integral part of daily life for billions of people worldwide. While some argue that these platforms have a detrimental effect on society, I largely disagree with this view, as I believe the benefits of social media far outweigh its drawbacks.</p>
         <p><strong>Body 1:</strong> One of the most compelling arguments in favour of social media is its ability to connect people across geographical boundaries. Platforms such as Instagram and Twitter enable individuals to maintain relationships regardless of distance. Furthermore, social media has proven to be a powerful tool for raising awareness about social issues. Movements like #MeToo gained momentum largely through viral posts, demonstrating their potential for positive societal change.</p>
@@ -232,32 +415,130 @@
       </div>
     </div>
 
-    <!-- SAMPLE ESSAY 2: Discussion -->
-    <div class="example-card">
-      <span class="band-label">Band 7.5 Sample</span>
-      <h3>Sample Essay — Online Education (Discussion)</h3>
+    <!-- ==================== TASK 2 SAMPLE 2: Discussion ==================== -->
+    <div class="example-card" id="t2-s2">
+      <span class="band-label">Band 8.0 Sample</span>
+      <h3>Sample Essay — Online Education (Discussion + Opinion)</h3>
       <p style="color:var(--text-light);font-style:italic;margin-bottom:1rem">Some people think that online learning is better than classroom learning. Discuss both views and give your opinion.</p>
+      <p class="collapse-note">Click to expand full answer</p>
+      <button class="expand-btn" onclick="toggleAnswer('t2-s2')">Show Full Answer ▼</button>
       <div class="sample-answer">
         <p><strong>Introduction:</strong> The rise of digital technology has transformed the education sector, with online learning becoming increasingly popular. While some believe that virtual classrooms offer superior advantages, others maintain that traditional face-to-face learning remains more effective.</p>
-        <p><strong>Body 1:</strong> Proponents of online learning argue that it offers unparalleled flexibility. Students can access lectures at any time, which is particularly beneficial for those with work commitments. Moreover, online courses often cost less than traditional programmes, making education more accessible.</p>
-        <p><strong>Body 2:</strong> On the other hand, advocates of classroom learning emphasise the importance of direct interaction. The ability to ask questions in real-time and engage in group discussions fosters deeper understanding. Additionally, the structured environment helps many students maintain discipline and focus.</p>
-        <p><strong>Conclusion:</strong> In my opinion, the most effective approach combines both methods. Blended learning can harness the flexibility of digital platforms while preserving the social benefits of in-person education.</p>
+        <p><strong>Body 1 — Online learning advantages:</strong> Proponents of online learning argue that it offers unparalleled flexibility. Students can access lectures at any time, which is particularly beneficial for those with work commitments or family responsibilities. Moreover, online courses often cost significantly less than traditional programmes, making quality education accessible to a wider demographic. For instance, platforms like Coursera allow learners in developing countries to access courses from prestigious universities at a fraction of the cost.</p>
+        <p><strong>Body 2 — Classroom learning advantages:</strong> On the other hand, advocates of classroom learning emphasise the importance of direct interaction. The ability to ask questions in real-time and engage in group discussions fosters deeper understanding of complex topics. Additionally, the structured environment of a physical classroom helps many students maintain discipline and focus — qualities that are often lacking in self-directed online study.</p>
+        <p><strong>Conclusion:</strong> In my opinion, the most effective approach combines both methods. Blended learning can harness the flexibility of digital platforms while preserving the social benefits of in-person education, ultimately creating a more well-rounded learning experience.</p>
+      </div>
+    </div>
+
+    <!-- ==================== TASK 2 SAMPLE 3: Problem/Solution ==================== -->
+    <div class="example-card" id="t2-s3">
+      <span class="band-label">Band 8.0 Sample</span>
+      <h3>Sample Essay — Urban Pollution (Problem/Solution)</h3>
+      <p style="color:var(--text-light);font-style:italic;margin-bottom:1rem">Air pollution in cities is becoming a serious problem. What are the causes of this issue, and what solutions can you suggest?</p>
+      <p class="collapse-note">Click to expand full answer</p>
+      <button class="expand-btn" onclick="toggleAnswer('t2-s3')">Show Full Answer ▼</button>
+      <div class="sample-answer">
+        <p><strong>Introduction:</strong> Urban air pollution has escalated into one of the most pressing environmental challenges of the 21st century. This essay will examine the primary causes of deteriorating air quality in cities and propose several viable solutions.</p>
+        <p><strong>Body 1 — Causes:</strong> The chief cause of urban air pollution is the emission of exhaust fumes from vehicles. With car ownership rates rising exponentially in both developed and developing nations, the volume of pollutants released into the atmosphere has increased dramatically. In addition, industrial activities contribute significantly to the problem, as factories often burn fossil fuels and release toxic gases. A less obvious but equally important factor is the burning of waste in rapidly urbanising areas, which further degrades air quality.</p>
+        <p><strong>Body 2 — Solutions:</strong> To address these issues, governments should invest heavily in public transportation infrastructure. Efficient bus and metro systems would reduce the number of private vehicles on the road. Furthermore, stricter regulations on industrial emissions, enforced through regular inspections and substantial fines, would compel factories to adopt cleaner technologies. Finally, promoting cycling and walking through dedicated lanes and pedestrianised zones could substantially reduce vehicle dependency in city centres.</p>
+        <p><strong>Conclusion:</strong> In summary, urban air pollution is primarily driven by vehicle emissions and industrial activity. However, with the implementation of improved public transport, stricter industrial regulations, and infrastructure encouraging active travel, cities can significantly improve their air quality.</p>
+      </div>
+    </div>
+
+    <!-- ==================== TASK 2 SAMPLE 4: Advantages/Disadvantages ==================== -->
+    <div class="example-card" id="t2-s4">
+      <span class="band-label b7">Band 7.5 Sample</span>
+      <h3>Sample Essay — Remote Work (Advantages/Disadvantages)</h3>
+      <p style="color:var(--text-light);font-style:italic;margin-bottom:1rem">Working from home has become increasingly common. Do the advantages of this development outweigh the disadvantages?</p>
+      <p class="collapse-note">Click to expand full answer</p>
+      <button class="expand-btn" onclick="toggleAnswer('t2-s4')">Show Full Answer ▼</button>
+      <div class="sample-answer">
+        <p><strong>Introduction:</strong> The shift towards remote work has accelerated dramatically in recent years, fundamentally changing the way millions of people approach their professional lives. While this trend brings certain drawbacks, I believe the advantages substantially outweigh them.</p>
+        <p><strong>Body 1 — Advantages:</strong> The most significant benefit of working from home is the flexibility it provides. Employees can structure their day around personal commitments, leading to improved work-life balance. This flexibility also eliminates commuting time, saving workers an average of one hour per day. For companies, the reduced need for office space translates into considerable cost savings. Research conducted by Stanford University found that remote workers were 13% more productive than their office-based counterparts.</p>
+        <p><strong>Body 2 — Disadvantages:</strong> Nevertheless, remote work is not without its challenges. Many employees report feelings of isolation and disconnection from their colleagues, which can negatively affect both mental health and team collaboration. Moreover, the boundaries between personal and professional life become blurred when the home serves as the workplace, potentially leading to longer working hours and burnout. Additionally, not all roles are suited to remote arrangements, creating equity concerns within organisations.</p>
+        <p><strong>Conclusion:</strong> Although remote work presents legitimate challenges related to social isolation and work-life boundaries, the benefits of enhanced productivity, flexibility, and cost efficiency make it a predominantly positive development for both employees and employers.</p>
+      </div>
+    </div>
+
+    <!-- ==================== TASK 2 SAMPLE 5: Two-Part Question ==================== -->
+    <div class="example-card" id="t2-s5">
+      <span class="band-label">Band 8.0 Sample</span>
+      <h3>Sample Essay — Urbanisation (Two-Part Question)</h3>
+      <p style="color:var(--text-light);font-style:italic;margin-bottom:1rem">More people are moving to cities. Why is this happening? Is this a positive or negative development?</p>
+      <p class="collapse-note">Click to expand full answer</p>
+      <button class="expand-btn" onclick="toggleAnswer('t2-s5')">Show Full Answer ▼</button>
+      <div class="sample-answer">
+        <p><strong>Introduction:</strong> Over the past few decades, there has been a significant trend towards urbanisation, with an increasing number of people relocating from rural areas to cities. This essay will discuss the key reasons behind this migration and evaluate whether it represents a positive or negative development.</p>
+        <p><strong>Body 1 — Why people move to cities:</strong> The primary driver of rural-to-urban migration is the pursuit of better employment opportunities. Cities tend to offer a wider range of industries and higher-paying jobs compared to agricultural regions. Furthermore, urban areas provide superior access to essential services such as healthcare and education. Young people, in particular, are drawn to cities for the cultural amenities and social opportunities that rural communities often lack. The allure of modern infrastructure, including reliable internet connectivity, also plays a significant role.</p>
+        <p><strong>Body 2 — Positive or negative:</strong> On balance, I believe that rapid urbanisation presents both opportunities and challenges, but the overall impact is positive. Cities stimulate economic growth, foster innovation, and provide pathways out of poverty for millions. However, unplanned urban growth can lead to overcrowding, inadequate housing, and environmental degradation. The key is for governments to implement effective urban planning to ensure that the benefits of city life are distributed equitably.</p>
+        <p><strong>Conclusion:</strong> In conclusion, the movement towards cities is largely driven by economic and social factors. While the trend has considerable benefits in terms of opportunity and development, it must be managed carefully through thoughtful policy to mitigate the negative consequences of rapid urbanisation.</p>
+      </div>
+    </div>
+
+    <!-- ==================== TASK 2 SAMPLE 6: Opinion (Agree/Disagree) ==================== -->
+    <div class="example-card" id="t2-s6">
+      <span class="band-label b7">Band 7.5 Sample</span>
+      <h3>Sample Essay — Traditional Education (Agree/Disagree)</h3>
+      <p style="color:var(--text-light);font-style:italic;margin-bottom:1rem">Some people think that traditional schools will no longer exist in the future. To what extent do you agree or disagree?</p>
+      <p class="collapse-note">Click to expand full answer</p>
+      <button class="expand-btn" onclick="toggleAnswer('t2-s6')">Show Full Answer ▼</button>
+      <div class="sample-answer">
+        <p><strong>Introduction:</strong> With the rapid advancement of educational technology, some predict that traditional brick-and-mortar schools will eventually become obsolete. I partially agree with this perspective; while the role of physical schools will undoubtedly evolve, I do not believe they will disappear entirely.</p>
+        <p><strong>Body 1:</strong> There are compelling reasons why traditional schools may continue to play an important role. Schools provide a structured social environment where children develop essential interpersonal skills through daily interaction with peers and teachers. This socialisation aspect of education is difficult to replicate in a purely virtual setting. Moreover, for younger children in particular, the physical presence of an educator offers guidance, discipline, and emotional support that technology cannot fully provide.</p>
+        <p><strong>Body 2:</strong> Admittedly, the growth of online learning platforms, artificial intelligence tutors, and virtual classrooms has the potential to replace many functions currently performed by schools. Students can now access world-class educational content from anywhere in the world, often at a fraction of the cost of traditional schooling. It is plausible that some parents will increasingly opt for home-based digital education, particularly at secondary level.</p>
+        <p><strong>Conclusion:</strong> While educational technology will undoubtedly reshape the landscape of schooling, I believe traditional schools will adapt rather than disappear. They will likely incorporate more digital tools while retaining their core social and developmental functions.</p>
+      </div>
+    </div>
+
+    <!-- ==================== TASK 2 SAMPLE 7: Problem/Solution ==================== -->
+    <div class="example-card" id="t2-s7">
+      <span class="band-label">Band 8.0 Sample</span>
+      <h3>Sample Essay — Childhood Obesity (Problem/Solution)</h3>
+      <p style="color:var(--text-light);font-style:italic;margin-bottom:1rem">In many countries, the number of overweight children is increasing. What problems does this cause, and what can be done to address them?</p>
+      <p class="collapse-note">Click to expand full answer</p>
+      <button class="expand-btn" onclick="toggleAnswer('t2-s7')">Show Full Answer ▼</button>
+      <div class="sample-answer">
+        <p><strong>Introduction:</strong> Childhood obesity has become an alarming trend in numerous countries around the world, posing significant health risks to the younger generation. This essay will explore the problems associated with this phenomenon and suggest practical measures to combat it.</p>
+        <p><strong>Body 1 — Problems:</strong> The health implications of childhood obesity are profound and far-reaching. Overweight children face an elevated risk of developing chronic conditions such as type 2 diabetes, cardiovascular disease, and joint problems at a young age. Beyond the physical consequences, obese children often experience bullying and social exclusion, which can lead to depression and low self-esteem. From a societal perspective, the long-term healthcare costs associated with obesity-related illnesses place an enormous burden on public health systems.</p>
+        <p><strong>Body 2 — Solutions:</strong> Several effective strategies can help reverse this trend. First, schools should implement mandatory physical education programmes and ensure that canteen meals meet nutritional standards. Governments could introduce taxes on sugary beverages and junk food, while subsidising fresh fruit and vegetables to make healthier options more affordable. Additionally, parents should be educated about the importance of balanced diets and regular physical activity for their children. Public awareness campaigns, particularly those targeting social media, could also play a significant role in shaping healthier eating habits among young people.</p>
+        <p><strong>Conclusion:</strong> Childhood obesity is a multifaceted problem with serious health and social consequences. However, through a coordinated approach involving governments, schools, and families, it is possible to create environments that encourage healthier lifestyles and reduce the prevalence of obesity among children.</p>
+      </div>
+    </div>
+
+    <!-- ==================== TASK 2 SAMPLE 8: Positive/Negative Development ==================== -->
+    <div class="example-card" id="t2-s8">
+      <span class="band-label b7">Band 7.5 Sample</span>
+      <h3>Sample Essay — Artificial Intelligence (Positive or Negative Development)</h3>
+      <p style="color:var(--text-light);font-style:italic;margin-bottom:1rem">Artificial intelligence is becoming increasingly prevalent in everyday life. Is this a positive or negative development?</p>
+      <p class="collapse-note">Click to expand full answer</p>
+      <button class="expand-btn" onclick="toggleAnswer('t2-s8')">Show Full Answer ▼</button>
+      <div class="sample-answer">
+        <p><strong>Introduction:</strong> Artificial intelligence has become an integral part of modern life, from virtual assistants on smartphones to automated systems in healthcare and transportation. While the proliferation of AI raises certain concerns, I believe it is predominantly a positive development.</p>
+        <p><strong>Body 1:</strong> The advantages of AI are numerous and well-documented. In the medical field, AI-powered diagnostic tools can detect diseases such as cancer earlier than traditional methods, potentially saving thousands of lives. In daily life, smart home devices and recommendation algorithms save people time and enhance their quality of life. Furthermore, AI has the potential to automate repetitive and dangerous tasks in industries such as manufacturing and mining, reducing workplace accidents and improving efficiency.</p>
+        <p><strong>Body 2:</strong> Critics of AI, however, raise important concerns about job displacement and privacy. As machines become capable of performing tasks previously done by humans, many workers — particularly in manufacturing and administration — face the prospect of unemployment. There are also legitimate worries about data privacy, as AI systems often require vast amounts of personal information to function effectively. These concerns must be addressed through robust regulation and retraining programmes.</p>
+        <p><strong>Conclusion:</strong> Despite the challenges posed by AI, including job displacement and privacy issues, the technology's potential to improve healthcare, increase efficiency, and enhance daily life makes it a fundamentally positive development, provided that appropriate safeguards are put in place.</p>
       </div>
     </div>
 
     <hr class="section-divider">
 
-    <!-- TASK 2 VOCABULARY -->
+    <!-- ==================== TASK 2 EXPANDED VOCABULARY ==================== -->
     <div class="example-card">
       <h3>📖 Essential Vocabulary for Task 2</h3>
-      <h4 style="margin:1rem 0 .5rem;color:#065f46">Expressing Opinions</h4>
+
+      <h4 style="margin:1.2rem 0 .5rem;color:#065f46">Expressing Opinions</h4>
       <div class="vocab-grid">
         <div class="vocab-item"><strong>I firmly believe</strong> <span>strong personal conviction</span></div>
-        <div class="vocab-item"><strong>It is widely acknowledged</strong> <span>generally accepted / recognized</span></div>
+        <div class="vocab-item"><strong>It is widely acknowledged</strong> <span>generally accepted / recognised</span></div>
         <div class="vocab-item"><strong>I would argue</strong> <span>presenting a reasoned position</span></div>
         <div class="vocab-item"><strong>From my perspective</strong> <span>in my point of view</span></div>
+        <div class="vocab-item"><strong>It is my contention that</strong> <span>I argue that</span></div>
+        <div class="vocab-item"><strong>I am inclined to believe</strong> <span>leaning towards an opinion</span></div>
+        <div class="vocab-item"><strong>It is irrefutable that</strong> <span>it cannot be denied that</span></div>
+        <div class="vocab-item"><strong>There is no doubt that</strong> <span>it is certain that</span></div>
       </div>
-      <h4 style="margin:1rem 0 .5rem;color:#065f46">Linking Words</h4>
+
+      <h4 style="margin:1.2rem 0 .5rem;color:#065f46">Linking Words & Connectors</h4>
       <div class="vocab-grid">
         <div class="vocab-item"><strong>Furthermore</strong> <span>in addition / moreover</span></div>
         <div class="vocab-item"><strong>However</strong> <span>on the other hand / but</span></div>
@@ -265,15 +546,55 @@
         <div class="vocab-item"><strong>Consequently</strong> <span>as a result / therefore</span></div>
         <div class="vocab-item"><strong>Admittedly</strong> <span>it must be acknowledged</span></div>
         <div class="vocab-item"><strong>Nevertheless</strong> <span>nonetheless / even so</span></div>
+        <div class="vocab-item"><strong>Moreover</strong> <span>what is more / besides</span></div>
+        <div class="vocab-item"><strong>Henceforth</strong> <span>from this point on</span></div>
+        <div class="vocab-item"><strong>Nonetheless</strong> <span>despite this / however</span></div>
+        <div class="vocab-item"><strong>In addition</strong> <span>furthermore / also</span></div>
       </div>
-      <h4 style="margin:1rem 0 .5rem;color:#065f46">Conclusions</h4>
+
+      <h4 style="margin:1.2rem 0 .5rem;color:#065f46">Giving Examples</h4>
+      <div class="vocab-grid">
+        <div class="vocab-item"><strong>For instance</strong> <span>for example / such as</span></div>
+        <div class="vocab-item"><strong>A case in point is</strong> <span>a clear example of</span></div>
+        <div class="vocab-item"><strong>To illustrate</strong> <span>to give an example</span></div>
+        <div class="vocab-item"><strong>Research indicates that</strong> <span>studies show that</span></div>
+        <div class="vocab-item"><strong>As evidence suggests</strong> <span>according to the data</span></div>
+        <div class="vocab-item"><strong>This is exemplified by</strong> <span>this can be seen in</span></div>
+      </div>
+
+      <h4 style="margin:1.2rem 0 .5rem;color:#065f46">Cause & Effect</h4>
+      <div class="vocab-grid">
+        <div class="vocab-item"><strong>This leads to</strong> <span>this results in / causes</span></div>
+        <div class="vocab-item"><strong>As a consequence</strong> <span>therefore / thus</span></div>
+        <div class="vocab-item"><strong>Stemming from</strong> <span>originating from / arising from</span></div>
+        <div class="vocab-item"><strong>Gives rise to</strong> <span>causes / produces</span></div>
+        <div class="vocab-item"><strong>This can be attributed to</strong> <span>this is caused by</span></div>
+        <div class="vocab-item"><strong>The upshot of this is</strong> <span>the result is</span></div>
+      </div>
+
+      <h4 style="margin:1.2rem 0 .5rem;color:#065f46">Conclusions</h4>
       <div class="vocab-grid">
         <div class="vocab-item"><strong>In conclusion</strong> <span>to sum up / finally</span></div>
         <div class="vocab-item"><strong>To sum up</strong> <span>in summary / overall</span></div>
         <div class="vocab-item"><strong>All things considered</strong> <span>taking everything into account</span></div>
-        <div class="vocab-item"><strong>Taking everything into account</strong> <span>considering all factors</span></div>
+        <div class="vocab-item"><strong>On balance</strong> <span>weighing up both sides</span></div>
+        <div class="vocab-item"><strong>Taking all factors into account</strong> <span>considering everything</span></div>
+        <div class="vocab-item"><strong>On the whole</strong> <span>generally speaking</span></div>
+      </div>
+
+      <h4 style="margin:1.2rem 0 .5rem;color:#065f46">Advanced Adjectives for Band 7+</h4>
+      <div class="vocab-grid">
+        <div class="vocab-item"><strong>compelling</strong> <span>convincing / persuasive</span></div>
+        <div class="vocab-item"><strong>profound</strong> <span>deep / significant</span></div>
+        <div class="vocab-item"><strong>unprecedented</strong> <span>never seen before</span></div>
+        <div class="vocab-item"><strong>indispensable</strong> <span>essential / necessary</span></div>
+        <div class="vocab-item"><strong>conducive</strong> <span>tending to promote</span></div>
+        <div class="vocab-item"><strong>predominantly</strong> <span>mainly / primarily</span></div>
+        <div class="vocab-item"><strong>ubiquitous</strong> <span>present everywhere</span></div>
+        <div class="vocab-item"><strong>detrimental</strong> <span>harmful / damaging</span></div>
       </div>
     </div>
+
   </section>
   </div> <!-- end task2-panel -->
 
@@ -288,9 +609,9 @@
       <table class="criteria-table">
         <tr><th>Criteria</th><th>Weight</th><th>Description</th></tr>
         <tr><td><strong>Task Response</strong></td><td>25%</td><td>Have you fully and directly answered the question? Are your ideas clear and well-supported?</td></tr>
-        <tr><td><strong>Coherence & Cohesion</strong></td><td>25%</td><td>Is the text logical and well-structured? Have you used linking words correctly?</td></tr>
-        <tr><td><strong>Lexical Resource</strong></td><td>25%</td><td>Have you used a range of accurate vocabulary?</td></tr>
-        <tr><td><strong>Grammar</strong></td><td>25%</td><td>Have you used a variety of grammatical structures?</td></tr>
+        <tr><td><strong>Coherence &amp; Cohesion</strong></td><td>25%</td><td>Is the text logical and well-structured? Have you used linking words correctly?</td></tr>
+        <tr><td><strong>Lexical Resource</strong></td><td>25%</td><td>Have you used a range of accurate vocabulary? Have you avoided repetition?</td></tr>
+        <tr><td><strong>Grammatical Range &amp; Accuracy</strong></td><td>25%</td><td>Have you used a variety of grammatical structures accurately?</td></tr>
       </table>
     </div>
 
@@ -300,43 +621,43 @@
         <h4>Expert</h4>
         <ul>
           <li>Full and accurate response to all parts of the question</li>
-          <li>Fully supported ideas</li>
+          <li>Fully developed and well-supported ideas</li>
           <li>Excellent structure and flawless cohesion</li>
-          <li>Extensive and precise vocabulary</li>
-          <li>Full command of grammar with high flexibility</li>
+          <li>Extensive and precise vocabulary with natural flexibility</li>
+          <li>Full command of grammar with wide range of structures</li>
         </ul>
       </div>
       <div class="score-card">
-        <div class="score-range">Band 7-8</div>
+        <div class="score-range">Band 7–8</div>
         <h4>Good to Expert</h4>
         <ul>
           <li>Full response to all parts of the question</li>
-          <li>Clear and logical ideas</li>
-          <li>Good use of linking words</li>
-          <li>Vocabulary with minor errors</li>
-          <li>Variety of grammatical structures</li>
+          <li>Clear, logical, and well-supported ideas</li>
+          <li>Good use of a range of linking words</li>
+          <li>Vocabulary with minor errors in word choice</li>
+          <li>Variety of grammatical structures with mostly accurate control</li>
         </ul>
       </div>
       <div class="score-card">
-        <div class="score-range">Band 5-6</div>
+        <div class="score-range">Band 5–6</div>
         <h4>Modest</h4>
         <ul>
-          <li>Partial response to the question</li>
-          <li>Ideas present but incomplete</li>
-          <li>Logical structure with some issues</li>
-          <li>More limited vocabulary</li>
-          <li>Simpler grammatical structures</li>
+          <li>Partial response; some ideas may be unclear</li>
+          <li>Ideas present but may be incompletely developed</li>
+          <li>Logical structure with some issues in coherence</li>
+          <li>Limited range of vocabulary with noticeable errors</li>
+          <li>Basic and complex structures with frequent errors</li>
         </ul>
       </div>
       <div class="score-card">
-        <div class="score-range">Band 3-4</div>
+        <div class="score-range">Band 3–4</div>
         <h4>Limited</h4>
         <ul>
-          <li>Incomplete or irrelevant response</li>
+          <li>Incomplete or largely irrelevant response</li>
           <li>Vague and unsupported ideas</li>
           <li>Lack of coherence in the text</li>
-          <li>Very limited vocabulary</li>
-          <li>Frequent grammatical errors</li>
+          <li>Very limited vocabulary with frequent errors</li>
+          <li>Frequent grammatical errors causing difficulty for the reader</li>
         </ul>
       </div>
     </div>
@@ -351,7 +672,7 @@
         <input type="range" min="1" max="9" value="6" oninput="document.getElementById('val1').textContent=this.value; calcBand()">
       </div>
       <div class="slider-group">
-        <label>Coherence & Cohesion: <span id="val2">6</span></label>
+        <label>Coherence &amp; Cohesion: <span id="val2">6</span></label>
         <input type="range" min="1" max="9" value="6" oninput="document.getElementById('val2').textContent=this.value; calcBand()">
       </div>
       <div class="slider-group">
@@ -369,26 +690,318 @@
       </div>
     </div>
 
-    <hr class="section-divider">
-
-    <div class="example-card">
-      <h3>❌ Common Mistakes</h3>
-      <table class="criteria-table">
-        <tr><th>Mistake</th><th>Description</th><th>Solution</th></tr>
-        <tr><td>Personal opinion in Task 1</td><td>Writing "I think" in a chart description</td><td>Only report the facts</td></tr>
-        <tr><td>Copying the question</td><td>Writing the question word for word</td><td>Paraphrase using different words</td></tr>
-        <tr><td>Skipping the Overview</td><td>Not identifying the most important trends</td><td>Always write an Overview paragraph</td></tr>
-        <tr><td>Insufficient word count</td><td>Writing fewer than the minimum</td><td>At least 150 (T1) or 250 (T2)</td></tr>
-        <tr><td>Repeating vocabulary</td><td>Using the same word repeatedly</td><td>Use synonyms</td></tr>
-        <tr><td>Poor time management</td><td>Spending too much time on Task 1</td><td>20 min for T1 + 40 min for T2</td></tr>
-      </table>
-    </div>
-
   </section>
   </div> <!-- end task3-panel -->
 
+  <!-- ==================== WRITING TIPS PANEL ==================== -->
+  <div class="task-panel" id="task4-panel">
+    <section class="section" style="padding-top:1rem">
+    <h2 class="section-title">Writing Tips, Common Mistakes &amp; Template Generator</h2>
+    <p class="section-subtitle">Master the strategies, avoid the pitfalls, and generate custom paragraph templates</p>
+
+    <!-- ==================== WRITING TIPS SECTION ==================== -->
+    <div class="example-card">
+      <h3>🎯 General Writing Tips for Band 7+</h3>
+      <div class="tips-grid">
+        <div class="tip-card">
+          <h4>⏱️ Time Management</h4>
+          <ul>
+            <li><strong>Task 1:</strong> 3 min planning + 15 min writing + 2 min checking</li>
+            <li><strong>Task 2:</strong> 5 min planning + 30 min writing + 5 min proofreading</li>
+            <li>Always start with Task 2 — it's worth twice the marks</li>
+            <li>Write your introduction and overview first to guarantee marks</li>
+          </ul>
+        </div>
+        <div class="tip-card">
+          <h4>📝 Paragraph Structure</h4>
+          <ul>
+            <li>Each paragraph = one clear idea</li>
+            <li>Start with a <strong>Topic Sentence</strong> (the main idea)</li>
+            <li>Follow with an <strong>Explanation</strong> (why or how)</li>
+            <li>Add an <strong>Example</strong> (specific evidence)</li>
+            <li>End with a <strong>Mini-conclusion</strong> linking to the next point</li>
+          </ul>
+        </div>
+        <div class="tip-card">
+          <h4>🔒 Task Response Secrets</h4>
+          <ul>
+            <li>Read the question <strong>twice</strong> before writing</li>
+            <li>Underline the key words in the question</li>
+            <li>Address <strong>every part</strong> of the question</li>
+            <li>For opinion essays, state your view clearly in the introduction</li>
+            <li>Never write about topics you can't support with examples</li>
+          </ul>
+        </div>
+        <div class="tip-card">
+          <h4>📚 Vocabulary Strategy</h4>
+          <ul>
+            <li>Use topic-specific vocabulary (not just general words)</li>
+            <li>Avoid repeating the same words — use synonyms</li>
+            <li>Learn <strong>collocations</strong> (natural word partnerships)</li>
+            <li>Use 2–3 "high-level" words per paragraph (not per sentence)</li>
+            <li>Never use a word you're unsure of — simplicity beats errors</li>
+          </ul>
+        </div>
+        <div class="tip-card">
+          <h4>🏗️ Coherence &amp; Cohesion</h4>
+          <ul>
+            <li>Use paragraphing effectively (one idea per paragraph)</li>
+            <li>Linking words should connect ideas, not be forced in</li>
+            <li>Use referencing: "this," "such," "the former/the latter"</li>
+            <li>Don't overuse connectors — natural flow matters more</li>
+            <li>Topic sentences act as signposts for the reader</li>
+          </ul>
+        </div>
+        <div class="tip-card">
+          <h4>✅ Grammar Power Moves</h4>
+          <ul>
+            <li>Mix simple, compound, and complex sentences</li>
+            <li>Use conditionals: "If governments were to…, it would…"</li>
+            <li>Use passives in Task 1: "It can be seen that…"</li>
+            <li>Use relative clauses: "People who…", "The system which…"</li>
+            <li>Proofread for common errors: subject-verb agreement, articles</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- ==================== WRITING PROCESS ==================== -->
+    <div class="example-card">
+      <h3>🔄 The Ideal 5-Step Writing Process</h3>
+      <div class="phase-box">
+        <h4>Step 1: Analyse the Question (2–3 minutes)</h4>
+        <ol>
+          <li><strong>Identify the task type</strong> — Opinion? Discussion? Problem/Solution?</li>
+          <li><strong>Underline key words</strong> — these tell you exactly what to address</li>
+          <li><strong>Note any specific instructions</strong> — "Give reasons," "Provide examples," etc.</li>
+          <li><strong>Plan your position</strong> — What will you argue? What examples will you use?</li>
+        </ol>
+      </div>
+      <div class="phase-box">
+        <h4>Step 2: Plan Your Essay (3–5 minutes)</h4>
+        <ol>
+          <li><strong>Decide your thesis</strong> — What is your overall position?</li>
+          <li><strong>List 2–3 main points</strong> for each body paragraph</li>
+          <li><strong>Brainstorm examples</strong> for each point</li>
+          <li><strong>Outline the structure</strong> — Introduction → Body 1 → Body 2 → Conclusion</li>
+        </ol>
+      </div>
+      <div class="phase-box">
+        <h4>Step 3: Write Your First Draft (25–30 minutes)</h4>
+        <ol>
+          <li><strong>Write the introduction</strong> — Paraphrase + state your position</li>
+          <li><strong>Write body paragraphs</strong> — Topic sentence → Explanation → Example → Link</li>
+          <li><strong>Write the conclusion</strong> — Summarise + restate your position</li>
+          <li><strong>Don't stop to edit</strong> — keep writing and move forward</li>
+        </ol>
+      </div>
+      <div class="phase-box">
+        <h4>Step 4: Edit &amp; Proofread (5 minutes)</h4>
+        <ol>
+          <li><strong>Check word count</strong> — Must be 150+ (Task 1) or 250+ (Task 2)</li>
+          <li><strong>Scan for grammar errors</strong> — subject-verb, tenses, articles</li>
+          <li><strong>Check spelling</strong> — especially common IELTS words</li>
+          <li><strong>Read your topic sentences</strong> — Do they logically flow?</li>
+        </ol>
+      </div>
+      <div class="phase-box">
+        <h4>Step 5: Final Review (1–2 minutes)</h4>
+        <ol>
+          <li><strong>Re-read the introduction</strong> — Does it match your conclusion?</li>
+          <li><strong>Check paragraph count</strong> — Minimum 4 paragraphs for Task 2</li>
+          <li><strong>Verify the overview exists</strong> for Task 1</li>
+          <li><strong>Breathe and submit</strong> — You've done the work!</li>
+        </ol>
+      </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- ==================== COMMON MISTAKES (EXPANDED) ==================== -->
+    <div class="example-card">
+      <h3>🚫 Common Mistakes — Task 1</h3>
+      <div class="mistake-grid">
+        <div class="mistake-card">
+          <h5>❌ Adding Personal Opinions</h5>
+          <p class="wrong">"I think renewable energy is the best option."</p>
+          <p class="right">✓ "Renewable energy showed the most significant growth."</p>
+          <p class="explain">Task 1 is purely factual. Never include personal views, predictions, or explanations for trends.</p>
+        </div>
+        <div class="mistake-card">
+          <h5>❌ Copying the Question Word-for-Word</h5>
+          <p class="wrong">"The line graph shows the number of tourists visiting…" (copied from question)</p>
+          <p class="right">✓ "The line graph illustrates changes in tourist numbers across…" (paraphrased)</p>
+          <p class="explain">Always paraphrase the introduction. Use synonyms and restructure the sentence.</p>
+        </div>
+        <div class="mistake-card">
+          <h5>❌ Skipping the Overview</h5>
+          <p class="wrong">Jumping straight into data descriptions after the introduction.</p>
+          <p class="right">✓ "Overall, the most notable trend was the sharp increase in…"</p>
+          <p class="explain">The Overview paragraph is the most important paragraph in Task 1. It must identify the main trends.</p>
+        </div>
+        <div class="mistake-card">
+          <h5>❌ Listing Every Data Point</h5>
+          <p class="wrong">"In 2000 it was 5%, in 2001 it was 6%, in 2002 it was 7%…"</p>
+          <p class="right">✓ "The figure rose gradually from 5% in 2000 to approximately 12% by 2005."</p>
+          <p class="explain">Select key data points and group information. Describe trends, don't just list numbers.</p>
+        </div>
+        <div class="mistake-card">
+          <h5>❌ Wrong Word Count</h5>
+          <p class="wrong">Writing only 120 words or exactly 150 words with no room for error.</p>
+          <p class="right">✓ Aim for 170–190 words for Task 1 (a comfortable margin above 150).</p>
+          <p class="explain">Under-writing loses marks. Over-writing risks mistakes. Aim for 170–190 words.</p>
+        </div>
+        <div class="mistake-card">
+          <h5>❌ Poor Time Management</h5>
+          <p class="wrong">Spending 35 minutes on Task 1 and only 25 minutes on Task 2.</p>
+          <p class="right">✓ Strictly 20 minutes for Task 1 and 40 minutes for Task 2.</p>
+          <p class="explain">Task 2 is worth twice as much. Always start with Task 2 or set a strict 20-minute timer for Task 1.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="example-card">
+      <h3>🚫 Common Mistakes — Task 2</h3>
+      <div class="mistake-grid">
+        <div class="mistake-card">
+          <h5>❌ Not Addressing All Parts of the Question</h5>
+          <p class="wrong">The question asks "Why?" AND "Is this positive or negative?" but you only answer one.</p>
+          <p class="right">✓ Address every part of the question with dedicated paragraphs.</p>
+          <p class="explain">Task Response is 25% of your score. Missing part of the question caps you at Band 5–6.</p>
+        </div>
+        <div class="mistake-card">
+          <h5>❌ Memorised Introductions</h5>
+          <p class="wrong">"In today's modern world, it is an undeniably true fact that…" (used for every essay)</p>
+          <p class="right">✓ "The rapid growth of [topic] has sparked debate about whether…" (tailored)</p>
+          <p class="explain">Examiners recognise templates. Write a specific introduction that directly addresses the question.</p>
+        </div>
+        <div class="mistake-card">
+          <h5>❌ Vague or Unsupported Ideas</h5>
+          <p class="wrong">"Many people think this is bad." (who? where? evidence?)</p>
+          <p class="right">✓ "A 2023 WHO report found that 35% of urban residents experienced…" (specific)</p>
+          <p class="explain">Support every claim with specific examples, data, or real-world references.</p>
+        </div>
+        <div class="mistake-card">
+          <h5>❌ Off-Topic Content</h5>
+          <p class="wrong">Writing about technology when the question is about education.</p>
+          <p class="right">✓ Stay on topic and relate every point back to the question.</p>
+          <p class="explain">If you drift off-topic, you lose Task Response marks no matter how well-written your essay is.</p>
+        </div>
+        <div class="mistake-card">
+          <h5>❌ Overusing Connectors</h5>
+          <p class="wrong">"Furthermore, moreover, additionally, in addition, besides, also…" (in one paragraph)</p>
+          <p class="right">✓ Use 1–2 connectors per paragraph. Let the ideas flow naturally.</p>
+          <p class="explain">Forced linking words hurt Coherence &amp; Cohesion. Quality of connection matters more than quantity.</p>
+        </div>
+        <div class="mistake-card">
+          <h5>❌ Informal Language</h5>
+          <p class="wrong">"Lots of people," "pretty much," "gonna," "stuff," "kinda."</p>
+          <p class="right">✓ "A significant number of people," "substantially," "approximately," "issues."</p>
+          <p class="explain">IELTS Writing is formal academic English. Avoid contractions, slang, and colloquialisms.</p>
+        </div>
+        <div class="mistake-card">
+          <h5>❌ Weak Conclusions</h5>
+          <p class="wrong">"In conclusion, this essay talked about the topic." (vague and useless)</p>
+          <p class="right">✓ "In conclusion, while [counterpoint], I believe [thesis] because [reasons]."</p>
+          <p class="explain">Your conclusion should restate your thesis with slightly different wording, not just summarise.</p>
+        </div>
+        <div class="mistake-card">
+          <h5>❌ Neglecting to Proofread</h5>
+          <p class="wrong">Leaving obvious errors: "Their is many reason" / "People should to study"</p>
+          <p class="right">✓ "There are many reasons" / "People should study" (simple fixes that save marks)</p>
+          <p class="explain">Always leave 3–5 minutes at the end to reread and correct obvious errors.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- ==================== PARAGRAPH TEMPLATE GENERATOR ==================== -->
+    <div class="example-card">
+      <h3>🛠️ Interactive Paragraph Template Generator</h3>
+      <p style="color:var(--text-light);font-size:.9rem;margin-bottom:1rem">Select your task type and customise the template to generate a ready-to-use paragraph structure. Copy it into your notes or practice essay.</p>
+
+      <div class="generator-box">
+        <div class="gen-field">
+          <label>📋 Task Type</label>
+          <select id="genTaskType" onchange="updateGenFields()">
+            <option value="t1-intro">Task 1 — Introduction Paragraph</option>
+            <option value="t1-overview">Task 1 — Overview Paragraph</option>
+            <option value="t1-details">Task 1 — Details Paragraph</option>
+            <option value="t2-intro">Task 2 — Introduction (Opinion)</option>
+            <option value="t2-intro-discuss">Task 2 — Introduction (Discussion)</option>
+            <option value="t2-intro-probsol">Task 2 — Introduction (Problem/Solution)</option>
+            <option value="t2-body">Task 2 — Body Paragraph</option>
+            <option value="t2-conclusion">Task 2 — Conclusion</option>
+          </select>
+        </div>
+        <div class="gen-field">
+          <label>📝 Topic / Subject</label>
+          <input type="text" id="genTopic" placeholder="e.g., energy consumption, social media, urbanisation…">
+        </div>
+        <div class="gen-field">
+          <label>🌍 Place (optional)</label>
+          <input type="text" id="genPlace" placeholder="e.g., the UK, worldwide, developing countries…">
+        </div>
+        <div class="gen-field">
+          <label>📅 Time Period (optional)</label>
+          <input type="text" id="genTime" placeholder="e.g., 2000–2020, the last decade…">
+        </div>
+        <div class="gen-field" id="genExtraField" style="display:none">
+          <label id="genExtraLabel">Extra Detail</label>
+          <input type="text" id="genExtra" placeholder="">
+        </div>
+        <button class="gen-btn" onclick="generateTemplate()">✨ Generate Template</button>
+        <div class="gen-output" id="genOutput">
+          <em style="color:var(--text-light)">Your generated template will appear here…</em>
+        </div>
+        <button class="copy-btn" id="copyBtn" onclick="copyTemplate()" style="display:none">📋 Copy to Clipboard</button>
+      </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- ==================== QUICK REFERENCE CHEAT SHEET ==================== -->
+    <div class="example-card">
+      <h3>📄 Quick Reference Cheat Sheet</h3>
+      <table class="criteria-table">
+        <tr><th>Element</th><th>Task 1</th><th>Task 2</th></tr>
+        <tr><td><strong>Word Count</strong></td><td>Minimum 150 words</td><td>Minimum 250 words</td></tr>
+        <tr><td><strong>Time</strong></td><td>20 minutes</td><td>40 minutes</td></tr>
+        <tr><td><strong>Score Weight</strong></td><td>33%</td><td>67%</td></tr>
+        <tr><td><strong>Personal Opinion?</strong></td><td>❌ Never</td><td>✅ Required (most types)</td></tr>
+        <tr><td><strong>Overview Required?</strong></td><td>✅ Yes — essential</td><td>❌ No (use introduction instead)</td></tr>
+        <tr><td><strong>Key Skill</strong></td><td>Describing trends &amp; data</td><td>Argumentation &amp; examples</td></tr>
+        <tr><td><strong>Structure</strong></td><td>Intro → Overview → Body 1 → Body 2</td><td>Intro → Body 1 → Body 2 → Conclusion</td></tr>
+        <tr><td><strong>Use "I think"?</strong></td><td>❌ Never</td><td>✅ Yes (for opinion essays)</td></tr>
+        <tr><td><strong>Best Band Strategy</strong></td><td>Strong overview + varied data language</td><td>Clear thesis + well-supported ideas</td></tr>
+      </table>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- ==================== RESOURCES ==================== -->
+    <div class="example-card">
+      <h3>📚 Useful Resources &amp; Practice</h3>
+      <p style="color:var(--text-light);font-size:.9rem;margin-bottom:1rem">Practice regularly with these official and recommended resources to improve your writing score:</p>
+      <ul style="padding-left:1.5rem;list-style:disc">
+        <li style="margin-bottom:.5rem;font-size:.9rem"><strong>IELTS Official Practice Tests</strong> — Cambridge IELTS Books 14–19 (real exam papers)</li>
+        <li style="margin-bottom:.5rem;font-size:.9rem"><strong>IELTS Liz</strong> — Free lessons, sample answers, and model essays (ieltsliz.com)</li>
+        <li style="margin-bottom:.5rem;font-size:.9rem"><strong>IELTS Simon</strong> — High-quality model essays by a former examiner</li>
+        <li style="margin-bottom:.5rem;font-size:.9rem"><strong>Grammarly / LanguageTool</strong> — Check your grammar after practice essays</li>
+        <li style="margin-bottom:.5rem;font-size:.9rem"><strong>Write &amp; get feedback</strong> — Use r/IELTS on Reddit or find a writing partner</li>
+      </ul>
+      <a class="resource-link" href="https://youtube.com/@ieltsscoreaccelerator" target="_blank" rel="noopener">▶ Watch our video lessons on YouTube</a>
+    </div>
+
+  </section>
+  </div> <!-- end task4-panel -->
+
 </div> <!-- end section/tabs container -->
 
+<!-- ==================== FOOTER ==================== -->
 <footer class="footer">
   <div class="footer-links">
     <a href="reading.html">Reading</a>
@@ -396,10 +1009,17 @@
     <a href="writing.html">Writing</a>
     <a href="speaking.html">Speaking</a>
   </div>
+  <div style="margin:.8rem 0">
+    <a href="https://youtube.com/@ieltsscoreaccelerator" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.15);padding:.6rem 1.2rem;border-radius:8px;font-weight:600;font-size:.9rem;transition:all .3s;color:#fff;text-decoration:none">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.38.55A3.02 3.02 0 0 0 .5 6.19 31.6 31.6 0 0 0 0 12a31.6 31.6 0 0 0 .5 5.81 3.02 3.02 0 0 0 2.12 2.14c1.88.55 9.38.55 9.38.55s7.5 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14A31.6 31.6 0 0 0 24 12a31.6 31.6 0 0 0-.5-5.81zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg>
+      YouTube Channel
+    </a>
+  </div>
   <p>© 2026 IELTS Pro | All rights reserved</p>
 </footer>
 
 <script>
+/* ==================== TAB SWITCHING ==================== */
 function switchTask(num) {
   document.querySelectorAll('.task-tab').forEach(function(t, i) {
     t.classList.toggle('active', i === num - 1);
@@ -407,7 +1027,10 @@ function switchTask(num) {
   document.getElementById('task1-panel').classList.toggle('active', num === 1);
   document.getElementById('task2-panel').classList.toggle('active', num === 2);
   document.getElementById('task3-panel').classList.toggle('active', num === 3);
+  document.getElementById('task4-panel').classList.toggle('active', num === 4);
 }
+
+/* ==================== BAND CALCULATOR ==================== */
 function calcBand() {
   var v1 = parseInt(document.getElementById('val1').textContent);
   var v2 = parseInt(document.getElementById('val2').textContent);
@@ -418,6 +1041,141 @@ function calcBand() {
   document.getElementById('finalBand').textContent = band.toFixed(1);
 }
 calcBand();
+
+/* ==================== EXPAND/COLLAPSE ANSWERS ==================== */
+function toggleAnswer(id) {
+  var card = document.getElementById(id);
+  var btn = card.querySelector('.expand-btn');
+  var sample = card.querySelector('.sample-answer');
+  if (sample.style.display === 'none' || sample.style.display === '') {
+    sample.style.display = 'block';
+    btn.textContent = 'Hide Answer ▲';
+    card.classList.remove('collapsed');
+  } else {
+    sample.style.display = 'none';
+    btn.textContent = 'Show Full Answer ▼';
+    card.classList.add('collapsed');
+  }
+}
+
+/* ==================== TEMPLATE GENERATOR ==================== */
+var templates = {
+  't1-intro': {
+    label: 'Task 1 — Introduction',
+    template: function(topic, place, time) {
+      return 'The [chart/graph/table/diagram] illustrates/shows/presents the changes in ' + (topic || '[TOPIC]') + ' in ' + (place || '[PLACE]') + ' ' + (time ? 'from ' + time : 'between [YEAR] and [YEAR]') + '.\n\n' +
+      '✅ TIP: Start with "The chart illustrates…" and use synonyms for the words in the question. Never copy the question word for word.';
+    }
+  },
+  't1-overview': {
+    label: 'Task 1 — Overview',
+    template: function(topic, place, time) {
+      return 'Overall, it is clear that [main trend 1]. Additionally, [main trend 2] was a notable feature of the data.\n\n' +
+      'The most striking feature of the data is that [key observation]. [Another key observation], which distinguishes [subject] from the other categories.\n\n' +
+      '✅ TIP: The Overview is the MOST important paragraph. Always identify the 2–3 most important trends or patterns. Never include specific data here.';
+    }
+  },
+  't1-details': {
+    label: 'Task 1 — Details Paragraph',
+    template: function(topic, place, time) {
+      return 'In more detail, [Subject A] [trend verb: rose/declined/remained stable] from [X] in [year] to [Y] in [year]. [Subject B] showed a similar/different pattern, [increasing/decreasing] from [X] to [Y] over the same period.\n\n' +
+      'By comparison, [Subject C] started at [X] and [peaked/hit a low] at [Y] in [year], before [levelling off/fluctuating] for the remainder of the period.\n\n' +
+      '✅ TIP: Use at least 3–4 specific data points. Mix overview verbs (surged, plummeted, fluctuated) with specific numbers.';
+    }
+  },
+  't2-intro': {
+    label: 'Task 2 — Introduction (Opinion Essay)',
+    template: function(topic, place, time) {
+      return 'It is often argued that [restate the topic in your own words]. While some people believe [viewpoint A], I firmly believe that [YOUR POSITION] for the following reasons.\n\n' +
+      '✅ TIP: Your position must be CLEAR in the introduction. Don\'t be vague — the examiner needs to know your stance immediately.';
+    }
+  },
+  't2-intro-discuss': {
+    label: 'Task 2 — Introduction (Discussion Essay)',
+    template: function(topic, place, time) {
+      return 'The question of whether [Topic] has become a subject of considerable debate. While some argue that [Viewpoint A], others contend that [Viewpoint B]. In my opinion, [YOUR POSITION].\n\n' +
+      '✅ TIP: Briefly mention both viewpoints in the introduction, then clearly state which one you support.';
+    }
+  },
+  't2-intro-probsol': {
+    label: 'Task 2 — Introduction (Problem/Solution Essay)',
+    template: function(topic, place, time) {
+      return '[Topic] has emerged as one of the most pressing challenges facing [place/society/the world] today. This essay will examine the primary causes of this issue and propose several practical solutions.\n\n' +
+      '✅ TIP: The introduction should clearly signal that you\'ll discuss BOTH problems and solutions.';
+    }
+  },
+  't2-body': {
+    label: 'Task 2 — Body Paragraph',
+    template: function(topic, place, time) {
+      return 'TOPIC SENTENCE: One of the most significant [reasons/advantages/disadvantages] of [topic] is that [main idea].\n\n' +
+      'EXPLANATION: This is because [explain why/how this is the case]. [Add further detail or reasoning].\n\n' +
+      'EXAMPLE: For instance, [provide a specific example — a real study, a country, a situation].\n\n' +
+      'MINI-CONCLUSION: This clearly demonstrates that [restate point briefly].\n\n' +
+      '✅ TIP: Every body paragraph needs: Topic Sentence + Explanation + Example + Link. This is the PEEL structure (Point, Explain, Example, Link).';
+    }
+  },
+  't2-conclusion': {
+    label: 'Task 2 — Conclusion',
+    template: function(topic, place, time) {
+      return 'In conclusion, although [acknowledge the other side briefly], I firmly believe that [YOUR THESIS — reworded]. This is supported by the fact that [reason 1] and [reason 2]. Moving forward, it is essential that [call to action or final thought].\n\n' +
+      '✅ TIP: Never introduce new ideas in the conclusion. Restate your position with different wording and optionally suggest implications or future actions.';
+    }
+  }
+};
+
+function updateGenFields() {
+  var val = document.getElementById('genTaskType').value;
+  var extraField = document.getElementById('genExtraField');
+  var extraLabel = document.getElementById('genExtraLabel');
+  var extraInput = document.getElementById('genExtra');
+
+  if (val === 't2-body') {
+    extraField.style.display = 'block';
+    extraLabel.textContent = 'Main Point / Argument';
+    extraInput.placeholder = 'e.g., "increased productivity," "improved health outcomes"…';
+  } else {
+    extraField.style.display = 'none';
+  }
+}
+
+function generateTemplate() {
+  var val = document.getElementById('genTaskType').value;
+  var topic = document.getElementById('genTopic').value.trim();
+  var place = document.getElementById('genPlace').value.trim();
+  var time = document.getElementById('genTime').value.trim();
+  var output = document.getElementById('genOutput');
+  var copyBtn = document.getElementById('copyBtn');
+
+  var t = templates[val];
+  if (!t) return;
+
+  output.textContent = t.template(topic, place, time);
+  output.classList.add('has-content');
+  copyBtn.style.display = 'inline-block';
+}
+
+function copyTemplate() {
+  var output = document.getElementById('genOutput');
+  var text = output.textContent;
+  navigator.clipboard.writeText(text).then(function() {
+    var btn = document.getElementById('copyBtn');
+    btn.textContent = '✅ Copied!';
+    setTimeout(function() { btn.textContent = '📋 Copy to Clipboard'; }, 2000);
+  }).catch(function() {
+    /* Fallback for older browsers */
+    var range = document.createRange();
+    range.selectNode(output);
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+    document.execCommand('copy');
+    window.getSelection().removeAllRanges();
+  });
+}
+
+/* Initialise: collapse all sample answers by default */
+document.querySelectorAll('.sample-answer').forEach(function(el) {
+  el.style.display = 'none';
+});
 </script>
 </body>
 </html>
