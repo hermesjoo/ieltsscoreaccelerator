@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Dashboard | IELTS Score Accelerator</title>
   <link rel="stylesheet" href="../css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     .dashboard { max-width: 1100px; margin: 0 auto; padding: 2rem; }
     .welcome-card {
@@ -183,9 +184,24 @@
     .logout-btn:active { transform: scale(0.97); }
 
     @media (max-width: 768px) {
-      .welcome-card { flex-direction: column; text-align: center; gap: 1rem; }
+      .dashboard { padding: 1.5rem 0.75rem; }
+      .welcome-card { flex-direction: column; text-align: center; gap: 1rem; padding: 2rem 1.2rem; }
+      .welcome-card h1 { font-size: 1.4rem; }
       .welcome-right { flex-direction: column; }
-      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .stats-row { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+      .stat-box { padding: 1rem; }
+      .stat-box .value { font-size: 1.3rem; }
+      .section-heading { font-size: 1.1rem; }
+      .actions-grid { grid-template-columns: 1fr; gap: 0.75rem; }
+      .action-card { padding: 1rem; }
+      .progress-section { padding: 1.5rem 1rem; }
+      .skill-progress { flex-wrap: wrap; gap: 0.5rem; }
+      .skill-name { min-width: auto; font-size: 0.9rem; flex: 0 0 100%; }
+      .progress-bar-bg { flex: 1; min-width: 0; }
+      .progress-pct { min-width: 35px; font-size: 0.8rem; }
+      .yt-cta { flex-direction: column; text-align: center; padding: 1.5rem 1rem; gap: 1rem; }
+      .activity-text { font-size: 0.88rem; }
+      .activity-time { font-size: 0.75rem; }
     }
   </style>
 </head>
@@ -331,56 +347,83 @@
   <p>&copy; 2026 IELTS Score Accelerator. All rights reserved.</p>
 </footer>
 
-<script type="module">
-  import { getUser, signOut } from '../js/auth.js';
+<script src="../js/auth.js"></script>
+<script>
+  (async function() {
+    const user = await getUser();
+    if (user) {
+      document.getElementById('userName').textContent = user.name || 'Student';
+      document.getElementById('userEmail').textContent = user.email || '';
+      if (user.photo) document.getElementById('userAvatar').src = user.photo;
+    }
 
-  const user = await getUser();
-  if (user) {
-    document.getElementById('userName').textContent = user.name || 'Student';
-    document.getElementById('userEmail').textContent = user.email || '';
-    if (user.photo) document.getElementById('userAvatar').src = user.photo;
-  }
+    // Load stats from localStorage
+    const stats = JSON.parse(localStorage.getItem('ielts_stats') || '{}');
+    document.getElementById('totalTests').textContent = stats.totalTests || 0;
+    document.getElementById('studyHours').textContent = (stats.studyHours || 0) + 'h';
+    document.getElementById('avgScore').textContent = stats.avgScore || '-';
+    document.getElementById('streak').textContent = stats.streak || 0;
 
-  // Load stats from localStorage
-  const stats = JSON.parse(localStorage.getItem('ielts_stats') || '{}');
-  document.getElementById('totalTests').textContent = stats.totalTests || 0;
-  document.getElementById('studyHours').textContent = (stats.studyHours || 0) + 'h';
-  document.getElementById('avgScore').textContent = stats.avgScore || '-';
-  document.getElementById('streak').textContent = stats.streak || 0;
-
-  // Load progress
-  const progress = JSON.parse(localStorage.getItem('ielts_progress') || '{}');
-  ['reading','listening','writing','speaking'].forEach(skill => {
-    const pct = progress[skill] || 0;
-    document.getElementById('prog' + skill.charAt(0).toUpperCase() + skill.slice(1)).style.width = pct + '%';
-    document.getElementById('pct' + skill.charAt(0).toUpperCase() + skill.slice(1)).textContent = pct + '%';
-  });
-
-  // Load activity
-  const activities = JSON.parse(localStorage.getItem('ielts_activity') || '[]');
-  if (activities.length > 0) {
-    const list = document.getElementById('activityList');
-    list.innerHTML = activities.slice(-10).reverse().map(a => `
-      <li class="activity-item">
-        <span class="activity-dot ${a.done ? 'done' : 'pending'}"></span>
-        <span class="activity-text">${a.text}</span>
-        <span class="activity-time">${a.time}</span>
-      </li>
-    `).join('');
-  }
-
-  window.handleLogout = function() {
-    localStorage.removeItem('user');
-    signOut(); window.location.href = '../index.html';
-  };
-
-  // Animate progress bars on load
-  setTimeout(() => {
-    document.querySelectorAll('.progress-bar-fill').forEach(bar => {
-      bar.style.width = bar.style.width;
+    // Load progress
+    const progress = JSON.parse(localStorage.getItem('ielts_progress') || '{}');
+    ['reading','listening','writing','speaking'].forEach(skill => {
+      const pct = progress[skill] || 0;
+      document.getElementById('prog' + skill.charAt(0).toUpperCase() + skill.slice(1)).style.width = pct + '%';
+      document.getElementById('pct' + skill.charAt(0).toUpperCase() + skill.slice(1)).textContent = pct + '%';
     });
-  }, 300);
+
+    // Load activity
+    const activities = JSON.parse(localStorage.getItem('ielts_activity') || '[]');
+    if (activities.length > 0) {
+      const list = document.getElementById('activityList');
+      list.innerHTML = activities.slice(-10).reverse().map(a => `
+        <li class="activity-item">
+          <span class="activity-dot ${a.done ? 'done' : 'pending'}"></span>
+          <span class="activity-text">${a.text}</span>
+          <span class="activity-time">${a.time}</span>
+        </li>
+      `).join('');
+    }
+
+    window.handleLogout = function() {
+      localStorage.removeItem('user');
+      signOut(); window.location.href = '../index.html';
+    };
+
+    // Animate progress bars on load
+    setTimeout(() => {
+      document.querySelectorAll('.progress-bar-fill').forEach(bar => {
+        bar.style.width = bar.style.width;
+      });
+    }, 300);
+  })();
 </script>
 
+<!-- Mobile Nav Toggle -->
+<script>
+(function() {
+  var nav = document.querySelector('.navbar');
+  if (!nav) return;
+  if (!nav.querySelector('.nav-toggle')) {
+    var toggle = document.createElement('button');
+    toggle.className = 'nav-toggle';
+    toggle.setAttribute('aria-label', 'Toggle navigation');
+    toggle.innerHTML = '<span class="hamburger"></span>';
+    var navLinks = nav.querySelector('.nav-links');
+    if (navLinks) nav.insertBefore(toggle, navLinks);
+    else nav.appendChild(toggle);
+  }
+  var backdrop = document.createElement('div');
+  backdrop.className = 'nav-backdrop';
+  document.body.appendChild(backdrop);
+  var toggleBtn = nav.querySelector('.nav-toggle');
+  var links = nav.querySelector('.nav-links');
+  function closeMenu() { toggleBtn.classList.remove('active'); links.classList.remove('open'); backdrop.classList.remove('open'); document.body.style.overflow = ''; }
+  function openMenu() { toggleBtn.classList.add('active'); links.classList.add('open'); backdrop.classList.add('open'); document.body.style.overflow = 'hidden'; }
+  toggleBtn.addEventListener('click', function() { links.classList.contains('open') ? closeMenu() : openMenu(); });
+  backdrop.addEventListener('click', closeMenu);
+  links.querySelectorAll('a').forEach(function(a) { a.addEventListener('click', closeMenu); });
+})();
+</script>
 </body>
 </html>

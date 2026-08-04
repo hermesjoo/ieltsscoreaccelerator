@@ -25,6 +25,7 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 a { text-decoration: none; color: inherit; }
@@ -61,6 +62,41 @@ ul { list-style: none; }
 @media (hover: hover) and (pointer: fine) {
   .nav-links a:hover { color: var(--primary); }
 }
+
+/* ===== Hamburger Menu Toggle ===== */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  z-index: 110;
+  -webkit-tap-highlight-color: transparent;
+}
+.nav-toggle .hamburger {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--text);
+  position: relative;
+  transition: background 200ms var(--ease-out);
+}
+.nav-toggle .hamburger::before,
+.nav-toggle .hamburger::after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 2px;
+  background: var(--text);
+  transition: transform 200ms var(--ease-out);
+}
+.nav-toggle .hamburger::before { top: -7px; }
+.nav-toggle .hamburger::after { top: 7px; }
+
+/* Hamburger → X animation */
+.nav-toggle.active .hamburger { background: transparent; }
+.nav-toggle.active .hamburger::before { transform: rotate(45deg); top: 0; }
+.nav-toggle.active .hamburger::after { transform: rotate(-45deg); top: 0; }
 
 /* ===== Buttons — Responsive Press ===== */
 .btn {
@@ -318,6 +354,7 @@ ul { list-style: none; }
   justify-content: center;
   gap: 2rem;
   margin-bottom: 1.5rem;
+  flex-wrap: wrap;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -326,9 +363,213 @@ ul { list-style: none; }
 
 /* ===== Responsive ===== */
 @media (max-width: 768px) {
-  .hero h1 { font-size: 2rem; }
-  .stats { flex-direction: column; align-items: center; gap: 1rem; }
-  .nav-links { gap: 1rem; }
+  /* Navbar hamburger */
+  .nav-toggle { display: block; }
+
+  .nav-links {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 75%;
+    max-width: 320px;
+    height: 100vh;
+    background: var(--card);
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 4.5rem 1.5rem 2rem;
+    box-shadow: -4px 0 20px rgba(0,0,0,0.15);
+    z-index: 200;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    animation: slideIn 250ms var(--ease-out);
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  @keyframes slideIn {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+  }
+
+  .nav-links a {
+    font-size: 1.05rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--border);
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .nav-links a.btn {
+    margin-top: 0.8rem;
+    text-align: center;
+    border-bottom: none;
+    padding: 0.75rem 1.5rem;
+  }
+
+  /* Nav overlay backdrop */
+  .nav-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 190;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .nav-backdrop.open { display: block; }
+
+  /* Hero */
+  .hero {
+    padding: 3.5rem 1.5rem;
+  }
+
+  .hero h1 {
+    font-size: 1.8rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .hero .btn {
+    font-size: 1rem;
+    padding: 0.7rem 1.5rem;
+  }
+
+  /* Stats */
+  .stats {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem 1rem;
+  }
+
+  .stat-card {
+    min-width: 0;
+    width: 100%;
+    max-width: 320px;
+    padding: 1.2rem 1.5rem;
+  }
+
+  .stat-card .number { font-size: 1.6rem; }
+
+  /* Sections */
+  .section {
+    padding: 2.5rem 1rem;
+  }
+
+  .section-title {
+    font-size: 1.4rem;
+  }
+
+  .section-subtitle {
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+  }
+
+  /* Skills grid */
+  .skills-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  /* Features grid */
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  /* CTA */
+  .cta {
+    padding: 2.5rem 1.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .cta h2 { font-size: 1.3rem; }
+  .cta p { font-size: 0.95rem; }
+
+  /* Footer */
+  .footer {
+    padding: 2rem 1.5rem;
+  }
+
+  .footer-links {
+    gap: 1rem;
+  }
+
+  /* General typography */
+  p, li, td {
+    font-size: 0.95rem;
+  }
+
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.4rem; }
+  h3 { font-size: 1.15rem; }
+  h4 { font-size: 1rem; }
+
+  /* Tables — horizontal scroll */
+  table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    white-space: nowrap;
+  }
+
+  table thead,
+  table tbody,
+  table tr {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    min-width: 500px;
+  }
+
+  /* Buttons & links spacing */
+  .btn {
+    padding: 0.7rem 1.3rem;
+    font-size: 0.9rem;
+    min-height: 44px;
+  }
+
+  /* Quiz options — full width */
+  .options label {
+    padding: 1rem;
+    margin-bottom: 0.6rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Fix any overflow on inline elements */
+  img, video, embed, object {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  .section {
+    padding: 2rem 0.75rem;
+  }
+
+  .hero {
+    padding: 3rem 1rem;
+  }
+
+  .hero h1 {
+    font-size: 1.5rem;
+  }
+
+  .nav-links {
+    width: 85%;
+  }
 }
 
 /* ===== Reduced Motion ===== */

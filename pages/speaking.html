@@ -29,6 +29,23 @@
     .cue-card li { margin-bottom: 0.3rem; color: var(--text); }
     .timer-widget { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--card); padding: 0.5rem 1rem; border-radius: 8px; border: 2px solid var(--border); margin-top: 0.5rem; }
     .timer-widget button { background: var(--primary); color: #fff; border: none; padding: 0.3rem 0.8rem; border-radius: 5px; cursor: pointer; font-size: 0.85rem; }
+    /* ===== Responsive ===== */
+    @media (max-width: 768px) {
+      .speaking-container { padding: 0 0.75rem; }
+      .part-section { padding: 1.2rem; margin-bottom: 1.5rem; }
+      .part-header { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+      .part-title { font-size: 1.1rem; }
+      .question-item { padding: 1rem; }
+      .question-item p { font-size: 0.95rem; }
+      .cue-card { padding: 1.2rem; }
+      .cue-card h4 { font-size: 1rem; }
+      .vocab-box { padding: 0.8rem; }
+      .vocab-list { gap: 0.4rem; }
+      .vocab-tag { font-size: 0.8rem; padding: 0.25rem 0.6rem; }
+      .tip-card { padding: 0.8rem 1rem; }
+      .timer-widget { flex-wrap: wrap; }
+      .show-btn { font-size: 0.85rem; padding: 0.3rem 0; }
+    }
   </style>
 </head>
 <body>
@@ -272,5 +289,31 @@ function startTimer(id, seconds) {
   <p>&copy; 2026 IELTS Score Accelerator. All rights reserved.</p>
 </footer>
 
+<!-- Mobile Nav Toggle -->
+<script>
+(function() {
+  var nav = document.querySelector('.navbar');
+  if (!nav) return;
+  if (!nav.querySelector('.nav-toggle')) {
+    var toggle = document.createElement('button');
+    toggle.className = 'nav-toggle';
+    toggle.setAttribute('aria-label', 'Toggle navigation');
+    toggle.innerHTML = '<span class="hamburger"></span>';
+    var navLinks = nav.querySelector('.nav-links');
+    if (navLinks) nav.insertBefore(toggle, navLinks);
+    else nav.appendChild(toggle);
+  }
+  var backdrop = document.createElement('div');
+  backdrop.className = 'nav-backdrop';
+  document.body.appendChild(backdrop);
+  var toggleBtn = nav.querySelector('.nav-toggle');
+  var links = nav.querySelector('.nav-links');
+  function closeMenu() { toggleBtn.classList.remove('active'); links.classList.remove('open'); backdrop.classList.remove('open'); document.body.style.overflow = ''; }
+  function openMenu() { toggleBtn.classList.add('active'); links.classList.add('open'); backdrop.classList.add('open'); document.body.style.overflow = 'hidden'; }
+  toggleBtn.addEventListener('click', function() { links.classList.contains('open') ? closeMenu() : openMenu(); });
+  backdrop.addEventListener('click', closeMenu);
+  links.querySelectorAll('a').forEach(function(a) { a.addEventListener('click', closeMenu); });
+})();
+</script>
 </body>
 </html>

@@ -83,6 +83,38 @@
     .phase-box ol{padding-left:1.5rem;margin-top:.5rem}
     .phase-box li{font-size:.9rem;color:var(--text-light);margin-bottom:.4rem;line-height:1.6}
     .phase-box li strong{color:var(--text)}
+    /* ===== Responsive ===== */
+    @media(max-width:768px){
+      .page-hero{padding:2.5rem 1rem}
+      .page-hero h1{font-size:1.5rem}
+      .page-hero p{font-size:.95rem}
+      .task-tabs{margin:-1rem auto 1.5rem;padding:0 .5rem;gap:.4rem}
+      .task-tab{padding:.6rem 1rem;font-size:.8rem;flex:1 1 auto;min-width:0;text-align:center}
+      .example-card{padding:1.2rem;margin-bottom:1.5rem}
+      .example-card h3{font-size:1.05rem}
+      .sample-answer{padding:1rem;font-size:.9rem;line-height:1.8}
+      .tip-box{padding:1rem}
+      .template-box{padding:1rem}
+      .template-box p{font-size:.85rem}
+      .vocab-grid{grid-template-columns:1fr;gap:.5rem}
+      .vocab-item{padding:.6rem;font-size:.85rem}
+      .scoring-guide{grid-template-columns:1fr;gap:1rem}
+      .score-card{padding:1.2rem}
+      .score-card .score-range{font-size:1.4rem}
+      .timer-box{gap:.6rem}
+      .timer-item{padding:.8rem 1rem}
+      .timer-item .time{font-size:1.2rem}
+      .criteria-table{font-size:.8rem}
+      .criteria-table th,.criteria-table td{padding:.5rem .4rem}
+      .interactive-scoring{padding:1.5rem 1rem}
+      .tips-grid{grid-template-columns:1fr}
+      .mistake-grid{grid-template-columns:1fr}
+      .generator-box{padding:1.5rem 1rem}
+      .gen-field select,.gen-field input,.gen-field textarea{font-size:.9rem;padding:.6rem}
+      .gen-output{padding:1rem;font-size:.85rem}
+      .expand-btn{padding:.5rem 1rem;font-size:.82rem}
+      .phase-box{padding:1rem}
+    }
   </style>
 </head>
 <body>
@@ -1176,6 +1208,32 @@ function copyTemplate() {
 document.querySelectorAll('.sample-answer').forEach(function(el) {
   el.style.display = 'none';
 });
+</script>
+<!-- Mobile Nav Toggle -->
+<script>
+(function() {
+  var nav = document.querySelector('.navbar');
+  if (!nav) return;
+  if (!nav.querySelector('.nav-toggle')) {
+    var toggle = document.createElement('button');
+    toggle.className = 'nav-toggle';
+    toggle.setAttribute('aria-label', 'Toggle navigation');
+    toggle.innerHTML = '<span class="hamburger"></span>';
+    var navLinks = nav.querySelector('.nav-links');
+    if (navLinks) nav.insertBefore(toggle, navLinks);
+    else nav.appendChild(toggle);
+  }
+  var backdrop = document.createElement('div');
+  backdrop.className = 'nav-backdrop';
+  document.body.appendChild(backdrop);
+  var toggleBtn = nav.querySelector('.nav-toggle');
+  var links = nav.querySelector('.nav-links');
+  function closeMenu() { toggleBtn.classList.remove('active'); links.classList.remove('open'); backdrop.classList.remove('open'); document.body.style.overflow = ''; }
+  function openMenu() { toggleBtn.classList.add('active'); links.classList.add('open'); backdrop.classList.add('open'); document.body.style.overflow = 'hidden'; }
+  toggleBtn.addEventListener('click', function() { links.classList.contains('open') ? closeMenu() : openMenu(); });
+  backdrop.addEventListener('click', closeMenu);
+  links.querySelectorAll('a').forEach(function(a) { a.addEventListener('click', closeMenu); });
+})();
 </script>
 </body>
 </html>

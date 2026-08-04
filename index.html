@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IELTS Score Accelerator | Ace Your IELTS Exam</title>
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* ===== Index Page Responsive ===== */
+    @media (max-width: 768px) {
+      .hero .btn { display: block; width: 100%; text-align: center; margin-bottom: 0.5rem; }
+    }
+  </style>
 </head>
 <body>
 
@@ -137,7 +143,7 @@
 <section class="section">
   <div style="background:var(--card);border-radius:var(--radius);padding:3rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap;border:1px solid var(--border)">
     <div style="font-size:4rem">📺</div>
-    <div style="flex:1;min-width:250px">
+    <div style="flex:1;min-width:200px">
       <h2 style="font-size:1.5rem;font-weight:700;margin-bottom:0.5rem;letter-spacing:-0.01em">Learn on YouTube</h2>
       <p style="color:var(--text-light);margin-bottom:1rem">Free video lessons covering all IELTS skills — tips, strategies, and real exam walkthroughs for Band 7-9</p>
       <a href="https://youtube.com/@ieltsscoreaccelerator" target="_blank" class="btn" style="background:#ff0000;color:#fff;display:inline-flex;align-items:center;gap:0.5rem">
@@ -168,5 +174,31 @@
   <p>&copy; 2026 IELTS Score Accelerator. All rights reserved.</p>
 </footer>
 
+<!-- Mobile Nav Toggle -->
+<script>
+(function() {
+  var nav = document.querySelector('.navbar');
+  if (!nav) return;
+  if (!nav.querySelector('.nav-toggle')) {
+    var toggle = document.createElement('button');
+    toggle.className = 'nav-toggle';
+    toggle.setAttribute('aria-label', 'Toggle navigation');
+    toggle.innerHTML = '<span class="hamburger"></span>';
+    var navLinks = nav.querySelector('.nav-links');
+    if (navLinks) nav.insertBefore(toggle, navLinks);
+    else nav.appendChild(toggle);
+  }
+  var backdrop = document.createElement('div');
+  backdrop.className = 'nav-backdrop';
+  document.body.appendChild(backdrop);
+  var toggleBtn = nav.querySelector('.nav-toggle');
+  var links = nav.querySelector('.nav-links');
+  function closeMenu() { toggleBtn.classList.remove('active'); links.classList.remove('open'); backdrop.classList.remove('open'); document.body.style.overflow = ''; }
+  function openMenu() { toggleBtn.classList.add('active'); links.classList.add('open'); backdrop.classList.add('open'); document.body.style.overflow = 'hidden'; }
+  toggleBtn.addEventListener('click', function() { links.classList.contains('open') ? closeMenu() : openMenu(); });
+  backdrop.addEventListener('click', closeMenu);
+  links.querySelectorAll('a').forEach(function(a) { a.addEventListener('click', closeMenu); });
+})();
+</script>
 </body>
 </html>

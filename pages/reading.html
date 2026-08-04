@@ -657,16 +657,37 @@
 
     /* ===== Responsive ===== */
     @media (max-width: 768px) {
-      .passage-nav { top: 56px; padding: 1rem; }
+      .page-header { padding: 2rem 1rem; }
+      .page-header h1 { font-size: 1.5rem; }
+      .page-header p { font-size: 0.95rem; }
+      .tips-section { padding: 0 0.75rem; margin: 1.5rem auto; }
+      .tips-card { padding: 1.2rem; }
+      .tips-card h2 { font-size: 1.15rem; }
+      .tips-list li { padding: 0.6rem 0.5rem 0.6rem 2.5rem; font-size: 0.9rem; }
+      .band-guide { padding: 0 0.75rem; }
+      .passage-nav { top: 56px; padding: 0.8rem; gap: 0.4rem; overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }
+      .passage-btn { padding: 0.4rem 0.8rem; font-size: 0.8rem; white-space: nowrap; flex-shrink: 0; }
       .passage-card { padding: 1.2rem; }
-      .passage-text { padding: 1rem; font-size: 0.95rem; }
+      .passage-text { padding: 1rem; font-size: 0.95rem; white-space: normal; text-align: left; }
       .passage-meta { flex-direction: column; gap: 0.5rem; }
-      .quiz-toolbar { top: 56px; padding: 0.75rem 1rem; }
-      .score-number { font-size: 3rem; }
+      .passage-title { font-size: 1.2rem; }
+      .quiz-toolbar { top: 56px; padding: 0.6rem 0.75rem; flex-direction: column; gap: 0.5rem; }
+      .quiz-container { padding: 0 0.75rem; }
+      .timer-display { font-size: 1rem; }
+      .global-progress { max-width: 100%; min-width: 100%; }
+      .toolbar-actions { width: 100%; justify-content: center; }
+      .score-number { font-size: 2.5rem; }
       .score-details { gap: 1rem; }
-      .band-table { font-size: 0.8rem; }
-      .band-table th, .band-table td { padding: 0.5rem 0.6rem; }
-      .results-grid { grid-template-columns: 1fr 1fr; }
+      .band-table { font-size: 0.75rem; }
+      .band-table th, .band-table td { padding: 0.4rem 0.5rem; }
+      .results-grid { grid-template-columns: 1fr; }
+      .question-card { padding: 1rem; }
+      .question-card p { font-size: 1rem; }
+      .options label { padding: 0.8rem; font-size: 0.9rem; }
+      .vocab-box { padding: 1rem; }
+      .vocab-item { padding: 0.5rem 0; font-size: 0.88rem; }
+      /* Table horizontal scroll */
+      .band-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%; }
     }
   </style>
 </head>
@@ -1731,7 +1752,7 @@ function checkAllAnswers() {
   passages.forEach((p, pi) => {
     const color = passageScores[pi] >= 4 ? 'var(--success)' : passageScores[pi] >= 2 ? 'var(--accent)' : '#ef4444';
     bdHtml += `<div style="display:flex;align-items:center;gap:0.5rem;margin:0.3rem 0;font-size:0.9rem;">`;
-    bdHtml += `<span style="min-width:150px;">${p.emoji} ${p.topicEN}</span>`;
+    bdHtml += `<span style="min-width:100px;word-break:break-word">${p.emoji} ${p.topicEN}</span>`;
     bdHtml += `<div style="flex:1;height:6px;background:rgba(255,255,255,0.2);border-radius:3px;overflow:hidden;">`;
     bdHtml += `<div style="width:${(passageScores[pi] / 5) * 100}%;height:100%;background:${color};border-radius:3px;"></div>`;
     bdHtml += `</div>`;
@@ -2019,6 +2040,32 @@ function endReview() {
 // ===== INIT =====
 renderAllPassages();
 renderQuestions();
+</script>
+<!-- Mobile Nav Toggle -->
+<script>
+(function() {
+  var nav = document.querySelector('.navbar');
+  if (!nav) return;
+  if (!nav.querySelector('.nav-toggle')) {
+    var toggle = document.createElement('button');
+    toggle.className = 'nav-toggle';
+    toggle.setAttribute('aria-label', 'Toggle navigation');
+    toggle.innerHTML = '<span class="hamburger"></span>';
+    var navLinks = nav.querySelector('.nav-links');
+    if (navLinks) nav.insertBefore(toggle, navLinks);
+    else nav.appendChild(toggle);
+  }
+  var backdrop = document.createElement('div');
+  backdrop.className = 'nav-backdrop';
+  document.body.appendChild(backdrop);
+  var toggleBtn = nav.querySelector('.nav-toggle');
+  var links = nav.querySelector('.nav-links');
+  function closeMenu() { toggleBtn.classList.remove('active'); links.classList.remove('open'); backdrop.classList.remove('open'); document.body.style.overflow = ''; }
+  function openMenu() { toggleBtn.classList.add('active'); links.classList.add('open'); backdrop.classList.add('open'); document.body.style.overflow = 'hidden'; }
+  toggleBtn.addEventListener('click', function() { links.classList.contains('open') ? closeMenu() : openMenu(); });
+  backdrop.addEventListener('click', closeMenu);
+  links.querySelectorAll('a').forEach(function(a) { a.addEventListener('click', closeMenu); });
+})();
 </script>
 </body>
 </html>

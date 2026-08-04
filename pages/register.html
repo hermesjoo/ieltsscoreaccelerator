@@ -40,6 +40,15 @@
     .msg-box { padding: 0.8rem 1rem; border-radius: 8px; margin-bottom: 1rem; font-size: 0.9rem; display: none; }
     .msg-box.error { background: #fee2e2; color: #dc2626; border: 1px solid #fecaca; }
     .msg-box.success { background: #d1fae5; color: #065f46; border: 1px solid #a7f3d0; }
+    /* ===== Responsive ===== */
+    @media (max-width: 768px) {
+      .auth-container { margin: 2rem auto; padding: 0 1rem; }
+      .auth-box { padding: 1.5rem 1.2rem; }
+      .auth-tab { padding: 0.7rem; font-size: 0.9rem; }
+      .form-group input, .form-group select { padding: 0.65rem 0.8rem; font-size: 0.95rem; }
+      .google-btn { padding: 0.8rem; font-size: 0.95rem; }
+      .auth-box .btn { font-size: 1rem; padding: 0.8rem; }
+    }
   </style>
 </head>
 <body>
@@ -146,20 +155,31 @@
   </div>
 </div>
 
-<script type="module">
-  import { signInWithGoogle, signUp, signIn } from '../js/auth.js';
+<!-- Supabase JS via CDN (non-module) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- Auth helper (non-module, exposes signInWithGoogle, signUp, signIn, etc. globally) -->
+<script src="../js/auth.js"></script>
 
+<script>
   function showMsg(text, type) {
     const el = document.getElementById('globalMsg');
     el.textContent = text;
     el.className = 'msg-box ' + type;
     el.style.display = 'block';
-    setTimeout(() => el.style.display = 'none', 5000);
+    // Keep visible longer for errors
+    const duration = type === 'error' ? 8000 : 5000;
+    setTimeout(() => el.style.display = 'none', duration);
   }
 
   // Google
   window.handleGoogle = async function() {
-    await signInWithGoogle();
+    try {
+      showMsg('Redirecting to Google...', 'success');
+      await signInWithGoogle();
+    } catch (err) {
+      console.error('Google sign-in failed:', err);
+      showMsg(err.message || 'Google sign-in failed. Please try again.', 'error');
+    }
   };
 
   // Login
@@ -168,9 +188,11 @@
     const email = document.getElementById('loginEmail').value;
     const pass = document.getElementById('loginPass').value;
     try {
+      showMsg('Logging in...', 'success');
       await signIn(email, pass);
       window.location.href = 'dashboard.html';
     } catch (err) {
+      console.error('Login failed:', err);
       showMsg(err.message || 'Login failed. Please try again.', 'error');
     }
   };
@@ -189,6 +211,7 @@
     }
 
     try {
+      showMsg('Creating account...', 'success');
       await signUp(email, pass, name);
       document.getElementById('loginForm').style.display = 'none';
       document.getElementById('registerForm').style.display = 'none';
@@ -196,7 +219,8 @@
       document.getElementById('successTitle').textContent = 'Account Created!';
       document.getElementById('successText').textContent = 'Check your email to verify, then login.';
     } catch (err) {
-      showMsg(err.message || 'Registration failed.', 'error');
+      console.error('Registration failed:', err);
+      showMsg(err.message || 'Registration failed. Please try again.', 'error');
     }
   };
 </script>
@@ -233,5 +257,31 @@
   <p>&copy; 2026 IELTS Score Accelerator. All rights reserved.</p>
 </footer>
 
+<!-- Mobile Nav Toggle -->
+<script>
+(function() {
+  var nav = document.querySelector('.navbar');
+  if (!nav) return;
+  if (!nav.querySelector('.nav-toggle')) {
+    var toggle = document.createElement('button');
+    toggle.className = 'nav-toggle';
+    toggle.setAttribute('aria-label', 'Toggle navigation');
+    toggle.innerHTML = '<span class="hamburger"></span>';
+    var navLinks = nav.querySelector('.nav-links');
+    if (navLinks) nav.insertBefore(toggle, navLinks);
+    else nav.appendChild(toggle);
+  }
+  var backdrop = document.createElement('div');
+  backdrop.className = 'nav-backdrop';
+  document.body.appendChild(backdrop);
+  var toggleBtn = nav.querySelector('.nav-toggle');
+  var links = nav.querySelector('.nav-links');
+  function closeMenu() { toggleBtn.classList.remove('active'); links.classList.remove('open'); backdrop.classList.remove('open'); document.body.style.overflow = ''; }
+  function openMenu() { toggleBtn.classList.add('active'); links.classList.add('open'); backdrop.classList.add('open'); document.body.style.overflow = 'hidden'; }
+  toggleBtn.addEventListener('click', function() { links.classList.contains('open') ? closeMenu() : openMenu(); });
+  backdrop.addEventListener('click', closeMenu);
+  links.querySelectorAll('a').forEach(function(a) { a.addEventListener('click', closeMenu); });
+})();
+</script>
 </body>
 </html>

@@ -351,14 +351,32 @@
 
     /* Responsive */
     @media (max-width: 768px) {
-      .listening-header h1 { font-size: 1.8rem; }
+      .listening-header { padding: 2rem 1rem; }
+      .listening-header h1 { font-size: 1.5rem; }
+      .listening-header p { font-size: 0.95rem; }
+      .progress-bar-container { padding: 0 1rem; margin-top: 1rem; }
+      .exercises-container { padding: 1rem; }
+      .exercise-card { padding: 1.2rem; }
       .exercise-header { flex-direction: column; gap: 0.8rem; align-items: flex-start; }
+      .exercise-title { font-size: 1.1rem; }
+      .exercise-meta { flex-wrap: wrap; gap: 0.4rem; }
+      .exercise-meta .meta-item { font-size: 0.8rem; }
       .matching-row { grid-template-columns: 1fr; gap: 0.3rem; }
       .matching-arrow { transform: rotate(90deg); text-align: center; }
       .score-breakdown { flex-wrap: wrap; gap: 1rem; }
-      .audio-player { flex-direction: column; align-items: flex-start; }
+      .audio-player { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
       .exercise-timer { flex-wrap: wrap; }
       .sentence-completion .inline-blank { min-width: 80px; }
+      .exercise-text { font-size: 0.95rem; padding: 1rem; }
+      .exercise-options { padding: 0; }
+      .exercise-options label { padding: 0.8rem 0.75rem; font-size: 0.9rem; }
+      .exercise-questions { padding: 0.5rem 0; }
+      .question-input { font-size: 1rem; padding: 0.7rem; }
+      .score-display { padding: 2rem 1rem; }
+      .score-display .band { font-size: 3rem; }
+      table.exercise-table { font-size: 0.8rem; }
+      table.exercise-table th, table.exercise-table td { padding: 0.4rem 0.5rem; }
+      .vocab-section { padding: 1rem; }
     }
 
     /* Smooth scroll */
@@ -3584,5 +3602,31 @@ function speakVocab(word) {
 }
 </script>
 
+<!-- Mobile Nav Toggle -->
+<script>
+(function() {
+  var nav = document.querySelector('.navbar');
+  if (!nav) return;
+  if (!nav.querySelector('.nav-toggle')) {
+    var toggle = document.createElement('button');
+    toggle.className = 'nav-toggle';
+    toggle.setAttribute('aria-label', 'Toggle navigation');
+    toggle.innerHTML = '<span class="hamburger"></span>';
+    var navLinks = nav.querySelector('.nav-links');
+    if (navLinks) nav.insertBefore(toggle, navLinks);
+    else nav.appendChild(toggle);
+  }
+  var backdrop = document.createElement('div');
+  backdrop.className = 'nav-backdrop';
+  document.body.appendChild(backdrop);
+  var toggleBtn = nav.querySelector('.nav-toggle');
+  var links = nav.querySelector('.nav-links');
+  function closeMenu() { toggleBtn.classList.remove('active'); links.classList.remove('open'); backdrop.classList.remove('open'); document.body.style.overflow = ''; }
+  function openMenu() { toggleBtn.classList.add('active'); links.classList.add('open'); backdrop.classList.add('open'); document.body.style.overflow = 'hidden'; }
+  toggleBtn.addEventListener('click', function() { links.classList.contains('open') ? closeMenu() : openMenu(); });
+  backdrop.addEventListener('click', closeMenu);
+  links.querySelectorAll('a').forEach(function(a) { a.addEventListener('click', closeMenu); });
+})();
+</script>
 </body>
 </html>
