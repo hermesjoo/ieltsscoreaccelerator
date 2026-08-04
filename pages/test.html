@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>آزمون تعیین سطح | IELTS Score Accelerator</title>
+  <title>Placement Test | IELTS Score Accelerator</title>
   <link rel="stylesheet" href="../css/style.css">
   <style>
     .test-container { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
@@ -14,12 +14,12 @@
     .question-card p { font-size: 1.1rem; margin-bottom: 1.5rem; }
     .options label { display: block; padding: 0.8rem 1rem; margin-bottom: 0.5rem; border: 2px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.2s; }
     .options label:hover { border-color: var(--primary); background: #eff6ff; }
-    .options input[type="radio"] { margin-left: 0.5rem; }
+    .options input[type="radio"] { margin-right: 0.5rem; }
     .options input:checked + span { font-weight: 600; }
     .result-box { background: var(--card); border-radius: var(--radius); padding: 3rem; text-align: center; border: 2px solid var(--primary); display: none; }
     .result-box .band { font-size: 5rem; font-weight: 800; color: var(--primary); }
     .result-box .band-label { font-size: 1.2rem; color: var(--text-light); margin-bottom: 2rem; }
-    .band-breakdown { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 2rem 0; text-align: right; }
+    .band-breakdown { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 2rem 0; text-align: left; }
     .band-item { background: #f1f5f9; padding: 1rem; border-radius: 8px; }
     .band-item strong { color: var(--primary); }
     .timer { font-size: 1.2rem; color: var(--text-light); margin-bottom: 1rem; text-align: center; }
@@ -39,27 +39,27 @@
     <a href="listening.html">Listening</a>
     <a href="writing.html">Writing</a>
     <a href="speaking.html">Speaking</a>
-    <a href="test.html" class="btn btn-outline">آزمون تعیین سطح</a>
-    <a href="register.html" class="btn btn-primary">ورود / ثبت‌نام</a>
+    <a href="test.html" class="btn btn-outline">Placement Test</a>
+    <a href="register.html" class="btn btn-primary">Sign Up</a>
   </div>
 </nav>
 
 <div class="section">
   <div class="test-container">
-    <h2 class="section-title">آزمون تعیین سطح IELTS</h2>
-    <p class="section-subtitle">۴۰ سوال از ۴ مهارت — حدود ۱۰ دقیقه</p>
+    <h2 class="section-title">IELTS Placement Test</h2>
+    <p class="section-subtitle">40 questions across 4 skills — approximately 10 minutes</p>
 
-    <div class="timer" id="timer">⏱ ۱۰:۰۰</div>
+    <div class="timer" id="timer">⏱ 10:00</div>
     <div class="test-progress"><div class="test-progress-bar" id="progressBar"></div></div>
 
     <div id="quizContainer"></div>
     <div class="result-box" id="resultBox">
       <div class="band" id="totalBand">-</div>
-      <div class="band-label">Band Score تقریبی شما</div>
+      <div class="band-label">Your Estimated Band Score</div>
       <div class="band-breakdown" id="bandBreakdown"></div>
       <br>
-      <a href="register.html" class="btn btn-primary" style="margin:0.5rem">ثبت‌نام برای دوره</a>
-      <button class="btn btn-outline" onclick="resetQuiz()" style="margin:0.5rem">تکرار آزمون</button>
+      <a href="register.html" class="btn btn-primary" style="margin:0.5rem">Sign Up for Full Access</a>
+      <button class="btn btn-outline" onclick="resetQuiz()" style="margin:0.5rem">Retake Test</button>
     </div>
   </div>
 </div>
@@ -139,7 +139,7 @@ function renderQuiz() {
     div.className = 'question-card';
     div.innerHTML = `
       <span class="category-badge ${catClass[q.cat]}">${catLabels[q.cat]}</span>
-      <h3>سوال ${i+1} از ${quiz.length}</h3>
+      <h3>Question ${i+1} of ${quiz.length}</h3>
       <p>${q.q}</p>
       <div class="options">
         ${q.opts.map((o,j) => `
@@ -153,13 +153,12 @@ function renderQuiz() {
 
 function checkAnswer(i, selected) {
   answers[i] = selected;
-  const correct = quiz[i].ans === selected;
   const labels = document.querySelectorAll(`input[name="q${i}"]`);
   labels.forEach((l,j) => {
     l.disabled = true;
     const parent = l.parentElement;
     if(j === quiz[i].ans) parent.style.background = '#d1fae5';
-    else if(j === selected && !correct) parent.style.background = '#fee2e2';
+    else if(j === selected && quiz[i].ans !== selected) parent.style.background = '#fee2e2';
   });
   updateProgress();
 }
@@ -216,7 +215,7 @@ startTimer();
 </script>
 
 <footer class="footer">
-  <p>© ۲۰۲۶ IELTS Score Accelerator | تمامی حقوق محفوظ است</p>
+  <p>&copy; 2026 IELTS Score Accelerator. All rights reserved.</p>
 </footer>
 
 </body>

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IELTS Writing | آیلتس‌پرو</title>
+  <title>IELTS Writing | IELTS Pro</title>
   <link rel="stylesheet" href="../css/style.css">
   <style>
     .page-hero{background:linear-gradient(135deg,#065f46 0%,#10b981 60%,#34d399 100%);padding:4rem 2rem;text-align:center;color:#fff}
@@ -16,10 +16,10 @@
     .example-card{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:2rem;margin-bottom:2rem;box-shadow:0 2px 12px rgba(0,0,0,.05)}
     .example-card h3{font-size:1.2rem;color:var(--primary);margin-bottom:1rem;border-bottom:2px solid #eff6ff;padding-bottom:.5rem}
     .band-label{display:inline-block;background:var(--primary);color:#fff;padding:.2rem .8rem;border-radius:20px;font-size:.8rem;margin-bottom:.5rem}
-    .sample-answer{background:#f8fafc;border-right:4px solid var(--primary);padding:1.5rem;border-radius:0 8px 8px 0;margin:1rem 0;line-height:2;font-size:.95rem}
+    .sample-answer{background:#f8fafc;border-left:4px solid var(--primary);padding:1.5rem;border-radius:0 8px 8px 0;margin:1rem 0;line-height:2;font-size:.95rem}
     .tip-box{background:#fffbeb;border:1px solid #fcd34d;border-radius:8px;padding:1.2rem;margin:1rem 0}
     .tip-box h4{color:#b45309;margin-bottom:.5rem;font-size:1rem}
-    .tip-box ul{padding-right:1.2rem}.tip-box li{margin-bottom:.3rem;font-size:.9rem;color:#78350f}
+    .tip-box ul{padding-left:1.2rem}.tip-box li{margin-bottom:.3rem;font-size:.9rem;color:#78350f}
     .template-box{background:#ecfdf5;border:1px solid #6ee7b7;border-radius:8px;padding:1.2rem;margin:1rem 0}
     .template-box h4{color:#065f46;margin-bottom:.5rem}
     .template-box p{font-size:.9rem;color:#064e3b;line-height:1.8}
@@ -30,9 +30,9 @@
     .score-card{background:var(--card);border-radius:var(--radius);padding:1.5rem;border:1px solid var(--border)}
     .score-card h4{color:var(--primary);margin-bottom:.5rem}
     .score-card .score-range{font-size:1.8rem;font-weight:800;color:var(--accent)}
-    .score-card ul{margin-top:.5rem;padding-right:1.2rem}.score-card li{font-size:.85rem;color:var(--text-light);margin-bottom:.3rem}
+    .score-card ul{margin-top:.5rem;padding-left:1.2rem}.score-card li{font-size:.85rem;color:var(--text-light);margin-bottom:.3rem}
     .criteria-table{width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:.9rem}
-    .criteria-table th{background:var(--primary);color:#fff;padding:.8rem;text-align:right}
+    .criteria-table th{background:var(--primary);color:#fff;padding:.8rem;text-align:left}
     .criteria-table td{padding:.7rem;border-bottom:1px solid var(--border)}
     .criteria-table tr:nth-child(even){background:#f8fafc}
     .interactive-scoring{background:var(--card);border-radius:var(--radius);padding:2rem;border:2px solid var(--accent);margin:2rem 0}
@@ -50,60 +50,60 @@
 <body>
 
 <nav class="navbar">
-  <a href="../index.html" class="logo">آیلتس<span>پرو</span></a>
+  <a href="../index.html" class="logo">IELTS<span>Pro</span></a>
   <div class="nav-links">
     <a href="reading.html">Reading</a>
     <a href="listening.html">Listening</a>
     <a href="writing.html">Writing</a>
     <a href="speaking.html">Speaking</a>
-    <a href="test.html" class="btn btn-outline">آزمون تعیین سطح</a>
-    <a href="register.html" class="btn btn-primary">ورود / ثبت‌نام</a>
+    <a href="test.html" class="btn btn-outline">Level Placement Test</a>
+    <a href="register.html" class="btn btn-primary">Login / Sign Up</a>
   </div>
 </nav>
 
 <section class="page-hero">
   <h1>✍️ IELTS Writing</h1>
-  <p>نمونه جواب با نمره بالا، قالب‌های آماده، تکنیک‌ها و راهنمای نمره‌دهی</p>
+  <p>High-scoring sample answers, ready-made templates, techniques, and scoring guide</p>
 </section>
 
 <div class="section">
   <div class="task-tabs">
-    <div class="task-tab active" onclick="switchTask(1)">Task 1 — توصیف نمودار</div>
-    <div class="task-tab" onclick="switchTask(2)">Task 2 — انشا</div>
-    <div class="task-tab" onclick="switchTask(3)">راهنمای نمره</div>
+    <div class="task-tab active" onclick="switchTask(1)">Task 1 — Chart Description</div>
+    <div class="task-tab" onclick="switchTask(2)">Task 2 — Essay</div>
+    <div class="task-tab" onclick="switchTask(3)">Scoring Guide</div>
   </div>
 
   <!-- ==================== TASK 1 PANEL ==================== -->
   <div class="task-panel active" id="task1-panel">
     <section class="section" style="padding-top:1rem">
-    <h2 class="section-title">Task 1 — توصیف نمودار یا جدول</h2>
-    <p class="section-subtitle">حداقل ۱۵۰ کلمه • ۲۰ دقیقه • ۳۳٪ کل نمره Writing</p>
+    <h2 class="section-title">Task 1 — Describing a Chart or Table</h2>
+    <p class="section-subtitle">Minimum 150 words • 20 minutes • 33% of total Writing score</p>
 
     <div class="timer-box">
-      <div class="timer-item"><div class="time">۲۰</div><div class="label">دقیقه زمان</div></div>
-      <div class="timer-item"><div class="time">۱۵۰+</div><div class="label">حداقل کلمه</div></div>
-      <div class="timer-item"><div class="time">۳۳٪</div><div class="label">وزن نمره</div></div>
+      <div class="timer-item"><div class="time">20</div><div class="label">Minutes</div></div>
+      <div class="timer-item"><div class="time">150+</div><div class="label">Min. Words</div></div>
+      <div class="timer-item"><div class="time">33%</div><div class="label">Score Weight</div></div>
     </div>
 
     <div class="tip-box">
-      <h4>💡 نکات کلیدی Task 1</h4>
+      <h4>💡 Key Tips for Task 1</h4>
       <ul>
-        <li>هرگز نظر شخصی ندهید — فقط واقعیات را گزارش کنید</li>
-        <li>پاراگراف معرفی (Introduction) را با تغییر لغات بازنویسی کنید</li>
-        <li>یک پاراگراف Overview داشته باشید (مهم‌ترین روندها)</li>
-        <li>داده‌های خاص با اعداد را ذکر کنید (حداقل ۲ مورد عددی)</li>
-        <li>از اتصال‌دهنده‌های توصیفی استفاده کنید</li>
-        <li>ساختار: Introduction → Overview → Body 1 → Body 2</li>
+        <li>Never give personal opinions — only report the facts</li>
+        <li>Paraphrase the introduction paragraph using different words</li>
+        <li>Include an Overview paragraph (the most important trends)</li>
+        <li>Mention specific data with numbers (at least 2 numerical references)</li>
+        <li>Use descriptive linking words</li>
+        <li>Structure: Introduction → Overview → Body 1 → Body 2</li>
       </ul>
     </div>
 
     <div class="template-box">
-      <h4>📝 قالب آماده Task 1</h4>
+      <h4>📝 Ready-Made Template for Task 1</h4>
       <p>
-        <strong>پاراگراف ۱ — معرفی:</strong> The chart/graph/table illustrates/shows…<br>
-        <strong>پاراگراف ۲ — مرور کلی:</strong> Overall, it is clear that… / The most striking trend is that…<br>
-        <strong>پاراگراف ۳ — جزئیات ۱:</strong> According to the data, [Subject] had the highest/lowest…<br>
-        <strong>پاراگراف ۴ — جزئیات ۲:</strong> In contrast, [Subject] showed a different pattern…
+        <strong>Paragraph 1 — Introduction:</strong> The chart/graph/table illustrates/shows…<br>
+        <strong>Paragraph 2 — Overview:</strong> Overall, it is clear that… / The most striking trend is that…<br>
+        <strong>Paragraph 3 — Details 1:</strong> According to the data, [Subject] had the highest/lowest…<br>
+        <strong>Paragraph 4 — Details 2:</strong> In contrast, [Subject] showed a different pattern…
       </p>
     </div>
 
@@ -112,7 +112,7 @@
     <!-- SAMPLE 1: Line Graph -->
     <div class="example-card">
       <span class="band-label">Band 8.0 Sample</span>
-      <h3>📈 نمونه توصیف نمودار خطی — مصرف انرژی</h3>
+      <h3>📈 Sample Line Graph Description — Energy Consumption</h3>
       <div class="sample-answer">
         <p>The line graph illustrates changes in energy consumption across four different sources in the UK between 2000 and 2020.</p>
         <p>Overall, it is evident that renewable energy sources experienced a dramatic rise over the period, while fossil fuel consumption declined steadily. Natural gas remained the most consumed source throughout, though its dominance narrowed considerably.</p>
@@ -124,7 +124,7 @@
     <!-- SAMPLE 2: Bar Chart -->
     <div class="example-card">
       <span class="band-label">Band 7.0 Sample</span>
-      <h3>📊 نمونه توصیف نمودار ستونی — هزینه تحصیل</h3>
+      <h3>📊 Sample Bar Chart Description — Tuition Costs</h3>
       <div class="sample-answer">
         <p>The bar chart compares the average annual tuition fees in four countries for the years 2010 and 2020.</p>
         <p>Overall, all four countries saw an increase in tuition fees over the decade. The USA consistently had the highest fees, whereas Germany remained the most affordable option.</p>
@@ -136,33 +136,33 @@
 
     <!-- TASK 1 VOCABULARY -->
     <div class="example-card">
-      <h3>📖 واژگان ضروری Task 1</h3>
-      <h4 style="margin:1rem 0 .5rem;color:#065f46">روند صعودی</h4>
+      <h3>📖 Essential Vocabulary for Task 1</h3>
+      <h4 style="margin:1rem 0 .5rem;color:#065f46">Upward Trends</h4>
       <div class="vocab-grid">
-        <div class="vocab-item"><strong>increase</strong> <span>افزایش</span></div>
-        <div class="vocab-item"><strong>rise sharply</strong> <span>افزایش شدید</span></div>
-        <div class="vocab-item"><strong>climb steadily</strong> <span>افزایش تدریجی</span></div>
-        <div class="vocab-item"><strong>surge</strong> <span>جهش / افزایش چشمگیر</span></div>
-        <div class="vocab-item"><strong>peak at</strong> <span>رسیدن به اوج</span></div>
-        <div class="vocab-item"><strong>soar</strong> <span>افزایش ناگهانی</span></div>
+        <div class="vocab-item"><strong>increase</strong> <span>to go up / rise</span></div>
+        <div class="vocab-item"><strong>rise sharply</strong> <span>to increase rapidly</span></div>
+        <div class="vocab-item"><strong>climb steadily</strong> <span>to increase gradually</span></div>
+        <div class="vocab-item"><strong>surge</strong> <span>sudden and large increase</span></div>
+        <div class="vocab-item"><strong>peak at</strong> <span>to reach the highest point</span></div>
+        <div class="vocab-item"><strong>soar</strong> <span>to increase very quickly</span></div>
       </div>
-      <h4 style="margin:1rem 0 .5rem;color:#065f46">روند نزولی</h4>
+      <h4 style="margin:1rem 0 .5rem;color:#065f46">Downward Trends</h4>
       <div class="vocab-grid">
-        <div class="vocab-item"><strong>decrease</strong> <span>کاهش</span></div>
-        <div class="vocab-item"><strong>decline steadily</strong> <span>کاهش تدریجی</span></div>
-        <div class="vocab-item"><strong>drop significantly</strong> <span>کاهش قابل‌توجه</span></div>
-        <div class="vocab-item"><strong>plummet</strong> <span>سقوط آزاد</span></div>
-        <div class="vocab-item"><strong>hit a low</strong> <span>رسیدن به کمترین حد</span></div>
-        <div class="vocab-item"><strong>dwindle</strong> <span>کاهش تدریجی و پیوسته</span></div>
+        <div class="vocab-item"><strong>decrease</strong> <span>to go down / reduce</span></div>
+        <div class="vocab-item"><strong>decline steadily</strong> <span>to decrease gradually</span></div>
+        <div class="vocab-item"><strong>drop significantly</strong> <span>notable decrease</span></div>
+        <div class="vocab-item"><strong>plummet</strong> <span>to fall very sharply</span></div>
+        <div class="vocab-item"><strong>hit a low</strong> <span>to reach the lowest point</span></div>
+        <div class="vocab-item"><strong>dwindle</strong> <span>to gradually and continuously decrease</span></div>
       </div>
-      <h4 style="margin:1rem 0 .5rem;color:#065f46">ثبات و مقایسه</h4>
+      <h4 style="margin:1rem 0 .5rem;color:#065f46">Stability & Comparison</h4>
       <div class="vocab-grid">
-        <div class="vocab-item"><strong>remain stable</strong> <span>ثابت ماندن</span></div>
-        <div class="vocab-item"><strong>level off</strong> <span>تثبیت شدن</span></div>
-        <div class="vocab-item"><strong>fluctuate</strong> <span>نوسان داشتن</span></div>
-        <div class="vocab-item"><strong>in contrast</strong> <span>در مقابل</span></div>
-        <div class="vocab-item"><strong>whereas</strong> <span>در حالی که</span></div>
-        <div class="vocab-item"><strong>by comparison</strong> <span>در مقایسه</span></div>
+        <div class="vocab-item"><strong>remain stable</strong> <span>to stay the same</span></div>
+        <div class="vocab-item"><strong>level off</strong> <span>to become stable after change</span></div>
+        <div class="vocab-item"><strong>fluctuate</strong> <span>to go up and down irregularly</span></div>
+        <div class="vocab-item"><strong>in contrast</strong> <span>on the other hand / conversely</span></div>
+        <div class="vocab-item"><strong>whereas</strong> <span>while / but</span></div>
+        <div class="vocab-item"><strong>by comparison</strong> <span>when compared</span></div>
       </div>
     </div>
   </section>
@@ -171,34 +171,34 @@
   <!-- ==================== TASK 2 PANEL ==================== -->
   <div class="task-panel" id="task2-panel">
     <section class="section" style="padding-top:1rem">
-    <h2 class="section-title">Task 2 — انشا (Essay)</h2>
-    <p class="section-subtitle">حداقل ۲۵۰ کلمه • ۴۰ دقیقه • ۶۷٪ کل نمره Writing</p>
+    <h2 class="section-title">Task 2 — Essay</h2>
+    <p class="section-subtitle">Minimum 250 words • 40 minutes • 67% of total Writing score</p>
 
     <div class="timer-box">
-      <div class="timer-item"><div class="time">۴۰</div><div class="label">دقیقه زمان</div></div>
-      <div class="timer-item"><div class="time">۲۵۰+</div><div class="label">حداقل کلمه</div></div>
-      <div class="timer-item"><div class="time">۶۷٪</div><div class="label">وزن نمره</div></div>
+      <div class="timer-item"><div class="time">40</div><div class="label">Minutes</div></div>
+      <div class="timer-item"><div class="time">250+</div><div class="label">Min. Words</div></div>
+      <div class="timer-item"><div class="time">67%</div><div class="label">Score Weight</div></div>
     </div>
 
     <div class="tip-box">
-      <h4>💡 نکات کلیدی Task 2</h4>
+      <h4>💡 Key Tips for Task 2</h4>
       <ul>
-        <li>سوال را با دقت بخوانید — نوع سوال مشخص می‌کند چه جوابی بدهید</li>
-        <li>پاسخ شما باید مستقیماً به سوال پاسخ دهد (Task Response)</li>
-        <li>حداقل ۴ پاراگراف بنویسید: معرفی، ۲ بدنه، نتیجه‌گیری</li>
-        <li>از مثال‌های مشخص و واقعی استفاده کنید</li>
-        <li>پاراگراف بدنه با Topic Sentence شروع شود</li>
-        <li>از لغات و ساختارهای متنوع دستوری استفاده کنید</li>
+        <li>Read the question carefully — the question type determines your response</li>
+        <li>Your answer must directly address the question (Task Response)</li>
+        <li>Write at least 4 paragraphs: Introduction, 2 Body paragraphs, Conclusion</li>
+        <li>Use specific, real-world examples</li>
+        <li>Each body paragraph should begin with a Topic Sentence</li>
+        <li>Use a variety of vocabulary and grammatical structures</li>
       </ul>
     </div>
 
     <div class="template-box">
-      <h4>📝 قالب آماده Task 2</h4>
+      <h4>📝 Ready-Made Template for Task 2</h4>
       <p>
-        <strong>مقدمه:</strong> It is often argued that… In my opinion…<br>
-        <strong>پاراگراف بدنه ۱:</strong> Topic sentence + توضیح + مثال + نتیجه موقت<br>
-        <strong>پاراگراف بدنه ۲:</strong> Topic sentence + توضیح + مثال + نتیجه موقت<br>
-        <strong>نتیجه‌گیری:</strong> In conclusion, although…, I firmly believe that…
+        <strong>Introduction:</strong> It is often argued that… In my opinion…<br>
+        <strong>Body Paragraph 1:</strong> Topic sentence + explanation + example + mini-conclusion<br>
+        <strong>Body Paragraph 2:</strong> Topic sentence + explanation + example + mini-conclusion<br>
+        <strong>Conclusion:</strong> In conclusion, although…, I firmly believe that…
       </p>
     </div>
 
@@ -206,14 +206,14 @@
 
     <!-- QUESTION TYPES TABLE -->
     <div class="example-card">
-      <h3>📋 انواع سوالات Task 2</h3>
+      <h3>📋 Task 2 Question Types</h3>
       <table class="criteria-table">
-        <tr><th>نوع سوال</th><th>توضیح</th><th>قالب جواب</th></tr>
-        <tr><td><strong>Opinion (Agree/Disagree)</strong></td><td>آیا موافقید که…؟</td><td>مقدمه + موافق/مخالف + نتیجه‌گیری</td></tr>
-        <tr><td><strong>Discussion + Opinion</strong></td><td>هر دو دیدگاه را بررسی کنید</td><td>دیدگاه ۱ + دیدگاه ۲ + نظر شما + نتیجه</td></tr>
-        <tr><td><strong>Problem/Solution</strong></td><td>مشکل + راه‌حل</td><td>مشکل‌ها + راه‌حل‌ها + نتیجه</td></tr>
-        <tr><td><strong>Advantages/Disadvantages</strong></td><td>مزایا و معایب</td><td>مزایا + معایب + تعادل + نتیجه</td></tr>
-        <tr><td><strong>Two-part Question</strong></td><td>دو سوال جداگانه</td><td>پاسخ سوال ۱ + پاسخ سوال ۲ + نتیجه</td></tr>
+        <tr><th>Question Type</th><th>Description</th><th>Answer Format</th></tr>
+        <tr><td><strong>Opinion (Agree/Disagree)</strong></td><td>Do you agree that…?</td><td>Introduction + Agree/Disagree + Conclusion</td></tr>
+        <tr><td><strong>Discussion + Opinion</strong></td><td>Discuss both viewpoints</td><td>Viewpoint 1 + Viewpoint 2 + Your opinion + Conclusion</td></tr>
+        <tr><td><strong>Problem/Solution</strong></td><td>Problem + Solution</td><td>Problems + Solutions + Conclusion</td></tr>
+        <tr><td><strong>Advantages/Disadvantages</strong></td><td>Pros and cons</td><td>Advantages + Disadvantages + Balance + Conclusion</td></tr>
+        <tr><td><strong>Two-part Question</strong></td><td>Two separate questions</td><td>Answer Q1 + Answer Q2 + Conclusion</td></tr>
       </table>
     </div>
 
@@ -222,7 +222,7 @@
     <!-- SAMPLE ESSAY 1: Opinion -->
     <div class="example-card">
       <span class="band-label">Band 8.0 Sample</span>
-      <h3>نمونه انشا — شبکه‌های اجتماعی (Opinion)</h3>
+      <h3>Sample Essay — Social Media (Opinion)</h3>
       <p style="color:var(--text-light);font-style:italic;margin-bottom:1rem">Some people believe that social media has a negative impact on society. To what extent do you agree or disagree?</p>
       <div class="sample-answer">
         <p><strong>Introduction:</strong> In recent years, social media platforms have become an integral part of daily life for billions of people worldwide. While some argue that these platforms have a detrimental effect on society, I largely disagree with this view, as I believe the benefits of social media far outweigh its drawbacks.</p>
@@ -235,7 +235,7 @@
     <!-- SAMPLE ESSAY 2: Discussion -->
     <div class="example-card">
       <span class="band-label">Band 7.5 Sample</span>
-      <h3>نمونه انشا — آموزش آنلاین (Discussion)</h3>
+      <h3>Sample Essay — Online Education (Discussion)</h3>
       <p style="color:var(--text-light);font-style:italic;margin-bottom:1rem">Some people think that online learning is better than classroom learning. Discuss both views and give your opinion.</p>
       <div class="sample-answer">
         <p><strong>Introduction:</strong> The rise of digital technology has transformed the education sector, with online learning becoming increasingly popular. While some believe that virtual classrooms offer superior advantages, others maintain that traditional face-to-face learning remains more effective.</p>
@@ -249,29 +249,29 @@
 
     <!-- TASK 2 VOCABULARY -->
     <div class="example-card">
-      <h3>📖 واژگان ضروری Task 2</h3>
-      <h4 style="margin:1rem 0 .5rem;color:#065f46">بیان نظر</h4>
+      <h3>📖 Essential Vocabulary for Task 2</h3>
+      <h4 style="margin:1rem 0 .5rem;color:#065f46">Expressing Opinions</h4>
       <div class="vocab-grid">
-        <div class="vocab-item"><strong>I firmly believe</strong> <span>من قویاً معتقدم</span></div>
-        <div class="vocab-item"><strong>It is widely acknowledged</strong> <span>به طور گسترده پذیرفته شده</span></div>
-        <div class="vocab-item"><strong>I would argue</strong> <span>من استدلال می‌کنم</span></div>
-        <div class="vocab-item"><strong>From my perspective</strong> <span>از دیدگاه من</span></div>
+        <div class="vocab-item"><strong>I firmly believe</strong> <span>strong personal conviction</span></div>
+        <div class="vocab-item"><strong>It is widely acknowledged</strong> <span>generally accepted / recognized</span></div>
+        <div class="vocab-item"><strong>I would argue</strong> <span>presenting a reasoned position</span></div>
+        <div class="vocab-item"><strong>From my perspective</strong> <span>in my point of view</span></div>
       </div>
-      <h4 style="margin:1rem 0 .5rem;color:#065f46">اتصال‌دهنده‌ها</h4>
+      <h4 style="margin:1rem 0 .5rem;color:#065f46">Linking Words</h4>
       <div class="vocab-grid">
-        <div class="vocab-item"><strong>Furthermore</strong> <span>علاوه بر این</span></div>
-        <div class="vocab-item"><strong>However</strong> <span>با این حال</span></div>
-        <div class="vocab-item"><strong>On the other hand</strong> <span>از طرف دیگر</span></div>
-        <div class="vocab-item"><strong>Consequently</strong> <span>در نتیجه</span></div>
-        <div class="vocab-item"><strong>Admittedly</strong> <span>باید اعتراف کرد</span></div>
-        <div class="vocab-item"><strong>Nevertheless</strong> <span>با این وجود</span></div>
+        <div class="vocab-item"><strong>Furthermore</strong> <span>in addition / moreover</span></div>
+        <div class="vocab-item"><strong>However</strong> <span>on the other hand / but</span></div>
+        <div class="vocab-item"><strong>On the other hand</strong> <span>conversely / alternatively</span></div>
+        <div class="vocab-item"><strong>Consequently</strong> <span>as a result / therefore</span></div>
+        <div class="vocab-item"><strong>Admittedly</strong> <span>it must be acknowledged</span></div>
+        <div class="vocab-item"><strong>Nevertheless</strong> <span>nonetheless / even so</span></div>
       </div>
-      <h4 style="margin:1rem 0 .5rem;color:#065f46">نتیجه‌گیری</h4>
+      <h4 style="margin:1rem 0 .5rem;color:#065f46">Conclusions</h4>
       <div class="vocab-grid">
-        <div class="vocab-item"><strong>In conclusion</strong> <span>در نتیجه</span></div>
-        <div class="vocab-item"><strong>To sum up</strong> <span>به طور خلاصه</span></div>
-        <div class="vocab-item"><strong>All things considered</strong> <span>با در نظر گرفتن همه چیز</span></div>
-        <div class="vocab-item"><strong>Taking everything into account</strong> <span>با لحاظ همه موارد</span></div>
+        <div class="vocab-item"><strong>In conclusion</strong> <span>to sum up / finally</span></div>
+        <div class="vocab-item"><strong>To sum up</strong> <span>in summary / overall</span></div>
+        <div class="vocab-item"><strong>All things considered</strong> <span>taking everything into account</span></div>
+        <div class="vocab-item"><strong>Taking everything into account</strong> <span>considering all factors</span></div>
       </div>
     </div>
   </section>
@@ -280,63 +280,63 @@
   <!-- ==================== SCORING GUIDE PANEL ==================== -->
   <div class="task-panel" id="task3-panel">
     <section class="section" style="padding-top:1rem">
-    <h2 class="section-title">راهنمای نمره‌دهی IELTS Writing</h2>
-    <p class="section-subtitle">آشنایی با معیارهای نمره‌دهی به شما کمک می‌کند دقیقاً بدانید روی چه چیزی کار کنید</p>
+    <h2 class="section-title">IELTS Writing Scoring Guide</h2>
+    <p class="section-subtitle">Understanding the scoring criteria will help you know exactly what to focus on</p>
 
     <div class="example-card">
-      <h3>📊 ۴ معیار اصلی نمره‌دهی</h3>
+      <h3>📊 The 4 Main Scoring Criteria</h3>
       <table class="criteria-table">
-        <tr><th>معیار</th><th>وزن</th><th>توضیح</th></tr>
-        <tr><td><strong>Task Response</strong></td><td>۲۵٪</td><td>آیا کامل و مستقیماً به سوال پاسخ داده‌اید؟ آیا ایده‌های واضح و پشتیبانی‌شده دارید؟</td></tr>
-        <tr><td><strong>Coherence & Cohesion</strong></td><td>۲۵٪</td><td>آیا متن منطقی و ساختارمند است؟ آیا از اتصال‌دهنده‌ها درست استفاده کرده‌اید؟</td></tr>
-        <tr><td><strong>Lexical Resource</strong></td><td>۲۵٪</td><td>آیا از واژگان متنوع و دقیق استفاده کرده‌اید؟</td></tr>
-        <tr><td><strong>Grammar</strong></td><td>۲۵٪</td><td>آیا از ساختارهای متنوع دستوری استفاده کرده‌اید؟</td></tr>
+        <tr><th>Criteria</th><th>Weight</th><th>Description</th></tr>
+        <tr><td><strong>Task Response</strong></td><td>25%</td><td>Have you fully and directly answered the question? Are your ideas clear and well-supported?</td></tr>
+        <tr><td><strong>Coherence & Cohesion</strong></td><td>25%</td><td>Is the text logical and well-structured? Have you used linking words correctly?</td></tr>
+        <tr><td><strong>Lexical Resource</strong></td><td>25%</td><td>Have you used a range of accurate vocabulary?</td></tr>
+        <tr><td><strong>Grammar</strong></td><td>25%</td><td>Have you used a variety of grammatical structures?</td></tr>
       </table>
     </div>
 
     <div class="scoring-guide">
       <div class="score-card">
         <div class="score-range">Band 9</div>
-        <h4>عالی</h4>
+        <h4>Expert</h4>
         <ul>
-          <li>پاسخ کامل و دقیق به تمام بخش‌های سوال</li>
-          <li>ایده‌های کاملاً پشتیبانی‌شده</li>
-          <li>ساختار عالی و اتصال بی‌نقص</li>
-          <li>واژگان گسترده و دقیق</li>
-          <li>دستور کامل با انعطاف‌پذیری بالا</li>
+          <li>Full and accurate response to all parts of the question</li>
+          <li>Fully supported ideas</li>
+          <li>Excellent structure and flawless cohesion</li>
+          <li>Extensive and precise vocabulary</li>
+          <li>Full command of grammar with high flexibility</li>
         </ul>
       </div>
       <div class="score-card">
         <div class="score-range">Band 7-8</div>
-        <h4>خوب تا عالی</h4>
+        <h4>Good to Expert</h4>
         <ul>
-          <li>پاسخ کامل به تمام بخش‌های سوال</li>
-          <li>ایده‌ها واضح و منطقی</li>
-          <li>استفاده خوب از اتصال‌دهنده‌ها</li>
-          <li>واژگان متنوع با خطاهای جزئی</li>
-          <li>ساختارهای متنوع دستوری</li>
+          <li>Full response to all parts of the question</li>
+          <li>Clear and logical ideas</li>
+          <li>Good use of linking words</li>
+          <li>Vocabulary with minor errors</li>
+          <li>Variety of grammatical structures</li>
         </ul>
       </div>
       <div class="score-card">
         <div class="score-range">Band 5-6</div>
-        <h4>متوسط</h4>
+        <h4>Modest</h4>
         <ul>
-          <li>پاسخ نسبی به سوال</li>
-          <li>ایده‌ها وجود دارند ولی کامل نیستند</li>
-          <li>ساختار منطقی اما با مشکلاتی</li>
-          <li>واژگان محدودتر</li>
-          <li>ساختارهای ساده‌تر دستوری</li>
+          <li>Partial response to the question</li>
+          <li>Ideas present but incomplete</li>
+          <li>Logical structure with some issues</li>
+          <li>More limited vocabulary</li>
+          <li>Simpler grammatical structures</li>
         </ul>
       </div>
       <div class="score-card">
         <div class="score-range">Band 3-4</div>
-        <h4>ضعیف</h4>
+        <h4>Limited</h4>
         <ul>
-          <li>پاسخ ناقص یا نامرتبط</li>
-          <li>ایده‌های مبهم و بدون پشتیبانی</li>
-          <li>عدم انسجام در متن</li>
-          <li>واژگان بسیار محدود</li>
-          <li>خطاهای دستوری زیاد</li>
+          <li>Incomplete or irrelevant response</li>
+          <li>Vague and unsupported ideas</li>
+          <li>Lack of coherence in the text</li>
+          <li>Very limited vocabulary</li>
+          <li>Frequent grammatical errors</li>
         </ul>
       </div>
     </div>
@@ -344,43 +344,43 @@
     <hr class="section-divider">
 
     <div class="interactive-scoring">
-      <h3 style="text-align:center;color:var(--primary);margin-bottom:1rem">🧮 محاسبه‌گر نمره تقریبی</h3>
-      <p style="text-align:center;color:var(--text-light);margin-bottom:1.5rem;font-size:.9rem">نمره هر معیار را با کشیدن اسلایدر مشخص کنید</p>
+      <h3 style="text-align:center;color:var(--primary);margin-bottom:1rem">🧮 Approximate Band Score Calculator</h3>
+      <p style="text-align:center;color:var(--text-light);margin-bottom:1.5rem;font-size:.9rem">Set each criterion's score by dragging the slider</p>
       <div class="slider-group">
-        <label>Task Response (پاسخگویی): <span id="val1">6</span></label>
+        <label>Task Response: <span id="val1">6</span></label>
         <input type="range" min="1" max="9" value="6" oninput="document.getElementById('val1').textContent=this.value; calcBand()">
       </div>
       <div class="slider-group">
-        <label>Coherence & Cohesion (انسجام): <span id="val2">6</span></label>
+        <label>Coherence & Cohesion: <span id="val2">6</span></label>
         <input type="range" min="1" max="9" value="6" oninput="document.getElementById('val2').textContent=this.value; calcBand()">
       </div>
       <div class="slider-group">
-        <label>Lexical Resource (واژگان): <span id="val3">6</span></label>
+        <label>Lexical Resource: <span id="val3">6</span></label>
         <input type="range" min="1" max="9" value="6" oninput="document.getElementById('val3').textContent=this.value; calcBand()">
       </div>
       <div class="slider-group">
-        <label>Grammar (دستور زبان): <span id="val4">6</span></label>
+        <label>Grammar: <span id="val4">6</span></label>
         <input type="range" min="1" max="9" value="6" oninput="document.getElementById('val4').textContent=this.value; calcBand()">
       </div>
       <div class="band-display">
-        <div>نمره تقریبی شما:</div>
+        <div>Your approximate score:</div>
         <div class="big-score" id="finalBand">6.0</div>
-        <div style="margin-top:.5rem;font-size:.9rem;opacity:.8">میانگین چهار معیار</div>
+        <div style="margin-top:.5rem;font-size:.9rem;opacity:.8">Average of all four criteria</div>
       </div>
     </div>
 
     <hr class="section-divider">
 
     <div class="example-card">
-      <h3>❌ اشتباهات رایج</h3>
+      <h3>❌ Common Mistakes</h3>
       <table class="criteria-table">
-        <tr><th>اشتباه</th><th>توضیح</th><th>راه‌حل</th></tr>
-        <tr><td>نظر شخصی در Task 1</td><td>نوشتن "I think" در توصیف نمودار</td><td>فقط واقعیات را گزارش کنید</td></tr>
-        <tr><td>کپی کردن سوال</td><td>کلمه به کلمه سوال را نوشتن</td><td>با تغییر لغات بازنویسی کنید</td></tr>
-        <tr><td>عدم نوشتن Overview</td><td>ندانستن مهم‌ترین روندها</td><td>حتماً پاراگراف Overview بنویسید</td></tr>
-        <tr><td>تعداد کلمات کم</td><td>کمتر از حداقل نوشتن</td><td>حداقل ۱۵۰ (T1) یا ۲۵۰ (T2)</td></tr>
-        <tr><td>تکرار لغات</td><td>استفاده مکرر از یک کلمه</td><td>از synonyms استفاده کنید</td></tr>
-        <tr><td>عدم مدیریت زمان</td><td>صرف بیش از حد زمان در Task 1</td><td>۲۰ دقیقه T1 + ۴۰ دقیقه T2</td></tr>
+        <tr><th>Mistake</th><th>Description</th><th>Solution</th></tr>
+        <tr><td>Personal opinion in Task 1</td><td>Writing "I think" in a chart description</td><td>Only report the facts</td></tr>
+        <tr><td>Copying the question</td><td>Writing the question word for word</td><td>Paraphrase using different words</td></tr>
+        <tr><td>Skipping the Overview</td><td>Not identifying the most important trends</td><td>Always write an Overview paragraph</td></tr>
+        <tr><td>Insufficient word count</td><td>Writing fewer than the minimum</td><td>At least 150 (T1) or 250 (T2)</td></tr>
+        <tr><td>Repeating vocabulary</td><td>Using the same word repeatedly</td><td>Use synonyms</td></tr>
+        <tr><td>Poor time management</td><td>Spending too much time on Task 1</td><td>20 min for T1 + 40 min for T2</td></tr>
       </table>
     </div>
 
@@ -396,7 +396,7 @@
     <a href="writing.html">Writing</a>
     <a href="speaking.html">Speaking</a>
   </div>
-  <p>© ۲۰۲۶ آیلتس‌پرو | تمامی حقوق محفوظ است</p>
+  <p>© 2026 IELTS Pro | All rights reserved</p>
 </footer>
 
 <script>

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IELTS Reading | تمرین ریدینگ آیلتس</title>
+  <title>IELTS Reading Practice</title>
   <link rel="stylesheet" href="../css/style.css">
   <style>
     /* ===== Page Header ===== */
@@ -460,57 +460,57 @@
 
 <!-- ===== NAVBAR ===== -->
 <nav class="navbar">
-  <a href="../index.html" class="logo">آیلتس<span>پرو</span></a>
+  <a href="../index.html" class="logo">IELTS<span>Pro</span></a>
   <div class="nav-links">
     <a href="reading.html">Reading</a>
     <a href="listening.html">Listening</a>
     <a href="writing.html">Writing</a>
     <a href="speaking.html">Speaking</a>
-    <a href="test.html" class="btn btn-outline">آزمون تعیین سطح</a>
-    <a href="register.html" class="btn btn-primary">ورود / ثبت‌نام</a>
+    <a href="test.html" class="btn btn-outline">Placement Test</a>
+    <a href="register.html" class="btn btn-primary">Sign In / Register</a>
   </div>
 </nav>
 
 <!-- ===== PAGE HEADER ===== -->
 <div class="page-header">
-  <h1>📖 تمرین Reading آیلتس</h1>
-  <p>۱۰ متن تمرینی حرفه‌ای با انواع سوالات — True/False/Not Given, Multiple Choice, Matching Headings, Fill-in-the-blank</p>
+  <h1>📖 IELTS Reading Practice</h1>
+  <p>10 professional practice passages with various question types — True/False/Not Given, Multiple Choice, Matching Headings, Fill-in-the-blank</p>
 </div>
 
 <!-- ===== TIMER & GLOBAL PROGRESS TOOLBAR ===== -->
 <div class="quiz-toolbar" id="quizToolbar">
   <div class="timer-display" id="timerDisplay">
     <span class="timer-icon">⏱️</span>
-    <span id="timerText">۶۰:۰۰</span>
+    <span id="timerText">60:00</span>
   </div>
   <div class="global-progress">
     <div class="label-row">
-      <span id="answeredLabel">پاسخ داده شده: ۰/۵۰</span>
-      <span id="scoreLabel">امتیاز: ۰</span>
+      <span id="answeredLabel">Answered: 0/50</span>
+      <span id="scoreLabel">Score: 0</span>
     </div>
     <div class="bar-track">
       <div class="bar-fill" id="globalBarFill"></div>
     </div>
   </div>
   <div class="toolbar-actions">
-    <button class="btn btn-primary" onclick="checkAllAnswers()">✅ بررسی</button>
-    <button class="btn btn-outline" onclick="showCorrectAnswers()">👁️ پاسخ صحیح</button>
-    <button class="btn btn-accent" onclick="resetQuiz()">🔄 شروع مجدد</button>
+    <button class="btn btn-primary" onclick="checkAllAnswers()">✅ Check</button>
+    <button class="btn btn-outline" onclick="showCorrectAnswers()">👁️ Show Answers</button>
+    <button class="btn btn-accent" onclick="resetQuiz()">🔄 Reset</button>
   </div>
 </div>
 
 <!-- ===== PASSAGE NAVIGATION ===== -->
 <div class="passage-nav" id="passageNav">
-  <button class="passage-btn active" onclick="showPassage(0)" data-idx="0">۱. تغییرات اقلیمی</button>
-  <button class="passage-btn" onclick="showPassage(1)" data-idx="1">۲. هوش مصنوعی در آموزش</button>
-  <button class="passage-btn" onclick="showPassage(2)" data-idx="2">۳. برنامه‌ریزی شهری</button>
-  <button class="passage-btn" onclick="showPassage(3)" data-idx="3">۴. اکتشاف فضا</button>
-  <button class="passage-btn" onclick="showPassage(4)" data-idx="4">۵. حفاظت اقیانوس</button>
-  <button class="passage-btn" onclick="showPassage(5)" data-idx="5">۶. تمدن‌های باستان</button>
-  <button class="passage-btn" onclick="showPassage(6)" data-idx="6">۷. سلامت روان</button>
-  <button class="passage-btn" onclick="showPassage(7)" data-idx="7">۸. انرژی تجدیدپذیر</button>
-  <button class="passage-btn" onclick="showPassage(8)" data-idx="8">۹. میراث فرهنگی</button>
-  <button class="passage-btn" onclick="showPassage(9)" data-idx="9">۱۰. امنیت غذایی</button>
+  <button class="passage-btn active" onclick="showPassage(0)" data-idx="0">1. Climate Change</button>
+  <button class="passage-btn" onclick="showPassage(1)" data-idx="1">2. AI in Education</button>
+  <button class="passage-btn" onclick="showPassage(2)" data-idx="2">3. Urban Planning</button>
+  <button class="passage-btn" onclick="showPassage(3)" data-idx="3">4. Space Exploration</button>
+  <button class="passage-btn" onclick="showPassage(4)" data-idx="4">5. Ocean Conservation</button>
+  <button class="passage-btn" onclick="showPassage(5)" data-idx="5">6. Ancient Civilisations</button>
+  <button class="passage-btn" onclick="showPassage(6)" data-idx="6">7. Mental Health</button>
+  <button class="passage-btn" onclick="showPassage(7)" data-idx="7">8. Renewable Energy</button>
+  <button class="passage-btn" onclick="showPassage(8)" data-idx="8">9. Cultural Heritage</button>
+  <button class="passage-btn" onclick="showPassage(9)" data-idx="9">10. Food Security</button>
 </div>
 
 <!-- ===== QUIZ CONTAINER ===== -->
@@ -519,26 +519,26 @@
 <!-- ===== SCORE PANEL ===== -->
 <div class="quiz-container">
   <div class="score-panel" id="scorePanel">
-    <h2>📊 نتیجه نهایی شما</h2>
-    <div class="score-number" id="scoreNumber">۰/۵۰</div>
+    <h2>📊 Your Final Results</h2>
+    <div class="score-number" id="scoreNumber">0/50</div>
     <div class="band-display" id="bandDisplay"></div>
     <div class="progress-bar" style="background:rgba(255,255,255,0.2)">
       <div class="progress-fill" id="scoreProgressFill" style="width:0%"></div>
     </div>
     <div class="score-details">
-      <div class="score-item"><div class="num" id="correctCount">۰</div><div class="lbl">صحیح ✓</div></div>
-      <div class="score-item"><div class="num" id="incorrectCount">۰</div><div class="lbl">نادرست ✗</div></div>
-      <div class="score-item"><div class="num" id="unansweredCount">۵۰</div><div class="lbl">بی‌پاسخ</div></div>
+      <div class="score-item"><div class="num" id="correctCount">0</div><div class="lbl">Correct ✓</div></div>
+      <div class="score-item"><div class="num" id="incorrectCount">0</div><div class="lbl">Incorrect ✗</div></div>
+      <div class="score-item"><div class="num" id="unansweredCount">50</div><div class="lbl">Unanswered</div></div>
     </div>
     <!-- Per-passage breakdown -->
-    <div id="passageBreakdown" style="margin-top:1.5rem; text-align:right;"></div>
+    <div id="passageBreakdown" style="margin-top:1.5rem; text-align:left;"></div>
   </div>
 
   <div class="quiz-actions" id="quizActions">
-    <button class="btn btn-primary" onclick="checkAllAnswers()">✅ بررسی پاسخ‌ها</button>
-    <button class="btn btn-outline" onclick="showCorrectAnswers()">👁️ نمایش پاسخ صحیح</button>
-    <button class="btn btn-accent" onclick="resetQuiz()">🔄 شروع مجدد</button>
-    <button class="btn btn-primary" onclick="toggleReviewMode()" id="reviewBtn" style="display:none;">📋 مرور سوال به سوال</button>
+    <button class="btn btn-primary" onclick="checkAllAnswers()">✅ Check Answers</button>
+    <button class="btn btn-outline" onclick="showCorrectAnswers()">👁️ Show Correct Answers</button>
+    <button class="btn btn-accent" onclick="resetQuiz()">🔄 Reset</button>
+    <button class="btn btn-primary" onclick="toggleReviewMode()" id="reviewBtn" style="display:none;">📋 Review Questions</button>
   </div>
 </div>
 
@@ -550,7 +550,7 @@
     <a href="writing.html">Writing</a>
     <a href="speaking.html">Speaking</a>
   </div>
-  <p>© ۲۰۲۶ آیلتس‌پرو | تمامی حقوق محفوظ است</p>
+  <p>© 2026 IELTS Pro | All Rights Reserved</p>
 </footer>
 
 <script>
@@ -564,9 +564,9 @@ const passages = [
     id: 0,
     title: 'Climate Change and Coastal Communities',
     emoji: '🌍',
-    topicFA: 'تغییرات اقلیمی',
-    difficulty: 'medium',
-    difficultyFA: 'متوسط',
+    topicEN: 'Climate Change',
+    difficulty: 'easy',
+    difficultyEN: 'Easy',
     text: [
       "Climate change poses an existential threat to coastal communities worldwide. Rising sea levels, driven by thermal expansion of ocean water and the melting of polar ice sheets, are reshaping coastlines at an alarming rate. The Intergovernmental Panel on Climate Change (IPCC) has projected that global mean sea levels could rise by up to one metre by 2100 if greenhouse gas emissions continue unchecked. For low-lying nations such as the Maldives, Tuvalu, and Bangladesh, such projections are not abstract — they represent the potential loss of entire territories.",
       "Beyond sea-level rise, coastal communities face intensifying storm surges and flooding. Warmer ocean temperatures fuel more powerful hurricanes and typhoons, causing billions of dollars in damage annually. In 2023 alone, climate-related disasters cost the global economy over 380 billion dollars, with coastal regions bearing the heaviest burden. Small island developing states (SIDS) contribute less than one percent of global emissions yet suffer disproportionately from their consequences, raising fundamental questions of climate justice.",
@@ -858,7 +858,7 @@ const questionsData = [
 ];
 
 // ===== UTILITIES =====
-function toFa(n) { return String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]); }
+function toFa(n) { return String(n); }
 
 let currentPassage = 0;
 let timerInterval = null;
