@@ -363,6 +363,12 @@ ul { list-style: none; }
 
 /* ===== Responsive ===== */
 @media (max-width: 768px) {
+  /* Navbar — static on mobile to avoid stacking context issues */
+  .navbar {
+    position: static;
+    z-index: auto;
+  }
+
   /* Navbar hamburger */
   .nav-toggle { display: block; }
 
