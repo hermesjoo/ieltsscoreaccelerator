@@ -111,6 +111,13 @@ function setupAuthListener() {
   });
 }
 
+// Expose globally
+window.signInWithGoogle = signInWithGoogle;
+window.signUp = signUp;
+window.signIn = signIn;
+window.signOut = signOut;
+window.getUser = getUser;
+
 // Auto-initialize when script loads
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', setupAuthListener);
