@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — IELTS Score Accelerator</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    :root { --sidebar-w: 260px; --bg: #0f172a; --surface: #1e293b; --border: #334155; --text: #e2e8f0; --muted: #94a3b8; --accent: #3b82f6; --danger: #ef4444; --success: #22c55e; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; }
+
+    /* ===== Login Gate ===== */
+    #adminGate { position: fixed; inset: 0; z-index: 9999; background: var(--bg); display: flex; align-items: center; justify-content: center; }
+    #adminGate.hidden { display: none; }
+    .gate-card { background: var(--surface); padding: 2.5rem; border-radius: 16px; width: 380px; max-width: 90vw; text-align: center; box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
+    .gate-card h2 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .gate-card p { color: var(--muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
+    .gate-card input { width: 100%; padding: 0.8rem 1rem; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font-size: 1rem; margin-bottom: 1rem; }
+    .gate-card input:focus { outline: none; border-color: var(--accent); }
+    .gate-card button { width: 100%; padding: 0.8rem; border: none; border-radius: 8px; background: var(--accent); color: #fff; font-size: 1rem; font-weight: 600; cursor: pointer; }
+    .gate-card button:hover { background: #2563eb; }
+    .gate-error { color: var(--danger); font-size: 0.85rem; margin-top: 0.5rem; display: none; }
+
+    /* ===== Sidebar ===== */
+    .sidebar { position: fixed; top: 0; left: 0; width: var(--sidebar-w); height: 100vh; background: var(--surface); border-right: 1px solid var(--border); padding: 1.5rem 0; overflow-y: auto; z-index: 100; }
+    .sidebar-brand { padding: 0 1.5rem 1.5rem; border-bottom: 1px solid var(--border); }
+    .sidebar-brand h1 { font-size: 1.1rem; color: var(--accent); }
+    .sidebar-brand small { color: var(--muted); font-size: 0.75rem; }
+    .sidebar-nav { padding: 1rem 0; }
+    .sidebar-nav a { display: flex; align-items: center; gap: 0.75rem; padding: 0.7rem 1.5rem; color: var(--muted); text-decoration: none; font-size: 0.9rem; transition: all 0.15s; }
+    .sidebar-nav a:hover, .sidebar-nav a.active { color: var(--text); background: rgba(59,130,246,0.1); border-right: 3px solid var(--accent); }
+    .sidebar-nav a .icon { font-size: 1.1rem; width: 24px; text-align: center; }
+    .sidebar-footer { position: absolute; bottom: 0; width: 100%; padding: 1rem 1.5rem; border-top: 1px solid var(--border); }
+    .sidebar-footer a { color: var(--danger); text-decoration: none; font-size: 0.85rem; }
+
+    /* ===== Main ===== */
+    .main { margin-left: var(--sidebar-w); flex: 1; padding: 2rem; min-height: 100vh; }
+    .main-header { margin-bottom: 2rem; }
+    .main-header h2 { font-size: 1.5rem; margin-bottom: 0.25rem; }
+    .main-header p { color: var(--muted); font-size: 0.9rem; }
+
+    /* ===== Stats Grid ===== */
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; }
+    .stat-card .label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .stat-card .value { font-size: 2rem; font-weight: 700; margin: 0.25rem 0; }
+    .stat-card .change { font-size: 0.8rem; }
+    .stat-card .change.up { color: var(--success); }
+    .stat-card .change.down { color: var(--danger); }
+
+    /* ===== Panels ===== */
+    .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 1.5rem; overflow: hidden; }
+    .panel-header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.25rem; border-bottom: 1px solid var(--border); }
+    .panel-header h3 { font-size: 1rem; }
+    .panel-body { padding: 1.25rem; }
+
+    /* ===== Table ===== */
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+    th { color: var(--muted); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    tr:hover { background: rgba(59,130,246,0.05); }
+    .badge { padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+    .badge-active { background: rgba(34,197,94,0.15); color: var(--success); }
+    .badge-inactive { background: rgba(239,68,68,0.15); color: var(--danger); }
+
+    /* ===== Buttons ===== */
+    .btn-sm { padding: 0.4rem 0.8rem; font-size: 0.8rem; border-radius: 6px; border: 1px solid var(--border); background: transparent; color: var(--text); cursor: pointer; }
+    .btn-sm:hover { background: var(--border); }
+    .btn-sm.danger { color: var(--danger); border-color: var(--danger); }
+    .btn-sm.danger:hover { background: rgba(239,68,68,0.1); }
+
+    /* ===== Search ===== */
+    .search-box { display: flex; gap: 0.5rem; }
+    .search-box input { padding: 0.5rem 0.8rem; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--text); font-size: 0.85rem; width: 200px; }
+    .search-box input:focus { outline: none; border-color: var(--accent); }
+
+    /* ===== Content Cards ===== */
+    .content-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+    .content-card { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem; }
+    .content-card h4 { font-size: 0.95rem; margin-bottom: 0.5rem; }
+    .content-card .meta { color: var(--muted); font-size: 0.8rem; margin-bottom: 0.75rem; }
+    .content-card .actions { display: flex; gap: 0.5rem; }
+
+    /* ===== Settings ===== */
+    .settings-group { margin-bottom: 1.5rem; }
+    .settings-group label { display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 0.4rem; }
+    .settings-group input, .settings-group select { width: 100%; max-width: 500px; padding: 0.6rem 0.8rem; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--text); font-size: 0.9rem; }
+    .settings-group input:focus { outline: none; border-color: var(--accent); }
+    .btn-primary { padding: 0.6rem 1.5rem; border: none; border-radius: 8px; background: var(--accent); color: #fff; font-weight: 600; cursor: pointer; }
+    .btn-primary:hover { background: #2563eb; }
+
+    /* ===== Section (hidden by default) ===== */
+    .section { display: none; }
+    .section.active { display: block; }
+
+    /* ===== Toast ===== */
+    .toast { position: fixed; bottom: 2rem; right: 2rem; padding: 0.8rem 1.2rem; border-radius: 8px; color: #fff; font-size: 0.9rem; z-index: 9999; animation: slideUp 0.3s ease; }
+    .toast.success { background: var(--success); }
+    .toast.error { background: var(--danger); }
+    @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    /* ===== Loading ===== */
+    .loading { text-align: center; padding: 2rem; color: var(--muted); }
+    .spinner { display: inline-block; width: 24px; height: 24px; border: 3px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.6s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ===== Mobile ===== */
+    @media (max-width: 768px) {
+      .sidebar { width: 100%; height: auto; position: relative; border-right: none; border-bottom: 1px solid var(--border); }
+      .sidebar-footer { position: static; }
+      .main { margin-left: 0; padding: 1rem; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .search-box input { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Admin Login Gate -->
+<div id="adminGate">
+  <div class="gate-card">
+    <h2>🔐 Admin Access</h2>
+    <p>Enter admin password to continue</p>
+    <input type="password" id="adminPass" placeholder="Password" onkeydown="if(event.key==='Enter')checkAdmin()">
+    <button onclick="checkAdmin()">Login</button>
+    <div class="gate-error" id="gateError">Wrong password</div>
+  </div>
+</div>
+
+<!-- Sidebar -->
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <h1>📊 IELTS Admin</h1>
+    <small>Score Accelerator Dashboard</small>
+  </div>
+  <nav class="sidebar-nav">
+    <a href="#" class="active" onclick="showSection('overview')"><span class="icon">📈</span> Overview</a>
+    <a href="#" onclick="showSection('users')"><span class="icon">👥</span> Users</a>
+    <a href="#" onclick="showSection('content')"><span class="icon">📝</span> Content</a>
+    <a href="#" onclick="showSection('settings')"><span class="icon">⚙️</span> Settings</a>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="#" onclick="adminLogout()">🚪 Logout</a>
+  </div>
+</aside>
+
+<!-- Main Content -->
+<div class="main">
+
+  <!-- ===== Overview ===== -->
+  <div class="section active" id="sec-overview">
+    <div class="main-header">
+      <h2>Overview</h2>
+      <p>Site statistics and recent activity</p>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="label">Total Users</div>
+        <div class="value" id="statUsers">—</div>
+        <div class="change up" id="statUsersChange"></div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Today's Signups</div>
+        <div class="value" id="statToday">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Reading Passages</div>
+        <div class="value">15</div>
+        <div class="change">Active content</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Listening Exercises</div>
+        <div class="value">15</div>
+        <div class="change">Active content</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header">
+        <h3>Recent Signups</h3>
+      </div>
+      <div class="panel-body">
+        <div class="loading" id="recentLoading"><span class="spinner"></span> Loading...</div>
+        <table id="recentTable" style="display:none">
+          <thead><tr><th>Email</th><th>Name</th><th>Joined</th></tr></thead>
+          <tbody id="recentBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Users ===== -->
+  <div class="section" id="sec-users">
+    <div class="main-header">
+      <h2>User Management</h2>
+      <p>View, search, and manage registered users</p>
+    </div>
+    <div class="panel">
+      <div class="panel-header">
+        <h3>All Users</h3>
+        <div class="search-box">
+          <input type="text" placeholder="Search email..." id="userSearch" oninput="filterUsers()">
+          <button class="btn-sm" onclick="loadUsers()">🔄 Refresh</button>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="loading" id="usersLoading"><span class="spinner"></span> Loading users...</div>
+        <table id="usersTable" style="display:none">
+          <thead>
+            <tr>
+              <th>Email</th>
+              <th>Name</th>
+              <th>Joined</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="usersBody"></tbody>
+        </table>
+        <div id="usersEmpty" style="display:none; text-align:center; padding:2rem; color:var(--muted);">No users found</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Content ===== -->
+  <div class="section" id="sec-content">
+    <div class="main-header">
+      <h2>Content Management</h2>
+      <p>Manage reading passages, listening exercises, writing samples, and speaking topics</p>
+    </div>
+    <div class="content-grid" id="contentGrid">
+      <div class="content-card">
+        <h4>📖 Reading</h4>
+        <div class="meta">15 passages with quizzes</div>
+        <div class="actions">
+          <a href="reading.html" class="btn-sm" target="_blank">View</a>
+        </div>
+      </div>
+      <div class="content-card">
+        <h4>🎧 Listening</h4>
+        <div class="meta">15 exercises with audio</div>
+        <div class="actions">
+          <a href="listening.html" class="btn-sm" target="_blank">View</a>
+        </div>
+      </div>
+      <div class="content-card">
+        <h4>✍️ Writing Task 1</h4>
+        <div class="meta">8 sample answers with examiner comments</div>
+        <div class="actions">
+          <a href="writing.html" class="btn-sm" target="_blank">View</a>
+        </div>
+      </div>
+      <div class="content-card">
+        <h4>✍️ Writing Task 2</h4>
+        <div class="meta">8 band-7+ essays with vocabulary</div>
+        <div class="actions">
+          <a href="writing.html" class="btn-sm" target="_blank">View</a>
+        </div>
+      </div>
+      <div class="content-card">
+        <h4>🗣️ Speaking Part 1</h4>
+        <div class="meta">12 topics with model answers</div>
+        <div class="actions">
+          <a href="speaking.html" class="btn-sm" target="_blank">View</a>
+        </div>
+      </div>
+      <div class="content-card">
+        <h4>🗣️ Speaking Part 2 & 3</h4>
+        <div class="meta">12 cue cards with extended answers</div>
+        <div class="actions">
+          <a href="speaking.html" class="btn-sm" target="_blank">View</a>
+        </div>
+      </div>
+      <div class="content-card">
+        <h4>📋 Placement Test</h4>
+        <div class="meta">40-question adaptive test</div>
+        <div class="actions">
+          <a href="test.html" class="btn-sm" target="_blank">View</a>
+        </div>
+      </div>
+      <div class="content-card">
+        <h4>🏠 Homepage</h4>
+        <div class="meta">Landing page with hero, features, CTA</div>
+        <div class="actions">
+          <a href="../index.html" class="btn-sm" target="_blank">View</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Settings ===== -->
+  <div class="section" id="sec-settings">
+    <div class="main-header">
+      <h2>Settings</h2>
+      <p>Configure site and Supabase connection</p>
+    </div>
+    <div class="panel">
+      <div class="panel-header"><h3>Supabase Configuration</h3></div>
+      <div class="panel-body">
+        <div class="settings-group">
+          <label>Project URL</label>
+          <input type="text" id="setUrl" value="https://nuvrlzxwijjwjycgmsrc.supabase.co">
+        </div>
+        <div class="settings-group">
+          <label>Site URL (for OAuth redirect)</label>
+          <input type="text" id="setSiteUrl" value="https://hermesjoo.github.io/ieltsscoreaccelerator/">
+        </div>
+        <div class="settings-group">
+          <label>Dashboard Redirect URL</label>
+          <input type="text" id="setDashUrl" value="https://hermesjoo.github.io/ieltsscoreaccelerator/pages/dashboard.html">
+        </div>
+        <button class="btn-primary" onclick="saveSettings()">Save Settings</button>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-header"><h3>Connection Test</h3></div>
+      <div class="panel-body">
+        <p style="color:var(--muted); margin-bottom:1rem;">Test Supabase connection and API status</p>
+        <button class="btn-sm" onclick="testConnection()">🔌 Test Connection</button>
+        <div id="connResult" style="margin-top:1rem; font-size:0.9rem;"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Supabase + Auth -->
+<script src="../js/supabase.min.js"></script>
+<script>
+// ===== Config =====
+var ADMIN_PASSWORD = 'ielts2024admin';
+var SUPABASE_URL = 'https://nuvrlzxwijjwjycgmsrc.supabase.co';
+var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im51dnJsenh3aWpqd2p5Y2dtc3JjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU4NzE5MTMsImV4cCI6MjEwMTQ0NzkxM30.DPpd4SR2aqSS14elDFr6kvnbuwrJkfbpPJrYIeB3McE';
+var _client = null;
+
+function getClient() {
+  if (_client) return _client;
+  if (typeof window.supabase !== 'undefined' && window.supabase.createClient) {
+    _client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    return _client;
+  }
+  return null;
+}
+
+// ===== Admin Gate =====
+function checkAdmin() {
+  var pass = document.getElementById('adminPass').value;
+  if (pass === ADMIN_PASSWORD) {
+    document.getElementById('adminGate').classList.add('hidden');
+    sessionStorage.setItem('adminAuth', 'true');
+    initDashboard();
+  } else {
+    document.getElementById('gateError').style.display = 'block';
+  }
+}
+
+function adminLogout() {
+  sessionStorage.removeItem('adminAuth');
+  location.reload();
+}
+
+// Check if already authenticated
+if (sessionStorage.getItem('adminAuth') === 'true') {
+  document.getElementById('adminGate').classList.add('hidden');
+  window.addEventListener('load', initDashboard);
+}
+
+// ===== Navigation =====
+function showSection(name) {
+  document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
+  document.getElementById('sec-' + name).classList.add('active');
+  document.querySelectorAll('.sidebar-nav a').forEach(function(a) { a.classList.remove('active'); });
+  event.currentTarget.classList.add('active');
+  if (name === 'users') loadUsers();
+  if (name === 'overview') loadOverview();
+}
+
+// ===== Toast =====
+function showToast(msg, type) {
+  var t = document.createElement('div');
+  t.className = 'toast ' + (type || 'success');
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(function() { t.remove(); }, 3000);
+}
+
+// ===== Init =====
+function initDashboard() {
+  loadOverview();
+}
+
+// ===== Overview =====
+function loadOverview() {
+  var client = getClient();
+  if (!client) { showToast('Supabase not loaded', 'error'); return; }
+
+  client.auth.admin.listUsers({ page: 1, perPage: 1000 }).then(function(res) {
+    var users = res.data && res.data.users ? res.data.users : [];
+    document.getElementById('statUsers').textContent = users.length;
+
+    // Today signups
+    var today = new Date().toISOString().split('T')[0];
+    var todayCount = users.filter(function(u) {
+      return u.created_at && u.created_at.startsWith(today);
+    }).length;
+    document.getElementById('statToday').textContent = todayCount;
+
+    // Recent 5
+    var recent = users.slice().sort(function(a, b) {
+      return (b.created_at || '').localeCompare(a.created_at || '');
+    }).slice(0, 5);
+
+    document.getElementById('recentLoading').style.display = 'none';
+    document.getElementById('recentTable').style.display = '';
+    var html = '';
+    recent.forEach(function(u) {
+      html += '<tr>';
+      html += '<td>' + (u.email || '—') + '</td>';
+      html += '<td>' + ((u.user_metadata && u.user_metadata.display_name) || '—') + '</td>';
+      html += '<td>' + formatDate(u.created_at) + '</td>';
+      html += '</tr>';
+    });
+    document.getElementById('recentBody').innerHTML = html || '<tr><td colspan="3" style="text-align:center;color:var(--muted)">No users yet</td></tr>';
+  }).catch(function(err) {
+    console.error('Overview error:', err);
+    document.getElementById('recentLoading').innerHTML = '<span style="color:var(--danger)">⚠️ ' + (err.message || 'Failed to load. You may need admin privileges.') + '</span>';
+  });
+}
+
+// ===== Users =====
+var _allUsers = [];
+
+function loadUsers() {
+  var client = getClient();
+  if (!client) return;
+  document.getElementById('usersLoading').style.display = '';
+  document.getElementById('usersTable').style.display = 'none';
+  document.getElementById('usersEmpty').style.display = 'none';
+
+  client.auth.admin.listUsers({ page: 1, perPage: 1000 }).then(function(res) {
+    _allUsers = res.data && res.data.users ? res.data.users : [];
+    renderUsers(_allUsers);
+  }).catch(function(err) {
+    console.error('Users error:', err);
+    document.getElementById('usersLoading').innerHTML = '<span style="color:var(--danger)">⚠️ ' + (err.message || 'Failed to load') + '</span>';
+  });
+}
+
+function renderUsers(users) {
+  document.getElementById('usersLoading').style.display = 'none';
+  if (!users.length) {
+    document.getElementById('usersEmpty').style.display = '';
+    return;
+  }
+  document.getElementById('usersTable').style.display = '';
+  var html = '';
+  users.forEach(function(u) {
+    var status = u.email_confirmed_at ? 'active' : 'inactive';
+    html += '<tr>';
+    html += '<td>' + (u.email || '—') + '</td>';
+    html += '<td>' + ((u.user_metadata && u.user_metadata.display_name) || '—') + '</td>';
+    html += '<td>' + formatDate(u.created_at) + '</td>';
+    html += '<td><span class="badge badge-' + status + '">' + status + '</span></td>';
+    html += '<td><button class="btn-sm danger" onclick="deleteUser(\'' + u.id + '\',\'' + (u.email || '') + '\')">Delete</button></td>';
+    html += '</tr>';
+  });
+  document.getElementById('usersBody').innerHTML = html;
+}
+
+function filterUsers() {
+  var q = document.getElementById('userSearch').value.toLowerCase();
+  var filtered = _allUsers.filter(function(u) {
+    return (u.email || '').toLowerCase().includes(q) || ((u.user_metadata && u.user_metadata.display_name) || '').toLowerCase().includes(q);
+  });
+  renderUsers(filtered);
+}
+
+function deleteUser(id, email) {
+  if (!confirm('Delete user ' + email + '? This cannot be undone.')) return;
+  var client = getClient();
+  if (!client) return;
+  client.auth.admin.deleteUser(id).then(function() {
+    showToast('User deleted: ' + email);
+    loadUsers();
+  }).catch(function(err) {
+    showToast('Failed: ' + (err.message || 'Unknown error'), 'error');
+  });
+}
+
+// ===== Settings =====
+function saveSettings() {
+  SUPABASE_URL = document.getElementById('setUrl').value;
+  showToast('Settings saved (for this session only)');
+  _client = null;
+}
+
+function testConnection() {
+  var el = document.getElementById('connResult');
+  el.innerHTML = '<span class="spinner"></span> Testing...';
+  var client = getClient();
+  if (!client) {
+    el.innerHTML = '<span style="color:var(--danger)">❌ Supabase JS not loaded</span>';
+    return;
+  }
+  client.from('_health').select('*').limit(1).then(function() {
+    el.innerHTML = '<span style="color:var(--success)">✅ Connected to Supabase</span>';
+  }).catch(function(err) {
+    client.auth.getSession().then(function(res) {
+      el.innerHTML = '<span style="color:var(--success)">✅ Connected (auth works, anon key valid)</span>';
+    }).catch(function() {
+      el.innerHTML = '<span style="color:var(--danger)">❌ Connection failed: ' + (err.message || 'Check URL and key') + '</span>';
+    });
+  });
+}
+
+// ===== Helpers =====
+function formatDate(iso) {
+  if (!iso) return '—';
+  var d = new Date(iso);
+  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+}
+</script>
+
+</body>
+</html>
