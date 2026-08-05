@@ -1,6 +1,6 @@
 // auth.js — Supabase auth helper (non-module, loaded via <script> tag)
 
-const SUPABASE_URL = 'https://nuvrlzxwijjwjycgmsrc.supabase.co';
+const SUPABASE_URL = 'https://nuvrizxiwjlwycgmsrc.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_W5eqkzt1JBFCEZLOayOcBA_Fg8HAmsR';
 const REDIRECT_TO = 'https://hermesjoo.github.io/ieltsscoreaccelerator/pages/dashboard.html';
 
