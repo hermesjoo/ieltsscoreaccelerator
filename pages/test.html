@@ -6,90 +6,281 @@
   <title>Placement Test | IELTS Score Accelerator</title>
   <link rel="stylesheet" href="../css/style.css">
   <style>
+    /* Dark theme overrides */
+    :root {
+      --primary: #2563eb;
+      --surface: #1e293b;
+      --bg: #0f172a;
+    }
+    body { background: var(--bg); color: #e2e8f0; }
+
     /* Progress Bar (sticky) */
-    .quiz-progress-bar{background:#fff;border-bottom:2px solid var(--border);padding:1rem 2rem;display:none;justify-content:center;align-items:center;position:sticky;top:56px;z-index:55;flex-direction:column;gap:.5rem;}
-    .quiz-progress-bar.visible{display:flex;}
-    .progress-text{font-size:.95rem;font-weight:700;color:var(--primary);}
-    .progress-track{width:100%;max-width:500px;height:10px;background:#e2e8f0;border-radius:5px;overflow:hidden;}
-    .progress-fill{height:100%;background:linear-gradient(90deg,var(--primary),#22d3ee);border-radius:5px;transition:width .5s ease;width:0%;}
+    .quiz-progress-bar {
+      background: var(--surface);
+      border-bottom: 2px solid #334155;
+      padding: 1rem 2rem;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      position: sticky;
+      top: 56px;
+      z-index: 55;
+      flex-direction: column;
+      gap: .5rem;
+    }
+    .quiz-progress-bar.visible { display: flex; }
+    .progress-text { font-size: .95rem; font-weight: 700; color: var(--primary); }
+    .progress-track {
+      width: 100%;
+      max-width: 500px;
+      height: 10px;
+      background: #334155;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), #22d3ee);
+      border-radius: 5px;
+      transition: width .5s ease;
+      width: 0%;
+    }
+
     /* Quiz Area */
-    .quiz-area{max-width:900px;margin:1.5rem auto;padding:0 1.5rem;}
+    .quiz-area { max-width: 900px; margin: 1.5rem auto; padding: 0 1.5rem; }
+
+    /* Section Header */
+    .section-header {
+      background: linear-gradient(135deg, var(--primary), #1d4ed8);
+      color: #fff;
+      border-radius: var(--radius);
+      padding: 1.5rem 2rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      animation: fadeSlideIn .35s ease;
+    }
+    .section-header h2 { font-size: 1.4rem; margin-bottom: .3rem; }
+    .section-header p { opacity: .85; font-size: .95rem; }
+
     /* Question Card */
-    .question-card-single{background:#fff;border-radius:var(--radius);padding:2rem;box-shadow:0 2px 16px rgba(0,0,0,.08);border:1px solid var(--border);animation:fadeSlideIn .35s ease;}
-    @keyframes fadeSlideIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
-    .question-header{display:flex;align-items:center;gap:.6rem;margin-bottom:1rem;flex-wrap:wrap;}
-    .category-badge{display:inline-block;padding:.25rem .7rem;border-radius:20px;font-size:.75rem;font-weight:600;}
-    .cat-reading{background:#dbeafe;color:#1d4ed8;}.cat-listening{background:#fef3c7;color:#92400e;}.cat-writing{background:#d1fae5;color:#065f46;}.cat-speaking{background:#fce7f3;color:#9d174d;}
-    .q-progress-mini{font-size:.8rem;color:var(--text-light);margin-left:auto;font-weight:600;}
-    .question-text-single{font-size:1.1rem;font-weight:600;line-height:1.8;margin-bottom:1.2rem;color:var(--text);}
+    .question-card-single {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: 0 2px 16px rgba(0,0,0,.3);
+      border: 1px solid #334155;
+      animation: fadeSlideIn .35s ease;
+    }
+    @keyframes fadeSlideIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    .question-header { display: flex; align-items: center; gap: .6rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .category-badge { display: inline-block; padding: .25rem .7rem; border-radius: 20px; font-size: .75rem; font-weight: 600; }
+    .cat-reading { background: #1e3a5f; color: #93c5fd; }
+    .cat-listening { background: #78350f; color: #fcd34d; }
+    .cat-writing { background: #064e3b; color: #6ee7b7; }
+    .cat-speaking { background: #831843; color: #f9a8d4; }
+    .q-progress-mini { font-size: .8rem; color: #94a3b8; margin-left: auto; font-weight: 600; }
+    .question-text-single { font-size: 1.1rem; font-weight: 600; line-height: 1.8; margin-bottom: 1.2rem; color: #e2e8f0; }
+
     /* Options */
-    .options-list-new{list-style:none;display:flex;flex-direction:column;gap:.6rem;}
-    .options-list-new label{display:flex;align-items:center;gap:.6rem;padding:.85rem 1.2rem;background:#fff;border:2px solid var(--border);border-radius:10px;cursor:pointer;transition:all .2s;min-height:48px;font-size:1rem;line-height:1.5;}
-    .options-list-new label:hover{border-color:var(--primary);background:#f0f7ff;}
-    .options-list-new label.selected{border-color:var(--primary);background:#eff6ff;box-shadow:0 0 0 1px var(--primary);}
-    .options-list-new input[type="radio"]{accent-color:var(--primary);width:20px;height:20px;flex-shrink:0;}
+    .options-list-new { list-style: none; display: flex; flex-direction: column; gap: .6rem; }
+    .options-list-new label {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      padding: .85rem 1.2rem;
+      background: #1e293b;
+      border: 2px solid #334155;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all .2s;
+      min-height: 48px;
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #e2e8f0;
+    }
+    .options-list-new label:hover { border-color: var(--primary); background: #1e3a5f; }
+    .options-list-new label.selected { border-color: var(--primary); background: #1e3a5f; box-shadow: 0 0 0 1px var(--primary); }
+    .options-list-new input[type="radio"] { accent-color: var(--primary); width: 20px; height: 20px; flex-shrink: 0; }
+
     /* Submit Button */
-    .submit-btn{display:block;width:100%;max-width:320px;margin:1.5rem auto 0;padding:.9rem 2rem;background:linear-gradient(135deg,var(--primary),#1d4ed8);color:#fff;border:none;border-radius:10px;font-size:1.05rem;font-weight:700;cursor:pointer;transition:all .2s;min-height:52px;}
-    .submit-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(37,99,235,.3);}
-    .submit-btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none;}
+    .submit-btn {
+      display: block;
+      width: 100%;
+      max-width: 320px;
+      margin: 1.5rem auto 0;
+      padding: .9rem 2rem;
+      background: linear-gradient(135deg, var(--primary), #1d4ed8);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .2s;
+      min-height: 52px;
+    }
+    .submit-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(37,99,235,.3); }
+    .submit-btn:disabled { opacity: .4; cursor: not-allowed; transform: none; box-shadow: none; }
+
     /* Answer Feedback */
-    .answer-feedback{display:none;margin-top:1rem;padding:1rem 1.2rem;border-radius:10px;font-size:.95rem;line-height:1.7;animation:fadeSlideIn .3s ease;}
-    .answer-feedback.visible{display:block;}
-    .answer-feedback.is-correct{background:#f0fdf4;color:#065f46;border:1px solid #bbf7d0;}
-    .answer-feedback.is-incorrect{background:#fef2f2;color:#991b1b;border:1px solid #fecaca;}
-    .answer-feedback.is-unanswered{background:#fffbeb;color:#92400e;border:1px solid #fde68a;}
-    .explanation-text{display:block;margin-top:.5rem;font-size:.88rem;color:var(--text-light);font-style:italic;border-top:1px solid rgba(0,0,0,.08);padding-top:.4rem;}
-    /* Check Result */
-    .check-result-card{display:none;background:linear-gradient(135deg,#1e3a5f,#2563eb);color:#fff;border-radius:var(--radius);padding:3rem;text-align:center;margin-top:2rem;animation:fadeSlideIn .35s ease;}
-    .check-result-card.visible{display:block;}
-    .check-result-card h3{font-size:1.5rem;margin-bottom:.5rem;}
-    .check-result-card p{opacity:.85;margin-bottom:1.5rem;font-size:1.05rem;}
-    .check-result-btn{display:inline-flex;align-items:center;gap:.5rem;padding:1rem 3rem;background:linear-gradient(135deg,#f59e0b,#f97316);color:#fff;border:none;border-radius:12px;font-size:1.2rem;font-weight:800;cursor:pointer;transition:all .2s;min-height:56px;box-shadow:0 4px 20px rgba(249,115,22,.3);}
-    .check-result-btn:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(249,115,22,.4);}
+    .answer-feedback {
+      display: none;
+      margin-top: 1rem;
+      padding: 1rem 1.2rem;
+      border-radius: 10px;
+      font-size: .95rem;
+      line-height: 1.7;
+      animation: fadeSlideIn .3s ease;
+    }
+    .answer-feedback.visible { display: block; }
+    .answer-feedback.is-correct { background: #064e3b; color: #6ee7b7; border: 1px solid #065f46; }
+    .answer-feedback.is-incorrect { background: #7f1d1d; color: #fca5a5; border: 1px solid #991b1b; }
+    .answer-feedback.is-unanswered { background: #78350f; color: #fcd34d; border: 1px solid #92400e; }
+
+    /* Navigation Buttons */
+    .quiz-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 900px;
+      margin: 1rem auto;
+      padding: 0 1.5rem;
+      gap: 1rem;
+    }
+    .quiz-nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      padding: .65rem 1.2rem;
+      background: var(--surface);
+      color: #93c5fd;
+      border: 2px solid #334155;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: .95rem;
+      cursor: pointer;
+      transition: all .2s;
+      min-height: 48px;
+      text-decoration: none;
+    }
+    .quiz-nav-btn:hover { border-color: var(--primary); background: #1e3a5f; transform: translateY(-1px); }
+    .quiz-nav-btn:disabled { opacity: .3; cursor: not-allowed; transform: none; }
+    .quiz-nav-btn.next { background: #065f46; color: #6ee7b7; border-color: #059669; }
+    .quiz-nav-btn.next:hover { background: #047857; }
+
+    /* Check Result Card */
+    .check-result-card {
+      display: none;
+      background: linear-gradient(135deg, #1e3a5f, #2563eb);
+      color: #fff;
+      border-radius: var(--radius);
+      padding: 3rem;
+      text-align: center;
+      margin-top: 2rem;
+      animation: fadeSlideIn .35s ease;
+    }
+    .check-result-card.visible { display: block; }
+    .check-result-card h3 { font-size: 1.5rem; margin-bottom: .5rem; }
+    .check-result-card p { opacity: .85; margin-bottom: 1.5rem; font-size: 1.05rem; }
+    .check-result-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: 1rem 3rem;
+      background: linear-gradient(135deg, #f59e0b, #f97316);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.2rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all .2s;
+      min-height: 56px;
+      box-shadow: 0 4px 20px rgba(249,115,22,.3);
+    }
+    .check-result-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(249,115,22,.4); }
+
     /* Results Screen */
-    .results-screen{display:none;animation:fadeSlideIn .4s ease;}
-    .results-screen.visible{display:block;}
-    .results-hero{background:linear-gradient(135deg,#1e3a5f,#2563eb);color:#fff;padding:3rem 2rem;border-radius:var(--radius);text-align:center;margin-bottom:2rem;}
-    .results-hero h2{font-size:1.8rem;margin-bottom:.5rem;}
-    .results-hero .score-big{font-size:4.5rem;font-weight:800;margin:1rem 0;}
-    .results-hero .band-big{font-size:1.5rem;font-weight:700;opacity:.9;margin-bottom:.5rem;}
-    .results-hero .pct-big{font-size:1.1rem;opacity:.8;}
-    .results-hero .progress-bar-results{width:100%;max-width:400px;margin:1.5rem auto 0;height:10px;background:rgba(255,255,255,.2);border-radius:5px;overflow:hidden;}
-    .results-hero .progress-fill-results{height:100%;background:linear-gradient(90deg,#fbbf24,#f59e0b);border-radius:5px;transition:width 1s ease;width:0%;}
-    .results-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin-bottom:2rem;}
-    .result-stat-card{background:#fff;padding:1.2rem;border-radius:10px;text-align:center;border:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,.04);}
-    .result-stat-card .stat-num{font-size:1.8rem;font-weight:800;color:var(--primary);}
-    .result-stat-card .stat-label{font-size:.82rem;color:var(--text-light);margin-top:.2rem;}
-    .section-breakdown-title{font-size:1.2rem;font-weight:700;color:var(--primary);margin-bottom:1rem;text-align:center;}
-    .section-score-row{display:flex;align-items:center;gap:.75rem;padding:.65rem 1rem;background:#f8fafc;border-radius:8px;border:1px solid var(--border);margin-bottom:.5rem;}
-    .section-score-row .ssr-label{font-size:.85rem;font-weight:600;min-width:120px;word-break:break-word;}
-    .section-score-row .ssr-bar{flex:1;height:8px;background:#e2e8f0;border-radius:4px;overflow:hidden;}
-    .section-score-row .ssr-fill{height:100%;border-radius:4px;transition:width .6s ease;}
-    .section-score-row .ssr-score{font-size:.85rem;font-weight:700;min-width:50px;text-align:right;}
-    .results-actions{display:flex;gap:1rem;justify-content:center;margin:2rem 0;flex-wrap:wrap;}
-    .results-actions .btn{min-height:48px;font-size:1rem;padding:.7rem 1.5rem;}
+    .results-screen { display: none; animation: fadeSlideIn .4s ease; }
+    .results-screen.visible { display: block; }
+    .results-hero {
+      background: linear-gradient(135deg, #1e3a5f, #2563eb);
+      color: #fff;
+      padding: 3rem 2rem;
+      border-radius: var(--radius);
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .results-hero h2 { font-size: 1.8rem; margin-bottom: .5rem; }
+    .results-hero .score-big { font-size: 4.5rem; font-weight: 800; margin: 1rem 0; }
+    .results-hero .band-big { font-size: 1.5rem; font-weight: 700; opacity: .9; margin-bottom: .5rem; }
+    .results-hero .pct-big { font-size: 1.1rem; opacity: .8; }
+    .results-hero .progress-bar-results { width: 100%; max-width: 400px; margin: 1.5rem auto 0; height: 10px; background: rgba(255,255,255,.2); border-radius: 5px; overflow: hidden; }
+    .results-hero .progress-fill-results { height: 100%; background: linear-gradient(90deg, #fbbf24, #f59e0b); border-radius: 5px; transition: width 1s ease; width: 0%; }
+    .results-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .result-stat-card { background: var(--surface); padding: 1.2rem; border-radius: 10px; text-align: center; border: 1px solid #334155; }
+    .result-stat-card .stat-num { font-size: 1.8rem; font-weight: 800; color: var(--primary); }
+    .result-stat-card .stat-label { font-size: .82rem; color: #94a3b8; margin-top: .2rem; }
+    .section-breakdown-title { font-size: 1.2rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem; text-align: center; }
+    .section-score-row {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      padding: .65rem 1rem;
+      background: var(--surface);
+      border-radius: 8px;
+      border: 1px solid #334155;
+      margin-bottom: .5rem;
+    }
+    .section-score-row .ssr-label { font-size: .85rem; font-weight: 600; min-width: 120px; word-break: break-word; color: #e2e8f0; }
+    .section-score-row .ssr-bar { flex: 1; height: 8px; background: #334155; border-radius: 4px; overflow: hidden; }
+    .section-score-row .ssr-fill { height: 100%; border-radius: 4px; transition: width .6s ease; }
+    .section-score-row .ssr-score { font-size: .85rem; font-weight: 700; min-width: 50px; text-align: right; color: #e2e8f0; }
+    .results-actions { display: flex; gap: 1rem; justify-content: center; margin: 2rem 0; flex-wrap: wrap; }
+    .results-actions .btn { min-height: 48px; font-size: 1rem; padding: .7rem 1.5rem; }
+
     /* Review Mode */
-    .review-container{display:none;}
-    .review-container.visible{display:block;}
-    .review-nav{position:sticky;top:56px;z-index:60;background:var(--primary);color:#fff;padding:.75rem 1.5rem;display:flex;justify-content:space-between;align-items:center;border-radius:8px;margin-bottom:1rem;}
-    .review-nav button{background:rgba(255,255,255,.2);color:#fff;border:none;padding:.5rem 1rem;border-radius:6px;font-weight:600;cursor:pointer;min-height:40px;}
-    .review-nav button:disabled{opacity:.3;cursor:not-allowed;}
-    .review-nav span{font-weight:700;font-size:.95rem;}
-    .review-question-card{background:#fff;border-radius:var(--radius);padding:2rem;margin-bottom:1.5rem;border:2px solid var(--border);}
-    .review-question-card.review-correct{border-color:var(--success);}
-    .review-question-card.review-incorrect{border-color:#ef4444;}
-    .review-question-card.review-unanswered{border-color:#f59e0b;}
+    .review-container { display: none; }
+    .review-container.visible { display: block; }
+    .review-nav {
+      position: sticky;
+      top: 56px;
+      z-index: 60;
+      background: var(--primary);
+      color: #fff;
+      padding: .75rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+    .review-nav button { background: rgba(255,255,255,.2); color: #fff; border: none; padding: .5rem 1rem; border-radius: 6px; font-weight: 600; cursor: pointer; min-height: 44px; }
+    .review-nav button:disabled { opacity: .3; cursor: not-allowed; }
+    .review-nav span { font-weight: 700; font-size: .95rem; }
+    .review-question-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      border: 2px solid #334155;
+    }
+    .review-question-card.review-correct { border-color: #10b981; }
+    .review-question-card.review-incorrect { border-color: #ef4444; }
+    .review-question-card.review-unanswered { border-color: #f59e0b; }
+
     /* Responsive */
-    @media(max-width:768px){
-      .quiz-progress-bar{top:56px;padding:.75rem 1rem;}
-      .quiz-area{padding:0 .75rem;}
-      .question-card-single{padding:1.2rem;}
-      .question-text-single{font-size:1rem;}
-      .options-list-new label{padding:.75rem 1rem;min-height:48px;}
-      .results-hero .score-big{font-size:3rem;}
-      .results-hero{padding:2rem 1rem;}
-      .results-stats{grid-template-columns:repeat(2,1fr);}
-      .section-score-row .ssr-label{min-width:100px;font-size:.8rem;}
+    @media(max-width: 768px) {
+      .quiz-progress-bar { top: 56px; padding: .75rem 1rem; }
+      .quiz-area { padding: 0 .75rem; }
+      .question-card-single { padding: 1.2rem; }
+      .question-text-single { font-size: 1rem; }
+      .options-list-new label { padding: .75rem 1rem; min-height: 48px; }
+      .results-hero .score-big { font-size: 3rem; }
+      .results-hero { padding: 2rem 1rem; }
+      .results-stats { grid-template-columns: repeat(2, 1fr); }
+      .section-score-row .ssr-label { min-width: 100px; font-size: .8rem; }
+      .quiz-nav { padding: 0 .75rem; }
     }
   </style>
 </head>
@@ -116,6 +307,12 @@
 
 <!-- QUIZ AREA -->
 <div class="quiz-area" id="quizArea"></div>
+
+<!-- NAVIGATION (Previous / Next) -->
+<div class="quiz-nav" id="quizNav" style="display:none;">
+  <button class="quiz-nav-btn" id="prevBtn" onclick="navigateQuestion(-1)" disabled>&larr; Previous Question</button>
+  <button class="quiz-nav-btn next" id="nextBtn" onclick="navigateQuestion(1)">Next Question &rarr;</button>
+</div>
 
 <!-- CHECK RESULT CARD -->
 <div class="quiz-area">
@@ -199,16 +396,22 @@ var TOTAL = questions.length; // 40
 var CAT_LABELS = {reading:'Reading',listening:'Listening',writing:'Writing',speaking:'Speaking'};
 var CAT_CLS = {reading:'cat-reading',listening:'cat-listening',writing:'cat-writing',speaking:'cat-speaking'};
 var CAT_ICONS = {reading:'📖',listening:'🎧',writing:'✏️',speaking:'🗣️'};
+var SECTION_ORDER = ['reading','listening','writing','speaking'];
+var SECTIONS = {
+  reading:  {start:0, end:9,  title:'📖 Reading Section', desc:'Questions 1–10: Vocabulary, comprehension strategies, and academic reading skills.'},
+  listening:{start:10,end:19, title:'🎧 Listening Section', desc:'Questions 11–20: Listening test format, strategies, and common pitfalls.'},
+  writing:  {start:20,end:29, title:'✏️ Writing Section', desc:'Questions 21–30: Task structures, word counts, coherence, and scoring criteria.'},
+  speaking: {start:30,end:39, title:'🗣️ Speaking Section', desc:'Questions 31–40: Test format, parts, pronunciation, and scoring bands.'}
+};
 
 // ===== STATE =====
 var currentIndex = 0;
 var answers = {};
+var submitted = {};
 var quizFinished = false;
 var reviewMode = false;
 var reviewCurrentQ = 0;
-
-// ===== SECTION INDEX (where each section starts) =====
-var sectionStarts = {reading:0,listening:10,writing:20,speaking:30};
+var autoAdvanceTimer = null;
 
 // ===== HELPERS =====
 function toFa(n) { return String(n); }
@@ -248,13 +451,51 @@ function updateProgressBar() {
   }
 }
 
+// ===== NAV BUTTONS =====
+function updateNavButtons() {
+  var nav = document.getElementById('quizNav');
+  var prevBtn = document.getElementById('prevBtn');
+  var nextBtn = document.getElementById('nextBtn');
+  nav.style.display = 'flex';
+  prevBtn.disabled = currentIndex === 0;
+  nextBtn.disabled = currentIndex >= TOTAL - 1;
+}
+
+function navigateQuestion(dir) {
+  var next = currentIndex + dir;
+  if (next < 0 || next >= TOTAL) return;
+  if (autoAdvanceTimer) { clearTimeout(autoAdvanceTimer); autoAdvanceTimer = null; }
+  currentIndex = next;
+  renderQuestion();
+}
+
+// ===== RENDER SECTION HEADER (if at section start) =====
+function renderSectionHeaderIfNeeded(idx) {
+  var section = getSectionForQ(idx);
+  var sec = SECTIONS[section];
+  if (idx === sec.start) {
+    var html = '<div class="section-header">';
+    html += '<h2>' + sec.title + '</h2>';
+    html += '<p>' + sec.desc + '</p>';
+    html += '</div>';
+    return html;
+  }
+  return '';
+}
+
 // ===== RENDER ONE QUESTION =====
 function renderQuestion() {
   var area = document.getElementById('quizArea');
   var q = questions[currentIndex];
   var section = getSectionForQ(currentIndex);
+  var isSubmitted = submitted[currentIndex];
 
   var html = '';
+
+  // Section header (if at section boundary)
+  html += renderSectionHeaderIfNeeded(currentIndex);
+
+  // Question card
   html += '<div class="question-card-single">';
   html += '<div class="question-header">';
   html += '<span class="category-badge ' + CAT_CLS[q.cat] + '">' + CAT_ICONS[q.cat] + ' ' + CAT_LABELS[q.cat] + '</span>';
@@ -268,30 +509,53 @@ function renderQuestion() {
   q.opts.forEach(function(opt, oi) {
     var checked = savedAnswer === toFa(oi) ? 'checked' : '';
     var selectedCls = savedAnswer === toFa(oi) ? ' selected' : '';
-    html += '<label class="' + selectedCls + '" onclick="selectOption(this,' + currentIndex + ',' + oi + ')">';
-    html += '<input type="radio" name="q' + currentIndex + '" value="' + oi + '" ' + checked + '>';
+    // If submitted, show correct/incorrect styling
+    if (isSubmitted) {
+      if (oi === q.ans) {
+        selectedCls = ' selected';
+        opt = opt + ' ✅';
+      } else if (oi === parseInt(savedAnswer) && oi !== q.ans) {
+        opt = opt + ' ❌';
+      }
+    }
+    var disabledAttr = isSubmitted ? 'disabled' : '';
+    var pointerStyle = isSubmitted ? 'pointer-events:none;' : '';
+    html += '<label class="' + selectedCls + '" style="' + pointerStyle + '" onclick="' + (isSubmitted ? '' : 'selectOption(this,' + currentIndex + ',' + oi + ')') + '">';
+    html += '<input type="radio" name="q' + currentIndex + '" value="' + oi + '" ' + checked + ' ' + disabledAttr + '>';
     html += '<span>' + opt + '</span></label>';
   });
   html += '</div>';
 
-  // Section divider info (when crossing sections)
-  if (currentIndex > 0 && section !== getSectionForQ(currentIndex - 1)) {
-    html += '<div style="margin-top:1rem;padding:.6rem 1rem;background:#f0f7ff;border-radius:8px;font-size:.85rem;color:var(--primary);font-weight:600;">📍 Starting ' + CAT_LABELS[section] + ' section (' + CAT_ICONS[section] + ' questions ' + toFa(sectionStarts[section] + 1) + '–' + toFa(sectionStarts[section] + 10) + ')</div>';
+  // Answer feedback (if already submitted)
+  if (isSubmitted) {
+    var isCorrect = parseInt(savedAnswer) === q.ans;
+    var isUnanswered = savedAnswer === undefined || savedAnswer === null || savedAnswer === '';
+    var feedbackClass = isUnanswered ? 'answer-feedback visible is-unanswered' : isCorrect ? 'answer-feedback visible is-correct' : 'answer-feedback visible is-incorrect';
+    var feedbackMsg = '';
+    if (isUnanswered) {
+      feedbackMsg = '⚠️ <strong>No answer selected</strong> — Correct answer: <strong>' + q.opts[q.ans] + '</strong>';
+    } else if (isCorrect) {
+      feedbackMsg = '✅ <strong>Correct!</strong>';
+    } else {
+      feedbackMsg = '❌ <strong>Incorrect</strong> — Your answer: <strong>' + q.opts[parseInt(savedAnswer)] + '</strong> — Correct answer: <strong>' + q.opts[q.ans] + '</strong>';
+    }
+    html += '<div class="' + feedbackClass + '">' + feedbackMsg + '</div>';
+  } else {
+    html += '<button class="submit-btn" id="submitBtn" onclick="submitAnswer()">✓ Submit Answer</button>';
+    html += '<div class="answer-feedback" id="answerFeedback"></div>';
   }
 
-  html += '<button class="submit-btn" id="submitBtn" onclick="submitAnswer()">✓ Submit Answer</button>';
-  html += '<div class="answer-feedback" id="answerFeedback"></div>';
   html += '</div>';
 
   area.innerHTML = html;
   updateProgressBar();
-
-  // Scroll to top of quiz area
+  updateNavButtons();
   area.scrollIntoView({behavior:'smooth',block:'start'});
 }
 
 // ===== SELECT OPTION =====
 function selectOption(label, qIdx, optIdx) {
+  if (submitted[qIdx]) return;
   var list = label.closest('.options-list-new');
   list.querySelectorAll('label').forEach(function(l) { l.classList.remove('selected'); });
   label.classList.add('selected');
@@ -301,6 +565,7 @@ function selectOption(label, qIdx, optIdx) {
 
 // ===== SUBMIT ANSWER =====
 function submitAnswer() {
+  if (submitted[currentIndex]) return;
   var q = questions[currentIndex];
   var submitBtn = document.getElementById('submitBtn');
   var feedback = document.getElementById('answerFeedback');
@@ -331,25 +596,42 @@ function submitAnswer() {
 
   if (isUnanswered) { answers[currentIndex] = ''; }
 
+  submitted[currentIndex] = true;
+
   // Disable all options
   var radios = document.querySelectorAll('input[name="q' + currentIndex + '"]');
   radios.forEach(function(r) { r.disabled = true; });
 
+  // Update progress
+  updateProgressBar();
+
   // Auto-advance after 1.2s
-  setTimeout(function() { advanceToNext(); }, 1200);
+  autoAdvanceTimer = setTimeout(function() { autoAdvanceTimer = null; advanceToNext(); }, 1200);
 }
 
 // ===== ADVANCE TO NEXT =====
 function advanceToNext() {
-  currentIndex++;
-  if (currentIndex >= TOTAL) {
-    // All questions answered — show Check Result card
-    quizFinished = true;
-    document.getElementById('quizArea').innerHTML = '';
-    showCheckResultCard();
-    updateProgressBar();
+  if (currentIndex >= TOTAL - 1) {
+    // Last question — check if all answered
+    if (isAllAnswered()) {
+      quizFinished = true;
+      document.getElementById('quizArea').innerHTML = '';
+      document.getElementById('quizNav').style.display = 'none';
+      showCheckResultCard();
+      updateProgressBar();
+    } else {
+      // Go to first unanswered question
+      for (var i = 0; i < TOTAL; i++) {
+        if (answers[i] === undefined || answers[i] === null || answers[i] === '') {
+          currentIndex = i;
+          renderQuestion();
+          return;
+        }
+      }
+    }
     return;
   }
+  currentIndex++;
   renderQuestion();
 }
 
@@ -368,6 +650,7 @@ function showCheckResultCard() {
 // ===== RESULTS =====
 function showResults() {
   document.getElementById('quizArea').innerHTML = '';
+  document.getElementById('quizNav').style.display = 'none';
   document.getElementById('checkResultCard').classList.remove('visible');
   document.getElementById('checkResultCard').innerHTML = '';
   document.getElementById('progressBar').classList.remove('visible');
@@ -427,7 +710,7 @@ function showResults() {
   ['reading','listening','writing','speaking'].forEach(function(cat) {
     var score = catCorrect[cat];
     var barPct = (score / 10) * 100;
-    var color = score >= 8 ? 'var(--success)' : score >= 5 ? 'var(--primary)' : '#ef4444';
+    var color = score >= 8 ? '#10b981' : score >= 5 ? 'var(--primary)' : '#ef4444';
     html += '<div class="section-score-row">';
     html += '<span class="ssr-label">' + CAT_ICONS[cat] + ' ' + CAT_LABELS[cat] + '</span>';
     html += '<div class="ssr-bar"><div class="ssr-fill" style="width:' + barPct + '%;background:' + color + ';"></div></div>';
@@ -462,6 +745,8 @@ function startReview() {
   document.getElementById('resultsScreen').classList.remove('visible');
   document.getElementById('resultsScreen').innerHTML = '';
   document.getElementById('quizArea').innerHTML = '';
+  document.getElementById('quizNav').style.display = 'none';
+  document.getElementById('progressBar').classList.remove('visible');
   renderReviewQuestion();
 }
 
@@ -477,6 +762,9 @@ function renderReviewQuestion() {
     status = isCorrect ? 'correct' : 'incorrect';
   }
 
+  var section = getSectionForQ(reviewCurrentQ);
+  var showSectionHeader = renderSectionHeaderIfNeeded(reviewCurrentQ);
+
   var html = '';
   // Nav
   html += '<div class="review-nav">';
@@ -484,14 +772,17 @@ function renderReviewQuestion() {
   html += '<span>Q' + toFa(reviewCurrentQ + 1) + ' of ' + toFa(TOTAL) + '</span>';
   html += '<button onclick="reviewNext()" ' + (reviewCurrentQ >= TOTAL - 1 ? 'disabled' : '') + '>Next ▶</button>';
   html += '</div>';
-  html += '<div style="text-align:center;margin-bottom:1rem;"><button class="btn btn-outline" onclick="backToResults()">← Back to Results</button></div>';
+  html += '<div style="text-align:center;margin-bottom:1rem;"><button class="quiz-nav-btn" onclick="backToResults()">← Back to Results</button></div>';
+
+  // Section header if applicable
+  html += showSectionHeader;
 
   // Question card
   var statusClass = status === 'correct' ? 'review-correct' : status === 'incorrect' ? 'review-incorrect' : 'review-unanswered';
   html += '<div class="review-question-card ' + statusClass + '">';
   html += '<div class="question-header">';
   html += '<span class="category-badge ' + CAT_CLS[q.cat] + '">' + CAT_ICONS[q.cat] + ' ' + CAT_LABELS[q.cat] + '</span>';
-  if (status === 'correct') html += '<span style="color:var(--success);font-weight:700;">✅ Correct</span>';
+  if (status === 'correct') html += '<span style="color:#10b981;font-weight:700;">✅ Correct</span>';
   else if (status === 'incorrect') html += '<span style="color:#ef4444;font-weight:700;">❌ Incorrect</span>';
   else html += '<span style="color:#f59e0b;font-weight:700;">⚠️ Unanswered</span>';
   html += '</div>';
@@ -534,9 +825,11 @@ function resetQuiz() {
   if (!confirm('Are you sure you want to reset all answers? This cannot be undone.')) return;
   currentIndex = 0;
   answers = {};
+  submitted = {};
   quizFinished = false;
   reviewMode = false;
   reviewCurrentQ = 0;
+  if (autoAdvanceTimer) { clearTimeout(autoAdvanceTimer); autoAdvanceTimer = null; }
 
   document.getElementById('resultsScreen').classList.remove('visible');
   document.getElementById('resultsScreen').innerHTML = '';
@@ -545,6 +838,7 @@ function resetQuiz() {
   document.getElementById('checkResultCard').classList.remove('visible');
   document.getElementById('checkResultCard').innerHTML = '';
   document.getElementById('progressFill').style.width = '0%';
+  document.getElementById('quizNav').style.display = 'none';
 
   renderQuestion();
 }
