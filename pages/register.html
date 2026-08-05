@@ -155,64 +155,54 @@
   </div>
 </div>
 
-<!-- Supabase JS via CDN (non-module) -->
+<!-- Supabase JS local -->
 <script src="../js/supabase.min.js"></script>
-<!-- Auth helper (non-module, exposes signInWithGoogle, signUp, signIn, etc. globally) -->
+<!-- Auth helper -->
 <script src="../js/auth.js"></script>
-
+<!-- Page scripts -->
 <script>
   function showMsg(text, type) {
-    const el = document.getElementById('globalMsg');
+    var el = document.getElementById('globalMsg');
     el.textContent = text;
     el.className = 'msg-box ' + type;
     el.style.display = 'block';
-    // Keep visible longer for errors
-    const duration = type === 'error' ? 8000 : 5000;
-    setTimeout(() => el.style.display = 'none', duration);
+    setTimeout(function() { el.style.display = 'none'; }, type === 'error' ? 8000 : 5000);
   }
 
-  // Google
   window.handleGoogle = async function() {
     try {
       showMsg('Redirecting to Google...', 'success');
-      await signInWithGoogle();
+      await window.signInWithGoogle();
     } catch (err) {
       console.error('Google sign-in failed:', err);
-      showMsg(err.message || 'Google sign-in failed. Please try again.', 'error');
+      showMsg(err.message || 'Google sign-in failed.', 'error');
     }
   };
 
-  // Login
   window.handleLogin = async function(e) {
     e.preventDefault();
-    const email = document.getElementById('loginEmail').value;
-    const pass = document.getElementById('loginPass').value;
+    var email = document.getElementById('loginEmail').value;
+    var pass = document.getElementById('loginPass').value;
     try {
       showMsg('Logging in...', 'success');
-      await signIn(email, pass);
+      await window.signIn(email, pass);
       window.location.href = 'dashboard.html';
     } catch (err) {
       console.error('Login failed:', err);
-      showMsg(err.message || 'Login failed. Please try again.', 'error');
+      showMsg(err.message || 'Login failed.', 'error');
     }
   };
 
-  // Register
   window.handleRegister = async function(e) {
     e.preventDefault();
-    const name = document.getElementById('regName').value;
-    const email = document.getElementById('regEmail').value;
-    const pass = document.getElementById('regPass').value;
-    const confirm = document.getElementById('regPassConfirm').value;
-
-    if (pass !== confirm) {
-      showMsg('Passwords do not match.', 'error');
-      return;
-    }
-
+    var name = document.getElementById('regName').value;
+    var email = document.getElementById('regEmail').value;
+    var pass = document.getElementById('regPass').value;
+    var confirm = document.getElementById('regPassConfirm').value;
+    if (pass !== confirm) { showMsg('Passwords do not match.', 'error'); return; }
     try {
       showMsg('Creating account...', 'success');
-      await signUp(email, pass, name);
+      await window.signUp(email, pass, name);
       document.getElementById('loginForm').style.display = 'none';
       document.getElementById('registerForm').style.display = 'none';
       document.getElementById('successMsg').style.display = 'block';
@@ -220,14 +210,12 @@
       document.getElementById('successText').textContent = 'Check your email to verify, then login.';
     } catch (err) {
       console.error('Registration failed:', err);
-      showMsg(err.message || 'Registration failed. Please try again.', 'error');
+      showMsg(err.message || 'Registration failed.', 'error');
     }
   };
-</script>
 
-<script>
   function switchTab(tab) {
-    document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.auth-tab').forEach(function(t) { t.classList.remove('active'); });
     document.getElementById('globalMsg').style.display = 'none';
     if (tab === 'login') {
       document.querySelectorAll('.auth-tab')[0].classList.add('active');
@@ -240,8 +228,9 @@
     }
     document.getElementById('successMsg').style.display = 'none';
   }
+
   function togglePass(id) {
-    const input = document.getElementById(id);
+    var input = document.getElementById(id);
     input.type = input.type === 'password' ? 'text' : 'password';
   }
 </script>
