@@ -1,5 +1,5 @@
 // auth.js — Supabase auth helper
-var SUPABASE_URL = 'https://nuvrizxiwjlwycgmsrc.supabase.co';
+var SUPABASE_URL = 'https://nuvrlzxwijjwjycgmsrc.supabase.co';
 var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im51dnJsenh3aWpqd2p5Y2dtc3JjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU4NzE5MTMsImV4cCI6MjEwMTQ0NzkxM30.DPpd4SR2aqSS14elDFr6kvnbuwrJkfbpPJrYIeB3McE';
 var REDIRECT_TO = 'https://hermesjoo.github.io/ieltsscoreaccelerator/pages/dashboard.html';
 var _supabaseClient = null;
