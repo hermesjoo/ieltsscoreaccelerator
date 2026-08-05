@@ -6,46 +6,96 @@
   <title>Placement Test | IELTS Score Accelerator</title>
   <link rel="stylesheet" href="../css/style.css">
   <style>
-    .test-container { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
-    .test-progress { background: var(--border); border-radius: 10px; height: 8px; margin-bottom: 2rem; overflow: hidden; }
-    .test-progress-bar { background: var(--primary); height: 100%; width: 0%; transition: width 0.4s; border-radius: 10px; }
-    .question-card { background: var(--card); border-radius: var(--radius); padding: 2rem; margin-bottom: 1.5rem; border: 1px solid var(--border); }
-    .question-card h3 { color: var(--primary); margin-bottom: 1rem; font-size: 0.9rem; }
-    .question-card p { font-size: 1.1rem; margin-bottom: 1.5rem; }
-    .options label { display: block; padding: 0.8rem 1rem; margin-bottom: 0.5rem; border: 2px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.2s; }
-    .options label:hover { border-color: var(--primary); background: #eff6ff; }
-    .options input[type="radio"] { margin-right: 0.5rem; }
-    .options input:checked + span { font-weight: 600; }
-    .result-box { background: var(--card); border-radius: var(--radius); padding: 3rem; text-align: center; border: 2px solid var(--primary); display: none; }
-    .result-box .band { font-size: 5rem; font-weight: 800; color: var(--primary); }
-    .result-box .band-label { font-size: 1.2rem; color: var(--text-light); margin-bottom: 2rem; }
-    .band-breakdown { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 2rem 0; text-align: left; }
-    .band-item { background: #f1f5f9; padding: 1rem; border-radius: 8px; }
-    .band-item strong { color: var(--primary); }
-    .timer { font-size: 1.2rem; color: var(--text-light); margin-bottom: 1rem; text-align: center; }
-    .category-badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; margin-bottom: 0.5rem; }
-    .cat-reading { background: #dbeafe; color: #1d4ed8; }
-    .cat-listening { background: #fef3c7; color: #92400e; }
-    .cat-writing { background: #d1fae5; color: #065f46; }
-    .cat-speaking { background: #fce7f3; color: #9d174d; }
-    /* ===== Responsive ===== */
-    @media (max-width: 768px) {
-      .test-container { padding: 0 0.75rem; margin: 1.5rem auto; }
-      .question-card { padding: 1.2rem; margin-bottom: 1rem; }
-      .question-card h3 { font-size: 0.85rem; }
-      .question-card p { font-size: 1rem; margin-bottom: 1rem; }
-      .options label { display: flex; padding: 0.9rem 0.8rem; margin-bottom: 0.5rem; font-size: 0.93rem; min-height: 44px; align-items: center; }
-      .result-box { padding: 2rem 1rem; }
-      .result-box .band { font-size: 3.5rem; }
-      .band-breakdown { grid-template-columns: 1fr; gap: 0.75rem; }
-      .band-item { padding: 0.8rem; font-size: 0.9rem; }
-      .timer { font-size: 1.1rem; }
-      .category-badge { font-size: 0.7rem; }
+    /* Progress Bar (sticky) */
+    .quiz-progress-bar{background:#fff;border-bottom:2px solid var(--border);padding:1rem 2rem;display:none;justify-content:center;align-items:center;position:sticky;top:56px;z-index:55;flex-direction:column;gap:.5rem;}
+    .quiz-progress-bar.visible{display:flex;}
+    .progress-text{font-size:.95rem;font-weight:700;color:var(--primary);}
+    .progress-track{width:100%;max-width:500px;height:10px;background:#e2e8f0;border-radius:5px;overflow:hidden;}
+    .progress-fill{height:100%;background:linear-gradient(90deg,var(--primary),#22d3ee);border-radius:5px;transition:width .5s ease;width:0%;}
+    /* Quiz Area */
+    .quiz-area{max-width:900px;margin:1.5rem auto;padding:0 1.5rem;}
+    /* Question Card */
+    .question-card-single{background:#fff;border-radius:var(--radius);padding:2rem;box-shadow:0 2px 16px rgba(0,0,0,.08);border:1px solid var(--border);animation:fadeSlideIn .35s ease;}
+    @keyframes fadeSlideIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+    .question-header{display:flex;align-items:center;gap:.6rem;margin-bottom:1rem;flex-wrap:wrap;}
+    .category-badge{display:inline-block;padding:.25rem .7rem;border-radius:20px;font-size:.75rem;font-weight:600;}
+    .cat-reading{background:#dbeafe;color:#1d4ed8;}.cat-listening{background:#fef3c7;color:#92400e;}.cat-writing{background:#d1fae5;color:#065f46;}.cat-speaking{background:#fce7f3;color:#9d174d;}
+    .q-progress-mini{font-size:.8rem;color:var(--text-light);margin-left:auto;font-weight:600;}
+    .question-text-single{font-size:1.1rem;font-weight:600;line-height:1.8;margin-bottom:1.2rem;color:var(--text);}
+    /* Options */
+    .options-list-new{list-style:none;display:flex;flex-direction:column;gap:.6rem;}
+    .options-list-new label{display:flex;align-items:center;gap:.6rem;padding:.85rem 1.2rem;background:#fff;border:2px solid var(--border);border-radius:10px;cursor:pointer;transition:all .2s;min-height:48px;font-size:1rem;line-height:1.5;}
+    .options-list-new label:hover{border-color:var(--primary);background:#f0f7ff;}
+    .options-list-new label.selected{border-color:var(--primary);background:#eff6ff;box-shadow:0 0 0 1px var(--primary);}
+    .options-list-new input[type="radio"]{accent-color:var(--primary);width:20px;height:20px;flex-shrink:0;}
+    /* Submit Button */
+    .submit-btn{display:block;width:100%;max-width:320px;margin:1.5rem auto 0;padding:.9rem 2rem;background:linear-gradient(135deg,var(--primary),#1d4ed8);color:#fff;border:none;border-radius:10px;font-size:1.05rem;font-weight:700;cursor:pointer;transition:all .2s;min-height:52px;}
+    .submit-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(37,99,235,.3);}
+    .submit-btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none;}
+    /* Answer Feedback */
+    .answer-feedback{display:none;margin-top:1rem;padding:1rem 1.2rem;border-radius:10px;font-size:.95rem;line-height:1.7;animation:fadeSlideIn .3s ease;}
+    .answer-feedback.visible{display:block;}
+    .answer-feedback.is-correct{background:#f0fdf4;color:#065f46;border:1px solid #bbf7d0;}
+    .answer-feedback.is-incorrect{background:#fef2f2;color:#991b1b;border:1px solid #fecaca;}
+    .answer-feedback.is-unanswered{background:#fffbeb;color:#92400e;border:1px solid #fde68a;}
+    .explanation-text{display:block;margin-top:.5rem;font-size:.88rem;color:var(--text-light);font-style:italic;border-top:1px solid rgba(0,0,0,.08);padding-top:.4rem;}
+    /* Check Result */
+    .check-result-card{display:none;background:linear-gradient(135deg,#1e3a5f,#2563eb);color:#fff;border-radius:var(--radius);padding:3rem;text-align:center;margin-top:2rem;animation:fadeSlideIn .35s ease;}
+    .check-result-card.visible{display:block;}
+    .check-result-card h3{font-size:1.5rem;margin-bottom:.5rem;}
+    .check-result-card p{opacity:.85;margin-bottom:1.5rem;font-size:1.05rem;}
+    .check-result-btn{display:inline-flex;align-items:center;gap:.5rem;padding:1rem 3rem;background:linear-gradient(135deg,#f59e0b,#f97316);color:#fff;border:none;border-radius:12px;font-size:1.2rem;font-weight:800;cursor:pointer;transition:all .2s;min-height:56px;box-shadow:0 4px 20px rgba(249,115,22,.3);}
+    .check-result-btn:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(249,115,22,.4);}
+    /* Results Screen */
+    .results-screen{display:none;animation:fadeSlideIn .4s ease;}
+    .results-screen.visible{display:block;}
+    .results-hero{background:linear-gradient(135deg,#1e3a5f,#2563eb);color:#fff;padding:3rem 2rem;border-radius:var(--radius);text-align:center;margin-bottom:2rem;}
+    .results-hero h2{font-size:1.8rem;margin-bottom:.5rem;}
+    .results-hero .score-big{font-size:4.5rem;font-weight:800;margin:1rem 0;}
+    .results-hero .band-big{font-size:1.5rem;font-weight:700;opacity:.9;margin-bottom:.5rem;}
+    .results-hero .pct-big{font-size:1.1rem;opacity:.8;}
+    .results-hero .progress-bar-results{width:100%;max-width:400px;margin:1.5rem auto 0;height:10px;background:rgba(255,255,255,.2);border-radius:5px;overflow:hidden;}
+    .results-hero .progress-fill-results{height:100%;background:linear-gradient(90deg,#fbbf24,#f59e0b);border-radius:5px;transition:width 1s ease;width:0%;}
+    .results-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin-bottom:2rem;}
+    .result-stat-card{background:#fff;padding:1.2rem;border-radius:10px;text-align:center;border:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,.04);}
+    .result-stat-card .stat-num{font-size:1.8rem;font-weight:800;color:var(--primary);}
+    .result-stat-card .stat-label{font-size:.82rem;color:var(--text-light);margin-top:.2rem;}
+    .section-breakdown-title{font-size:1.2rem;font-weight:700;color:var(--primary);margin-bottom:1rem;text-align:center;}
+    .section-score-row{display:flex;align-items:center;gap:.75rem;padding:.65rem 1rem;background:#f8fafc;border-radius:8px;border:1px solid var(--border);margin-bottom:.5rem;}
+    .section-score-row .ssr-label{font-size:.85rem;font-weight:600;min-width:120px;word-break:break-word;}
+    .section-score-row .ssr-bar{flex:1;height:8px;background:#e2e8f0;border-radius:4px;overflow:hidden;}
+    .section-score-row .ssr-fill{height:100%;border-radius:4px;transition:width .6s ease;}
+    .section-score-row .ssr-score{font-size:.85rem;font-weight:700;min-width:50px;text-align:right;}
+    .results-actions{display:flex;gap:1rem;justify-content:center;margin:2rem 0;flex-wrap:wrap;}
+    .results-actions .btn{min-height:48px;font-size:1rem;padding:.7rem 1.5rem;}
+    /* Review Mode */
+    .review-container{display:none;}
+    .review-container.visible{display:block;}
+    .review-nav{position:sticky;top:56px;z-index:60;background:var(--primary);color:#fff;padding:.75rem 1.5rem;display:flex;justify-content:space-between;align-items:center;border-radius:8px;margin-bottom:1rem;}
+    .review-nav button{background:rgba(255,255,255,.2);color:#fff;border:none;padding:.5rem 1rem;border-radius:6px;font-weight:600;cursor:pointer;min-height:40px;}
+    .review-nav button:disabled{opacity:.3;cursor:not-allowed;}
+    .review-nav span{font-weight:700;font-size:.95rem;}
+    .review-question-card{background:#fff;border-radius:var(--radius);padding:2rem;margin-bottom:1.5rem;border:2px solid var(--border);}
+    .review-question-card.review-correct{border-color:var(--success);}
+    .review-question-card.review-incorrect{border-color:#ef4444;}
+    .review-question-card.review-unanswered{border-color:#f59e0b;}
+    /* Responsive */
+    @media(max-width:768px){
+      .quiz-progress-bar{top:56px;padding:.75rem 1rem;}
+      .quiz-area{padding:0 .75rem;}
+      .question-card-single{padding:1.2rem;}
+      .question-text-single{font-size:1rem;}
+      .options-list-new label{padding:.75rem 1rem;min-height:48px;}
+      .results-hero .score-big{font-size:3rem;}
+      .results-hero{padding:2rem 1rem;}
+      .results-stats{grid-template-columns:repeat(2,1fr);}
+      .section-score-row .ssr-label{min-width:100px;font-size:.8rem;}
     }
   </style>
 </head>
 <body>
 
+<!-- NAVBAR -->
 <nav class="navbar">
   <a href="../index.html" class="logo"><img src="../images/logo-color.png" alt="IELTS Score Accelerator" style="height:48px"></a>
   <div class="nav-links">
@@ -58,28 +108,46 @@
   </div>
 </nav>
 
-<div class="section">
-  <div class="test-container">
-    <h2 class="section-title">IELTS Placement Test</h2>
-    <p class="section-subtitle">40 questions across 4 skills — approximately 10 minutes</p>
-
-    <div class="timer" id="timer">⏱ 10:00</div>
-    <div class="test-progress"><div class="test-progress-bar" id="progressBar"></div></div>
-
-    <div id="quizContainer"></div>
-    <div class="result-box" id="resultBox">
-      <div class="band" id="totalBand">-</div>
-      <div class="band-label">Your Estimated Band Score</div>
-      <div class="band-breakdown" id="bandBreakdown"></div>
-      <br>
-      <a href="register.html" class="btn btn-primary" style="margin:0.5rem">Sign Up for Full Access</a>
-      <button class="btn btn-outline" onclick="resetQuiz()" style="margin:0.5rem">Retake Test</button>
-    </div>
-  </div>
+<!-- PROGRESS BAR -->
+<div class="quiz-progress-bar" id="progressBar">
+  <div class="progress-text" id="progressText">Question 1 of 40</div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
 </div>
 
+<!-- QUIZ AREA -->
+<div class="quiz-area" id="quizArea"></div>
+
+<!-- CHECK RESULT CARD -->
+<div class="quiz-area">
+  <div class="check-result-card" id="checkResultCard"></div>
+</div>
+
+<!-- RESULTS SCREEN -->
+<div class="quiz-area">
+  <div class="results-screen" id="resultsScreen"></div>
+</div>
+
+<!-- REVIEW CONTAINER -->
+<div class="quiz-area">
+  <div class="review-container" id="reviewContainer"></div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-links">
+    <a href="reading.html">Reading</a>
+    <a href="listening.html">Listening</a>
+    <a href="writing.html">Writing</a>
+    <a href="speaking.html">Speaking</a>
+    <a href="https://youtube.com/@ieltsscoreaccelerator" target="_blank" rel="noopener noreferrer">📺 YouTube</a>
+  </div>
+  <p>&copy; 2026 IELTS Score Accelerator. All rights reserved.</p>
+</footer>
+
 <script>
-const questions = [
+// IELTS PLACEMENT TEST — One Question at a Time
+// ===== QUESTION DATA (40 questions: 10 Reading + 10 Listening + 10 Writing + 10 Speaking) =====
+var questions = [
   // Reading (10)
   {cat:'reading',q:'The word "ubiquitous" most nearly means:',opts:['Rare','Everywhere','Ancient','Tiny'],ans:1},
   {cat:'reading',q:'In IELTS Reading, "skimming" means:',opts:['Reading every word carefully','Getting the main idea quickly','Translating the text','Memorizing details'],ans:1},
@@ -91,7 +159,6 @@ const questions = [
   {cat:'reading',q:'The best approach to unknown vocabulary is:',opts:['Stop reading','Guess from context','Use a dictionary immediately','Skip the question'],ans:1},
   {cat:'reading',q:'Academic Reading passages are usually:',opts:['About personal stories','From books, journals, magazines','From social media','From children books'],ans:1},
   {cat:'reading',q:'How many passages are in IELTS Academic Reading?',opts:['1','2','3','5'],ans:2},
-
   // Listening (10)
   {cat:'listening',q:'IELTS Listening has _____ sections.',opts:['2','3','4','5'],ans:2},
   {cat:'listening',q:'In Section 1, you typically hear:',opts:['A lecture','A monologue','A conversation between two people','A news broadcast'],ans:2},
@@ -103,7 +170,6 @@ const questions = [
   {cat:'listening',q:'How many times do you hear the audio in IELTS?',opts:['3 times','2 times','1 time','4 times'],ans:2},
   {cat:'listening',q:'Numbers and dates in Listening require:',opts:['Approximate answers','Exact figures','Roman numerals','Written out in words'],ans:1},
   {cat:'listening',q:'Transfer time at the end of Listening is:',opts:['5 minutes','10 minutes','No transfer time (paper only)','20 minutes'],ans:2},
-
   // Writing (10)
   {cat:'writing',q:'IELTS Writing Task 1 (Academic) requires you to:',opts:['Write an essay','Describe a graph or diagram','Write a letter','Translate a passage'],ans:1},
   {cat:'writing',q:'IELTS Writing Task 2 is worth:',opts:['Same as Task 1','Less than Task 1','More than Task 1','Double Task 1'],ans:2},
@@ -115,7 +181,6 @@ const questions = [
   {cat:'writing',q:'Which is better for a high Writing score?',opts:['Very long sentences','Variety of vocabulary and grammar','Simple words only','No paragraphs'],ans:1},
   {cat:'writing',q:'In Task 2, "discuss both views" means:',opts:['Only agree','Present both sides then give opinion','Ignore one side','Write a poem'],ans:1},
   {cat:'writing',q:'Time recommended for Writing Task 2:',opts:['20 minutes','30 minutes','40 minutes','60 minutes'],ans:2},
-
   // Speaking (10)
   {cat:'speaking',q:'IELTS Speaking has _____ parts.',opts:['2','3','4','5'],ans:1},
   {cat:'speaking',q:'Part 1 of Speaking lasts about:',opts:['1-2 minutes','4-5 minutes','10 minutes','20 minutes'],ans:1},
@@ -126,113 +191,366 @@ const questions = [
   {cat:'speaking',q:'Part 3 questions are about:',opts:['Your personal life','Abstract ideas and opinions','Your name','The weather'],ans:1},
   {cat:'speaking',q:'Pronunciation is scored on:',opts:['Accent perfection','Intelligibility and features of pronunciation','Speaking loudly','Number of words'],ans:1},
   {cat:'speaking',q:'How long is the entire Speaking test?',opts:['5 minutes','11-14 minutes','30 minutes','1 hour'],ans:1},
-  {cat:'speaking',q:'The Speaking test is:',opts:['Always with other candidates','Recorded and played back','One-on-one with an examiner','Done online only'],ans:2},
+  {cat:'speaking',q:'The Speaking test is:',opts:['Always with other candidates','Recorded and played back','One-on-one with an examiner','Done online only'],ans:2}
 ];
 
-let current = 0, score = 0, answers = [], timerInterval, timeLeft = 600;
+// ===== CONSTANTS =====
+var TOTAL = questions.length; // 40
+var CAT_LABELS = {reading:'Reading',listening:'Listening',writing:'Writing',speaking:'Speaking'};
+var CAT_CLS = {reading:'cat-reading',listening:'cat-listening',writing:'cat-writing',speaking:'cat-speaking'};
+var CAT_ICONS = {reading:'📖',listening:'🎧',writing:'✏️',speaking:'🗣️'};
 
-function shuffleByCategory() {
-  const cats = ['reading','listening','writing','speaking'];
-  const shuffled = [];
-  cats.forEach(cat => {
-    const items = questions.filter(q => q.cat === cat);
-    shuffled.push(...items);
+// ===== STATE =====
+var currentIndex = 0;
+var answers = {};
+var quizFinished = false;
+var reviewMode = false;
+var reviewCurrentQ = 0;
+
+// ===== SECTION INDEX (where each section starts) =====
+var sectionStarts = {reading:0,listening:10,writing:20,speaking:30};
+
+// ===== HELPERS =====
+function toFa(n) { return String(n); }
+
+function getSectionForQ(i) {
+  if (i < 10) return 'reading';
+  if (i < 20) return 'listening';
+  if (i < 30) return 'writing';
+  return 'speaking';
+}
+
+function countAnswered() {
+  var c = 0;
+  for (var i = 0; i < TOTAL; i++) {
+    if (answers[i] !== undefined && answers[i] !== null && answers[i] !== '') c++;
+  }
+  return c;
+}
+
+function isAllAnswered() {
+  return countAnswered() === TOTAL;
+}
+
+// ===== PROGRESS BAR =====
+function updateProgressBar() {
+  var bar = document.getElementById('progressBar');
+  bar.classList.add('visible');
+  var answered = countAnswered();
+  var progressText = document.getElementById('progressText');
+  var progressFill = document.getElementById('progressFill');
+  if (quizFinished) {
+    progressText.textContent = 'All ' + toFa(TOTAL) + ' questions answered! ✅';
+    progressFill.style.width = '100%';
+  } else {
+    progressText.textContent = 'Question ' + toFa(currentIndex + 1) + ' of ' + toFa(TOTAL) + ' — Answered: ' + toFa(answered) + '/' + toFa(TOTAL);
+    progressFill.style.width = ((answered / TOTAL) * 100) + '%';
+  }
+}
+
+// ===== RENDER ONE QUESTION =====
+function renderQuestion() {
+  var area = document.getElementById('quizArea');
+  var q = questions[currentIndex];
+  var section = getSectionForQ(currentIndex);
+
+  var html = '';
+  html += '<div class="question-card-single">';
+  html += '<div class="question-header">';
+  html += '<span class="category-badge ' + CAT_CLS[q.cat] + '">' + CAT_ICONS[q.cat] + ' ' + CAT_LABELS[q.cat] + '</span>';
+  html += '<span class="q-progress-mini">Q' + toFa(currentIndex + 1) + ' of ' + toFa(TOTAL) + '</span>';
+  html += '</div>';
+  html += '<div class="question-text-single">' + q.q + '</div>';
+
+  var savedAnswer = answers[currentIndex];
+
+  html += '<div class="options-list-new" id="optionsList">';
+  q.opts.forEach(function(opt, oi) {
+    var checked = savedAnswer === toFa(oi) ? 'checked' : '';
+    var selectedCls = savedAnswer === toFa(oi) ? ' selected' : '';
+    html += '<label class="' + selectedCls + '" onclick="selectOption(this,' + currentIndex + ',' + oi + ')">';
+    html += '<input type="radio" name="q' + currentIndex + '" value="' + oi + '" ' + checked + '>';
+    html += '<span>' + opt + '</span></label>';
   });
-  return shuffled;
+  html += '</div>';
+
+  // Section divider info (when crossing sections)
+  if (currentIndex > 0 && section !== getSectionForQ(currentIndex - 1)) {
+    html += '<div style="margin-top:1rem;padding:.6rem 1rem;background:#f0f7ff;border-radius:8px;font-size:.85rem;color:var(--primary);font-weight:600;">📍 Starting ' + CAT_LABELS[section] + ' section (' + CAT_ICONS[section] + ' questions ' + toFa(sectionStarts[section] + 1) + '–' + toFa(sectionStarts[section] + 10) + ')</div>';
+  }
+
+  html += '<button class="submit-btn" id="submitBtn" onclick="submitAnswer()">✓ Submit Answer</button>';
+  html += '<div class="answer-feedback" id="answerFeedback"></div>';
+  html += '</div>';
+
+  area.innerHTML = html;
+  updateProgressBar();
+
+  // Scroll to top of quiz area
+  area.scrollIntoView({behavior:'smooth',block:'start'});
 }
 
-const quiz = shuffleByCategory();
-
-function renderQuiz() {
-  const container = document.getElementById('quizContainer');
-  container.innerHTML = '';
-  quiz.forEach((q, i) => {
-    const catLabels = {reading:'Reading',listening:'Listening',writing:'Writing',speaking:'Speaking'};
-    const catClass = {reading:'cat-reading',listening:'cat-listening',writing:'cat-writing',speaking:'cat-speaking'};
-    const div = document.createElement('div');
-    div.className = 'question-card';
-    div.innerHTML = `
-      <span class="category-badge ${catClass[q.cat]}">${catLabels[q.cat]}</span>
-      <h3>Question ${i+1} of ${quiz.length}</h3>
-      <p>${q.q}</p>
-      <div class="options">
-        ${q.opts.map((o,j) => `
-          <label><input type="radio" name="q${i}" value="${j}" onchange="checkAnswer(${i},${j})"><span>${o}</span></label>
-        `).join('')}
-      </div>
-    `;
-    container.appendChild(div);
-  });
+// ===== SELECT OPTION =====
+function selectOption(label, qIdx, optIdx) {
+  var list = label.closest('.options-list-new');
+  list.querySelectorAll('label').forEach(function(l) { l.classList.remove('selected'); });
+  label.classList.add('selected');
+  answers[qIdx] = toFa(optIdx);
+  updateProgressBar();
 }
 
-function checkAnswer(i, selected) {
-  answers[i] = selected;
-  const labels = document.querySelectorAll(`input[name="q${i}"]`);
-  labels.forEach((l,j) => {
-    l.disabled = true;
-    const parent = l.parentElement;
-    if(j === quiz[i].ans) parent.style.background = '#d1fae5';
-    else if(j === selected && quiz[i].ans !== selected) parent.style.background = '#fee2e2';
-  });
-  updateProgress();
+// ===== SUBMIT ANSWER =====
+function submitAnswer() {
+  var q = questions[currentIndex];
+  var submitBtn = document.getElementById('submitBtn');
+  var feedback = document.getElementById('answerFeedback');
+  var userAnswer = answers[currentIndex];
+  var isCorrect = false;
+  var isUnanswered = false;
+
+  if (userAnswer === undefined || userAnswer === null || userAnswer === '') {
+    isUnanswered = true;
+  } else {
+    isCorrect = parseInt(userAnswer) === q.ans;
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = isCorrect ? '✅ Correct!' : isUnanswered ? '⚠️ Unanswered' : '❌ Incorrect';
+
+  feedback.classList.add('visible');
+  if (isUnanswered) {
+    feedback.className = 'answer-feedback visible is-unanswered';
+    feedback.innerHTML = '⚠️ <strong>No answer selected</strong> — Correct answer: <strong>' + q.opts[q.ans] + '</strong>';
+  } else if (isCorrect) {
+    feedback.className = 'answer-feedback visible is-correct';
+    feedback.innerHTML = '✅ <strong>Correct!</strong>';
+  } else {
+    feedback.className = 'answer-feedback visible is-incorrect';
+    feedback.innerHTML = '❌ <strong>Incorrect</strong> — Your answer: <strong>' + q.opts[parseInt(userAnswer)] + '</strong> — Correct answer: <strong>' + q.opts[q.ans] + '</strong>';
+  }
+
+  if (isUnanswered) { answers[currentIndex] = ''; }
+
+  // Disable all options
+  var radios = document.querySelectorAll('input[name="q' + currentIndex + '"]');
+  radios.forEach(function(r) { r.disabled = true; });
+
+  // Auto-advance after 1.2s
+  setTimeout(function() { advanceToNext(); }, 1200);
 }
 
-function updateProgress() {
-  const answered = answers.filter(a => a !== undefined).length;
-  document.getElementById('progressBar').style.width = (answered/quiz.length*100)+'%';
-  if(answered === quiz.length) showResults();
+// ===== ADVANCE TO NEXT =====
+function advanceToNext() {
+  currentIndex++;
+  if (currentIndex >= TOTAL) {
+    // All questions answered — show Check Result card
+    quizFinished = true;
+    document.getElementById('quizArea').innerHTML = '';
+    showCheckResultCard();
+    updateProgressBar();
+    return;
+  }
+  renderQuestion();
 }
 
+// ===== CHECK RESULT CARD =====
+function showCheckResultCard() {
+  var card = document.getElementById('checkResultCard');
+  var html = '';
+  html += '<h3>🏆 All 40 Questions Answered!</h3>';
+  html += '<p>Click below to see your detailed results and estimated IELTS band score.</p>';
+  html += '<button class="check-result-btn" onclick="showResults()">📊 Check Result</button>';
+  card.innerHTML = html;
+  card.classList.add('visible');
+  card.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+// ===== RESULTS =====
 function showResults() {
-  clearInterval(timerInterval);
-  score = 0;
-  const catScores = {reading:0,listening:0,writing:0,speaking:0};
-  const catCounts = {reading:0,listening:0,writing:0,speaking:0};
-  quiz.forEach((q,i) => {
-    catCounts[q.cat]++;
-    if(answers[i] === q.ans) { score++; catScores[q.cat]++; }
+  document.getElementById('quizArea').innerHTML = '';
+  document.getElementById('checkResultCard').classList.remove('visible');
+  document.getElementById('checkResultCard').innerHTML = '';
+  document.getElementById('progressBar').classList.remove('visible');
+
+  var correct = 0, incorrect = 0, unanswered = 0;
+  var catCorrect = {reading:0,listening:0,writing:0,speaking:0};
+  var catTotal = {reading:10,listening:10,writing:10,speaking:10};
+
+  questions.forEach(function(q, i) {
+    var userAnswer = answers[i];
+    if (userAnswer === undefined || userAnswer === null || userAnswer === '') {
+      unanswered++;
+      return;
+    }
+    var isCorrect = parseInt(userAnswer) === q.ans;
+    if (isCorrect) {
+      correct++;
+      catCorrect[q.cat]++;
+    } else {
+      incorrect++;
+    }
   });
-  const totalBand = Math.round((score / quiz.length) * 9 * 2) / 2;
-  const bands = {};
-  ['reading','listening','writing','speaking'].forEach(c => {
-    bands[c] = Math.round((catScores[c] / catCounts[c]) * 9 * 2) / 2;
+
+  var pct = Math.round((correct / TOTAL) * 100);
+  var band = '', bandDesc = '';
+  if (pct >= 95) { band = 'Band 9.0 🏆'; bandDesc = 'Expert User'; }
+  else if (pct >= 90) { band = 'Band 8.5 ⭐'; bandDesc = 'Very Good User'; }
+  else if (pct >= 80) { band = 'Band 8.0 ⭐'; bandDesc = 'Very Good User'; }
+  else if (pct >= 70) { band = 'Band 7.0 👍'; bandDesc = 'Good User'; }
+  else if (pct >= 60) { band = 'Band 6.5'; bandDesc = 'Competent User'; }
+  else if (pct >= 55) { band = 'Band 6.0 ✓'; bandDesc = 'Competent User'; }
+  else if (pct >= 50) { band = 'Band 5.5'; bandDesc = 'Modest User'; }
+  else if (pct >= 40) { band = 'Band 5.0'; bandDesc = 'Modest User'; }
+  else if (pct >= 30) { band = 'Band 4.0'; bandDesc = 'Limited User'; }
+  else { band = 'Band 3.0 — Keep Practising!'; bandDesc = 'Needs more practice'; }
+
+  var html = '';
+  // Hero
+  html += '<div class="results-hero">';
+  html += '<h2>📊 Your Placement Test Results</h2>';
+  html += '<div class="score-big">' + toFa(correct) + '/' + toFa(TOTAL) + '</div>';
+  html += '<div class="band-big">' + band + ' — ' + bandDesc + '</div>';
+  html += '<div class="pct-big">' + toFa(pct) + '% Accuracy</div>';
+  html += '<div class="progress-bar-results"><div class="progress-fill-results" id="resultProgressFill"></div></div>';
+  html += '</div>';
+
+  // Stats grid
+  html += '<div class="results-stats">';
+  html += '<div class="result-stat-card"><div class="stat-num">' + toFa(correct) + '</div><div class="stat-label">Correct ✓</div></div>';
+  html += '<div class="result-stat-card"><div class="stat-num">' + toFa(incorrect) + '</div><div class="stat-label">Incorrect ✗</div></div>';
+  html += '<div class="result-stat-card"><div class="stat-num">' + toFa(unanswered) + '</div><div class="stat-label">Unanswered</div></div>';
+  html += '<div class="result-stat-card"><div class="stat-num">' + toFa(pct) + '%</div><div class="stat-label">Accuracy</div></div>';
+  html += '</div>';
+
+  // Section breakdown
+  html += '<div class="section-breakdown-title">📋 Section Breakdown</div>';
+  ['reading','listening','writing','speaking'].forEach(function(cat) {
+    var score = catCorrect[cat];
+    var barPct = (score / 10) * 100;
+    var color = score >= 8 ? 'var(--success)' : score >= 5 ? 'var(--primary)' : '#ef4444';
+    html += '<div class="section-score-row">';
+    html += '<span class="ssr-label">' + CAT_ICONS[cat] + ' ' + CAT_LABELS[cat] + '</span>';
+    html += '<div class="ssr-bar"><div class="ssr-fill" style="width:' + barPct + '%;background:' + color + ';"></div></div>';
+    html += '<span class="ssr-score">' + toFa(score) + '/10</span>';
+    html += '</div>';
   });
-  document.getElementById('quizContainer').style.display = 'none';
-  const box = document.getElementById('resultBox');
-  box.style.display = 'block';
-  document.getElementById('totalBand').textContent = totalBand;
-  const names = {reading:'Reading',listening:'Listening',writing:'Writing',speaking:'Speaking'};
-  document.getElementById('bandBreakdown').innerHTML = Object.entries(bands).map(([k,v]) =>
-    `<div class="band-item"><strong>${names[k]}:</strong> ${v}</div>`
-  ).join('');
+
+  // Actions
+  html += '<div class="results-actions">';
+  html += '<button class="btn btn-primary" onclick="startReview()">📋 Review Answers</button>';
+  html += '<button class="btn btn-accent" onclick="resetQuiz()">🔄 Reset All</button>';
+  html += '<a href="register.html" class="btn btn-primary">Sign Up for Full Access</a>';
+  html += '</div>';
+
+  var resultsScreen = document.getElementById('resultsScreen');
+  resultsScreen.innerHTML = html;
+  resultsScreen.classList.add('visible');
+
+  // Animate progress fill
+  setTimeout(function() {
+    var fill = document.getElementById('resultProgressFill');
+    if (fill) fill.style.width = pct + '%';
+  }, 100);
+
+  resultsScreen.scrollIntoView({behavior:'smooth',block:'start'});
 }
 
-function startTimer() {
-  timerInterval = setInterval(() => {
-    timeLeft--;
-    const m = Math.floor(timeLeft/60), s = timeLeft%60;
-    document.getElementById('timer').textContent = `⏱ ${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-    if(timeLeft <= 0) showResults();
-  }, 1000);
+// ===== REVIEW MODE =====
+function startReview() {
+  reviewMode = true;
+  reviewCurrentQ = 0;
+  document.getElementById('resultsScreen').classList.remove('visible');
+  document.getElementById('resultsScreen').innerHTML = '';
+  document.getElementById('quizArea').innerHTML = '';
+  renderReviewQuestion();
 }
 
+function renderReviewQuestion() {
+  var container = document.getElementById('reviewContainer');
+  var q = questions[reviewCurrentQ];
+  var userAnswer = answers[reviewCurrentQ];
+  var status = 'unanswered';
+  var isCorrect = false;
+
+  if (userAnswer !== undefined && userAnswer !== null && userAnswer !== '') {
+    isCorrect = parseInt(userAnswer) === q.ans;
+    status = isCorrect ? 'correct' : 'incorrect';
+  }
+
+  var html = '';
+  // Nav
+  html += '<div class="review-nav">';
+  html += '<button onclick="reviewPrev()" ' + (reviewCurrentQ === 0 ? 'disabled' : '') + '>◀ Previous</button>';
+  html += '<span>Q' + toFa(reviewCurrentQ + 1) + ' of ' + toFa(TOTAL) + '</span>';
+  html += '<button onclick="reviewNext()" ' + (reviewCurrentQ >= TOTAL - 1 ? 'disabled' : '') + '>Next ▶</button>';
+  html += '</div>';
+  html += '<div style="text-align:center;margin-bottom:1rem;"><button class="btn btn-outline" onclick="backToResults()">← Back to Results</button></div>';
+
+  // Question card
+  var statusClass = status === 'correct' ? 'review-correct' : status === 'incorrect' ? 'review-incorrect' : 'review-unanswered';
+  html += '<div class="review-question-card ' + statusClass + '">';
+  html += '<div class="question-header">';
+  html += '<span class="category-badge ' + CAT_CLS[q.cat] + '">' + CAT_ICONS[q.cat] + ' ' + CAT_LABELS[q.cat] + '</span>';
+  if (status === 'correct') html += '<span style="color:var(--success);font-weight:700;">✅ Correct</span>';
+  else if (status === 'incorrect') html += '<span style="color:#ef4444;font-weight:700;">❌ Incorrect</span>';
+  else html += '<span style="color:#f59e0b;font-weight:700;">⚠️ Unanswered</span>';
+  html += '</div>';
+  html += '<div class="question-text-single">' + q.q + '</div>';
+
+  // Options with highlighting
+  html += '<div class="options-list-new">';
+  q.opts.forEach(function(opt, oi) {
+    var cls = '', marker = '';
+    if (oi === q.ans) { cls = 'selected'; marker = ' ✅'; }
+    if (oi === parseInt(userAnswer) && !isCorrect) { marker = ' ❌ (your answer)'; }
+    html += '<label class="' + cls + '" style="pointer-events:none;"><input type="radio" disabled> ' + opt + marker + '</label>';
+  });
+  html += '</div>';
+
+  html += '</div>';
+
+  container.innerHTML = html;
+  container.classList.add('visible');
+  container.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function reviewNext() {
+  if (reviewCurrentQ < TOTAL - 1) { reviewCurrentQ++; renderReviewQuestion(); }
+}
+
+function reviewPrev() {
+  if (reviewCurrentQ > 0) { reviewCurrentQ--; renderReviewQuestion(); }
+}
+
+function backToResults() {
+  reviewMode = false;
+  document.getElementById('reviewContainer').classList.remove('visible');
+  document.getElementById('reviewContainer').innerHTML = '';
+  showResults();
+}
+
+// ===== RESET =====
 function resetQuiz() {
-  current = 0; score = 0; answers = []; timeLeft = 600;
-  document.getElementById('quizContainer').style.display = 'block';
-  document.getElementById('resultBox').style.display = 'none';
-  renderQuiz();
-  startTimer();
+  if (!confirm('Are you sure you want to reset all answers? This cannot be undone.')) return;
+  currentIndex = 0;
+  answers = {};
+  quizFinished = false;
+  reviewMode = false;
+  reviewCurrentQ = 0;
+
+  document.getElementById('resultsScreen').classList.remove('visible');
+  document.getElementById('resultsScreen').innerHTML = '';
+  document.getElementById('reviewContainer').classList.remove('visible');
+  document.getElementById('reviewContainer').innerHTML = '';
+  document.getElementById('checkResultCard').classList.remove('visible');
+  document.getElementById('checkResultCard').innerHTML = '';
+  document.getElementById('progressFill').style.width = '0%';
+
+  renderQuestion();
 }
 
-renderQuiz();
-startTimer();
+// ===== INIT =====
+renderQuestion();
 </script>
-
-<footer class="footer">
-  <div class="footer-links"><a href="reading.html">Reading</a><a href="listening.html">Listening</a><a href="writing.html">Writing</a><a href="speaking.html">Speaking</a><a href="https://youtube.com/@ieltsscoreaccelerator" target="_blank">YouTube</a></div>
-  <p>&copy; 2026 IELTS Score Accelerator. All rights reserved.</p>
-</footer>
-
-<script src="../js/nav.js"></script>
 </body>
 </html>
