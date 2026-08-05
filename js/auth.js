@@ -1,7 +1,7 @@
 // auth.js — Supabase auth helper (non-module, loaded via <script> tag)
 
 const SUPABASE_URL = 'https://nuvrizxiwjlwycgmsrc.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_W5eqkzt1JBFCEZLOayOcBA_Fg8HAmsR';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im51dnJsenh3aWpqd2p5Y2dtc3JjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU4NzE5MTMsImV4cCI6MjEwMTQ0NzkxM30.DPpd4SR2aqSS14elDFr6kvnbuwrJkfbpPJrYIeB3McE';
 const REDIRECT_TO = 'https://hermesjoo.github.io/ieltsscoreaccelerator/pages/dashboard.html';
 
 // Initialize Supabase client (expects @supabase/supabase-js loaded via CDN)
