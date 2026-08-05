@@ -227,64 +227,81 @@
   <div class="section" id="sec-content">
     <div class="main-header">
       <h2>Content Management</h2>
-      <p>Manage reading passages, listening exercises, writing samples, and speaking topics</p>
+      <p>Create, edit, and manage all site content</p>
     </div>
-    <div class="content-grid" id="contentGrid">
-      <div class="content-card">
-        <h4>📖 Reading</h4>
-        <div class="meta">15 passages with quizzes</div>
-        <div class="actions">
-          <a href="reading.html" class="btn-sm" target="_blank">View</a>
+    <div class="panel">
+      <div class="panel-header">
+        <h3>All Content</h3>
+        <div style="display:flex; gap:0.5rem; align-items:center;">
+          <select id="contentFilter" onchange="renderContent()" style="padding:0.4rem; border:1px solid var(--border); border-radius:6px; background:var(--bg); color:var(--text); font-size:0.85rem;">
+            <option value="all">All Types</option>
+            <option value="reading">📖 Reading</option>
+            <option value="listening">🎧 Listening</option>
+            <option value="writing">✍️ Writing</option>
+            <option value="speaking">🗣️ Speaking</option>
+          </select>
+          <button class="btn-primary" onclick="openContentModal()" style="font-size:0.85rem; padding:0.5rem 1rem;">+ New Content</button>
         </div>
       </div>
-      <div class="content-card">
-        <h4>🎧 Listening</h4>
-        <div class="meta">15 exercises with audio</div>
-        <div class="actions">
-          <a href="listening.html" class="btn-sm" target="_blank">View</a>
+      <div class="panel-body">
+        <table id="contentTable">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Type</th>
+              <th>Status</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="contentBody"></tbody>
+        </table>
+        <div id="contentEmpty" style="display:none; text-align:center; padding:2rem; color:var(--muted);">No content yet. Click "+ New Content" to create one.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content Modal -->
+  <div id="contentModal" style="display:none; position:fixed; inset:0; z-index:9000; background:rgba(0,0,0,0.6); display:none; align-items:center; justify-content:center;">
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:16px; width:600px; max-width:95vw; max-height:90vh; overflow-y:auto; padding:2rem;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+        <h3 id="modalTitle">New Content</h3>
+        <button onclick="closeContentModal()" style="background:none; border:none; color:var(--muted); font-size:1.5rem; cursor:pointer;">&times;</button>
+      </div>
+      <input type="hidden" id="editContentId">
+      <div class="settings-group">
+        <label>Title *</label>
+        <input type="text" id="cmTitle" placeholder="e.g. The History of Coffee">
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+        <div class="settings-group">
+          <label>Type *</label>
+          <select id="cmType" style="width:100%; padding:0.6rem; border:1px solid var(--border); border-radius:6px; background:var(--bg); color:var(--text);">
+            <option value="reading">📖 Reading</option>
+            <option value="listening">🎧 Listening</option>
+            <option value="writing">✍️ Writing</option>
+            <option value="speaking">🗣️ Speaking</option>
+          </select>
+        </div>
+        <div class="settings-group">
+          <label>Status</label>
+          <select id="cmStatus" style="width:100%; padding:0.6rem; border:1px solid var(--border); border-radius:6px; background:var(--bg); color:var(--text);">
+            <option value="published">Published</option>
+            <option value="draft">Draft</option>
+          </select>
         </div>
       </div>
-      <div class="content-card">
-        <h4>✍️ Writing Task 1</h4>
-        <div class="meta">8 sample answers with examiner comments</div>
-        <div class="actions">
-          <a href="writing.html" class="btn-sm" target="_blank">View</a>
-        </div>
+      <div class="settings-group">
+        <label>Summary</label>
+        <input type="text" id="cmSummary" placeholder="Short description for listing">
       </div>
-      <div class="content-card">
-        <h4>✍️ Writing Task 2</h4>
-        <div class="meta">8 band-7+ essays with vocabulary</div>
-        <div class="actions">
-          <a href="writing.html" class="btn-sm" target="_blank">View</a>
-        </div>
+      <div class="settings-group">
+        <label>Content (HTML supported)</label>
+        <textarea id="cmBody" rows="10" placeholder="Write your content here..." style="width:100%; padding:0.8rem; border:1px solid var(--border); border-radius:6px; background:var(--bg); color:var(--text); font-family:monospace; font-size:0.85rem; resize:vertical;"></textarea>
       </div>
-      <div class="content-card">
-        <h4>🗣️ Speaking Part 1</h4>
-        <div class="meta">12 topics with model answers</div>
-        <div class="actions">
-          <a href="speaking.html" class="btn-sm" target="_blank">View</a>
-        </div>
-      </div>
-      <div class="content-card">
-        <h4>🗣️ Speaking Part 2 & 3</h4>
-        <div class="meta">12 cue cards with extended answers</div>
-        <div class="actions">
-          <a href="speaking.html" class="btn-sm" target="_blank">View</a>
-        </div>
-      </div>
-      <div class="content-card">
-        <h4>📋 Placement Test</h4>
-        <div class="meta">40-question adaptive test</div>
-        <div class="actions">
-          <a href="test.html" class="btn-sm" target="_blank">View</a>
-        </div>
-      </div>
-      <div class="content-card">
-        <h4>🏠 Homepage</h4>
-        <div class="meta">Landing page with hero, features, CTA</div>
-        <div class="actions">
-          <a href="../index.html" class="btn-sm" target="_blank">View</a>
-        </div>
+      <div style="display:flex; gap:0.5rem; justify-content:flex-end; margin-top:1rem;">
+        <button class="btn-sm" onclick="closeContentModal()">Cancel</button>
+        <button class="btn-primary" onclick="saveContent()">💾 Save</button>
       </div>
     </div>
   </div>
@@ -374,6 +391,7 @@ function showSection(name) {
   event.currentTarget.classList.add('active');
   if (name === 'users') loadUsers();
   if (name === 'overview') loadOverview();
+  if (name === 'content') loadContent();
 }
 
 // ===== Toast =====
@@ -519,6 +537,172 @@ function formatDate(iso) {
   if (!iso) return '—';
   var d = new Date(iso);
   return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+}
+
+// ===== Content Management =====
+var _contentDB = [];
+
+function loadContent() {
+  var stored = localStorage.getItem('ielts_content');
+  if (stored) {
+    _contentDB = JSON.parse(stored);
+  }
+  // Seed with existing static content if empty
+  if (_contentDB.length === 0) {
+    _contentDB = [
+      { id: 'c1', title: 'The History of Coffee', type: 'reading', status: 'published', summary: 'How a humble bean conquered the world', body: '<p>Coffee is one of the world\'s most popular beverages...</p>', date: '2024-01-15' },
+      { id: 'c2', title: 'Climate Change and Oceans', type: 'reading', status: 'published', summary: 'Rising sea temperatures and marine ecosystems', body: '<p>The world\'s oceans have absorbed much of the heat...</p>', date: '2024-01-20' },
+      { id: 'c3', title: 'Urban Planning in the 21st Century', type: 'reading', status: 'published', summary: 'How cities are adapting to modern challenges', body: '<p>As urban populations grow, city planners face...</p>', date: '2024-02-01' },
+      { id: 'c4', title: 'Airport Announcement', type: 'listening', status: 'published', summary: 'Practice listening to airport travel announcements', body: '<p>Listen to the announcement and answer questions about flight details.</p>', date: '2024-01-18' },
+      { id: 'c5', title: 'University Lecture: Biology', type: 'listening', status: 'published', summary: 'Academic lecture on marine biology', body: '<p>Today we will explore the fascinating world of deep-sea creatures.</p>', date: '2024-01-25' },
+      { id: 'c6', title: 'Task 1: Process Diagram', type: 'writing', status: 'published', summary: 'Band 8 model answer for ceramic pot manufacturing', body: '<p>The diagram illustrates the process of manufacturing ceramic pots...</p>', date: '2024-02-05' },
+      { id: 'c7', title: 'Task 2: Technology Essay', type: 'writing', status: 'published', summary: 'Band 7+ essay on technology and privacy', body: '<p>In today\'s digital age, the question of privacy has become...</p>', date: '2024-02-10' },
+      { id: 'c8', title: 'Part 1: Hometown', type: 'speaking', status: 'published', summary: 'Model answers about your hometown', body: '<p><strong>Where is your hometown?</strong><br>My hometown is a small coastal city...</p>', date: '2024-02-03' },
+      { id: 'c9', title: 'Part 2: Describe a Book', type: 'speaking', status: 'published', summary: 'Cue card: Describe a book that you enjoyed reading', body: '<p>I\'d like to talk about a book called "Sapiens" by Yuval Noah Harari...</p>', date: '2024-02-08' },
+    ];
+    saveContentDB();
+  }
+  renderContent();
+}
+
+function saveContentDB() {
+  localStorage.setItem('ielts_content', JSON.stringify(_contentDB));
+}
+
+function renderContent() {
+  var filter = document.getElementById('contentFilter').value;
+  var items = _contentDB;
+  if (filter !== 'all') {
+    items = items.filter(function(c) { return c.type === filter; });
+  }
+  items.sort(function(a, b) { return (b.date || '').localeCompare(a.date || ''); });
+
+  if (!items.length) {
+    document.getElementById('contentTable').style.display = 'none';
+    document.getElementById('contentEmpty').style.display = '';
+    return;
+  }
+  document.getElementById('contentTable').style.display = '';
+  document.getElementById('contentEmpty').style.display = 'none';
+
+  var typeIcons = { reading: '📖', listening: '🎧', writing: '✍️', speaking: '🗣️' };
+  var html = '';
+  items.forEach(function(c) {
+    var icon = typeIcons[c.type] || '📄';
+    var badgeClass = c.status === 'published' ? 'badge-active' : 'badge-inactive';
+    html += '<tr>';
+    html += '<td><strong>' + escHtml(c.title) + '</strong><br><small style="color:var(--muted)">' + escHtml(c.summary || '') + '</small></td>';
+    html += '<td>' + icon + ' ' + c.type.charAt(0).toUpperCase() + c.type.slice(1) + '</td>';
+    html += '<td><span class="badge ' + badgeClass + '">' + c.status + '</span></td>';
+    html += '<td>' + (c.date || '—') + '</td>';
+    html += '<td style="white-space:nowrap">';
+    html += '<button class="btn-sm" onclick="editContent(\'' + c.id + '\')">✏️ Edit</button> ';
+    html += '<button class="btn-sm" onclick="previewContent(\'' + c.id + '\')">👁️</button> ';
+    html += '<button class="btn-sm danger" onclick="deleteContent(\'' + c.id + '\')">🗑️</button>';
+    html += '</td></tr>';
+  });
+  document.getElementById('contentBody').innerHTML = html;
+}
+
+function openContentModal(id) {
+  document.getElementById('contentModal').style.display = 'flex';
+  if (id) {
+    var item = _contentDB.find(function(c) { return c.id === id; });
+    if (item) {
+      document.getElementById('modalTitle').textContent = 'Edit Content';
+      document.getElementById('editContentId').value = item.id;
+      document.getElementById('cmTitle').value = item.title || '';
+      document.getElementById('cmType').value = item.type || 'reading';
+      document.getElementById('cmStatus').value = item.status || 'published';
+      document.getElementById('cmSummary').value = item.summary || '';
+      document.getElementById('cmBody').value = item.body || '';
+    }
+  } else {
+    document.getElementById('modalTitle').textContent = 'New Content';
+    document.getElementById('editContentId').value = '';
+    document.getElementById('cmTitle').value = '';
+    document.getElementById('cmType').value = 'reading';
+    document.getElementById('cmStatus').value = 'draft';
+    document.getElementById('cmSummary').value = '';
+    document.getElementById('cmBody').value = '';
+  }
+}
+
+function closeContentModal() {
+  document.getElementById('contentModal').style.display = 'none';
+}
+
+function editContent(id) {
+  openContentModal(id);
+}
+
+function saveContent() {
+  var title = document.getElementById('cmTitle').value.trim();
+  var type = document.getElementById('cmType').value;
+  var status = document.getElementById('cmStatus').value;
+  var summary = document.getElementById('cmSummary').value.trim();
+  var body = document.getElementById('cmBody').value;
+  var editId = document.getElementById('editContentId').value;
+
+  if (!title) { showToast('Title is required', 'error'); return; }
+
+  if (editId) {
+    // Update
+    var idx = _contentDB.findIndex(function(c) { return c.id === editId; });
+    if (idx >= 0) {
+      _contentDB[idx].title = title;
+      _contentDB[idx].type = type;
+      _contentDB[idx].status = status;
+      _contentDB[idx].summary = summary;
+      _contentDB[idx].body = body;
+    }
+    showToast('Content updated!');
+  } else {
+    // Create
+    _contentDB.push({
+      id: 'c' + Date.now(),
+      title: title,
+      type: type,
+      status: status,
+      summary: summary,
+      body: body,
+      date: new Date().toISOString().split('T')[0]
+    });
+    showToast('Content created!');
+  }
+  saveContentDB();
+  renderContent();
+  closeContentModal();
+}
+
+function deleteContent(id) {
+  var item = _contentDB.find(function(c) { return c.id === id; });
+  if (!confirm('Delete "' + (item ? item.title : '') + '"?')) return;
+  _contentDB = _contentDB.filter(function(c) { return c.id !== id; });
+  saveContentDB();
+  renderContent();
+  showToast('Content deleted');
+}
+
+function previewContent(id) {
+  var item = _contentDB.find(function(c) { return c.id === id; });
+  if (!item) return;
+  var w = window.open('', '_blank', 'width=700,height=600');
+  w.document.write('<!DOCTYPE html><html><head><title>' + escHtml(item.title) + '</title>');
+  w.document.write('<style>body{font-family:system-ui;max-width:700px;margin:2rem auto;padding:0 1rem;color:#1a1a1a;line-height:1.7}');
+  w.document.write('h1{color:#2563eb}.meta{color:#666;margin-bottom:1.5rem}</style></head><body>');
+  w.document.write('<h1>' + escHtml(item.title) + '</h1>');
+  w.document.write('<div class="meta">' + escHtml(item.type.toUpperCase()) + ' · ' + escHtml(item.summary || '') + '</div>');
+  w.document.write('<hr style="border:1px solid #eee;margin:1.5rem 0">');
+  w.document.write(item.body || '<p style="color:#999">No content</p>');
+  w.document.write('</body></html>');
+  w.document.close();
+}
+
+function escHtml(s) {
+  var d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
 }
 </script>
 
