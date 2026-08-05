@@ -6,694 +6,154 @@
   <title>IELTS Reading Practice — 15 Passages</title>
   <link rel="stylesheet" href="../css/style.css">
   <style>
-    /* ===== Page Header ===== */
-    .page-header {
-      background: linear-gradient(135deg, #1e3a5f, #2563eb);
-      color: #fff;
-      padding: 3rem 2rem;
-      text-align: center;
-    }
-    .page-header h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
-    .page-header p { opacity: 0.9; font-size: 1.1rem; }
-
-    /* ===== Tips Section ===== */
-    .tips-section {
-      max-width: 900px;
-      margin: 2rem auto;
-      padding: 0 1.5rem;
-    }
-    .tips-card {
-      background: linear-gradient(135deg, #f0fdf4, #ecfdf5);
-      border: 2px solid #bbf7d0;
-      border-radius: var(--radius);
-      padding: 2rem;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-    }
-    .tips-card h2 {
-      font-size: 1.4rem;
-      color: #065f46;
-      margin-bottom: 1.2rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .tips-list {
-      list-style: none;
-      counter-reset: tip-counter;
-    }
-    .tips-list li {
-      counter-increment: tip-counter;
-      padding: 0.8rem 1rem 0.8rem 3rem;
-      position: relative;
-      line-height: 1.7;
-      border-bottom: 1px solid rgba(0,0,0,0.06);
-    }
-    .tips-list li:last-child { border-bottom: none; }
-    .tips-list li::before {
-      content: counter(tip-counter);
-      position: absolute;
-      left: 0;
-      top: 0.8rem;
-      width: 28px;
-      height: 28px;
-      background: #065f46;
-      color: #fff;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.85rem;
-      font-weight: 700;
-    }
-    .tips-list li strong { color: #065f46; }
-    .tips-toggle {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      margin-top: 1rem;
-      padding: 0.5rem 1rem;
-      background: #065f46;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 0.9rem;
-      transition: background 0.2s;
-    }
-    .tips-toggle:hover { background: #047857; }
-
-    /* ===== Band Score Guide ===== */
-    .band-guide {
-      max-width: 900px;
-      margin: 2rem auto;
-      padding: 0 1.5rem;
-    }
-    .band-guide-card {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 2rem;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-    }
-    .band-guide-card h2 {
-      font-size: 1.4rem;
-      color: var(--primary);
-      margin-bottom: 1rem;
-    }
-    .band-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.9rem;
-    }
-    .band-table th {
-      background: var(--primary);
-      color: #fff;
-      padding: 0.7rem 1rem;
-      text-align: left;
-    }
-    .band-table td {
-      padding: 0.6rem 1rem;
-      border-bottom: 1px solid var(--border);
-      line-height: 1.6;
-    }
-    .band-table tr:nth-child(even) { background: #f8fafc; }
-    .band-table .band-badge {
-      display: inline-block;
-      padding: 0.2rem 0.6rem;
-      border-radius: 4px;
-      font-weight: 700;
-      font-size: 0.85rem;
-    }
-    .band-9 { background: #d1fae5; color: #065f46; }
-    .band-8 { background: #dbeafe; color: #1e40af; }
-    .band-7 { background: #e0e7ff; color: #3730a3; }
-    .band-6 { background: #fef3c7; color: #92400e; }
-    .band-5 { background: #fed7aa; color: #9a3412; }
-    .band-4 { background: #fecaca; color: #991b1b; }
-
-    /* ===== Timer & Progress Bar ===== */
-    .quiz-toolbar {
-      background: #fff;
-      border-bottom: 1px solid var(--border);
-      padding: 1rem 2rem;
-      display: none;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 56px;
-      z-index: 55;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-    }
-    .quiz-toolbar.visible { display: flex; }
-    .timer-display {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--primary);
-    }
-    .timer-display.warning { color: #ef4444; animation: pulse 1s infinite; }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
-    }
-    .timer-icon { font-size: 1.4rem; }
-    .timer-controls { display: flex; gap: 0.3rem; }
-    .timer-controls .btn { font-size: 0.75rem; padding: 0.3rem 0.6rem; }
-    .global-progress {
-      flex: 1;
-      max-width: 400px;
-      min-width: 150px;
-    }
-    .global-progress .label-row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.8rem;
-      color: var(--text-light);
-      margin-bottom: 0.3rem;
-    }
-    .global-progress .bar-track {
-      height: 8px;
-      background: #e2e8f0;
-      border-radius: 4px;
-      overflow: hidden;
-    }
-    .global-progress .bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--primary), var(--success));
-      border-radius: 4px;
-      transition: width 0.4s ease;
-      width: 0%;
-    }
-    .toolbar-actions { display: flex; gap: 0.5rem; }
-    .toolbar-actions .btn { font-size: 0.85rem; padding: 0.4rem 1rem; }
-
-    /* ===== Passage Navigation ===== */
-    .passage-nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      justify-content: center;
-      padding: 1.5rem 2rem;
-      background: #fff;
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 56px;
-      z-index: 50;
-    }
-    .passage-btn {
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      border: 2px solid var(--border);
-      background: #fff;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 0.9rem;
-      transition: all 0.2s;
-    }
-    .passage-btn:hover { border-color: var(--primary); color: var(--primary); }
-    .passage-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
-    .passage-btn.completed { border-color: var(--success); color: var(--success); background: #f0fdf4; }
-    .passage-btn.completed.active { background: var(--success); color: #fff; }
-
-    /* ===== Quiz Container ===== */
-    .quiz-container {
-      max-width: 900px;
-      margin: 2rem auto;
-      padding: 0 1.5rem;
-    }
-
-    /* ===== Passage Card ===== */
-    .passage-card {
-      background: #fff;
-      border-radius: var(--radius);
-      padding: 2rem;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-      margin-bottom: 2rem;
-      border: 1px solid var(--border);
-      display: none;
-    }
-    .passage-card.active { display: block; }
-    .passage-meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1.5rem;
-      padding-bottom: 1rem;
-      border-bottom: 2px solid var(--primary);
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-    .passage-title { font-size: 1.4rem; font-weight: 700; color: var(--primary); }
-    .passage-difficulty {
-      padding: 0.3rem 0.8rem;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      font-weight: 600;
-    }
-    .diff-easy { background: #d1fae5; color: #065f46; }
-    .diff-medium { background: #fef3c7; color: #92400e; }
-    .diff-hard { background: #fee2e2; color: #991b1b; }
-
-    /* ===== Passage Text ===== */
-    .passage-text {
-      background: #f1f5f9;
-      padding: 1.5rem;
-      border-radius: 8px;
-      line-height: 2;
-      font-size: 1rem;
-      margin-bottom: 2rem;
-      white-space: pre-wrap;
-      text-align: justify;
-      border-left: 4px solid var(--primary);
-      font-family: 'Georgia', 'Times New Roman', serif;
-      color: #334155;
-    }
-    .passage-paragraph {
-      margin-bottom: 1rem;
-    }
-    .passage-paragraph:last-child { margin-bottom: 0; }
-
-    /* ===== Vocabulary Box ===== */
-    .vocab-box {
-      background: linear-gradient(135deg, #eff6ff, #f0f7ff);
-      border: 1px solid #bfdbfe;
-      border-radius: 8px;
-      padding: 1.5rem;
-      margin-top: 1.5rem;
-    }
-    .vocab-box h4 {
-      font-size: 1.05rem;
-      color: #1e40af;
-      margin-bottom: 0.8rem;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-    .vocab-item {
-      padding: 0.6rem 0;
-      border-bottom: 1px solid rgba(0,0,0,0.06);
-    }
-    .vocab-item:last-child { border-bottom: none; }
-    .vocab-word {
-      font-weight: 700;
-      color: #1e40af;
-      font-size: 0.95rem;
-    }
-    .vocab-pos {
-      font-style: italic;
-      color: #6b7280;
-      font-size: 0.85rem;
-      margin-left: 0.3rem;
-    }
-    .vocab-def {
-      font-size: 0.9rem;
-      color: #334155;
-      margin: 0.2rem 0;
-    }
-    .vocab-ex {
-      font-size: 0.85rem;
-      color: #6b7280;
-      font-style: italic;
-    }
-
-    /* ===== Section Divider ===== */
-    .section-divider {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin: 2rem 0;
-    }
-    .section-divider::before,
-    .section-divider::after {
-      content: '';
-      flex: 1;
-      height: 2px;
-      background: var(--border);
-    }
-    .section-divider span {
-      font-weight: 700;
-      color: var(--primary);
-      white-space: nowrap;
-    }
-
-    /* ===== Questions Section ===== */
-    .questions-section { margin-top: 1.5rem; }
-    .questions-section h3 {
-      font-size: 1.2rem;
-      color: var(--text);
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid var(--accent);
-      display: inline-block;
-    }
-    .question-block {
-      margin-bottom: 1.5rem;
-      padding: 1.2rem;
-      background: #fafbfc;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      transition: all 0.3s;
-    }
-    .question-block.correct {
-      border-color: var(--success);
-      background: #f0fdf4;
-    }
-    .question-block.incorrect {
-      border-color: #ef4444;
-      background: #fef2f2;
-    }
-    .question-block.unanswered {
-      border-color: #f59e0b;
-      background: #fffbeb;
-    }
-    .question-text {
-      font-weight: 600;
-      margin-bottom: 0.8rem;
-      font-size: 1rem;
-      line-height: 1.8;
-    }
-    .question-type {
-      display: inline-block;
-      padding: 0.15rem 0.6rem;
-      border-radius: 4px;
-      font-size: 0.7rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-    }
-    .type-tf { background: #dbeafe; color: #1e40af; }
-    .type-mc { background: #fce7f3; color: #9d174d; }
-    .type-mh { background: #e0e7ff; color: #3730a3; }
-    .type-fb { background: #d1fae5; color: #065f46; }
-
-    /* ===== Options List ===== */
-    .options-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-    .options-list label {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.6rem 1rem;
-      background: #fff;
-      border: 2px solid var(--border);
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .options-list label:hover {
-      border-color: var(--primary);
-      background: #f0f7ff;
-    }
-    .options-list input[type="radio"] {
-      accent-color: var(--primary);
-      width: 18px;
-      height: 18px;
-    }
-    .options-list label.selected { border-color: var(--primary); background: #eff6ff; }
-    .options-list label.show-correct { border-color: var(--success); background: #f0fdf4; }
-    .options-list label.show-incorrect {
-      border-color: #ef4444;
-      background: #fef2f2;
-      text-decoration: line-through;
-      opacity: 0.7;
-    }
-
-    /* ===== Fill-in-the-blank ===== */
-    .fill-input {
-      padding: 0.5rem 1rem;
-      border: 2px solid var(--border);
-      border-radius: 8px;
-      font-size: 1rem;
-      width: 100%;
-      max-width: 300px;
-      font-family: inherit;
-      transition: border-color 0.2s;
-      direction: ltr;
-      text-align: left;
-    }
-    .fill-input:focus { outline: none; border-color: var(--primary); }
-    .fill-input.show-correct { border-color: var(--success); background: #f0fdf4; }
-    .fill-input.show-incorrect { border-color: #ef4444; background: #fef2f2; }
-
-    /* ===== Matching Headings Select ===== */
-    .mh-select {
-      padding: 0.5rem 1rem;
-      border: 2px solid var(--border);
-      border-radius: 8px;
-      font-size: 1rem;
-      font-family: inherit;
-      background: #fff;
-      cursor: pointer;
-      min-width: 200px;
-    }
-    .mh-select:focus { outline: none; border-color: var(--primary); }
-    .mh-select.show-correct { border-color: var(--success); background: #f0fdf4; }
-    .mh-select.show-incorrect { border-color: #ef4444; background: #fef2f2; }
-
-    /* ===== Answer / Explanation ===== */
-    .correct-answer {
-      display: none;
-      margin-top: 0.7rem;
-      padding: 0.7rem 1rem;
-      border-radius: 8px;
-      font-size: 0.9rem;
-      line-height: 1.7;
-    }
-    .correct-answer.visible { display: block; }
-    .correct-answer.is-correct {
-      background: #f0fdf4;
-      color: #065f46;
-      border: 1px solid #bbf7d0;
-    }
-    .correct-answer.is-incorrect {
-      background: #fef2f2;
-      color: #991b1b;
-      border: 1px solid #fecaca;
-    }
-    .correct-answer.is-unanswered {
-      background: #fffbeb;
-      color: #92400e;
-      border: 1px solid #fde68a;
-    }
-    .explanation {
-      display: block;
-      margin-top: 0.4rem;
-      font-size: 0.85rem;
-      color: var(--text-light);
-      font-style: italic;
-      border-top: 1px solid rgba(0,0,0,0.1);
-      padding-top: 0.4rem;
-      margin-top: 0.5rem;
-    }
-
-    /* ===== Quiz Actions ===== */
-    .quiz-actions {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      margin: 2rem 0;
-      flex-wrap: wrap;
-    }
-
-    /* ===== Score Panel ===== */
-    .score-panel {
-      background: linear-gradient(135deg, #1e3a5f, #2563eb);
-      color: #fff;
-      padding: 2.5rem;
-      border-radius: var(--radius);
-      text-align: center;
-      margin: 2rem 0;
-      display: none;
-    }
-    .score-panel.visible { display: block; }
-    .score-panel h2 { font-size: 1.8rem; margin-bottom: 1rem; }
-    .score-number { font-size: 4rem; font-weight: 800; margin: 1rem 0; }
-    .band-display {
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin: 0.5rem 0;
-      opacity: 0.9;
-    }
-    .score-details {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      margin-top: 1.5rem;
-      flex-wrap: wrap;
-    }
-    .score-item { text-align: center; }
-    .score-item .num { font-size: 1.5rem; font-weight: 700; }
-    .score-item .lbl { font-size: 0.85rem; opacity: 0.8; }
-    .score-panel .progress-bar {
-      width: 100%;
-      height: 8px;
-      background: rgba(255,255,255,0.2);
-      border-radius: 4px;
-      margin-top: 1.5rem;
-      overflow: hidden;
-    }
-    .score-panel .progress-fill {
-      height: 100%;
-      background: var(--accent);
-      border-radius: 4px;
-      transition: width 1s ease;
-    }
-
-    /* ===== Per-Passage Score ===== */
-    .passage-score-bar {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      margin: 1rem 0;
-      padding: 0.75rem 1rem;
-      background: #f8fafc;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-    }
-    .passage-score-bar .label { font-size: 0.85rem; font-weight: 600; min-width: 80px; }
-    .passage-score-bar .mini-bar {
-      flex: 1;
-      height: 6px;
-      background: #e2e8f0;
-      border-radius: 3px;
-      overflow: hidden;
-    }
-    .passage-score-bar .mini-fill {
-      height: 100%;
-      border-radius: 3px;
-      transition: width 0.6s ease;
-    }
-    .passage-score-bar .score-text {
-      font-size: 0.85rem;
-      font-weight: 700;
-      min-width: 40px;
-      text-align: center;
-    }
-
-    /* ===== Results Summary ===== */
-    .results-summary {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 2rem;
-      margin: 2rem 0;
-      display: none;
-    }
-    .results-summary.visible { display: block; }
-    .results-summary h2 {
-      font-size: 1.4rem;
-      color: var(--primary);
-      margin-bottom: 1rem;
-      text-align: center;
-    }
-    .results-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-    .result-stat {
-      background: #f8fafc;
-      padding: 1.2rem;
-      border-radius: 8px;
-      text-align: center;
-      border: 1px solid var(--border);
-    }
-    .result-stat .stat-num {
-      font-size: 2rem;
-      font-weight: 800;
-      color: var(--primary);
-    }
-    .result-stat .stat-label {
-      font-size: 0.85rem;
-      color: var(--text-light);
-      margin-top: 0.3rem;
-    }
-    .results-tips {
-      margin-top: 1.5rem;
-      padding: 1rem 1.2rem;
-      background: #fffbeb;
-      border: 1px solid #fde68a;
-      border-radius: 8px;
-    }
-    .results-tips h4 { color: #92400e; margin-bottom: 0.5rem; }
-    .results-tips ul { padding-left: 1.2rem; }
-    .results-tips li { color: #78350f; line-height: 1.7; font-size: 0.9rem; }
-
-    /* ===== Review Mode ===== */
-    .review-header {
-      text-align: center;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-      background: linear-gradient(135deg, #065f46, #10b981);
-      border-radius: var(--radius);
-      color: #fff;
-    }
-    .review-header h2 { font-size: 1.5rem; margin-bottom: 0.5rem; }
-
-    /* ===== Question Number Badge ===== */
-    .q-number {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      font-size: 0.8rem;
-      font-weight: 700;
-      margin-left: 0.5rem;
-      flex-shrink: 0;
-    }
-    .q-number.correct { background: var(--success); color: #fff; }
-    .q-number.incorrect { background: #ef4444; color: #fff; }
-    .q-number.unanswered { background: #f59e0b; color: #fff; }
-
-    /* ===== Responsive ===== */
-    @media (max-width: 768px) {
-      .page-header { padding: 2rem 1rem; }
-      .page-header h1 { font-size: 1.5rem; }
-      .page-header p { font-size: 0.95rem; }
-      .tips-section { padding: 0 0.75rem; margin: 1.5rem auto; }
-      .tips-card { padding: 1.2rem; }
-      .tips-card h2 { font-size: 1.15rem; }
-      .tips-list li { padding: 0.6rem 0.5rem 0.6rem 2.5rem; font-size: 0.9rem; }
-      .band-guide { padding: 0 0.75rem; }
-      .passage-nav { top: 56px; padding: 0.8rem; gap: 0.4rem; overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }
-      .passage-btn { padding: 0.4rem 0.8rem; font-size: 0.8rem; white-space: nowrap; flex-shrink: 0; }
-      .passage-card { padding: 1.2rem; }
-      .passage-text { padding: 1rem; font-size: 0.95rem; white-space: normal; text-align: left; }
-      .passage-meta { flex-direction: column; gap: 0.5rem; }
-      .passage-title { font-size: 1.2rem; }
-      .quiz-toolbar { top: 56px; padding: 0.6rem 0.75rem; flex-direction: column; gap: 0.5rem; }
-      .quiz-container { padding: 0 0.75rem; }
-      .timer-display { font-size: 1rem; }
-      .global-progress { max-width: 100%; min-width: 100%; }
-      .toolbar-actions { width: 100%; justify-content: center; }
-      .score-number { font-size: 2.5rem; }
-      .score-details { gap: 1rem; }
-      .band-table { font-size: 0.75rem; }
-      .band-table th, .band-table td { padding: 0.4rem 0.5rem; }
-      .results-grid { grid-template-columns: 1fr; }
-      .question-card { padding: 1rem; }
-      .question-card p { font-size: 1rem; }
-      .options label { padding: 0.8rem; font-size: 0.9rem; }
-      .vocab-box { padding: 1rem; }
-      .vocab-item { padding: 0.5rem 0; font-size: 0.88rem; }
-      /* Table horizontal scroll */
-      .band-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%; }
+    /* Page Header */
+    .page-header {background:linear-gradient(135deg,#1e3a5f,#2563eb);color:#fff;padding:3rem 2rem;text-align:center;}
+    .page-header h1{font-size:2.2rem;margin-bottom:.5rem;}
+    .page-header p{opacity:.9;font-size:1.1rem;}
+    /* Tips */
+    .tips-section{max-width:900px;margin:2rem auto;padding:0 1.5rem;}
+    .tips-card{background:linear-gradient(135deg,#f0fdf4,#ecfdf5);border:2px solid #bbf7d0;border-radius:var(--radius);padding:2rem;box-shadow:0 2px 12px rgba(0,0,0,.06);}
+    .tips-card h2{font-size:1.4rem;color:#065f46;margin-bottom:1.2rem;display:flex;align-items:center;gap:.5rem;}
+    .tips-list{list-style:none;counter-reset:tip-counter;}
+    .tips-list li{counter-increment:tip-counter;padding:.8rem 1rem .8rem 3rem;position:relative;line-height:1.7;border-bottom:1px solid rgba(0,0,0,.06);}
+    .tips-list li:last-child{border-bottom:none;}
+    .tips-list li::before{content:counter(tip-counter);position:absolute;left:0;top:.8rem;width:28px;height:28px;background:#065f46;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;}
+    .tips-list li strong{color:#065f46;}
+    .tips-toggle{display:inline-flex;align-items:center;gap:.4rem;margin-top:1rem;padding:.5rem 1rem;background:#065f46;color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:600;font-size:.9rem;transition:background .2s;}
+    .tips-toggle:hover{background:#047857;}
+    /* Band Guide */
+    .band-guide{max-width:900px;margin:2rem auto;padding:0 1.5rem;}
+    .band-guide-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:2rem;box-shadow:0 2px 12px rgba(0,0,0,.06);}
+    .band-guide-card h2{font-size:1.4rem;color:var(--primary);margin-bottom:1rem;}
+    .band-table{width:100%;border-collapse:collapse;font-size:.9rem;}
+    .band-table th{background:var(--primary);color:#fff;padding:.7rem 1rem;text-align:left;}
+    .band-table td{padding:.6rem 1rem;border-bottom:1px solid var(--border);line-height:1.6;}
+    .band-table tr:nth-child(even){background:#f8fafc;}
+    .band-table .band-badge{display:inline-block;padding:.2rem .6rem;border-radius:4px;font-weight:700;font-size:.85rem;}
+    .band-9{background:#d1fae5;color:#065f46;}.band-8{background:#dbeafe;color:#1e40af;}.band-7{background:#e0e7ff;color:#3730a3;}
+    .band-6{background:#fef3c7;color:#92400e;}.band-5{background:#fed7aa;color:#9a3412;}.band-4{background:#fecaca;color:#991b1b;}
+    /* Progress Bar */
+    .quiz-progress-bar{background:#fff;border-bottom:2px solid var(--border);padding:1rem 2rem;display:none;justify-content:center;align-items:center;position:sticky;top:56px;z-index:55;flex-direction:column;gap:.5rem;}
+    .quiz-progress-bar.visible{display:flex;}
+    .progress-text{font-size:.95rem;font-weight:700;color:var(--primary);}
+    .progress-track{width:100%;max-width:500px;height:10px;background:#e2e8f0;border-radius:5px;overflow:hidden;}
+    .progress-fill{height:100%;background:linear-gradient(90deg,var(--primary),#22d3ee);border-radius:5px;transition:width .5s ease;width:0%;}
+    /* Passage Nav */
+    .passage-nav-bar{display:none;justify-content:space-between;align-items:center;max-width:900px;margin:1rem auto 0;padding:0 1.5rem;}
+    .passage-nav-bar.visible{display:flex;}
+    .nav-passage-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.6rem 1.2rem;background:var(--primary);color:#fff;border:none;border-radius:8px;font-weight:600;font-size:.95rem;cursor:pointer;transition:all .2s;min-height:44px;}
+    .nav-passage-btn:hover{background:#1d4ed8;transform:translateY(-1px);}
+    .nav-passage-btn:disabled{opacity:.3;cursor:not-allowed;transform:none;}
+    .nav-passage-btn.next{background:#059669;}
+    .nav-passage-btn.next:hover{background:#047857;}
+    .passage-indicator{font-size:.85rem;font-weight:600;color:var(--text-light);}
+    /* Quiz Area */
+    .quiz-area{max-width:900px;margin:1.5rem auto;padding:0 1.5rem;}
+    /* Passage Card */
+    .passage-card-new{background:#fff;border-radius:var(--radius);padding:2rem;box-shadow:0 2px 12px rgba(0,0,0,.06);margin-bottom:1.5rem;border:1px solid var(--border);}
+    .passage-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:2px solid var(--primary);flex-wrap:wrap;gap:.5rem;}
+    .passage-title{font-size:1.4rem;font-weight:700;color:var(--primary);}
+    .passage-difficulty{padding:.3rem .8rem;border-radius:20px;font-size:.8rem;font-weight:600;}
+    .diff-easy{background:#d1fae5;color:#065f46;}.diff-medium{background:#fef3c7;color:#92400e;}.diff-hard{background:#fee2e2;color:#991b1b;}
+    .passage-text-wrapper{margin-bottom:1.5rem;}
+    .passage-toggle-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.5rem 1rem;background:#f1f5f9;border:1px solid var(--border);border-radius:8px;cursor:pointer;font-weight:600;font-size:.9rem;color:var(--primary);transition:all .2s;margin-bottom:.75rem;min-height:44px;}
+    .passage-toggle-btn:hover{background:#e2e8f0;}
+    .passage-text{background:#f1f5f9;padding:1.5rem;border-radius:8px;line-height:2;font-size:1rem;max-height:300px;overflow-y:auto;white-space:pre-wrap;text-align:justify;border-left:4px solid var(--primary);font-family:'Georgia','Times New Roman',serif;color:#334155;transition:max-height .3s ease;}
+    .passage-text.collapsed{max-height:0;padding:0 1.5rem;overflow:hidden;}
+    .passage-paragraph{margin-bottom:1rem;}.passage-paragraph:last-child{margin-bottom:0;}
+    /* Question Card */
+    .question-card-single{background:#fff;border-radius:var(--radius);padding:2rem;box-shadow:0 2px 16px rgba(0,0,0,.08);border:1px solid var(--border);animation:fadeSlideIn .35s ease;}
+    @keyframes fadeSlideIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+    .question-header{display:flex;align-items:center;gap:.6rem;margin-bottom:1rem;}
+    .q-type-badge{display:inline-block;padding:.2rem .7rem;border-radius:4px;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;}
+    .type-tf{background:#dbeafe;color:#1e40af;}.type-mc{background:#fce7f3;color:#9d174d;}.type-mh{background:#e0e7ff;color:#3730a3;}.type-fb{background:#d1fae5;color:#065f46;}
+    .q-progress-mini{font-size:.8rem;color:var(--text-light);margin-left:auto;font-weight:600;}
+    .question-text-single{font-size:1.1rem;font-weight:600;line-height:1.8;margin-bottom:1.2rem;color:var(--text);}
+    /* Options */
+    .options-list-new{list-style:none;display:flex;flex-direction:column;gap:.6rem;}
+    .options-list-new label{display:flex;align-items:center;gap:.6rem;padding:.85rem 1.2rem;background:#fff;border:2px solid var(--border);border-radius:10px;cursor:pointer;transition:all .2s;min-height:48px;font-size:1rem;line-height:1.5;}
+    .options-list-new label:hover{border-color:var(--primary);background:#f0f7ff;}
+    .options-list-new label.selected{border-color:var(--primary);background:#eff6ff;box-shadow:0 0 0 1px var(--primary);}
+    .options-list-new input[type="radio"]{accent-color:var(--primary);width:20px;height:20px;flex-shrink:0;}
+    .fill-input-new{padding:.7rem 1.2rem;border:2px solid var(--border);border-radius:10px;font-size:1.05rem;width:100%;max-width:350px;font-family:inherit;transition:border-color .2s;direction:ltr;text-align:left;min-height:48px;}
+    .fill-input-new:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 2px rgba(37,99,235,.15);}
+    .mh-select-new{padding:.7rem 1.2rem;border:2px solid var(--border);border-radius:10px;font-size:1.05rem;font-family:inherit;background:#fff;cursor:pointer;min-width:250px;min-height:48px;}
+    .mh-select-new:focus{outline:none;border-color:var(--primary);}
+    .submit-btn{display:block;width:100%;max-width:320px;margin:1.5rem auto 0;padding:.9rem 2rem;background:linear-gradient(135deg,var(--primary),#1d4ed8);color:#fff;border:none;border-radius:10px;font-size:1.05rem;font-weight:700;cursor:pointer;transition:all .2s;min-height:52px;}
+    .submit-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(37,99,235,.3);}
+    .submit-btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none;}
+    .answer-feedback{display:none;margin-top:1rem;padding:1rem 1.2rem;border-radius:10px;font-size:.95rem;line-height:1.7;animation:fadeSlideIn .3s ease;}
+    .answer-feedback.visible{display:block;}
+    .answer-feedback.is-correct{background:#f0fdf4;color:#065f46;border:1px solid #bbf7d0;}
+    .answer-feedback.is-incorrect{background:#fef2f2;color:#991b1b;border:1px solid #fecaca;}
+    .answer-feedback.is-unanswered{background:#fffbeb;color:#92400e;border:1px solid #fde68a;}
+    .explanation-text{display:block;margin-top:.5rem;font-size:.88rem;color:var(--text-light);font-style:italic;border-top:1px solid rgba(0,0,0,.08);padding-top:.4rem;}
+    /* Passage Complete */
+    .passage-complete-card{display:none;background:linear-gradient(135deg,#065f46,#10b981);color:#fff;border-radius:var(--radius);padding:2.5rem;text-align:center;margin-top:1.5rem;animation:fadeSlideIn .35s ease;}
+    .passage-complete-card.visible{display:block;}
+    .passage-complete-card h3{font-size:1.4rem;margin-bottom:.5rem;}
+    .passage-complete-card p{opacity:.9;margin-bottom:1.5rem;}
+    .next-passage-btn{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 2rem;background:#fff;color:#065f46;border:none;border-radius:10px;font-size:1.05rem;font-weight:700;cursor:pointer;transition:all .2s;min-height:52px;}
+    .next-passage-btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.15);}
+    /* Check Result */
+    .check-result-card{display:none;background:linear-gradient(135deg,#1e3a5f,#2563eb);color:#fff;border-radius:var(--radius);padding:3rem;text-align:center;margin-top:2rem;animation:fadeSlideIn .35s ease;}
+    .check-result-card.visible{display:block;}
+    .check-result-card h3{font-size:1.5rem;margin-bottom:.5rem;}
+    .check-result-card p{opacity:.85;margin-bottom:1.5rem;font-size:1.05rem;}
+    .check-result-btn{display:inline-flex;align-items:center;gap:.5rem;padding:1rem 3rem;background:linear-gradient(135deg,#f59e0b,#f97316);color:#fff;border:none;border-radius:12px;font-size:1.2rem;font-weight:800;cursor:pointer;transition:all .2s;min-height:56px;box-shadow:0 4px 20px rgba(249,115,22,.3);}
+    .check-result-btn:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(249,115,22,.4);}
+    /* Results Screen */
+    .results-screen{display:none;animation:fadeSlideIn .4s ease;}
+    .results-screen.visible{display:block;}
+    .results-hero{background:linear-gradient(135deg,#1e3a5f,#2563eb);color:#fff;padding:3rem 2rem;border-radius:var(--radius);text-align:center;margin-bottom:2rem;}
+    .results-hero h2{font-size:1.8rem;margin-bottom:.5rem;}
+    .results-hero .score-big{font-size:4.5rem;font-weight:800;margin:1rem 0;}
+    .results-hero .band-big{font-size:1.5rem;font-weight:700;opacity:.9;margin-bottom:.5rem;}
+    .results-hero .pct-big{font-size:1.1rem;opacity:.8;}
+    .results-hero .progress-bar-results{width:100%;max-width:400px;margin:1.5rem auto 0;height:10px;background:rgba(255,255,255,.2);border-radius:5px;overflow:hidden;}
+    .results-hero .progress-fill-results{height:100%;background:linear-gradient(90deg,#fbbf24,#f59e0b);border-radius:5px;transition:width 1s ease;width:0%;}
+    .results-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin-bottom:2rem;}
+    .result-stat-card{background:#fff;padding:1.2rem;border-radius:10px;text-align:center;border:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,.04);}
+    .result-stat-card .stat-num{font-size:1.8rem;font-weight:800;color:var(--primary);}
+    .result-stat-card .stat-label{font-size:.82rem;color:var(--text-light);margin-top:.2rem;}
+    .passage-breakdown-title{font-size:1.2rem;font-weight:700;color:var(--primary);margin-bottom:1rem;text-align:center;}
+    .passage-score-row{display:flex;align-items:center;gap:.75rem;padding:.65rem 1rem;background:#f8fafc;border-radius:8px;border:1px solid var(--border);margin-bottom:.5rem;}
+    .passage-score-row .psr-label{font-size:.85rem;font-weight:600;min-width:140px;word-break:break-word;}
+    .passage-score-row .psr-bar{flex:1;height:8px;background:#e2e8f0;border-radius:4px;overflow:hidden;}
+    .passage-score-row .psr-fill{height:100%;border-radius:4px;transition:width .6s ease;}
+    .passage-score-row .psr-score{font-size:.85rem;font-weight:700;min-width:35px;text-align:right;}
+    .results-actions{display:flex;gap:1rem;justify-content:center;margin:2rem 0;flex-wrap:wrap;}
+    .results-actions .btn{min-height:48px;font-size:1rem;padding:.7rem 1.5rem;}
+    /* Review Mode */
+    .review-container{display:none;}
+    .review-container.visible{display:block;}
+    .review-nav{position:sticky;top:56px;z-index:60;background:var(--primary);color:#fff;padding:.75rem 1.5rem;display:flex;justify-content:space-between;align-items:center;border-radius:8px;margin-bottom:1rem;}
+    .review-nav button{background:rgba(255,255,255,.2);color:#fff;border:none;padding:.5rem 1rem;border-radius:6px;font-weight:600;cursor:pointer;min-height:40px;}
+    .review-nav button:disabled{opacity:.3;cursor:not-allowed;}
+    .review-nav span{font-weight:700;font-size:.95rem;}
+    .review-question-card{background:#fff;border-radius:var(--radius);padding:2rem;margin-bottom:1.5rem;border:2px solid var(--border);}
+    .review-question-card.review-correct{border-color:var(--success);}
+    .review-question-card.review-incorrect{border-color:#ef4444;}
+    .review-question-card.review-unanswered{border-color:#f59e0b;}
+    .review-passage-ref{font-size:.85rem;color:var(--text-light);margin-bottom:.5rem;}
+    /* Responsive */
+    @media(max-width:768px){
+      .page-header{padding:2rem 1rem;}.page-header h1{font-size:1.5rem;}.page-header p{font-size:.95rem;}
+      .tips-section{padding:0 .75rem;margin:1.5rem auto;}.tips-card{padding:1.2rem;}.tips-card h2{font-size:1.15rem;}
+      .tips-list li{padding:.6rem .5rem .6rem 2.5rem;font-size:.9rem;}.band-guide{padding:0 .75rem;}
+      .quiz-progress-bar{top:56px;padding:.75rem 1rem;}.quiz-area{padding:0 .75rem;}
+      .passage-card-new{padding:1.2rem;}.passage-text{padding:1rem;font-size:.95rem;white-space:normal;text-align:left;}
+      .passage-meta{flex-direction:column;gap:.5rem;}.passage-title{font-size:1.2rem;}
+      .question-card-single{padding:1.2rem;}.question-text-single{font-size:1rem;}
+      .options-list-new label{padding:.75rem 1rem;min-height:48px;}
+      .results-hero .score-big{font-size:3rem;}.results-hero{padding:2rem 1rem;}
+      .results-stats{grid-template-columns:repeat(2,1fr);}.passage-score-row .psr-label{min-width:100px;font-size:.8rem;}
     }
   </style>
 </head>
 <body>
 
-<!-- ===== NAVBAR ===== -->
+<!-- NAVBAR -->
 <nav class="navbar">
   <a href="../index.html" class="logo"><img src="../images/logo-color.png" alt="IELTS Score Accelerator" style="height:48px"></a>
   <div class="nav-links">
@@ -706,159 +166,77 @@
   </div>
 </nav>
 
-<!-- ===== PAGE HEADER ===== -->
+<!-- PAGE HEADER -->
 <div class="page-header">
   <h1>📖 IELTS Reading Practice</h1>
   <p>15 professional practice passages with various question types — True/False/Not Given, Multiple Choice, Matching Headings, Fill-in-the-blank</p>
 </div>
 
-<!-- ===== TIPS FOR READING ===== -->
+<!-- TIPS -->
 <div class="tips-section">
   <div class="tips-card" id="tipsCard">
     <h2>💡 Tips for IELTS Reading — 5 Essential Strategies</h2>
-    <p style="margin-bottom:1rem; color:#334155;">Master these strategies to maximise your IELTS Reading band score. Click the button below to expand or collapse.</p>
+    <p style="margin-bottom:1rem;color:#334155;">Master these strategies to maximise your IELTS Reading band score. Click the button below to expand or collapse.</p>
     <button class="tips-toggle" onclick="toggleTips()" id="tipsToggleBtn">▼ Show Tips</button>
     <div id="tipsContent" style="display:none;">
       <ol class="tips-list" style="margin-top:1rem;">
-        <li><strong>Skim first, then scan for details.</strong> Spend 2–3 minutes skimming each passage to understand the main idea and structure. Then read the questions and scan for specific information. This saves time and improves accuracy compared to reading every word carefully.</li>
-        <li><strong>Watch for synonyms and paraphrasing.</strong> IELTS examiners rarely use the exact words from the passage in the questions. Train yourself to recognise paraphrased versions — for example, "significant" in a question may correspond to "considerable" or "substantial" in the passage.</li>
-        <li><strong>Manage your time — aim for 20 minutes per passage.</strong> The IELTS Reading test gives you 60 minutes for 3 passages. Allocate roughly 20 minutes per passage, spending more time on harder ones. If a question takes more than 2 minutes, mark your best guess and move on.</li>
-        <li><strong>Read the questions before the passage.</strong> Underlining key words in the questions helps you know exactly what to look for. This targeted approach prevents wasted time on irrelevant information and reduces the chance of misreading.</li>
-        <li><strong>Don't get stuck on unknown words.</strong> Every passage contains unfamiliar vocabulary, and that's by design. Use context clues to guess the meaning. Often, the surrounding sentences provide enough information to answer questions correctly without understanding every single word.</li>
+        <li><strong>Skim first, then scan for details.</strong> Spend 2–3 minutes skimming each passage to understand the main idea and structure. Then read the questions and scan for specific information.</li>
+        <li><strong>Watch for synonyms and paraphrasing.</strong> IELTS examiners rarely use the exact words from the passage in the questions. Train yourself to recognise paraphrased versions.</li>
+        <li><strong>Manage your time — aim for 20 minutes per passage.</strong> The IELTS Reading test gives you 60 minutes for 3 passages. Allocate roughly 20 minutes per passage.</li>
+        <li><strong>Read the questions before the passage.</strong> Underlining key words in the questions helps you know exactly what to look for.</li>
+        <li><strong>Don't get stuck on unknown words.</strong> Every passage contains unfamiliar vocabulary, and that's by design. Use context clues to guess the meaning.</li>
       </ol>
     </div>
   </div>
 </div>
 
-<!-- ===== TIMER & GLOBAL PROGRESS TOOLBAR ===== -->
-<div class="quiz-toolbar" id="quizToolbar">
-  <div style="display:flex;align-items:center;gap:0.75rem;">
-    <div class="timer-display" id="timerDisplay">
-      <span class="timer-icon">⏱️</span>
-      <span id="timerText">60:00</span>
-    </div>
-    <div class="timer-controls">
-      <button class="btn btn-outline" onclick="pauseTimer()" id="pauseBtn" title="Pause">⏸</button>
-      <button class="btn btn-outline" onclick="resumeTimer()" id="resumeBtn" title="Resume" style="display:none;">▶</button>
-    </div>
-  </div>
-  <div class="global-progress">
-    <div class="label-row">
-      <span id="answeredLabel">Answered: 0/75</span>
-      <span id="scoreLabel">Score: 0</span>
-    </div>
-    <div class="bar-track">
-      <div class="bar-fill" id="globalBarFill"></div>
-    </div>
-  </div>
-  <div class="toolbar-actions">
-    <button class="btn btn-primary" onclick="checkAllAnswers()">✅ Check</button>
-    <button class="btn btn-outline" onclick="showCorrectAnswers()">👁️ Show Answers</button>
-    <button class="btn btn-accent" onclick="resetQuiz()">🔄 Reset</button>
-  </div>
+<!-- PROGRESS BAR -->
+<div class="quiz-progress-bar" id="progressBar">
+  <div class="progress-text" id="progressText">Question 1 of 75</div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
 </div>
 
-<!-- ===== PASSAGE NAVIGATION ===== -->
-<div class="passage-nav" id="passageNav">
-  <button class="passage-btn active" onclick="showPassage(0)" data-idx="0">1</button>
-  <button class="passage-btn" onclick="showPassage(1)" data-idx="1">2</button>
-  <button class="passage-btn" onclick="showPassage(2)" data-idx="2">3</button>
-  <button class="passage-btn" onclick="showPassage(3)" data-idx="3">4</button>
-  <button class="passage-btn" onclick="showPassage(4)" data-idx="4">5</button>
-  <button class="passage-btn" onclick="showPassage(5)" data-idx="5">6</button>
-  <button class="passage-btn" onclick="showPassage(6)" data-idx="6">7</button>
-  <button class="passage-btn" onclick="showPassage(7)" data-idx="7">8</button>
-  <button class="passage-btn" onclick="showPassage(8)" data-idx="8">9</button>
-  <button class="passage-btn" onclick="showPassage(9)" data-idx="9">10</button>
-  <button class="passage-btn" onclick="showPassage(10)" data-idx="10">11</button>
-  <button class="passage-btn" onclick="showPassage(11)" data-idx="11">12</button>
-  <button class="passage-btn" onclick="showPassage(12)" data-idx="12">13</button>
-  <button class="passage-btn" onclick="showPassage(13)" data-idx="13">14</button>
-  <button class="passage-btn" onclick="showPassage(14)" data-idx="14">15</button>
+<!-- PASSAGE NAV -->
+<div class="passage-nav-bar" id="passageNavBar">
+  <button class="nav-passage-btn" id="prevPassageBtn" onclick="navigatePassage(-1)" disabled>← Previous Passage</button>
+  <span class="passage-indicator" id="passageIndicator">Passage 1 of 15</span>
+  <button class="nav-passage-btn next" id="nextPassageBtn" onclick="navigatePassage(1)">Next Passage →</button>
 </div>
 
-<!-- ===== QUIZ CONTAINER ===== -->
-<div class="quiz-container" id="quizContainer"></div>
+<!-- QUIZ AREA -->
+<div class="quiz-area" id="quizArea"></div>
 
-<!-- ===== SCORE PANEL ===== -->
-<div class="quiz-container">
-  <div class="score-panel" id="scorePanel">
-    <h2>📊 Your Final Results</h2>
-    <div class="score-number" id="scoreNumber">0/75</div>
-    <div class="band-display" id="bandDisplay"></div>
-    <div class="progress-bar" style="background:rgba(255,255,255,0.2)">
-      <div class="progress-fill" id="scoreProgressFill" style="width:0%"></div>
-    </div>
-    <div class="score-details">
-      <div class="score-item"><div class="num" id="correctCount">0</div><div class="lbl">Correct ✓</div></div>
-      <div class="score-item"><div class="num" id="incorrectCount">0</div><div class="lbl">Incorrect ✗</div></div>
-      <div class="score-item"><div class="num" id="unansweredCount">75</div><div class="lbl">Unanswered</div></div>
-    </div>
-    <div id="passageBreakdown" style="margin-top:1.5rem; text-align:left;"></div>
-  </div>
-
-  <div class="quiz-actions" id="quizActions">
-    <button class="btn btn-primary" onclick="checkAllAnswers()">✅ Check Answers</button>
-    <button class="btn btn-outline" onclick="showCorrectAnswers()">👁️ Show Correct Answers</button>
-    <button class="btn btn-accent" onclick="resetQuiz()">🔄 Reset</button>
-    <button class="btn btn-primary" onclick="toggleReviewMode()" id="reviewBtn" style="display:none;">📋 Review Questions</button>
-  </div>
-
-  <!-- ===== RESULTS SUMMARY ===== -->
-  <div class="results-summary" id="resultsSummary">
-    <h2>📋 Detailed Results Summary</h2>
-    <div class="results-grid" id="resultsGrid"></div>
-    <div class="results-tips" id="resultsTips"></div>
-  </div>
+<!-- RESULTS SCREEN -->
+<div class="quiz-area">
+  <div class="results-screen" id="resultsScreen"></div>
 </div>
 
-<!-- ===== BAND SCORE GUIDE ===== -->
+<!-- REVIEW CONTAINER -->
+<div class="quiz-area">
+  <div class="review-container" id="reviewContainer"></div>
+</div>
+
+<!-- BAND SCORE GUIDE -->
 <div class="band-guide">
   <div class="band-guide-card">
     <h2>🎯 IELTS Reading Band Score Guide</h2>
     <p style="margin-bottom:1rem;color:#6b7280;">Understanding how your raw score translates to an IELTS band score helps you set realistic targets.</p>
     <table class="band-table">
-      <thead>
-        <tr><th>Band Score</th><th>Correct Answers (out of 75)</th><th>Description</th></tr>
-      </thead>
+      <thead><tr><th>Band Score</th><th>Correct Answers (out of 75)</th><th>Description</th></tr></thead>
       <tbody>
-        <tr>
-          <td><span class="band-badge band-9">Band 9</span></td>
-          <td>71–75 (95–100%)</td>
-          <td><strong>Expert User</strong> — Has fully operational command of the language. Appropriate, accurate and fluent with complete understanding.</td>
-        </tr>
-        <tr>
-          <td><span class="band-badge band-8">Band 8.0–8.5</span></td>
-          <td>63–70 (84–94%)</td>
-          <td><strong>Very Good User</strong> — Has fully operational command with only occasional unsystematic inaccuracies and inappropriate usage.</td>
-        </tr>
-        <tr>
-          <td><span class="band-badge band-7">Band 7.0–7.5</span></td>
-          <td>53–62 (71–83%)</td>
-          <td><strong>Good User</strong> — Has operational command, though with occasional inaccuracies and misunderstandings in some situations.</td>
-        </tr>
-        <tr>
-          <td><span class="band-badge band-6">Band 6.0–6.5</span></td>
-          <td>41–52 (55–70%)</td>
-          <td><strong>Competent User</strong> — Generally has effective command despite some inaccuracies and misunderstandings.</td>
-        </tr>
-        <tr>
-          <td><span class="band-badge band-5">Band 5.0–5.5</span></td>
-          <td>30–40 (40–54%)</td>
-          <td><strong>Modest User</strong> — Has partial command, coping with overall meaning in most situations, though likely to make many mistakes.</td>
-        </tr>
-        <tr>
-          <td><span class="band-badge band-4">Band 4.0–4.5</span></td>
-          <td>16–29 (21–39%)</td>
-          <td><strong>Limited User</strong> — Basic competence is limited to familiar situations. Frequent problems in understanding and expression.</td>
-        </tr>
+        <tr><td><span class="band-badge band-9">Band 9</span></td><td>71–75 (95–100%)</td><td><strong>Expert User</strong> — Has fully operational command of the language.</td></tr>
+        <tr><td><span class="band-badge band-8">Band 8.0–8.5</span></td><td>63–70 (84–94%)</td><td><strong>Very Good User</strong> — Occasional unsystematic inaccuracies.</td></tr>
+        <tr><td><span class="band-badge band-7">Band 7.0–7.5</span></td><td>53–62 (71–83%)</td><td><strong>Good User</strong> — Operational command with occasional inaccuracies.</td></tr>
+        <tr><td><span class="band-badge band-6">Band 6.0–6.5</span></td><td>41–52 (55–70%)</td><td><strong>Competent User</strong> — Generally effective command.</td></tr>
+        <tr><td><span class="band-badge band-5">Band 5.0–5.5</span></td><td>30–40 (40–54%)</td><td><strong>Modest User</strong> — Partial command.</td></tr>
+        <tr><td><span class="band-badge band-4">Band 4.0–4.5</span></td><td>16–29 (21–39%)</td><td><strong>Limited User</strong> — Basic competence limited to familiar situations.</td></tr>
       </tbody>
     </table>
-    <p style="margin-top:1rem;font-size:0.85rem;color:#6b7280;">Note: The actual IELTS band-to-score conversion can vary slightly between test administrations. These figures are approximate guidelines based on recent official conversions.</p>
+    <p style="margin-top:1rem;font-size:.85rem;color:#6b7280;">Note: These figures are approximate guidelines based on recent official conversions.</p>
   </div>
 </div>
 
-<!-- ===== FOOTER ===== -->
+<!-- FOOTER -->
 <footer class="footer">
   <div class="footer-links">
     <a href="reading.html">Reading</a>
@@ -871,11 +249,8 @@
 </footer>
 
 <script>
-// ======================================================================
-// IELTS READING QUIZ ENGINE — Production-Quality (15 Passages, 75 Questions)
-// ======================================================================
-
-// ----- PASSAGE DATA -----
+// IELTS READING QUIZ ENGINE — One Question at a Time
+// ===== PASSAGE DATA =====
 const passages = [
   {
     id: 0,
@@ -1194,7 +569,6 @@ const passages = [
     ]
   }
 ];
-
 // ----- QUESTION DATA -----
 // Each passage has 5 questions
 const questionsData = [
@@ -1424,623 +798,554 @@ const questionsData = [
   ]
 ];
 
-// ===== UTILITIES =====
-function toFa(n) { return String(n); }
 
-const TOTAL_PASSAGES = passages.length;  // 15
+// ===== CONSTANTS =====
+const TOTAL_PASSAGES = passages.length;
 const Q_PER_PASSAGE = 5;
-const TOTAL_QUESTIONS = TOTAL_PASSAGES * Q_PER_PASSAGE;  // 75
+const TOTAL_QUESTIONS = TOTAL_PASSAGES * Q_PER_PASSAGE;
 
+// ===== STATE =====
 let currentPassage = 0;
-let timerInterval = null;
-let totalSeconds = 60 * 60; // 60 minutes
-let timerRunning = false;
+let currentQuestionIdx = 0;
+let answers = {};
+let passageCompleted = [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false];
+let allAnswered = false;
+let quizFinished = false;
 let reviewMode = false;
-let currentReviewQ = 0;
-let hasBeenChecked = false;
+let reviewCurrentQ = 0;
+
+function toFa(n) { return String(n); }
 
 // ===== TIPS TOGGLE =====
 function toggleTips() {
-  const content = document.getElementById('tipsContent');
-  const btn = document.getElementById('tipsToggleBtn');
+  var content = document.getElementById('tipsContent');
+  var btn = document.getElementById('tipsToggleBtn');
   if (content.style.display === 'none') {
     content.style.display = 'block';
-    btn.textContent = '▲ Hide Tips';
+    btn.textContent = '\u25B2 Hide Tips';
   } else {
     content.style.display = 'none';
-    btn.textContent = '▼ Show Tips';
+    btn.textContent = '\u25BC Show Tips';
   }
 }
 
-// ===== RENDER PASSAGES =====
-function renderAllPassages() {
-  const container = document.getElementById('quizContainer');
-  let html = '';
-
-  passages.forEach((p, pi) => {
-    html += `<div class="passage-card ${pi === 0 ? 'active' : ''}" data-passage="${pi}">`;
-    html += `<div class="passage-meta">`;
-    html += `<div class="passage-title">${p.emoji} Passage ${toFa(pi + 1)}: ${p.topicEN}</div>`;
-    const diffClass = p.difficulty === 'easy' ? 'diff-easy' : p.difficulty === 'medium' ? 'diff-medium' : 'diff-hard';
-    html += `<span class="passage-difficulty ${diffClass}">Level: ${p.difficultyEN}</span>`;
-    html += `</div>`;
-
-    // Passage text with paragraphs
-    html += `<div class="passage-text">`;
-    p.text.forEach(para => {
-      html += `<div class="passage-paragraph">${para}</div>`;
-    });
-    html += `</div>`;
-
-    // Questions section
-    html += `<div class="questions-section" id="passage${pi}questions"></div>`;
-
-    // Vocabulary section
-    if (p.vocab && p.vocab.length > 0) {
-      html += `<div class="section-divider"><span>📚 Key Vocabulary</span></div>`;
-      html += `<div class="vocab-box">`;
-      html += `<h4>📖 Essential Vocabulary for This Passage</h4>`;
-      p.vocab.forEach(v => {
-        html += `<div class="vocab-item">`;
-        html += `<div><span class="vocab-word">${v.word}</span><span class="vocab-pos">(${v.pos})</span></div>`;
-        html += `<div class="vocab-def">${v.def}</div>`;
-        html += `<div class="vocab-ex">"${v.ex}"</div>`;
-        html += `</div>`;
-      });
-      html += `</div>`;
-    }
-
-    html += `</div>`;
-  });
-
-  container.innerHTML = html;
-}
-
-// ===== RENDER QUESTIONS =====
-function renderQuestions() {
-  questionsData.forEach((passageQs, pi) => {
-    const container = document.getElementById(`passage${pi}questions`);
-    if (!container) return;
-
-    const types = {
-      tf: 'True / False / Not Given',
-      mc: 'Multiple Choice',
-      mh: 'Matching Headings',
-      fb: 'Fill in the Blank'
-    };
-    const typeCls = {
-      tf: 'type-tf',
-      mc: 'type-mc',
-      mh: 'type-mh',
-      fb: 'type-fb'
-    };
-
-    let html = `<div class="section-divider"><span>📝 Practice Questions</span></div>`;
-
-    passageQs.forEach((q, qi) => {
-      html += `<div class="question-block" id="qb-${q.id}">`;
-      html += `<div class="question-type ${typeCls[q.type]}">${types[q.type]}</div>`;
-      html += `<div class="question-text"><span class="q-number" id="qn-${q.id}">${qi + 1}</span>${q.text}</div>`;
-
-      if (q.type === 'tf') {
-        html += `<div class="options-list">`;
-        ['True', 'False', 'Not Given'].forEach(opt => {
-          html += `<label onclick="selectOption(this)"><input type="radio" name="${q.id}" value="${opt}"> ${opt}</label>`;
-        });
-        html += `</div>`;
-      } else if (q.type === 'mc') {
-        html += `<div class="options-list">`;
-        q.options.forEach((opt, oi) => {
-          html += `<label onclick="selectOption(this)"><input type="radio" name="${q.id}" value="${oi}"> ${opt}</label>`;
-        });
-        html += `</div>`;
-      } else if (q.type === 'mh') {
-        html += `<select class="mh-select" id="input-${q.id}" onchange="updateToolbar()">`;
-        html += `<option value="">— Select heading —</option>`;
-        q.options.forEach((opt, oi) => {
-          html += `<option value="${oi}">${opt}</option>`;
-        });
-        html += `</select>`;
-      } else if (q.type === 'fb') {
-        html += `<input type="text" class="fill-input" id="input-${q.id}" placeholder="Type your answer..." oninput="updateToolbar()">`;
-      }
-
-      // Answer/explanation container (hidden by default)
-      html += `<div class="correct-answer" id="ans-${q.id}"></div>`;
-      html += `</div>`;
-    });
-
-    // Per-passage score bar
-    html += `<div class="passage-score-bar" id="psb-${pi}" style="display:none">`;
-    html += `<div class="label">Score:</div>`;
-    html += `<div class="mini-bar"><div class="mini-fill" id="psf-${pi}" style="width:0%"></div></div>`;
-    html += `<div class="score-text" id="pst-${pi}">0/5</div>`;
-    html += `</div>`;
-
-    container.innerHTML = html;
+function checkAllAnswered() {
+  var flat = questionsData.flat();
+  return flat.every(function(q) {
+    var ans = answers[q.id];
+    return ans !== undefined && ans !== null && ans !== '';
   });
 }
 
-function selectOption(label) {
-  const list = label.closest('.options-list');
-  list.querySelectorAll('label').forEach(l => l.classList.remove('selected'));
-  label.classList.add('selected');
-  updateToolbar();
+function updateProgressBar() {
+  var flat = questionsData.flat();
+  var answeredCount = 0;
+  flat.forEach(function(q) {
+    var ans = answers[q.id];
+    if (ans !== undefined && ans !== null && ans !== '') answeredCount++;
+  });
+  var progressText = document.getElementById('progressText');
+  var progressFill = document.getElementById('progressFill');
+  if (quizFinished) {
+    progressText.textContent = 'All ' + toFa(TOTAL_QUESTIONS) + ' questions answered! \u2705';
+    progressFill.style.width = '100%';
+  } else {
+    var globalQ = currentPassage * Q_PER_PASSAGE + currentQuestionIdx + 1;
+    progressText.textContent = 'Question ' + toFa(globalQ) + ' of ' + toFa(TOTAL_QUESTIONS) + ' \u2014 Answered: ' + toFa(answeredCount) + '/' + toFa(TOTAL_QUESTIONS);
+    progressFill.style.width = ((answeredCount / TOTAL_QUESTIONS) * 100) + '%';
+  }
 }
 
-// ===== PASSAGE NAVIGATION =====
-function showPassage(idx) {
+function updatePassageNav() {
+  var prevBtn = document.getElementById('prevPassageBtn');
+  var nextBtn = document.getElementById('nextPassageBtn');
+  var indicator = document.getElementById('passageIndicator');
+  var navBar = document.getElementById('passageNavBar');
+  var progressBar = document.getElementById('progressBar');
+  navBar.classList.add('visible');
+  progressBar.classList.add('visible');
+  prevBtn.disabled = currentPassage === 0;
+  indicator.textContent = 'Passage ' + toFa(currentPassage + 1) + ' of ' + toFa(TOTAL_PASSAGES);
+  if (currentPassage === TOTAL_PASSAGES - 1) {
+    nextBtn.style.display = 'none';
+  } else {
+    nextBtn.style.display = '';
+    nextBtn.textContent = 'Next Passage \u2192';
+  }
+}
+
+function navigatePassage(direction) {
+  var newPassage = currentPassage + direction;
+  if (newPassage < 0 || newPassage >= TOTAL_PASSAGES) return;
+  goToPassage(newPassage);
+}
+
+function goToPassage(idx) {
   currentPassage = idx;
-  document.querySelectorAll('.passage-card').forEach(c => c.classList.remove('active'));
-  document.querySelectorAll('.passage-btn').forEach((b, i) => {
-    b.classList.remove('active');
-    if (i === idx) b.classList.add('active');
-  });
-  document.querySelector(`[data-passage="${idx}"]`).classList.add('active');
-  document.querySelector('.quiz-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-// ===== TIMER =====
-function startTimer() {
-  if (timerRunning) return;
-  timerRunning = true;
-  document.getElementById('pauseBtn').style.display = '';
-  document.getElementById('resumeBtn').style.display = 'none';
-  document.getElementById('quizToolbar').classList.add('visible');
-  timerInterval = setInterval(() => {
-    totalSeconds--;
-    if (totalSeconds <= 0) {
-      clearInterval(timerInterval);
-      totalSeconds = 0;
-      alert('Time is up! Checking your answers...');
-      checkAllAnswers();
+  currentQuestionIdx = 0;
+  if (passageCompleted[idx]) {
+    var pq = questionsData[idx];
+    for (var i = 0; i < pq.length; i++) {
+      var ans = answers[pq[i].id];
+      if (!ans || ans === '') { currentQuestionIdx = i; break; }
     }
-    updateTimerDisplay();
-  }, 1000);
-}
-
-function pauseTimer() {
-  if (!timerRunning) return;
-  clearInterval(timerInterval);
-  timerRunning = false;
-  document.getElementById('pauseBtn').style.display = 'none';
-  document.getElementById('resumeBtn').style.display = '';
-}
-
-function resumeTimer() {
-  startTimer();
-}
-
-function updateTimerDisplay() {
-  const m = Math.floor(totalSeconds / 60);
-  const s = totalSeconds % 60;
-  const display = document.getElementById('timerText');
-  display.textContent = toFa(`${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`);
-  const timerEl = document.getElementById('timerDisplay');
-  if (totalSeconds <= 300) {
-    timerEl.classList.add('warning');
-  } else {
-    timerEl.classList.remove('warning');
   }
+  renderPassageView();
+  updateProgressBar();
+  updatePassageNav();
+  document.getElementById('quizArea').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-// ===== TOOLBAR UPDATE =====
-function updateToolbar() {
-  let answered = 0;
-  const flat = questionsData.flat();
-  flat.forEach(q => {
-    const userAnswer = getAnswer(q.id);
-    if (userAnswer !== null && userAnswer !== '') answered++;
+function renderPassageView() {
+  var area = document.getElementById('quizArea');
+  var p = passages[currentPassage];
+  var pq = questionsData[currentPassage];
+  var qIdx = currentQuestionIdx;
+  var q = pq[qIdx];
+  var types = { tf: 'True / False / Not Given', mc: 'Multiple Choice', mh: 'Matching Headings', fb: 'Fill in the Blank' };
+  var typeCls = { tf: 'type-tf', mc: 'type-mc', mh: 'type-mh', fb: 'type-fb' };
+  var html = '';
+  var diffClass = p.difficulty === 'easy' ? 'diff-easy' : p.difficulty === 'medium' ? 'diff-medium' : 'diff-hard';
+
+  // Passage card
+  html += '<div class="passage-card-new">';
+  html += '<div class="passage-meta">';
+  html += '<div class="passage-title">' + p.emoji + ' Passage ' + toFa(currentPassage + 1) + ': ' + p.topicEN + '</div>';
+  html += '<span class="passage-difficulty ' + diffClass + '">Level: ' + p.difficultyEN + '</span>';
+  html += '</div>';
+
+  // Collapsible passage text
+  html += '<div class="passage-text-wrapper">';
+  html += '<button class="passage-toggle-btn" onclick="togglePassageText()" id="passageToggleBtn">\uD83D\uDCD6 Show Passage Text</button>';
+  html += '<div class="passage-text collapsed" id="passageTextBlock">';
+  p.text.forEach(function(para) {
+    html += '<div class="passage-paragraph">' + para + '</div>';
   });
-  document.getElementById('answeredLabel').textContent = `Answered: ${toFa(answered)}/${toFa(TOTAL_QUESTIONS)}`;
-  const pct = Math.round((answered / TOTAL_QUESTIONS) * 100);
-  document.getElementById('globalBarFill').style.width = pct + '%';
-}
+  html += '</div></div>';
 
-// ===== GET ANSWER =====
-function getAnswer(qid) {
-  const q = questionsData.flat().find(x => x.id === qid);
-  if (!q) return null;
-  if (q.type === 'tf' || q.type === 'mc') {
-    const sel = document.querySelector(`input[name="${qid}"]:checked`);
-    return sel ? sel.value : null;
-  } else {
-    const inp = document.getElementById(`input-${qid}`);
-    return inp ? inp.value.trim() : null;
+  // Vocabulary
+  if (p.vocab && p.vocab.length > 0) {
+    html += '<div style="margin-top:1rem;"><button class="passage-toggle-btn" onclick="toggleVocab()" id="vocabToggleBtn">\uD83D\uDCDA Key Vocabulary</button>';
+    html += '<div class="vocab-box" id="vocabBox" style="display:none;">';
+    html += '<h4>\uD83D\uDCD6 Essential Vocabulary for This Passage</h4>';
+    p.vocab.forEach(function(v) {
+      html += '<div class="vocab-item">';
+      html += '<div><span class="vocab-word">' + v.word + '</span><span class="vocab-pos">(' + v.pos + ')</span></div>';
+      html += '<div class="vocab-def">' + v.def + '</div>';
+      html += '<div class="vocab-ex">\u201C' + v.ex + '\u201D</div>';
+      html += '</div>';
+    });
+    html += '</div></div>';
+  }
+  html += '</div>'; // end passage-card-new
+
+  // Question card
+  html += '<div class="question-card-single">';
+  html += '<div class="question-header">';
+  html += '<span class="q-type-badge ' + typeCls[q.type] + '">' + types[q.type] + '</span>';
+  html += '<span class="q-progress-mini">Q' + toFa(qIdx + 1) + ' of ' + toFa(Q_PER_PASSAGE) + ' in this passage</span>';
+  html += '</div>';
+  html += '<div class="question-text-single">' + q.text + '</div>';
+
+  var savedAnswer = answers[q.id];
+
+  if (q.type === 'tf') {
+    html += '<div class="options-list-new" id="optionsList">';
+    ['True', 'False', 'Not Given'].forEach(function(opt) {
+      var checked = savedAnswer === opt ? 'checked' : '';
+      var selectedCls = savedAnswer === opt ? ' selected' : '';
+      html += '<label class="' + selectedCls + '" onclick="selectOptionNew(this)"><input type="radio" name="' + q.id + '" value="' + opt + '" ' + checked + '> ' + opt + '</label>';
+    });
+    html += '</div>';
+  } else if (q.type === 'mc') {
+    html += '<div class="options-list-new" id="optionsList">';
+    q.options.forEach(function(opt, oi) {
+      var checked = savedAnswer === toFa(oi) ? 'checked' : '';
+      var selectedCls = savedAnswer === toFa(oi) ? ' selected' : '';
+      html += '<label class="' + selectedCls + '" onclick="selectOptionNew(this)"><input type="radio" name="' + q.id + '" value="' + oi + '" ' + checked + '> ' + opt + '</label>';
+    });
+    html += '</div>';
+  } else if (q.type === 'mh') {
+    html += '<select class="mh-select-new" id="input-' + q.id + '" onchange="onInputChanged()">';
+    html += '<option value="">\u2014 Select heading \u2014</option>';
+    q.options.forEach(function(opt, oi) {
+      var selected = savedAnswer === toFa(oi) ? 'selected' : '';
+      html += '<option value="' + oi + '" ' + selected + '>' + opt + '</option>';
+    });
+    html += '</select>';
+  } else if (q.type === 'fb') {
+    html += '<input type="text" class="fill-input-new" id="input-' + q.id + '" placeholder="Type your answer..." value="' + (savedAnswer || '') + '" oninput="onInputChanged()">';
+  }
+
+  html += '<button class="submit-btn" id="submitBtn" onclick="submitAnswer()">\u2713 Submit Answer</button>';
+  html += '<div class="answer-feedback" id="answerFeedback"></div>';
+  html += '</div>'; // end question-card-single
+
+  // Passage complete card
+  html += '<div class="passage-complete-card" id="passageCompleteCard">';
+  html += '<h3>\uD83C\uDF89 Passage ' + toFa(currentPassage + 1) + ' Complete!</h3>';
+  html += '<p>You\'ve answered all 5 questions for "' + p.topicEN + '"</p>';
+  if (currentPassage < TOTAL_PASSAGES - 1) {
+    html += '<button class="next-passage-btn" onclick="goToPassage(' + (currentPassage + 1) + ')">Next Passage \u2192</button>';
+  }
+  html += '</div>';
+
+  // Check result card
+  if (allAnswered && !quizFinished) {
+    html += '<div class="check-result-card visible" id="checkResultCard">';
+    html += '<h3>\uD83C\uDFC6 All 75 Questions Answered!</h3>';
+    html += '<p>Click below to see your detailed results and estimated band score.</p>';
+    html += '<button class="check-result-btn" onclick="showResults()">\uD83D\uDCCA Check Result</button>';
+    html += '</div>';
+  }
+  if (currentPassage === TOTAL_PASSAGES - 1 && passageCompleted[currentPassage] && !quizFinished) {
+    html += '<div class="check-result-card visible" id="checkResultCard">';
+    html += '<h3>\uD83C\uDFC6 All Passages Complete!</h3>';
+    html += '<p>You\'ve finished all 15 passages. Ready to see your results?</p>';
+    html += '<button class="check-result-btn" onclick="showResults()">\uD83D\uDCCA Check Result</button>';
+    html += '</div>';
+  }
+
+  area.innerHTML = html;
+
+  if (passageCompleted[currentPassage]) {
+    var completeCard = document.getElementById('passageCompleteCard');
+    if (completeCard) {
+      completeCard.classList.add('visible');
+      var submitBtn = document.getElementById('submitBtn');
+      if (submitBtn) submitBtn.style.display = 'none';
+    }
   }
 }
 
-// ===== CHECK ALL ANSWERS =====
-function checkAllAnswers() {
-  startTimer();
-  hasBeenChecked = true;
-  if (timerRunning) clearInterval(timerInterval);
-  timerRunning = false;
-  document.getElementById('pauseBtn').style.display = 'none';
-  document.getElementById('resumeBtn').style.display = 'none';
+function togglePassageText() {
+  var textBlock = document.getElementById('passageTextBlock');
+  var btn = document.getElementById('passageToggleBtn');
+  if (textBlock.classList.contains('collapsed')) {
+    textBlock.classList.remove('collapsed');
+    btn.textContent = '\uD83D\uDCD6 Hide Passage Text';
+  } else {
+    textBlock.classList.add('collapsed');
+    btn.textContent = '\uD83D\uDCD6 Show Passage Text';
+  }
+}
 
-  let correct = 0, incorrect = 0, unanswered = 0;
-  const passageScores = Array(TOTAL_PASSAGES).fill(0);
-  const questionDetails = []; // For results summary
+function toggleVocab() {
+  var box = document.getElementById('vocabBox');
+  var btn = document.getElementById('vocabToggleBtn');
+  if (box.style.display === 'none') {
+    box.style.display = 'block';
+    btn.textContent = '\uD83D\uDCDA Hide Vocabulary';
+  } else {
+    box.style.display = 'none';
+    btn.textContent = '\uD83D\uDCDA Key Vocabulary';
+  }
+}
 
-  questionsData.forEach((passageQs, pi) => {
-    passageQs.forEach((q, qi) => {
-      const userAnswer = getAnswer(q.id);
-      const qb = document.getElementById(`qb-${q.id}`);
-      const ansEl = document.getElementById(`ans-${q.id}`);
-      const qn = document.getElementById(`qn-${q.id}`);
-      qb.classList.remove('correct', 'incorrect', 'unanswered');
+function selectOptionNew(label) {
+  var list = label.closest('.options-list-new');
+  list.querySelectorAll('label').forEach(function(l) { l.classList.remove('selected'); });
+  label.classList.add('selected');
+  var radio = label.querySelector('input[type="radio"]');
+  if (radio) { answers[radio.name] = radio.value; }
+  updateProgressBar();
+}
 
-      if (userAnswer === null || userAnswer === '') {
+function onInputChanged() {
+  var pq = questionsData[currentPassage];
+  var q = pq[currentQuestionIdx];
+  var inp = document.getElementById('input-' + q.id);
+  if (inp) { answers[q.id] = inp.value.trim(); }
+  updateProgressBar();
+}
+
+function submitAnswer() {
+  var pq = questionsData[currentPassage];
+  var q = pq[currentQuestionIdx];
+  var submitBtn = document.getElementById('submitBtn');
+  var feedback = document.getElementById('answerFeedback');
+  var userAnswer = answers[q.id] || '';
+  var isCorrect = false;
+  var isUnanswered = false;
+
+  if (!userAnswer || userAnswer === '') {
+    isUnanswered = true;
+  } else {
+    if (q.type === 'mc' || q.type === 'mh') {
+      isCorrect = parseInt(userAnswer) === q.answer;
+    } else {
+      isCorrect = userAnswer.toLowerCase() === q.answer.toLowerCase();
+    }
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = isCorrect ? '\u2705 Correct!' : isUnanswered ? '\u26A0\uFE0F Unanswered' : '\u274C Incorrect';
+
+  feedback.classList.add('visible');
+  if (isUnanswered) {
+    feedback.className = 'answer-feedback visible is-unanswered';
+    feedback.innerHTML = '\u26A0\uFE0F <strong>No answer selected</strong> \u2014 Correct answer: <strong>' + getCorrectAnswerText(q) + '</strong><span class="explanation-text">\uD83D\uDCA1 ' + q.explanation + '</span>';
+  } else if (isCorrect) {
+    feedback.className = 'answer-feedback visible is-correct';
+    feedback.innerHTML = '\u2705 <strong>Correct!</strong><span class="explanation-text">\uD83D\uDCA1 ' + q.explanation + '</span>';
+  } else {
+    feedback.className = 'answer-feedback visible is-incorrect';
+    feedback.innerHTML = '\u274C <strong>Incorrect</strong> \u2014 Your answer: <strong>' + getUserAnswerText(q) + '</strong> \u2014 Correct answer: <strong>' + getCorrectAnswerText(q) + '</strong><span class="explanation-text">\uD83D\uDCA1 ' + q.explanation + '</span>';
+  }
+
+  if (isUnanswered) { answers[q.id] = ''; }
+
+  setTimeout(function() { advanceToNext(); }, 1200);
+}
+
+function getCorrectAnswerText(q) {
+  if (q.type === 'tf') return q.answer;
+  if (q.type === 'mc') return q.options[q.answer];
+  if (q.type === 'mh') return q.options[q.answer];
+  return q.answer;
+}
+
+function getUserAnswerText(q) {
+  var ans = answers[q.id];
+  if (!ans || ans === '') return '(no answer)';
+  if (q.type === 'tf') return ans;
+  if (q.type === 'mc') return q.options[parseInt(ans)];
+  if (q.type === 'mh') return q.options[parseInt(ans)];
+  return ans;
+}
+
+function advanceToNext() {
+  currentQuestionIdx++;
+  if (currentQuestionIdx >= Q_PER_PASSAGE) {
+    passageCompleted[currentPassage] = true;
+    currentQuestionIdx = Q_PER_PASSAGE - 1;
+    if (checkAllAnswered()) { quizFinished = true; }
+    renderPassageView();
+    updateProgressBar();
+    updatePassageNav();
+    setTimeout(function() {
+      var completeCard = document.getElementById('passageCompleteCard');
+      if (completeCard) {
+        completeCard.classList.add('visible');
+        completeCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      if (quizFinished) {
+        var checkCard = document.getElementById('checkResultCard');
+        if (checkCard) checkCard.classList.add('visible');
+      }
+    }, 100);
+    return;
+  }
+  renderPassageView();
+  updateProgressBar();
+  updatePassageNav();
+}
+
+function showResults() {
+  quizFinished = true;
+  document.getElementById('quizArea').innerHTML = '';
+  document.getElementById('passageNavBar').classList.remove('visible');
+
+  var correct = 0, incorrect = 0, unanswered = 0;
+  var passageScores = Array(TOTAL_PASSAGES).fill(0);
+
+  questionsData.forEach(function(passageQs, pi) {
+    passageQs.forEach(function(q) {
+      var userAnswer = answers[q.id];
+      if (userAnswer === undefined || userAnswer === null || userAnswer === '') {
         unanswered++;
-        qb.classList.add('unanswered');
-        qn.classList.add('unanswered');
-        ansEl.className = 'correct-answer visible is-unanswered';
-        ansEl.innerHTML = `⚠️ <strong>Unanswered</strong> — Correct answer: ${getCorrectAnswerText(q)}<span class="explanation">💡 ${q.explanation}</span>`;
-        questionDetails.push({ passage: pi, question: qi, status: 'unanswered' });
         return;
       }
-
-      let isCorrect = false;
+      var isCorrect = false;
       if (q.type === 'mc' || q.type === 'mh') {
         isCorrect = parseInt(userAnswer) === q.answer;
       } else {
         isCorrect = userAnswer.toLowerCase() === q.answer.toLowerCase();
       }
-
-      if (isCorrect) {
-        correct++;
-        passageScores[pi]++;
-        qb.classList.add('correct');
-        qn.classList.add('correct');
-        ansEl.className = 'correct-answer visible is-correct';
-        ansEl.innerHTML = `✅ <strong>Correct!</strong><span class="explanation">💡 ${q.explanation}</span>`;
-        highlightSelectedAnswer(q, true);
-        questionDetails.push({ passage: pi, question: qi, status: 'correct' });
-      } else {
-        incorrect++;
-        qb.classList.add('incorrect');
-        qn.classList.add('incorrect');
-        ansEl.className = 'correct-answer visible is-incorrect';
-        ansEl.innerHTML = `❌ <strong>Incorrect</strong> — Correct answer: ${getCorrectAnswerText(q)}<span class="explanation">💡 ${q.explanation}</span>`;
-        highlightSelectedAnswer(q, false);
-        questionDetails.push({ passage: pi, question: qi, status: 'incorrect' });
-      }
+      if (isCorrect) { correct++; passageScores[pi]++; }
+      else { incorrect++; }
     });
-
-    // Show per-passage score bar
-    const psb = document.getElementById(`psb-${pi}`);
-    const psf = document.getElementById(`psf-${pi}`);
-    const pst = document.getElementById(`pst-${pi}`);
-    if (psb) {
-      psb.style.display = 'flex';
-      const pct = Math.round((passageScores[pi] / 5) * 100);
-      psf.style.width = pct + '%';
-      pst.textContent = `${toFa(passageScores[pi])}/5`;
-      const color = pct >= 80 ? 'var(--success)' : pct >= 40 ? 'var(--accent)' : '#ef4444';
-      psf.style.background = color;
-    }
   });
 
-  // Update score panel
-  document.getElementById('scorePanel').classList.add('visible');
-  document.getElementById('scoreNumber').textContent = `${toFa(correct)}/${toFa(TOTAL_QUESTIONS)}`;
-  document.getElementById('correctCount').textContent = toFa(correct);
-  document.getElementById('incorrectCount').textContent = toFa(incorrect);
-  document.getElementById('unansweredCount').textContent = toFa(unanswered);
-  document.getElementById('scoreProgressFill').style.width = Math.round((correct / TOTAL_QUESTIONS) * 100) + '%';
-  document.getElementById('scoreLabel').textContent = `Score: ${toFa(correct)}`;
+  var pct = Math.round((correct / TOTAL_QUESTIONS) * 100);
+  var band = '', bandDesc = '';
+  if (pct >= 95) { band = 'Band 9.0 \uD83C\uDFC6'; bandDesc = 'Expert User'; }
+  else if (pct >= 90) { band = 'Band 8.5 \u2B50'; bandDesc = 'Very Good User'; }
+  else if (pct >= 80) { band = 'Band 8.0 \u2B50'; bandDesc = 'Very Good User'; }
+  else if (pct >= 70) { band = 'Band 7.0 \uD83D\uDC4D'; bandDesc = 'Good User'; }
+  else if (pct >= 60) { band = 'Band 6.5'; bandDesc = 'Competent User'; }
+  else if (pct >= 55) { band = 'Band 6.0 \u2713'; bandDesc = 'Competent User'; }
+  else if (pct >= 50) { band = 'Band 5.5'; bandDesc = 'Modest User'; }
+  else if (pct >= 40) { band = 'Band 5.0'; bandDesc = 'Modest User'; }
+  else if (pct >= 30) { band = 'Band 4.0'; bandDesc = 'Limited User'; }
+  else { band = 'Band 3.0 \u2014 Keep Practising!'; bandDesc = 'Needs more practice'; }
 
-  // IELTS Band estimation
-  const pct = correct / TOTAL_QUESTIONS;
-  let band = '', bandDescription = '';
-  if (pct >= 0.95) { band = 'Band 9.0 🏆'; bandDescription = 'Expert User'; }
-  else if (pct >= 0.90) { band = 'Band 8.5 ⭐'; bandDescription = 'Very Good User'; }
-  else if (pct >= 0.80) { band = 'Band 8.0 ⭐'; bandDescription = 'Very Good User'; }
-  else if (pct >= 0.70) { band = 'Band 7.0 👍'; bandDescription = 'Good User'; }
-  else if (pct >= 0.60) { band = 'Band 6.5'; bandDescription = 'Competent User'; }
-  else if (pct >= 0.55) { band = 'Band 6.0 ✓'; bandDescription = 'Competent User'; }
-  else if (pct >= 0.50) { band = 'Band 5.5'; bandDescription = 'Modest User'; }
-  else if (pct >= 0.40) { band = 'Band 5.0'; bandDescription = 'Modest User'; }
-  else if (pct >= 0.30) { band = 'Band 4.0'; bandDescription = 'Limited User'; }
-  else { band = 'Band 3.0 — Keep Practising!'; bandDescription = 'Needs more practice'; }
-  document.getElementById('bandDisplay').textContent = `${band} — ${bandDescription}`;
+  var html = '';
+  html += '<div class="results-hero">';
+  html += '<h2>\uD83D\uDCCA Your Results</h2>';
+  html += '<div class="score-big">' + toFa(correct) + '/' + toFa(TOTAL_QUESTIONS) + '</div>';
+  html += '<div class="band-big">' + band + ' \u2014 ' + bandDesc + '</div>';
+  html += '<div class="pct-big">' + toFa(pct) + '% Accuracy</div>';
+  html += '<div class="progress-bar-results"><div class="progress-fill-results" id="resultProgressFill"></div></div>';
+  html += '</div>';
 
-  // Per-passage breakdown
-  const bdEl = document.getElementById('passageBreakdown');
-  let bdHtml = '<div style="font-weight:700;margin-bottom:0.5rem;text-align:center;">Passage Results:</div>';
-  passages.forEach((p, pi) => {
-    const color = passageScores[pi] >= 4 ? 'var(--success)' : passageScores[pi] >= 2 ? 'var(--accent)' : '#ef4444';
-    bdHtml += `<div style="display:flex;align-items:center;gap:0.5rem;margin:0.3rem 0;font-size:0.9rem;">`;
-    bdHtml += `<span style="min-width:100px;word-break:break-word">${p.emoji} ${p.topicEN}</span>`;
-    bdHtml += `<div style="flex:1;height:6px;background:rgba(255,255,255,0.2);border-radius:3px;overflow:hidden;">`;
-    bdHtml += `<div style="width:${(passageScores[pi] / 5) * 100}%;height:100%;background:${color};border-radius:3px;"></div>`;
-    bdHtml += `</div>`;
-    bdHtml += `<span style="min-width:30px;font-weight:700;">${toFa(passageScores[pi])}/5</span>`;
-    bdHtml += `</div>`;
-  });
-  bdEl.innerHTML = bdHtml;
+  html += '<div class="results-stats">';
+  html += '<div class="result-stat-card"><div class="stat-num">' + toFa(correct) + '</div><div class="stat-label">Correct \u2713</div></div>';
+  html += '<div class="result-stat-card"><div class="stat-num">' + toFa(incorrect) + '</div><div class="stat-label">Incorrect \u2717</div></div>';
+  html += '<div class="result-stat-card"><div class="stat-num">' + toFa(unanswered) + '</div><div class="stat-label">Unanswered</div></div>';
+  html += '<div class="result-stat-card"><div class="stat-num">' + toFa(pct) + '%</div><div class="stat-label">Accuracy</div></div>';
+  html += '</div>';
 
-  // ===== RESULTS SUMMARY =====
-  renderResultsSummary(correct, incorrect, unanswered, passageScores, band, bandDescription);
-
-  document.getElementById('reviewBtn').style.display = 'inline-block';
-  document.getElementById('scorePanel').scrollIntoView({ behavior: 'smooth' });
-
-  // Mark completed passages
-  passages.forEach((p, pi) => {
-    const btn = document.querySelector(`.passage-btn[data-idx="${pi}"]`);
-    if (btn && passageScores[pi] > 0) btn.classList.add('completed');
-  });
-}
-
-// ===== RESULTS SUMMARY =====
-function renderResultsSummary(correct, incorrect, unanswered, passageScores, band, bandDescription) {
-  const summaryEl = document.getElementById('resultsSummary');
-  summaryEl.classList.add('visible');
-  const grid = document.getElementById('resultsGrid');
-  const pctCorrect = Math.round((correct / TOTAL_QUESTIONS) * 100);
-  const avgPerPassage = (correct / TOTAL_PASSAGES).toFixed(1);
-
-  // Find weakest and strongest passages
-  let bestPassage = 0, worstPassage = 0;
-  for (let i = 0; i < TOTAL_PASSAGES; i++) {
-    if (passageScores[i] > passageScores[bestPassage]) bestPassage = i;
-    if (passageScores[i] < passageScores[worstPassage]) worstPassage = i;
-  }
-
-  grid.innerHTML = `
-    <div class="result-stat"><div class="stat-num">${pctCorrect}%</div><div class="stat-label">Overall Accuracy</div></div>
-    <div class="result-stat"><div class="stat-num">${avgPerPassage}</div><div class="stat-label">Avg. per Passage</div></div>
-    <div class="result-stat"><div class="stat-num">${correct}</div><div class="stat-label">Correct Answers</div></div>
-    <div class="result-stat"><div class="stat-num">${incorrect}</div><div class="stat-label">Incorrect Answers</div></div>
-    <div class="result-stat"><div class="stat-num">${unanswered}</div><div class="stat-label">Unanswered</div></div>
-    <div class="result-stat"><div class="stat-num">${band}</div><div class="stat-label">Estimated Band</div></div>
-  `;
-
-  // Generate personalised tips
-  const tipsEl = document.getElementById('resultsTips');
-  let tipsHtml = '<h4>💡 Personalised Recommendations</h4><ul>';
-
-  if (pctCorrect >= 80) {
-    tipsHtml += '<li><strong>Excellent performance!</strong> You demonstrate strong reading comprehension. Focus on speed to increase your confidence during the actual test.</li>';
-  } else if (pctCorrect >= 60) {
-    tipsHtml += '<li><strong>Good foundation.</strong> You\'re on track for Band 6-7. Work on identifying paraphrased vocabulary to improve accuracy further.</li>';
-  } else if (pctCorrect >= 40) {
-    tipsHtml += '<li><strong>Room for improvement.</strong> Focus on skimming and scanning techniques. Practice reading the questions before the passage to guide your search.</li>';
-  } else {
-    tipsHtml += '<li><strong>Keep practising!</strong> Start with easier passages and gradually increase difficulty. Build your vocabulary with our vocabulary lists above each passage\'s questions.</li>';
-  }
-
-  if (unanswered > 5) {
-    tipsHtml += `<li><strong>Time management:</strong> You left ${unanswered} questions unanswered. Practice with a timer and move on if a question takes more than 2 minutes.</li>`;
-  }
-
-  if (incorrect > unanswered && incorrect > 5) {
-    tipsHtml += '<li><strong>Review explanations:</strong> Your incorrect answers suggest some comprehension gaps. Re-read the passages and study the explanations carefully.</li>';
-  }
-
-  tipsHtml += `<li><strong>Strongest topic:</strong> ${passages[bestPassage].emoji} ${passages[bestPassage].topicEN} (${passageScores[bestPassage]}/5) — build on this strength.</li>`;
-  tipsHtml += `<li><strong>Weakest topic:</strong> ${passages[worstPassage].emoji} ${passages[worstPassage].topicEN} (${passageScores[worstPassage]}/5) — revisit this passage and its vocabulary.</li>`;
-  tipsHtml += '</ul>';
-  tipsEl.innerHTML = tipsHtml;
-}
-
-function getCorrectAnswerText(q) {
-  if (q.type === 'tf') return `<strong>${q.answer}</strong>`;
-  if (q.type === 'mc') return `<strong>${q.options[q.answer]}</strong>`;
-  if (q.type === 'mh') return `<strong>${q.options[q.answer]}</strong>`;
-  return `<strong>${q.answer}</strong>`;
-}
-
-function highlightSelectedAnswer(q, isCorrect) {
-  if (q.type === 'tf' || q.type === 'mc' || q.type === 'mh') {
-    const qb = document.getElementById(`qb-${q.id}`);
-    qb.querySelectorAll('label').forEach(l => {
-      const inp = l.querySelector('input');
-      if (inp && inp.checked) {
-        if (isCorrect) {
-          l.classList.add('show-correct');
-        } else {
-          l.classList.add('show-incorrect');
-        }
-      }
-    });
-    // For MH, highlight the select
-    if (q.type === 'mh') {
-      const sel = document.getElementById(`input-${q.id}`);
-      if (sel) sel.classList.add(isCorrect ? 'show-correct' : 'show-incorrect');
-    }
-  } else if (q.type === 'fb') {
-    const inp = document.getElementById(`input-${q.id}`);
-    if (inp) inp.classList.add(isCorrect ? 'show-correct' : 'show-incorrect');
-  }
-}
-
-// ===== SHOW CORRECT ANSWERS =====
-function showCorrectAnswers() {
-  hasBeenChecked = true;
-  questionsData.flat().forEach(q => {
-    const qb = document.getElementById(`qb-${q.id}`);
-    const ansEl = document.getElementById(`ans-${q.id}`);
-    qb.classList.remove('incorrect', 'unanswered');
-    qb.classList.add('correct');
-    const qn = document.getElementById(`qn-${q.id}`);
-    qn.className = 'q-number correct';
-    ansEl.className = 'correct-answer visible is-correct';
-    ansEl.innerHTML = `✅ <strong>Correct answer: ${getCorrectAnswerText(q)}</strong><span class="explanation">💡 ${q.explanation}</span>`;
-
-    if (q.type === 'tf' || q.type === 'mc') {
-      qb.querySelectorAll('label').forEach(l => {
-        l.classList.remove('selected', 'show-incorrect');
-        const inp = l.querySelector('input');
-        const correctVal = q.type === 'mc' ? String(q.answer) : q.answer;
-        if (inp && inp.value === correctVal) l.classList.add('show-correct');
-      });
-    } else if (q.type === 'mh') {
-      const sel = document.getElementById(`input-${q.id}`);
-      if (sel) {
-        sel.value = q.answer;
-        sel.classList.add('show-correct');
-      }
-    } else {
-      const inp = document.getElementById(`input-${q.id}`);
-      if (inp) { inp.value = q.answer; inp.classList.add('show-correct'); }
-    }
-  });
-  document.getElementById('scorePanel').classList.add('visible');
-  document.getElementById('scoreProgressFill').style.width = '100%';
-  document.getElementById('scoreNumber').textContent = `${toFa(TOTAL_QUESTIONS)}/${toFa(TOTAL_QUESTIONS)}`;
-  document.getElementById('correctCount').textContent = toFa(TOTAL_QUESTIONS);
-  document.getElementById('incorrectCount').textContent = '0';
-  document.getElementById('unansweredCount').textContent = '0';
-  document.getElementById('bandDisplay').textContent = 'Band 9.0 🏆 — Expert User';
-  document.getElementById('reviewBtn').style.display = 'inline-block';
-}
-
-// ===== RESET QUIZ =====
-function resetQuiz() {
-  hasBeenChecked = false;
-  totalSeconds = 60 * 60;
-  timerRunning = false;
-  if (timerInterval) clearInterval(timerInterval);
-
-  questionsData.flat().forEach(q => {
-    const qb = document.getElementById(`qb-${q.id}`);
-    const ansEl = document.getElementById(`ans-${q.id}`);
-    const qn = document.getElementById(`qn-${q.id}`);
-    qb.classList.remove('correct', 'incorrect', 'unanswered');
-    qn.className = 'q-number';
-    ansEl.className = 'correct-answer';
-    if (q.type === 'tf' || q.type === 'mc') {
-      qb.querySelectorAll('input[type=radio]').forEach(inp => { inp.checked = false; });
-      qb.querySelectorAll('.options-list label').forEach(l => l.classList.remove('selected', 'show-correct', 'show-incorrect'));
-    } else if (q.type === 'mh') {
-      const sel = document.getElementById(`input-${q.id}`);
-      if (sel) { sel.value = ''; sel.classList.remove('show-correct', 'show-incorrect'); }
-    } else {
-      const inp = document.getElementById(`input-${q.id}`);
-      if (inp) { inp.value = ''; inp.classList.remove('show-correct', 'show-incorrect'); }
-    }
+  html += '<div class="passage-breakdown-title">\uD83D\uDCCB Per-Passage Breakdown</div>';
+  passages.forEach(function(p, pi) {
+    var score = passageScores[pi];
+    var barPct = (score / 5) * 100;
+    var color = score >= 4 ? 'var(--success)' : score >= 2 ? 'var(--primary)' : '#ef4444';
+    html += '<div class="passage-score-row">';
+    html += '<span class="psr-label">' + p.emoji + ' ' + p.topicEN + '</span>';
+    html += '<div class="psr-bar"><div class="psr-fill" style="width:' + barPct + '%;background:' + color + ';"></div></div>';
+    html += '<span class="psr-score">' + toFa(score) + '/5</span>';
+    html += '</div>';
   });
 
-  document.getElementById('scorePanel').classList.remove('visible');
-  document.getElementById('resultsSummary').classList.remove('visible');
-  document.getElementById('quizToolbar').classList.remove('visible');
-  document.getElementById('timerText').textContent = '60:00';
-  document.getElementById('timerDisplay').classList.remove('warning');
-  document.getElementById('globalBarFill').style.width = '0%';
-  document.getElementById('answeredLabel').textContent = `Answered: 0/${TOTAL_QUESTIONS}`;
-  document.getElementById('scoreLabel').textContent = 'Score: 0';
-  document.getElementById('reviewBtn').style.display = 'none';
-  document.getElementById('pauseBtn').style.display = '';
-  document.getElementById('resumeBtn').style.display = 'none';
-  document.querySelectorAll('.passage-score-bar').forEach(b => b.style.display = 'none');
-  document.querySelectorAll('.passage-btn').forEach(b => b.classList.remove('completed'));
+  html += '<div class="results-actions">';
+  html += '<button class="btn btn-primary" onclick="startReview()">\uD83D\uDCCB Review Answers</button>';
+  html += '<button class="btn btn-accent" onclick="resetQuiz()">\uD83D\uDD04 Reset All</button>';
+  html += '</div>';
 
-  reviewMode = false;
-  showPassage(0);
-}
-
-// ===== REVIEW MODE =====
-function toggleReviewMode() {
-  reviewMode = !reviewMode;
-  const btn = document.getElementById('reviewBtn');
-  if (reviewMode) {
-    btn.textContent = '📖 Normal View';
-    startReview();
-  } else {
-    btn.textContent = '📋 Review Questions';
-    endReview();
-  }
+  var resultsScreen = document.getElementById('resultsScreen');
+  resultsScreen.innerHTML = html;
+  resultsScreen.classList.add('visible');
+  setTimeout(function() {
+    var fill = document.getElementById('resultProgressFill');
+    if (fill) fill.style.width = pct + '%';
+  }, 100);
+  resultsScreen.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function startReview() {
-  currentReviewQ = 0;
-  showReviewQuestion();
+  reviewMode = true;
+  reviewCurrentQ = 0;
+  document.getElementById('resultsScreen').classList.remove('visible');
+  document.getElementById('quizArea').innerHTML = '';
+  renderReviewQuestion();
 }
 
-function showReviewQuestion() {
-  const flat = questionsData.flat();
-  if (currentReviewQ >= flat.length) {
-    currentReviewQ = flat.length - 1;
-  }
-
-  // Hide all passage cards
-  document.querySelectorAll('.passage-card').forEach(c => c.classList.remove('active'));
-
-  // Determine which passage this question belongs to
-  let qIndex = 0;
-  let passageIdx = 0;
-  let qIdxInPassage = 0;
-  for (let pi = 0; pi < questionsData.length; pi++) {
-    if (qIndex + questionsData[pi].length > currentReviewQ) {
+function renderReviewQuestion() {
+  var container = document.getElementById('reviewContainer');
+  var flat = questionsData.flat();
+  var q = flat[reviewCurrentQ];
+  var passageIdx = 0, qIdx = 0, running = 0;
+  for (var pi = 0; pi < questionsData.length; pi++) {
+    if (running + questionsData[pi].length > reviewCurrentQ) {
       passageIdx = pi;
-      qIdxInPassage = currentReviewQ - qIndex;
+      qIdx = reviewCurrentQ - running;
       break;
     }
-    qIndex += questionsData[pi].length;
+    running += questionsData[pi].length;
   }
 
-  // Show that passage
-  document.querySelector(`[data-passage="${passageIdx}"]`).classList.add('active');
-
-  // Scroll to question
-  const q = flat[currentReviewQ];
-  const qb = document.getElementById(`qb-${q.id}`);
-  if (qb) {
-    qb.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    qb.style.boxShadow = '0 0 0 3px var(--primary)';
-    setTimeout(() => { qb.style.boxShadow = ''; }, 2000);
+  var p = passages[passageIdx];
+  var types = { tf: 'True / False / Not Given', mc: 'Multiple Choice', mh: 'Matching Headings', fb: 'Fill in the Blank' };
+  var typeCls = { tf: 'type-tf', mc: 'type-mc', mh: 'type-mh', fb: 'type-fb' };
+  var userAnswer = answers[q.id] || '';
+  var status = 'unanswered';
+  var isCorrect = false;
+  if (userAnswer !== '') {
+    if (q.type === 'mc' || q.type === 'mh') { isCorrect = parseInt(userAnswer) === q.answer; }
+    else { isCorrect = userAnswer.toLowerCase() === q.answer.toLowerCase(); }
+    status = isCorrect ? 'correct' : 'incorrect';
   }
 
-  // Update nav to show which passage
-  document.querySelectorAll('.passage-btn').forEach((b, i) => {
-    b.classList.remove('active');
-    if (i === passageIdx) b.classList.add('active');
-  });
+  var html = '';
+  html += '<div class="review-nav">';
+  html += '<button onclick="reviewPrev()" ' + (reviewCurrentQ === 0 ? 'disabled' : '') + '>\u25C0 Previous</button>';
+  html += '<span>Q' + toFa(reviewCurrentQ + 1) + ' of ' + toFa(TOTAL_QUESTIONS) + '</span>';
+  html += '<button onclick="reviewNext()" ' + (reviewCurrentQ >= flat.length - 1 ? 'disabled' : '') + '>Next \u25B6</button>';
+  html += '</div>';
+  html += '<div style="text-align:center;margin-bottom:1rem;"><button class="btn btn-outline" onclick="backToResults()">\u2190 Back to Results</button></div>';
 
-  // Add review navigation bar if not exists
-  let revBar = document.getElementById('reviewBar');
-  if (!revBar) {
-    revBar = document.createElement('div');
-    revBar.id = 'reviewBar';
-    revBar.style.cssText = 'position:sticky;top:120px;z-index:60;background:var(--primary);color:#fff;padding:0.75rem 1.5rem;display:flex;justify-content:space-between;align-items:center;border-radius:8px;margin-bottom:1rem;';
-    document.querySelector('.quiz-container').prepend(revBar);
+  var statusClass = status === 'correct' ? 'review-correct' : status === 'incorrect' ? 'review-incorrect' : 'review-unanswered';
+  html += '<div class="review-question-card ' + statusClass + '">';
+  html += '<div class="review-passage-ref">' + p.emoji + ' Passage ' + toFa(passageIdx + 1) + ': ' + p.topicEN + ' \u2014 Question ' + toFa(qIdx + 1) + '</div>';
+  html += '<div class="question-header">';
+  html += '<span class="q-type-badge ' + typeCls[q.type] + '">' + types[q.type] + '</span>';
+  if (status === 'correct') html += '<span style="color:var(--success);font-weight:700;">\u2705 Correct</span>';
+  else if (status === 'incorrect') html += '<span style="color:#ef4444;font-weight:700;">\u274C Incorrect</span>';
+  else html += '<span style="color:#f59e0b;font-weight:700;">\u26A0\uFE0F Unanswered</span>';
+  html += '</div>';
+  html += '<div class="question-text-single">' + q.text + '</div>';
+
+  if (q.type === 'tf' || q.type === 'mc' || q.type === 'mh') {
+    var options = q.type === 'tf' ? ['True', 'False', 'Not Given'] : q.options;
+    html += '<div class="options-list-new">';
+    options.forEach(function(opt, oi) {
+      var cls = '', marker = '';
+      if (q.type === 'tf') {
+        if (opt === q.answer) { cls = 'selected'; marker = ' \u2705'; }
+        if (opt === userAnswer && !isCorrect) { marker = ' \u274C (your answer)'; }
+      } else {
+        if (toFa(oi) === toFa(q.answer)) { cls = 'selected'; marker = ' \u2705'; }
+        if (toFa(oi) === userAnswer && !isCorrect) { marker = ' \u274C (your answer)'; }
+      }
+      html += '<label class="' + cls + '" style="pointer-events:none;"><input type="radio" disabled> ' + opt + marker + '</label>';
+    });
+    html += '</div>';
+  } else {
+    html += '<div style="margin-top:0.5rem;">';
+    html += '<div style="font-size:0.9rem;color:var(--text-light);">Your answer: <strong style="color:' + (isCorrect ? 'var(--success)' : '#ef4444') + '">' + (userAnswer || '(no answer)') + '</strong></div>';
+    html += '<div style="font-size:0.9rem;color:var(--text-light);">Correct answer: <strong style="color:var(--success)">' + q.answer + '</strong></div>';
+    html += '</div>';
   }
-  revBar.style.display = 'flex';
-  revBar.innerHTML = `
-    <button class="btn" style="background:rgba(255,255,255,0.2);color:#fff;border:none;" onclick="reviewPrev()" ${currentReviewQ === 0 ? 'disabled style="opacity:0.3"' : ''}>◀ Previous</button>
-    <span style="font-weight:700;">Question ${toFa(currentReviewQ + 1)} of ${toFa(flat.length)}</span>
-    <button class="btn" style="background:rgba(255,255,255,0.2);color:#fff;border:none;" onclick="reviewNext()" ${currentReviewQ >= flat.length - 1 ? 'disabled style="opacity:0.3"' : ''}>Next ▶</button>
-  `;
+
+  html += '<div class="answer-feedback visible ' + (isCorrect ? 'is-correct' : userAnswer === '' ? 'is-unanswered' : 'is-incorrect') + '">';
+  html += '<span class="explanation-text">\uD83D\uDCA1 ' + q.explanation + '</span>';
+  html += '</div>';
+  html += '</div>';
+
+  container.innerHTML = html;
+  container.classList.add('visible');
+  container.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function reviewNext() {
-  const flat = questionsData.flat();
-  if (currentReviewQ < flat.length - 1) {
-    currentReviewQ++;
-    showReviewQuestion();
-  }
+  var flat = questionsData.flat();
+  if (reviewCurrentQ < flat.length - 1) { reviewCurrentQ++; renderReviewQuestion(); }
 }
 
 function reviewPrev() {
-  if (currentReviewQ > 0) {
-    currentReviewQ--;
-    showReviewQuestion();
-  }
+  if (reviewCurrentQ > 0) { reviewCurrentQ--; renderReviewQuestion(); }
 }
 
-function endReview() {
-  const revBar = document.getElementById('reviewBar');
-  if (revBar) revBar.style.display = 'none';
-  showPassage(currentPassage);
+function backToResults() {
+  reviewMode = false;
+  document.getElementById('reviewContainer').classList.remove('visible');
+  document.getElementById('reviewContainer').innerHTML = '';
+  showResults();
+}
+
+function resetQuiz() {
+  if (!confirm('Are you sure you want to reset all answers? This cannot be undone.')) return;
+  answers = {};
+  passageCompleted = [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false];
+  allAnswered = false;
+  quizFinished = false;
+  reviewMode = false;
+  reviewCurrentQ = 0;
+  currentPassage = 0;
+  currentQuestionIdx = 0;
+  document.getElementById('resultsScreen').classList.remove('visible');
+  document.getElementById('resultsScreen').innerHTML = '';
+  document.getElementById('reviewContainer').classList.remove('visible');
+  document.getElementById('reviewContainer').innerHTML = '';
+  document.getElementById('progressFill').style.width = '0%';
+  goToPassage(0);
 }
 
 // ===== INIT =====
-renderAllPassages();
-renderQuestions();
+document.addEventListener('DOMContentLoaded', function() {
+  goToPassage(0);
+});
 </script>
-<script src="../js/nav.js"></script>
 </body>
 </html>
