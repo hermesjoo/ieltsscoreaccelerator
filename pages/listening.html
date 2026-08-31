@@ -842,6 +842,113 @@ if(typeof speechSynthesis!=='undefined'){window.speechSynthesis.getVoices();wind
 
 // ===== Vocabulary =====
 
+// IELTS Listening high-frequency academic vocabulary
+const LISTENING_VOCAB = [
+  {word:"accommodation", pos:"noun", def:"A place to live or stay; lodging often arranged for students or travellers."},
+  {word:"enrol", pos:"verb", def:"To officially register for a course or membership."},
+  {word:"orientation", pos:"noun", def:"An introduction session explaining how a course, campus, or system works."},
+  {word:"timetable", pos:"noun", def:"A schedule showing the times of classes, events, or transport."},
+  {word:"deposit", pos:"noun", def:"A partial payment held as security, often refundable."},
+  {word:"refund", pos:"noun / verb", def:"Money returned when a purchase or booking is cancelled."},
+  {word:"registration", pos:"noun", def:"The official process of signing up for a course, event, or service."},
+  {word:"lecture", pos:"noun", def:"A formal talk given to teach students, common in universities."},
+  {word:"seminar", pos:"noun", def:"A small-group discussion class led by a tutor."},
+  {word:"assignment", pos:"noun", def:"A piece of work given to students as part of their course."},
+  {word:"deadline", pos:"noun", def:"The latest time by which something must be submitted or completed."},
+  {word:"extension", pos:"noun", def:"Extra time granted beyond an original deadline."},
+  {word:"bibliography", pos:"noun", def:"A list of sources referenced in academic writing."},
+  {word:"journal", pos:"noun", def:"An academic periodical publishing peer-reviewed research."},
+  {word:"questionnaire", pos:"noun", def:"A written set of questions used for surveys or research."},
+  {word:"survey", pos:"noun", def:"An investigation of opinions or facts by asking people questions."},
+  {word:"recommendation", pos:"noun", def:"A suggestion or piece of advice, often formal or written."},
+  {word:"insurance", pos:"noun", def:"Financial protection against loss, damage, or illness."},
+  {word:"facility", pos:"noun", def:"A building, service, or piece of equipment provided for a purpose."},
+  {word:"excursion", pos:"noun", def:"A short trip or outing, often educational or recreational."},
+  {word:"itinerary", pos:"noun", def:"A planned route or schedule for a journey."},
+  {word:"platform", pos:"noun", def:"The raised area at a station where you get on or off a train."},
+  {word:"terminus", pos:"noun", def:"The end station of a rail or bus line."},
+  {word:"vacancy", pos:"noun", def:"An available room, job, or position."},
+  {word:"renovation", pos:"noun", def:"The act of improving or restoring a building."},
+  {word:"appliance", pos:"noun", def:"A device or machine for household use, e.g. a washing machine."},
+  {word:"warranty", pos:"noun", def:"A written guarantee for repairs or replacement within a period."},
+  {word:"receipt", pos:"noun", def:"A written confirmation that money or goods were received."},
+  {word:"membership", pos:"noun", def:"The state of belonging to a club or organisation, often paid."},
+  {word:"subscription", pos:"noun", def:"A paid arrangement to receive a service or publication regularly."},
+];
+
+function initVocabulary() {
+  var grid = document.getElementById('vocabGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  LISTENING_VOCAB.forEach(function(item) {
+    var card = document.createElement('div');
+    card.className = 'vocab-card';
+    card.innerHTML = '<div class="vocab-word"></div><div class="vocab-pos"></div>' +
+                     '<div class="vocab-def"></div>' +
+                     '<button type="button" class="vocab-speak-btn">🔊 Listen</button>';
+    card.querySelector('.vocab-word').textContent = item.word;
+    card.querySelector('.vocab-pos').textContent = item.pos;
+    card.querySelector('.vocab-def').textContent = item.def;
+    card.addEventListener('click', function(e) {
+      if (e.target.classList.contains('vocab-speak-btn')) return;
+      card.classList.toggle('expanded');
+    });
+    card.querySelector('.vocab-speak-btn').addEventListener('click', function(e) {
+      e.stopPropagation();
+      speakVocabWord(item.word);
+    });
+    grid.appendChild(card);
+  });
+}
+
+function speakVocabWord(word) {
+  if (typeof speechSynthesis === 'undefined') return;
+  window.speechSynthesis.cancel();
+  var u = new SpeechSynthesisUtterance(word);
+  u.lang = 'en-GB'; u.rate = 0.9;
+  var voices = window.speechSynthesis.getVoices();
+  var v = voices.find(function(x){return x.lang && x.lang.startsWith('en');}) || voices[0];
+  if (v) u.voice = v;
+  window.speechSynthesis.speak(u);
+}
+
+// ===== Band Estimator =====
+
+// Official IELTS Listening raw-score → band mapping (academic standard)
+var BAND_TABLE = [
+  {raw:39, band:9}, {raw:37, band:8.5}, {raw:35, band:8}, {raw:32, band:7.5},
+  {raw:30, band:7}, {raw:26, band:6.5}, {raw:23, band:6}, {raw:18, band:5.5},
+  {raw:16, band:5}, {raw:13, band:4.5}, {raw:10, band:4}, {raw:8, band:3.5},
+  {raw:6, band:3}, {raw:4, band:2.5},
+];
+
+function estimateBand() {
+  var total = 0;
+  for (var i = 1; i <= 4; i++) {
+    var el = document.getElementById('estPart' + i);
+    var v = el ? parseInt(el.value, 10) : 0;
+    if (isNaN(v)) v = 0;
+    v = Math.max(0, Math.min(10, v));
+    total += v;
+  }
+  var band = 2.0; // below table floor
+  for (var j = 0; j < BAND_TABLE.length; j++) {
+    if (total >= BAND_TABLE[j].raw) { band = BAND_TABLE[j].band; break; }
+  }
+  var numEl = document.getElementById('bandNumber');
+  var detEl = document.getElementById('bandDetail');
+  if (numEl) numEl.textContent = band.toFixed(1);
+  if (detEl) {
+    var msg;
+    if (band >= 8) msg = 'Excellent — near-native listening comprehension.';
+    else if (band >= 7) msg = 'Very good — you handle complex speech well.';
+    else if (band >= 6) msg = 'Competent — understand main ideas and details.';
+    else if (band >= 5) msg = 'Modest — partial understanding; keep practising.';
+    else msg = 'Limited — focus on Parts 1–2 before tackling full tests.';
+    detEl.textContent = total + '/40 correct → ' + msg;
+  }
+}
+
 </script>
 </body>
 </html>
