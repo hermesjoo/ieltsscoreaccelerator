@@ -107,11 +107,27 @@
 
     /* ===== Mobile ===== */
     @media (max-width: 768px) {
-      .sidebar { width: 100%; height: auto; position: relative; border-right: none; border-bottom: 1px solid var(--border); }
-      .sidebar-footer { position: static; }
-      .main { margin-left: 0; padding: 1rem; }
+      body { flex-direction: column; }
+      .sidebar { width: 100%; height: auto; position: relative; border-right: none; border-bottom: 1px solid var(--border); padding: 0; }
+      .sidebar-brand { padding: 0.9rem 1rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+      .sidebar-brand small { display: none; }
+      .sidebar-nav { display: flex; overflow-x: auto; padding: 0; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+      .sidebar-nav::-webkit-scrollbar { display: none; }
+      .sidebar-nav a { padding: 0.65rem 0.9rem; white-space: nowrap; border-right: none; border-bottom: 3px solid transparent; }
+      .sidebar-nav a:hover, .sidebar-nav a.active { border-right: none; border-bottom: 3px solid var(--accent); }
+      .sidebar-footer { position: static; padding: 0.6rem 1rem; border-top: 1px solid var(--border); }
+      .main { margin-left: 0; padding: 1rem; max-width: 100%; overflow-x: hidden; }
       .stats-grid { grid-template-columns: 1fr 1fr; }
       .search-box input { width: 100%; }
+      .main-header h2 { font-size: 1.25rem; }
+      .panel-body { padding: 1rem 0.8rem; overflow-x: auto; }
+      #pkgTable, #contentTable, #usersTable { display: block; min-width: 480px; }
+      /* stack inline form grids created in phase C */
+      #sec-packages [style*="grid-template-columns"] { display: block !important; }
+      #sec-packages [style*="grid-template-columns"] > * + * { margin-top: 0.9rem; }
+      #sec-packages [style*="grid-template-columns"] .btn-primary,
+      #sec-packages [style*="grid-template-columns"] button { width: 100%; }
+      #contentModal > div { padding: 1.2rem; }
     }
   </style>
 </head>
