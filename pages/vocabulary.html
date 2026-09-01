@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vocabulary Test — IELTS Score Accelerator</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .page-header {background:linear-gradient(135deg,#0d1226,#1a2142);color:#fff;padding:3rem 2rem;text-align:center;border-bottom:1px solid var(--border);}
+    .page-header h1 {font-size:2.2rem;margin-bottom:.5rem;}
+    .page-header p {color:#aab4d8;font-size:1.05rem;max-width:600px;margin:0 auto;}
+    .wrap {max-width:780px;margin:2.5rem auto;padding:0 1.5rem;}
+    .setup-card {background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;}
+    .level-row {display:flex;gap:1rem;flex-wrap:wrap;margin:1.2rem 0;}
+    .level-btn {flex:1;min-width:110px;padding:1.1rem;border-radius:12px;background:var(--bg-soft);border:1px solid var(--border-bright);color:var(--text);font-weight:800;font-size:1.05rem;cursor:pointer;transition:all .2s;}
+    .level-btn:hover, .level-btn.sel {border-color:var(--primary);background:rgba(99,102,241,.12);transform:translateY(-2px);}
+    .level-btn small {display:block;font-weight:500;font-size:.72rem;color:var(--text-light);margin-top:.3rem;}
+    .qcard {background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;display:none;}
+    .qnum {font-size:.8rem;color:var(--text-light);margin-bottom:1rem;}
+    .qtext {font-size:1.15rem;line-height:1.7;margin-bottom:1.4rem;font-weight:600;}
+    .qopts {display:grid;gap:.7rem;}
+    .opt {padding:.85rem 1.1rem;border-radius:10px;border:1px solid var(--border);background:var(--bg-soft);cursor:pointer;transition:all .15s;text-align:left;font:inherit;color:var(--text);font-size:.95rem;}
+    .opt:hover {border-color:var(--primary);}
+    .opt.correct {border-color:var(--success);background:rgba(52,211,153,.15);}
+    .opt.wrong {border-color:var(--danger);background:rgba(248,113,113,.15);}
+    .opt:disabled {cursor:default;opacity:.85;}
+    .progress {height:6px;background:var(--bg-soft);border-radius:3px;margin:1.4rem 0;overflow:hidden;}
+    .progress-fill {height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));border-radius:3px;transition:width .3s var(--ease-out);}
+    .result-card {background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:2.5rem;text-align:center;display:none;}
+    .result-band {font-size:3rem;font-weight:800;background:linear-gradient(90deg,var(--primary),var(--accent));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+    .result-msg {color:var(--text-light);margin:.8rem 0 1.6rem;line-height:1.7;}
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="../index.html" class="logo"><img src="../images/logo-color.png" alt="IELTS Score Accelerator" style="height:48px"></a>
+  <div class="nav-links">
+    <a href="reading.html">Reading</a>
+    <a href="listening.html">Listening</a>
+    <a href="packages.html">Packages</a>
+    <a href="vocabulary.html" style="color:var(--text)">Vocab Test</a>
+    <a href="test.html" class="btn btn-outline">Placement Test</a>
+    <a href="register.html" class="btn btn-primary">Sign Up</a>
+  </div>
+</nav>
+
+<section class="page-header">
+  <h1>🔤 Vocabulary Test</h1>
+  <p>15 quick questions. Find your CEFR vocabulary level and what to learn next.</p>
+</section>
+
+<div class="wrap">
+  <div class="setup-card" id="setup">
+    <h2 style="font-size:1.2rem;margin-bottom:.5rem;">Choose a question pool</h2>
+    <p style="color:var(--text-light);font-size:.88rem;">Each level has its own bank. Not sure? Pick <strong style="color:var(--text)">B1</strong> — questions adapt upward.</p>
+    <div class="level-row" id="levelRow"></div>
+    <button class="btn btn-primary" id="startBtn" style="width:100%;min-height:48px;font-size:1.05rem;" disabled>Start Test</button>
+  </div>
+
+  <div class="qcard" id="quiz">
+    <div class="progress"><div class="progress-fill" id="qFill" style="width:0%"></div></div>
+    <div class="qnum" id="qNum"></div>
+    <div class="qtext" id="qText"></div>
+    <div class="qopts" id="qOpts"></div>
+  </div>
+
+  <div class="result-card" id="result">
+    <div style="font-size:.9rem;color:var(--text-light);">Your vocabulary level</div>
+    <div class="result-band" id="rLevel">—</div>
+    <div class="result-msg" id="rMsg"></div>
+    <button class="btn btn-outline" onclick="location.reload()">Try Again</button>
+    <a class="btn btn-accent" href="packages.html" style="margin-left:.5rem;">See matching package →</a>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-links" id="footerLinks"></div>
+  <p>&copy; 2026 IELTS Score Accelerator. All rights reserved.</p>
+</footer>
+
+<script src="../js/site-config.js"></script>
+<script src="../js/vocab-banks.js"></script>
+<script>
+  var chosen = null, qs = [], idx = 0, score = 0;
+
+  var levelRow = document.getElementById('levelRow');
+  levelRow.innerHTML = ['A1','A2','B1','B2'].map(function(l){
+    return '<button class="level-btn" data-lvl="'+l+'">'+l+'<small>'+({A1:'Beginner',A2:'Elementary',B1:'Intermediate',B2:'Upper-int.'}[l])+'</small></button>';
+  }).join('');
+  levelRow.addEventListener('click', function(e){
+    var b = e.target.closest('.level-btn'); if(!b) return;
+    document.querySelectorAll('.level-btn').forEach(function(x){x.classList.remove('sel')});
+    b.classList.add('sel'); chosen = b.dataset.lvl;
+    document.getElementById('startBtn').disabled = false;
+  });
+
+  document.getElementById('startBtn').addEventListener('click', function(){
+    qs = pickQuestions(VOCAB_BANKS[chosen], 15);
+    idx = 0; score = 0;
+    document.getElementById('setup').style.display = 'none';
+    document.getElementById('quiz').style.display = 'block';
+    showQ();
+  });
+
+  function pickQuestions(bank, n){
+    var pool = bank.slice();
+    var out = [];
+    while(out.length < n && pool.length){
+      out.push(pool.splice(Math.floor(Math.random()*pool.length),1)[0]);
+    }
+    return out;
+  }
+
+  function showQ(){
+    var q = qs[idx];
+    document.getElementById('qNum').textContent = 'Question '+(idx+1)+' of '+qs.length;
+    document.getElementById('qText').textContent = q.q;
+    document.getElementById('qFill').style.width = (100*idx/qs.length)+'%';
+    var box = document.getElementById('qOpts');
+    box.innerHTML = q.opts.map(function(o,i){ return '<button class="opt" data-i="'+i+'">'+o+'</button>'; }).join('');
+    box.onclick = function(e){
+      var b = e.target.closest('.opt'); if(!b) return;
+      var pick = parseInt(b.dataset.i,10);
+      var ok = pick === q.a;
+      if(ok) score++;
+      b.classList.add(ok ? 'correct' : 'wrong');
+      if(!ok) box.children[q.a].classList.add('correct');
+      box.querySelectorAll('.opt').forEach(function(x){x.disabled = true});
+      setTimeout(function(){ idx++; idx < qs.length ? showQ() : finish(); }, 750);
+    };
+  }
+
+  function finish(){
+    document.getElementById('quiz').style.display = 'none';
+    document.getElementById('result').style.display = 'block';
+    var pct = score/qs.length;
+    var next = {A1:'A2',A2:'B1',B1:'B2',B2:'B2'}[chosen];
+    var lvl, msg;
+    if(pct >= 0.85){ lvl = next; msg = 'Excellent — you are solidly above this level. Your vocabulary is ready for <strong>'+next+'</strong> work.'; }
+    else if(pct >= 0.6){ lvl = chosen; msg = 'Good — this level fits you now. Consolidate it with the <strong>'+chosen+'</strong> package, then move up.'; }
+    else if(pct >= 0.35){ lvl = chosen; msg = 'You are close to this level but need practice. Focus on the <strong>'+chosen+'</strong> vocabulary sets first.'; }
+    else { lvl = (chosen==='A1'?'A1':{A2:'A1',B1:'A2',B2:'B1'}[chosen]); msg = 'Start one level lower — the <strong>'+lvl+'</strong> package will build your base quickly.'; }
+    document.getElementById('rLevel').textContent = lvl;
+    document.getElementById('rMsg').innerHTML = 'Score: '+score+'/'+qs.length+' — '+msg;
+  }
+</script>
+<script src="../js/footer.js"></script>
+<script src="../js/nav.js"></script>
+</body>
+</html>

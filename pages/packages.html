@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>General English Packages (A1–B2) — IELTS Score Accelerator</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .page-header {background:linear-gradient(135deg,#0d1226,#1a2142);color:#fff;padding:3.5rem 2rem;text-align:center;border-bottom:1px solid var(--border);}
+    .page-header h1 {font-size:2.3rem;margin-bottom:.5rem;}
+    .page-header p {color:#aab4d8;max-width:640px;margin:0 auto;font-size:1.05rem;}
+    .wrap {max-width:1100px;margin:2.5rem auto;padding:0 1.5rem;}
+    .section-title {font-size:1.5rem;font-weight:800;margin:2.5rem 0 1.2rem;letter-spacing:-.02em;}
+    .pkg-grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;}
+    .pkg-card {background:linear-gradient(180deg,var(--card),var(--bg-soft));border:1px solid var(--border);border-radius:var(--radius);padding:2rem;position:relative;overflow:hidden;transition:transform .2s var(--ease-out),box-shadow .2s var(--ease-out),border-color .2s;}
+    .pkg-card:hover {transform:translateY(-4px);box-shadow:0 12px 40px rgba(99,102,241,.18);border-color:var(--border-bright);}
+    .pkg-level {position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--primary),var(--accent));}
+    .pkg-badge {display:inline-block;background:rgba(99,102,241,.14);border:1px solid rgba(99,102,241,.3);color:#a5b4fc;padding:.2rem .7rem;border-radius:20px;font-size:.75rem;font-weight:700;margin-bottom:.8rem;}
+    .pkg-card h3 {font-size:1.25rem;margin-bottom:.5rem;}
+    .pkg-card .desc {color:var(--text-light);font-size:.88rem;line-height:1.7;min-height:66px;}
+    .pkg-meta {display:flex;gap:1rem;margin:1.1rem 0;font-size:.8rem;color:var(--text-light);}
+    .pkg-meta span {display:flex;align-items:center;gap:.3rem;}
+    .pkg-cta {display:block;text-align:center;padding:.75rem;border-radius:10px;font-weight:700;margin-top:.6rem;transition:all .2s;}
+    .pkg-cta.soon {background:var(--bg-soft);border:1px dashed var(--border-bright);color:var(--text-light);cursor:not-allowed;}
+    .pkg-cta.live {background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;box-shadow:0 4px 18px var(--primary-glow);}
+    .pkg-cta.live:hover {filter:brightness(1.12);}
+    .coming-grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.2rem;}
+    .coming-card {background:var(--bg-soft);border:1px dashed var(--border-bright);border-radius:var(--radius);padding:1.6rem;text-align:center;opacity:.85;}
+    .coming-card .ico {font-size:2rem;margin-bottom:.7rem;}
+    .coming-card h3 {font-size:1.05rem;margin-bottom:.4rem;}
+    .coming-card p {font-size:.82rem;color:var(--text-light);margin-bottom:.9rem;}
+    .coming-card .tag {display:inline-block;background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.3);color:#67e8f9;font-size:.72rem;font-weight:700;padding:.2rem .7rem;border-radius:20px;}
+    .level-path {display:flex;align-items:center;justify-content:center;gap:.6rem;margin:2rem auto 0;flex-wrap:wrap;}
+    .level-path .lvl {width:52px;height:52px;border-radius:14px;background:var(--bg-soft);border:1px solid var(--border-bright);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.95rem;}
+    .level-path .arrow {color:var(--text-light);}
+    .note {max-width:760px;margin:1rem auto 0;text-align:center;color:var(--text-light);font-size:.85rem;}
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="../index.html" class="logo"><img src="../images/logo-color.png" alt="IELTS Score Accelerator" style="height:48px"></a>
+  <div class="nav-links">
+    <a href="reading.html">Reading</a>
+    <a href="listening.html">Listening</a>
+    <a href="writing.html">Writing</a>
+    <a href="speaking.html">Speaking</a>
+    <a href="packages.html" style="color:var(--text)">Packages</a>
+    <a href="test.html" class="btn btn-outline">Placement Test</a>
+    <a href="register.html" class="btn btn-primary">Sign Up</a>
+  </div>
+</nav>
+
+<section class="page-header">
+  <h1>📦 General English Packages</h1>
+  <p>Structured video courses from absolute beginner to upper-intermediate — the perfect runway before IELTS.</p>
+  <div class="level-path">
+    <div class="lvl">A1</div><span class="arrow">→</span>
+    <div class="lvl">A2</div><span class="arrow">→</span>
+    <div class="lvl">B1</div><span class="arrow">→</span>
+    <div class="lvl">B2</div><span class="arrow">→</span>
+    <div class="lvl" style="background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;border:none;">IELTS</div>
+  </div>
+</section>
+
+<div class="wrap">
+  <h2 class="section-title">Core levels</h2>
+  <div class="pkg-grid" id="pkgGrid"></div>
+
+  <h2 class="section-title">Coming soon</h2>
+  <div class="coming-grid" id="comingGrid"></div>
+
+  <p class="note">Not sure which level to start? Take the <a href="placement.html" style="color:var(--accent);font-weight:600;">general placement test</a> — 15 minutes, free.</p>
+</div>
+
+<footer class="footer">
+  <div class="footer-links" id="footerLinks"></div>
+  <p>&copy; 2026 IELTS Score Accelerator. All rights reserved.</p>
+</footer>
+
+<script src="../js/site-config.js"></script>
+<script>
+  var PACKAGES = [
+    { level: "A1", name: "Starter", ico: "🌱",
+      desc: "First steps in English: alphabet & sounds, essential phrases, numbers, introductions, and everyday survival vocabulary.",
+      lessons: 24, hours: "6h video", status: "soon" },
+    { level: "A2", name: "Elementary", ico: "🌿",
+      desc: "Build simple sentences with confidence: daily routines, past & future basics, shopping, travel English, and short conversations.",
+      lessons: 28, hours: "8h video", status: "soon" },
+    { level: "B1", name: "Intermediate", ico: "🌲",
+      desc: "Independent communication: full past/present/future system, opinions & discussion, email writing, and extended listening.",
+      lessons: 32, hours: "10h video", status: "soon" },
+    { level: "B2", name: "Upper-Intermediate", ico: "🌳",
+      desc: "The IELTS launchpad: complex grammar, academic vocabulary, argumentative writing, and natural fluent speaking. Direct bridge to exam prep.",
+      lessons: 36, hours: "12h video", status: "soon" },
+  ];
+
+  var COMING = [
+    { ico: "🎓", title: "IELTS Mock Tests", tag: "IN DEVELOPMENT", desc: "Full 4-skill simulations with real timing and official band mapping." },
+    { ico: "📚", title: "E-Book Library", tag: "IN DEVELOPMENT", desc: "Grammar guides, vocabulary builders, and graded short stories." },
+    { ico: "✍️", title: "Writing Review by Examiners", tag: "IN DEVELOPMENT", desc: "Personal band score + detailed comments on your essays." },
+    { ico: "🗣️", title: "VIP Speaking Partners", tag: "IN DEVELOPMENT", desc: "Matched with high-level partners for serious practice." },
+  ];
+
+  var grid = document.getElementById('pkgGrid');
+  grid.innerHTML = PACKAGES.map(function (p) {
+    return '<div class="pkg-card"><div class="pkg-level"></div>' +
+      '<span class="pkg-badge">' + p.level + ' · ' + p.name + '</span>' +
+      '<h3>' + p.ico + ' ' + p.name + ' Package</h3>' +
+      '<div class="desc">' + p.desc + '</div>' +
+      '<div class="pkg-meta"><span>🎬 ' + p.lessons + ' lessons</span><span>⏱️ ' + p.hours + '</span></div>' +
+      '<a class="pkg-cta ' + (p.status === 'live' ? 'live' : 'soon') + '">' + (p.status === 'live' ? 'Start learning →' : 'Notify me — coming soon') + '</a>' +
+      '</div>';
+  }).join('');
+
+  var cg = document.getElementById('comingGrid');
+  cg.innerHTML = COMING.map(function (c) {
+    return '<div class="coming-card"><div class="ico">' + c.ico + '</div><h3>' + c.title + '</h3><p>' + c.desc + '</p><span class="tag">' + c.tag + '</span></div>';
+  }).join('');
+</script>
+<script src="../js/footer.js"></script>
+<script src="../js/nav.js"></script>
+</body>
+</html>

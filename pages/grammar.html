@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grammar Test — IELTS Score Accelerator</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .page-header {background:linear-gradient(135deg,#0d1226,#1a2142);color:#fff;padding:3rem 2rem;text-align:center;border-bottom:1px solid var(--border);}
+    .page-header h1 {font-size:2.2rem;margin-bottom:.5rem;}
+    .page-header p {color:#aab4d8;font-size:1.05rem;max-width:600px;margin:0 auto;}
+    .wrap {max-width:820px;margin:2.5rem auto;padding:0 1.5rem;}
+    .topic-grid {display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem;margin:1.2rem 0 1.6rem;}
+    .topic-btn {padding:1rem;border-radius:12px;background:var(--bg-soft);border:1px solid var(--border-bright);color:var(--text);cursor:pointer;text-align:left;transition:all .15s;font:inherit;}
+    .topic-btn:hover {border-color:var(--primary);transform:translateY(-2px);}
+    .topic-btn.sel {border-color:var(--primary);background:rgba(99,102,241,.14);}
+    .topic-btn strong {display:block;font-size:.95rem;}
+    .topic-btn small {color:var(--text-light);font-size:.72rem;}
+    .setup-card, .qcard, .result-card {background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;}
+    .qcard, .result-card {display:none;}
+    .qnum {font-size:.8rem;color:var(--text-light);margin-bottom:.9rem;}
+    .qtext {font-size:1.1rem;line-height:1.7;margin-bottom:1.3rem;font-weight:600;}
+    .qopts {display:grid;gap:.7rem;}
+    .opt {padding:.85rem 1.1rem;border-radius:10px;border:1px solid var(--border);background:var(--bg-soft);cursor:pointer;transition:all .15s;text-align:left;font:inherit;color:var(--text);font-size:.95rem;}
+    .opt:hover {border-color:var(--primary);}
+    .opt.correct {border-color:var(--success);background:rgba(52,211,153,.15);}
+    .opt.wrong {border-color:var(--danger);background:rgba(248,113,113,.15);}
+    .opt:disabled {cursor:default;}
+    .progress {height:6px;background:var(--bg-soft);border-radius:3px;margin-bottom:1.3rem;overflow:hidden;}
+    .progress-fill {height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));transition:width .3s;}
+    .result-band {font-size:2.6rem;font-weight:800;background:linear-gradient(90deg,var(--primary),var(--accent));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+    .per-topic {text-align:left;margin:1.4rem 0;display:grid;gap:.5rem;}
+    .pt-row {display:flex;justify-content:space-between;padding:.5rem .9rem;background:var(--bg-soft);border-radius:8px;font-size:.88rem;}
+    .pt-row .good {color:var(--success);} .pt-row .weak {color:var(--danger);}
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="../index.html" class="logo"><img src="../images/logo-color.png" alt="IELTS Score Accelerator" style="height:48px"></a>
+  <div class="nav-links">
+    <a href="reading.html">Reading</a>
+    <a href="listening.html">Listening</a>
+    <a href="packages.html">Packages</a>
+    <a href="vocabulary.html">Vocab Test</a>
+    <a href="test.html" class="btn btn-outline">Placement Test</a>
+    <a href="register.html" class="btn btn-primary">Sign Up</a>
+  </div>
+</nav>
+
+<section class="page-header">
+  <h1>📐 Grammar Test</h1>
+  <p>Pick topics or take the mixed challenge — instant scoring with weak-point analysis.</p>
+</section>
+
+<div class="wrap">
+  <div class="setup-card" id="setup">
+    <h2 style="font-size:1.2rem;margin-bottom:.5rem;">Choose topics (or mix them all)</h2>
+    <div class="topic-grid" id="topicGrid"></div>
+    <button class="btn btn-primary" id="startBtn" style="width:100%;min-height:48px;font-size:1.05rem;" disabled>Select at least one topic</button>
+  </div>
+
+  <div class="qcard" id="quiz">
+    <div class="progress"><div class="progress-fill" id="qFill" style="width:0%"></div></div>
+    <div class="qnum" id="qNum"></div>
+    <div class="qtext" id="qText"></div>
+    <div class="qopts" id="qOpts"></div>
+  </div>
+
+  <div class="result-card" id="result">
+    <div style="font-size:.9rem;color:var(--text-light);">Your score</div>
+    <div class="result-band" id="rScore">—</div>
+    <div class="result-msg" id="rMsg" style="color:var(--text-light);margin:.6rem 0 1rem;"></div>
+    <div class="per-topic" id="rTopics"></div>
+    <button class="btn btn-outline" onclick="location.reload()">Try Again</button>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-links" id="footerLinks"></div>
+  <p>&copy; 2026 IELTS Score Accelerator. All rights reserved.</p>
+</footer>
+
+<script src="../js/site-config.js"></script>
+<script src="../js/grammar-banks.js"></script>
+<script>
+  var TOPIC_NAMES = {tenses:'Verb Tenses', articles:'Articles', conditionals:'Conditionals', modals:'Modal Verbs',
+    passives:'Passive Voice', relatives:'Relative Clauses', gerunds:'Gerunds & Infinitives',
+    comparatives:'Comparatives', prepositions:'Prepositions', reported:'Reported Speech',
+    quantifiers:'Quantifiers', wordorder:'Word Order'};
+
+  var chosen = {}, qs = [], idx = 0, score = 0, perTopic = {};
+
+  var tg = document.getElementById('topicGrid');
+  tg.innerHTML = Object.keys(GRAMMAR_BANKS).map(function(t){
+    return '<button class="topic-btn" data-t="'+t+'"><strong>'+TOPIC_NAMES[t]+'</strong><small>'+GRAMMAR_BANKS[t].length+' questions</small></button>';
+  }).join('');
+  tg.addEventListener('click', function(e){
+    var b = e.target.closest('.topic-btn'); if(!b) return;
+    var t = b.dataset.t;
+    chosen[t] = !chosen[t];
+    b.classList.toggle('sel', chosen[t]);
+    var n = Object.keys(chosen).filter(function(k){return chosen[k]}).length;
+    var btn = document.getElementById('startBtn');
+    btn.disabled = n === 0;
+    btn.textContent = n === 0 ? 'Select at least one topic' : 'Start Test (' + n + ' topic' + (n>1?'s':'') + ')';
+  });
+
+  document.getElementById('startBtn').addEventListener('click', function(){
+    qs = [];
+    Object.keys(chosen).forEach(function(t){
+      if(!chosen[t]) return;
+      GRAMMAR_BANKS[t].forEach(function(q){ qs.push(Object.assign({topic:t}, q)); });
+    });
+    // shuffle
+    qs.sort(function(){ return Math.random() - 0.5; });
+    idx = 0; score = 0; perTopic = {};
+    document.getElementById('setup').style.display = 'none';
+    document.getElementById('quiz').style.display = 'block';
+    showQ();
+  });
+
+  function showQ(){
+    var q = qs[idx];
+    document.getElementById('qNum').textContent = 'Question '+(idx+1)+' of '+qs.length+' · '+TOPIC_NAMES[q.topic];
+    document.getElementById('qText').textContent = q.q;
+    document.getElementById('qFill').style.width = (100*idx/qs.length)+'%';
+    var box = document.getElementById('qOpts');
+    box.innerHTML = q.opts.map(function(o,i){ return '<button class="opt" data-i="'+i+'">'+o+'</button>'; }).join('');
+    box.onclick = function(e){
+      var b = e.target.closest('.opt'); if(!b) return;
+      var pick = parseInt(b.dataset.i,10);
+      var ok = pick === q.a;
+      perTopic[q.topic] = perTopic[q.topic] || {right:0, total:0};
+      perTopic[q.topic].total++;
+      if(ok){ score++; perTopic[q.topic].right++; }
+      b.classList.add(ok ? 'correct' : 'wrong');
+      if(!ok) box.children[q.a].classList.add('correct');
+      box.querySelectorAll('.opt').forEach(function(x){x.disabled=true});
+      setTimeout(function(){ idx++; idx < qs.length ? showQ() : finish(); }, 650);
+    };
+  }
+
+  function finish(){
+    document.getElementById('quiz').style.display='none';
+    document.getElementById('result').style.display='block';
+    document.getElementById('rScore').textContent = score + '/' + qs.length;
+    var pct = score/qs.length;
+    var msg = pct>=0.85 ? 'Outstanding — your grammar is exam-ready. Focus on accuracy under time pressure now.'
+            : pct>=0.6 ? 'Solid foundation. Review the weak topics below and re-test.'
+            : pct>=0.35 ? 'Good start — the weak topics below are your fastest wins.'
+            : 'Build the basics first — the B1 package covers every topic here.';
+    document.getElementById('rMsg').textContent = msg;
+    document.getElementById('rTopics').innerHTML = Object.keys(perTopic).map(function(t){
+      var r = perTopic[t], p = r.right/r.total;
+      return '<div class="pt-row"><span>'+TOPIC_NAMES[t]+'</span><span class="'+(p>=0.7?'good':'weak')+'">'+r.right+'/'+r.total+'</span></div>';
+    }).join('');
+  }
+</script>
+<script src="../js/footer.js"></script>
+<script src="../js/nav.js"></script>
+</body>
+</html>

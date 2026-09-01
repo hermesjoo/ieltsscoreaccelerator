@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exam News & Blog — IELTS Score Accelerator</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .page-header {background:linear-gradient(135deg,#0d1226,#1a2142);color:#fff;padding:3.5rem 2rem;text-align:center;border-bottom:1px solid var(--border);}
+    .page-header h1 {font-size:2.3rem;margin-bottom:.5rem;}
+    .page-header p {color:#aab4d8;max-width:640px;margin:0 auto;font-size:1.05rem;}
+    .wrap {max-width:860px;margin:2.5rem auto;padding:0 1.5rem;}
+    .news-card {background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.8rem 2rem;margin-bottom:1.3rem;transition:border-color .2s, box-shadow .2s;cursor:pointer;}
+    .news-card:hover {border-color:var(--border-bright);box-shadow:0 8px 30px rgba(99,102,241,.12);}
+    .news-meta {display:flex;gap:.8rem;align-items:center;font-size:.75rem;color:var(--text-light);margin-bottom:.6rem;}
+    .news-tag {background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.3);color:#67e8f9;padding:.15rem .6rem;border-radius:20px;font-weight:700;}
+    .news-card h2 {font-size:1.25rem;margin-bottom:.5rem;}
+    .news-card p {color:var(--text-light);font-size:.92rem;line-height:1.7;}
+    /* article view */
+    #articleView {display:none;}
+    #articleView .back {margin-bottom:1.5rem;}
+    #articleBody {background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:2.2rem;line-height:1.9;}
+    #articleBody h2 {font-size:1.6rem;margin-bottom:1rem;}
+    #articleBody h3 {font-size:1.15rem;margin:1.4rem 0 .5rem;}
+    #articleBody p {color:var(--text-light);margin-bottom:.9rem;}
+    #articleBody ul {color:var(--text-light);margin:0 0 1rem 1.4rem;list-style:disc;}
+    #articleBody li {margin-bottom:.4rem;}
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="../index.html" class="logo"><img src="../images/logo-color.png" alt="IELTS Score Accelerator" style="height:48px"></a>
+  <div class="nav-links">
+    <a href="reading.html">Reading</a>
+    <a href="listening.html">Listening</a>
+    <a href="packages.html">Packages</a>
+    <a href="library.html">Library</a>
+    <a href="news.html" style="color:var(--text)">News</a>
+    <a href="register.html" class="btn btn-primary">Sign Up</a>
+  </div>
+</nav>
+
+<section class="page-header" id="listHeader">
+  <h1>📰 Exam News</h1>
+  <p>Fee changes, format updates, results policies — what test-takers need to know, explained simply.</p>
+</section>
+
+<div class="wrap">
+  <div id="listView"></div>
+
+  <div id="articleView">
+    <button class="btn btn-outline back" onclick="showList()">← Back to all news</button>
+    <div id="articleBody"></div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-links" id="footerLinks"></div>
+  <p>&copy; 2026 IELTS Score Accelerator. All rights reserved.</p>
+</footer>
+
+<script src="../js/site-config.js"></script>
+<script>
+  // Seed articles — original editorial content. Later: served from API/news table (phase B8 done, admin CMS later).
+  var NEWS = [
+    {id:'ielts-one-skill-retake-expands', tag:'IELTS', date:'2026-08-15',
+     title:'IELTS One Skill Retake: where it stands in 2026',
+     excerpt:'Missed your band in one skill only? One Skill Retake lets you re-sit a single section instead of the whole exam. Here is who qualifies, what it costs, and how it appears on your TRF.',
+     body:'<h2>What is One Skill Retake?</h2><p>Instead of repeating the entire IELTS exam, One Skill Retake (OSR) lets you re-take exactly one section — Listening, Reading, Writing, or Speaking — if your other scores already meet your target.</p><h3>Key facts</h3><ul><li>Available for computer-delivered IELTS in a growing list of countries.</li><li>You must book the retake within 60 days of your original test.</li><li>Your new Test Report Form shows a "OSR" marker next to the retaken skill.</li><li>Most universities accept OSR results — but always check the specific institution\'s policy.</li></ul><h3>Should you retake one skill or the whole exam?</h3><p>If your weak skill is more than half a band below the others, a focused retake is usually the smart move: same fee as roughly 60% of a full re-sit in most centres, and far less preparation fatigue. If your scores are uneven across the board, a full re-sit with structured practice (see our packages) is the better investment.</p>'},
+    {id:'toefl-shorter-format', tag:'TOEFL', date:'2026-07-28',
+     title:'TOEFL iBT is now under 2 hours — what changed',
+     excerpt:'ETS trimmed the TOEFL iBT to under two hours: fewer Reading passages, a more focused Writing section, and faster score reporting. We break down the new timing per section.',
+     body:'<h2>The shorter TOEFL</h2><p>ETS has progressively shortened the TOEFL iBT. The modern test runs under two hours with these approximate timings:</p><ul><li><strong>Reading:</strong> 2 passages, 20 questions, ~35 minutes.</li><li><strong>Listening:</strong> ~16 questions, ~25 minutes.</li><li><strong>Speaking:</strong> 4 tasks, ~16 minutes.</li><li><strong>Writing:</strong> 2 tasks (integrated + academic discussion), ~29 minutes.</li></ul><h3>What it means for you</h3><p>Shorter doesn\'t mean easier — the per-question time pressure is higher, and stamina management matters more. Practise with full timed sections, not isolated questions, to build the right pacing reflexes.</p>'},
+    {id:'pte-score-alignment', tag:'PTE', date:'2026-07-10',
+     title:'PTE Academic score alignment with IELTS — a quick mapping',
+     excerpt:'Comparing PTE and IELTS scores for university applications? Here is the concordance institutions actually use, and where the two tests feel very different.',
+     body:'<h2>How PTE scores map to IELTS</h2><p>Pearson publishes an official concordance. Roughly: PTE 65 ≈ IELTS 7.0, PTE 58 ≈ IELTS 6.5, PTE 50 ≈ IELTS 6.0.</p><h3>Where the tests differ</h3><ul><li><strong>Format:</strong> PTE is fully computer-based, including Speaking — you talk to a microphone, not an examiner.</li><li><strong>Scoring:</strong> PTE is machine-scored end-to-end; results typically arrive within 48 hours.</li><li><strong>Task integration:</strong> PTE tasks often test two skills at once (e.g. read aloud tests reading + speaking).</li></ul><p>Choose PTE if you prefer fast results and computer speaking; choose IELTS if you want the human-examiner format many candidates find more natural.</p>'},
+    {id:'gre-2026-updates', tag:'GRE', date:'2026-06-20',
+     title:'The shorter GRE: what graduate applicants need to know',
+     excerpt:'The GRE is now about half its former length (~1h 58m) with an unscored experimental section removed and Analytical Writing reduced to one task. Scoring scales stay the same.',
+     body:'<h2>Shorter, not softer</h2><p>The current GRE format runs just under two hours: two Verbal sections, two Quantitative sections, and a single "Analyze an Issue" writing task. Scores remain on the familiar 260–340 scale plus a 0–6 writing score.</p><h3>Strategy adjustments</h3><ul><li>Section-level pacing matters more — fewer questions, less room to recover lost time.</li><li>The removed Argument essay means less writing prep overall.</li><li>Official PowerPrep practice tests now mirror the new timing — use them as your benchmark.</li></ul>'},
+    {id:'results-verification-trends', tag:'Policies', date:'2026-06-02',
+     title:'Universities are verifying test scores more strictly — what to know',
+     excerpt:'With AI-generated documents on the rise, admissions offices increasingly verify results directly with awarding bodies. Submitting genuine scores is essential — and taking shortcuts can mean permanent bans.',
+     body:'<h2>Verification is the new normal</h2><p>IELTS, TOEFL, PTE and GRE scores are all verifiable through official portals. Institutions routinely confirm TRFs and score reports, and inconsistencies (altered PDFs, borrowed identities) lead to rejected applications — or worse, lifetime testing bans.</p><h3>Practical takeaways</h3><ul><li>Always order official score reports through the test provider.</li><li>Never buy "certificate" services — they are scams that end applications and futures.</li><li>If your score was withheld pending "result investigation", respond to the test centre quickly and honestly.</li></ul><p>There is no shortcut past preparation — but there is a fast lane: structured practice with feedback. That\'s exactly what we build here.</p>'},
+  ];
+
+  function showList(){
+    document.getElementById('listView').style.display='block';
+    document.getElementById('articleView').style.display='none';
+    document.getElementById('listHeader').style.display='block';
+    document.getElementById('listView').innerHTML = NEWS.map(function(n, i){
+      return '<div class="news-card" onclick="showArticle('+i+')">'+
+        '<div class="news-meta"><span class="news-tag">'+n.tag+'</span><span>'+n.date+'</span></div>'+
+        '<h2>'+n.title+'</h2><p>'+n.excerpt+'</p></div>';
+    }).join('');
+    window.scrollTo(0,0);
+  }
+  function showArticle(i){
+    var n = NEWS[i];
+    document.getElementById('listView').style.display='none';
+    document.getElementById('listHeader').style.display='none';
+    document.getElementById('articleView').style.display='block';
+    document.getElementById('articleBody').innerHTML =
+      '<div class="news-meta" style="margin-bottom:1rem"><span class="news-tag">'+n.tag+'</span><span>'+n.date+'</span></div>'+
+      '<h2>'+n.title+'</h2>'+n.body;
+    window.scrollTo(0,0);
+  }
+  showList();
+</script>
+<script src="../js/footer.js"></script>
+<script src="../js/nav.js"></script>
+</body>
+</html>

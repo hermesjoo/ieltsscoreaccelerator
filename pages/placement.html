@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>General Placement Test (A1–B2) — IELTS Score Accelerator</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .page-header {background:linear-gradient(135deg,#0d1226,#1a2142);color:#fff;padding:3rem 2rem;text-align:center;border-bottom:1px solid var(--border);}
+    .page-header h1 {font-size:2.2rem;margin-bottom:.5rem;}
+    .page-header p {color:#aab4d8;font-size:1.05rem;max-width:620px;margin:0 auto;}
+    .wrap {max-width:780px;margin:2.5rem auto;padding:0 1.5rem;}
+    .card {background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;}
+    .qcard, .result-card {display:none;}
+    .qnum {font-size:.8rem;color:var(--text-light);margin-bottom:.9rem;}
+    .qtext {font-size:1.12rem;line-height:1.7;margin-bottom:1.3rem;font-weight:600;}
+    .qopts {display:grid;gap:.7rem;}
+    .opt {padding:.85rem 1.1rem;border-radius:10px;border:1px solid var(--border);background:var(--bg-soft);cursor:pointer;transition:all .15s;text-align:left;font:inherit;color:var(--text);font-size:.95rem;}
+    .opt:hover {border-color:var(--primary);}
+    .opt.picked {border-color:var(--primary);background:rgba(99,102,241,.15);}
+    .progress {height:6px;background:var(--bg-soft);border-radius:3px;margin-bottom:1.3rem;overflow:hidden;}
+    .progress-fill {height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));transition:width .3s;}
+    .result-band {font-size:3.2rem;font-weight:800;background:linear-gradient(90deg,var(--primary),var(--accent));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+    .level-ladder {display:flex;justify-content:center;gap:.5rem;margin:1.4rem 0;}
+    .ladder-step {width:56px;height:56px;border-radius:14px;background:var(--bg-soft);border:1px solid var(--border-bright);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--text-light);}
+    .ladder-step.hit {background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;border:none;box-shadow:0 4px 18px var(--primary-glow);}
+    .rec-box {background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.3);border-radius:12px;padding:1.2rem;margin:1.4rem 0;text-align:left;}
+    .rec-box h3 {font-size:1rem;margin-bottom:.4rem;}
+    .rec-box p {font-size:.9rem;color:var(--text-light);}
+    .skill-bars {margin:1.4rem 0;text-align:left;}
+    .sb-row {display:flex;align-items:center;gap:.8rem;margin-bottom:.7rem;font-size:.85rem;}
+    .sb-row .lbl {width:110px;color:var(--text-light);}
+    .sb-track {flex:1;height:8px;background:var(--bg-soft);border-radius:4px;overflow:hidden;}
+    .sb-fill {height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));border-radius:4px;}
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="../index.html" class="logo"><img src="../images/logo-color.png" alt="IELTS Score Accelerator" style="height:48px"></a>
+  <div class="nav-links">
+    <a href="reading.html">Reading</a>
+    <a href="listening.html">Listening</a>
+    <a href="packages.html">Packages</a>
+    <a href="vocabulary.html">Vocab Test</a>
+    <a href="placement.html" style="color:var(--text)">Placement</a>
+    <a href="register.html" class="btn btn-primary">Sign Up</a>
+  </div>
+</nav>
+
+<section class="page-header">
+  <h1>🧭 General Placement Test</h1>
+  <p>20 adaptive questions — 15 minutes. Find your CEFR level (A1→B2) and the right package to start.</p>
+</section>
+
+<div class="wrap">
+  <div class="card" id="intro">
+    <h2 style="font-size:1.2rem;margin-bottom:.8rem;">How it works</h2>
+    <ul style="color:var(--text-light);font-size:.92rem;line-height:2;padding-left:1.2rem;list-style:disc;">
+      <li>Questions get harder or easier based on your answers (adaptive).</li>
+      <li>No pass/fail — this is measurement, not an exam.</li>
+      <li>At the end: your level, skill breakdown, and a package recommendation.</li>
+    </ul>
+    <button class="btn btn-primary" id="startBtn" style="width:100%;min-height:48px;font-size:1.05rem;margin-top:1.2rem;">Start Placement Test</button>
+  </div>
+
+  <div class="card qcard" id="quiz">
+    <div class="progress"><div class="progress-fill" id="qFill" style="width:0%"></div></div>
+    <div class="qnum" id="qNum"></div>
+    <div class="qtext" id="qText"></div>
+    <div class="qopts" id="qOpts"></div>
+  </div>
+
+  <div class="card result-card" id="result">
+    <div style="font-size:.9rem;color:var(--text-light);">Your overall level</div>
+    <div class="result-band" id="rLevel">—</div>
+    <div class="level-ladder" id="ladder"></div>
+    <div class="skill-bars" id="skillBars"></div>
+    <div class="rec-box" id="recBox"></div>
+    <button class="btn btn-outline" onclick="location.reload()">Retake</button>
+    <a class="btn btn-accent" id="recLink" href="packages.html" style="margin-left:.5rem;">Go to my package →</a>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-links" id="footerLinks"></div>
+  <p>&copy; 2026 IELTS Score Accelerator. All rights reserved.</p>
+</footer>
+
+<script src="../js/site-config.js"></script>
+<script src="../js/placement-bank.js"></script>
+<script>
+  // adaptive: start mid (B1-ish). Track ability theta 0-3 (A1..B2).
+  var TH, asked = {}, askedCount = 0, answers = [], TOTAL = 20;
+  var LEVELS = ['A1','A2','B1','B2'];
+  var SKILLS = ['grammar','vocab','reading'];
+
+  document.getElementById('startBtn').addEventListener('click', function(){
+    TH = 1.5; askedCount = 0; answers = [];
+    document.getElementById('intro').style.display='none';
+    document.getElementById('quiz').style.display='block';
+    nextQ();
+  });
+
+  function nextQ(){
+    var level = Math.min(3, Math.max(0, Math.round(TH)));
+    var lvlName = LEVELS[level];
+    var pool = (PLACEMENT_BANK[lvlName]||[]).filter(function(q){ return !asked[q.id]; });
+    if(!pool.length){
+      // fall back to any level
+      for(var l of LEVELS){
+        pool = (PLACEMENT_BANK[l]||[]).filter(function(q){ return !asked[q.id]; });
+        if(pool.length){ lvlName = l; break; }
+      }
+    }
+    if(!pool.length || askedCount >= TOTAL){ return finish(); }
+    var q = pool[Math.floor(Math.random()*pool.length)];
+    asked[q.id] = true; askedCount++;
+    window._cur = q;
+
+    document.getElementById('qNum').textContent = 'Question '+askedCount+' of '+TOTAL;
+    document.getElementById('qText').textContent = q.q;
+    document.getElementById('qFill').style.width = (100*askedCount/TOTAL)+'%';
+    var box = document.getElementById('qOpts');
+    box.innerHTML = q.opts.map(function(o,i){ return '<button class="opt" data-i="'+i+'">'+o+'</button>'; }).join('');
+    box.onclick = function(e){
+      var b = e.target.closest('.opt'); if(!b) return;
+      var pick = parseInt(b.dataset.i,10);
+      var ok = pick === q.a;
+      answers.push({skill:q.skill, ok:ok, level:lvlName});
+      // adapt: correct → theta up; wrong → down (weight by level distance)
+      TH += ok ? 0.45 : -0.45;
+      TH = Math.min(3.4, Math.max(-0.4, TH));
+      box.querySelectorAll('.opt').forEach(function(x){x.disabled=true});
+      b.classList.add(ok?'correct':'wrong');
+      if(!ok) box.children[q.a].classList.add('correct');
+      setTimeout(nextQ, 600);
+    };
+  }
+
+  function finish(){
+    document.getElementById('quiz').style.display='none';
+    document.getElementById('result').style.display='block';
+    var level = LEVELS[Math.min(3, Math.max(0, Math.round(TH)))];
+    document.getElementById('rLevel').textContent = level;
+
+    document.getElementById('ladder').innerHTML = LEVELS.map(function(l){
+      return '<div class="ladder-step'+(l===level?' hit':'')+'">'+l+'</div>';
+    }).join('');
+
+    // per-skill accuracy
+    var bars = SKILLS.map(function(s){
+      var rel = answers.filter(function(a){return a.skill===s;});
+      var pct = rel.length ? Math.round(100*rel.filter(function(a){return a.ok;}).length/rel.length) : 50;
+      return '<div class="sb-row"><span class="lbl">'+({grammar:'Grammar',vocab:'Vocabulary',reading:'Reading'}[s])+'</span><div class="sb-track"><div class="sb-fill" style="width:'+pct+'%"></div></div><span>'+pct+'%</span></div>';
+    }).join('');
+    document.getElementById('skillBars').innerHTML = bars;
+
+    var recs = {A1:'Starter (A1)', A2:'Elementary (A2)', B1:'Intermediate (B1)', B2:'Upper-Intermediate (B2)'};
+    document.getElementById('recBox').innerHTML =
+      '<h3>📋 Recommended path: '+recs[level]+' package</h3>'+
+      '<p>Based on '+askedCount+' answers, the '+recs[level]+' video package matches your current level. '+
+      (level==='B2' ? 'You are also ready to start IELTS-specific practice alongside it.' : 'Finish it, take the test again, and step up to the next level.')+'</p>';
+    document.getElementById('recLink').href = 'packages.html';
+  }
+</script>
+<script src="../js/footer.js"></script>
+<script src="../js/nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library — E-books & Books — IELTS Score Accelerator</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .page-header {background:linear-gradient(135deg,#0d1226,#1a2142);color:#fff;padding:3.5rem 2rem;text-align:center;border-bottom:1px solid var(--border);}
+    .page-header h1 {font-size:2.3rem;margin-bottom:.5rem;}
+    .page-header p {color:#aab4d8;max-width:640px;margin:0 auto;font-size:1.05rem;}
+    .wrap {max-width:1100px;margin:2.5rem auto;padding:0 1.5rem;}
+    .section-title {font-size:1.5rem;font-weight:800;margin:2.5rem 0 1.2rem;letter-spacing:-.02em;}
+    .book-grid {display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.5rem;}
+    .book-card {background:linear-gradient(180deg,var(--card),var(--bg-soft));border:1px solid var(--border);border-radius:var(--radius);padding:1.8rem;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s,border-color .2s;}
+    .book-card:hover {transform:translateY(-4px);box-shadow:0 12px 40px rgba(99,102,241,.15);border-color:var(--border-bright);}
+    .book-cover {height:150px;border-radius:10px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));display:flex;align-items:center;justify-content:center;font-size:3rem;margin-bottom:1.1rem;border:1px solid rgba(99,102,241,.4);}
+    .book-card h3 {font-size:1.05rem;margin-bottom:.4rem;}
+    .book-card .desc {color:var(--text-light);font-size:.84rem;line-height:1.65;flex:1;}
+    .book-meta {display:flex;justify-content:space-between;align-items:center;margin-top:1rem;}
+    .book-tag {font-size:.72rem;color:var(--text-light);}
+    .book-btn {padding:.55rem 1.1rem;border-radius:9px;font-weight:700;font-size:.85rem;border:none;cursor:pointer;transition:all .2s;text-decoration:none;display:inline-block;}
+    .book-btn.free {background:linear-gradient(135deg,var(--success),#059669);color:#fff;}
+    .book-btn.paid {background:linear-gradient(135deg,var(--accent-warm),#d97706);color:#1f2937;}
+    .empty-note {text-align:center;color:var(--text-light);padding:2rem;border:1px dashed var(--border-bright);border-radius:var(--radius);font-size:.9rem;}
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="../index.html" class="logo"><img src="../images/logo-color.png" alt="IELTS Score Accelerator" style="height:48px"></a>
+  <div class="nav-links">
+    <a href="reading.html">Reading</a>
+    <a href="listening.html">Listening</a>
+    <a href="packages.html">Packages</a>
+    <a href="library.html" style="color:var(--text)">Library</a>
+    <a href="test.html" class="btn btn-outline">Placement Test</a>
+    <a href="register.html" class="btn btn-primary">Sign Up</a>
+  </div>
+</nav>
+
+<section class="page-header">
+  <h1>📚 Library</h1>
+  <p>Free study guides and graded readers — plus premium e-books and printed books worth owning.</p>
+</section>
+
+<div class="wrap">
+  <h2 class="section-title">🎁 Free E-books</h2>
+  <div class="book-grid" id="freeGrid"></div>
+
+  <h2 class="section-title">💎 Premium E-books</h2>
+  <div class="book-grid" id="paidGrid"></div>
+
+  <h2 class="section-title">📖 Recommended Books (print)</h2>
+  <div class="book-grid" id="printGrid"></div>
+</div>
+
+<footer class="footer">
+  <div class="footer-links" id="footerLinks"></div>
+  <p>&copy; 2026 IELTS Score Accelerator. All rights reserved.</p>
+</footer>
+
+<script src="../js/site-config.js"></script>
+<script>
+  // Placeholder catalogue — replace covers/files when real books are ready (admin upload: phase C3 pattern).
+  var FREE = [
+    {ico:'📗', title:'Grammar Foundations', pages:'42 pages', desc:'The 12 grammar points that matter most for A2–B1 learners, with exercises and answer key.', file:null},
+    {ico:'📘', title:'300 IELTS Words', pages:'58 pages', desc:'High-frequency academic vocabulary with definitions, examples, and practice sentences.', file:null},
+    {ico:'📕', title:'Graded Reader: The Lighthouse', pages:'24 pages', desc:'An original short story written for B1 learners — with a glossary and comprehension quiz.', file:null},
+  ];
+  var PAID = [
+    {ico:'✨', title:'Writing Templates Masterpack', price:'$4.99', desc:'Band 7+ structures for Task 1 & Task 2, fill-in frameworks, and 20 annotated sample answers.', soon:true},
+    {ico:'✨', title:'Speaking Cue Card Vault', price:'$3.99', desc:'120 Part-2 cue cards with model answers, key vocabulary, and follow-up questions.', soon:true},
+  ];
+  var PRINT = [
+    {ico:'🏆', title:'Cambridge IELTS 19', price:'~$50', desc:'The gold standard of authentic practice tests. Buy the latest edition for real exam material.', link:'https://www.cambridge.org/gb/cambridgeenglish/catalog/cambridge-english-exams-ielts/cambridge-ielts-19'},
+    {ico:'🏆', title:'English Grammar in Use (Murphy)', price:'~$30', desc:'The self-study grammar bible — clear explanations on the left, exercises on the right.', link:'https://www.cambridge.org/gb/cambridgeenglish/catalog/grammar-vocabulary-and-pronation/english-grammar-use-5th-edition'},
+  ];
+
+  function render(id, arr, kind){
+    var el = document.getElementById(id);
+    if(!arr.length){ el.innerHTML = '<div class="empty-note" style="grid-column:1/-1">Coming soon</div>'; return; }
+    el.innerHTML = arr.map(function(b){
+      var btn;
+      if(kind==='free') btn = b.file
+        ? '<a class="book-btn free" href="'+b.file+'" download>⬇ Download</a>'
+        : '<button class="book-btn free" disabled title="Coming soon">Coming soon</button>';
+      else if(kind==='paid') btn = '<button class="book-btn paid" '+(b.soon?'disabled':'')+'>'+(b.soon?'Coming soon':'Buy · '+b.price)+'</button>';
+      else btn = '<a class="book-btn paid" href="'+b.link+'" target="_blank" rel="noopener">View →</a>';
+      return '<div class="book-card"><div class="book-cover">'+b.ico+'</div><h3>'+b.title+'</h3>'+
+        '<div class="desc">'+b.desc+'</div><div class="book-meta"><span class="book-tag">'+(b.pages||b.price||'')+'</span>'+btn+'</div></div>';
+    }).join('');
+  }
+  render('freeGrid', FREE, 'free');
+  render('paidGrid', PAID, 'paid');
+  render('printGrid', PRINT, 'print');
+</script>
+<script src="../js/footer.js"></script>
+<script src="../js/nav.js"></script>
+</body>
+</html>
