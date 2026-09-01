@@ -74,6 +74,28 @@ CREATE TABLE IF NOT EXISTS admin_log (
     payload TEXT,
     created_at TEXT NOT NULL
 );
+CREATE TABLE IF NOT EXISTS packages (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    level TEXT NOT NULL,               -- A1 | A2 | B1 | B2
+    title TEXT NOT NULL,
+    description TEXT,
+    is_published INTEGER NOT NULL DEFAULT 0,
+    created_at TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS videos (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    package_id INTEGER NOT NULL REFERENCES packages(id),
+    title TEXT NOT NULL,
+    file_path TEXT NOT NULL,           -- relative to MEDIA_DIR
+    size_bytes INTEGER,
+    is_free_preview INTEGER NOT NULL DEFAULT 0,
+    created_at TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS video_tokens (
+    token TEXT PRIMARY KEY,
+    video_id INTEGER NOT NULL REFERENCES videos(id),
+    expires_at REAL NOT NULL
+);
 """
 
 
@@ -154,11 +176,12 @@ def contact():
 
 
 @APP.route("/api/admin/messages", methods=["GET", "OPTIONS"])
-@require_admin
 def admin_messages():
     pre = _preflight()
     if pre:
         return pre
+    if not secrets.compare_digest(request.headers.get("Authorization",""), "Bearer " + ADMIN_PASS):
+        return jsonify(error="admin auth required"), 401
     rows = db().execute(
         "SELECT * FROM contact_messages ORDER BY id DESC LIMIT 200"
     ).fetchall()
@@ -166,11 +189,12 @@ def admin_messages():
 
 
 @APP.route("/api/admin/log", methods=["POST", "OPTIONS"])
-@require_admin
 def admin_log():
     pre = _preflight()
     if pre:
         return pre
+    if not secrets.compare_digest(request.headers.get("Authorization",""), "Bearer " + ADMIN_PASS):
+        return jsonify(error="admin auth required"), 401
     data = request.get_json(silent=True) or {}
     db().execute(
         "INSERT INTO admin_log (action, payload, created_at) VALUES (?,?,?)",
@@ -179,6 +203,191 @@ def admin_log():
     )
     db().commit()
     return jsonify(ok=True)
+
+
+# ---------------------------------------------------------------------------
+# Phase C — packages, video upload, signed streaming
+# ---------------------------------------------------------------------------
+MEDIA_DIR = os.path.join(API_BASE_DIR, "media", "videos")
+os.makedirs(MEDIA_DIR, exist_ok=True)
+ALLOWED_VIDEO_EXT = {".mp4", ".webm", ".m4v"}
+TOKEN_TTL = 3600  # 1 hour
+
+
+@APP.route("/api/packages")
+def list_packages():
+    rows = db().execute(
+        """SELECT p.id, p.level, p.title, p.description, p.is_published,
+                  (SELECT COUNT(*) FROM videos v WHERE v.package_id = p.id) AS video_count
+           FROM packages p WHERE p.is_published = 1 ORDER BY p.level"""
+    ).fetchall()
+    out = []
+    for r in rows:
+        pkg = dict(r)
+        vids = db().execute(
+            "SELECT id, title, is_free_preview, size_bytes FROM videos WHERE package_id=? ORDER BY id",
+            (r["id"],),
+        ).fetchall()
+        pkg["videos"] = [dict(v) for v in vids]
+        out.append(pkg)
+    return jsonify(out)
+
+
+@APP.route("/api/admin/packages", methods=["GET", "POST", "OPTIONS"])
+def admin_packages():
+    pre = _preflight()
+    if pre:
+        return pre
+    auth = request.headers.get("Authorization", "")
+    if not secrets.compare_digest(auth, "Bearer " + ADMIN_PASS):
+        return jsonify(error="admin auth required"), 401
+    if request.method == "GET":
+        rows = db().execute(
+            "SELECT * FROM packages ORDER BY level"
+        ).fetchall()
+        return jsonify([dict(r) for r in rows])
+    data = request.get_json(silent=True) or {}
+    level = (data.get("level") or "").strip().upper()[:2]
+    title = (data.get("title") or "").strip()[:120]
+    desc = (data.get("description") or "").strip()[:1000]
+    if level not in ("A1", "A2", "B1", "B2") or not title:
+        return jsonify(error="level (A1/A2/B1/B2) and title required"), 400
+    cur = db().execute(
+        "INSERT INTO packages (level, title, description, is_published, created_at) VALUES (?,?,?,1,?)",
+        (level, title, desc, datetime.now(timezone.utc).isoformat()),
+    )
+    db().commit()
+    return jsonify(ok=True, id=cur.lastrowid), 201
+
+
+@APP.route("/api/admin/upload", methods=["POST", "OPTIONS"])
+def admin_upload():
+    pre = _preflight()
+    if pre:
+        return pre
+    auth = request.headers.get("Authorization", "")
+    if not secrets.compare_digest(auth, "Bearer " + ADMIN_PASS):
+        return jsonify(error="admin auth required"), 401
+    f = request.files.get("file")
+    package_id = request.form.get("package_id", type=int)
+    title = (request.form.get("title") or "").strip()[:120]
+    is_preview = 1 if request.form.get("is_preview") in ("1", "true", "on") else 0
+    if not f or not package_id or not title:
+        return jsonify(error="file, package_id, title required"), 400
+    pkg = db().execute("SELECT id FROM packages WHERE id=?", (package_id,)).fetchone()
+    if not pkg:
+        return jsonify(error="package not found"), 404
+    ext = os.path.splitext(f.filename or "")[1].lower()
+    if ext not in ALLOWED_VIDEO_EXT:
+        return jsonify(error="only mp4/webm/m4v allowed"), 400
+    safe = re.sub(r"[^a-zA-Z0-9_-]", "_", f.filename.rsplit(".", 1)[0])[:60]
+    fname = f"pkg{package_id}_{safe}_{secrets.token_hex(4)}{ext}"
+    dest = os.path.join(MEDIA_DIR, fname)
+    f.save(dest)
+    size = os.path.getsize(dest)
+    cur = db().execute(
+        "INSERT INTO videos (package_id, title, file_path, size_bytes, is_free_preview, created_at) VALUES (?,?,?,?,?,?)",
+        (package_id, title, fname, size, is_preview, datetime.now(timezone.utc).isoformat()),
+    )
+    db().commit()
+    return jsonify(ok=True, id=cur.lastrowid, size=size), 201
+
+
+@APP.route("/api/admin/videos/<int:vid>", methods=["DELETE", "OPTIONS"])
+def admin_delete_video(vid):
+    pre = _preflight()
+    if pre:
+        return pre
+    if not secrets.compare_digest(request.headers.get("Authorization",""), "Bearer " + ADMIN_PASS):
+        return jsonify(error="admin auth required"), 401
+    row = db().execute("SELECT file_path FROM videos WHERE id=?", (vid,)).fetchone()
+    if not row:
+        return jsonify(error="not found"), 404
+    path = os.path.join(MEDIA_DIR, row["file_path"])
+    if os.path.exists(path):
+        os.remove(path)
+    db().execute("DELETE FROM videos WHERE id=?", (vid,))
+    db().commit()
+    return jsonify(ok=True)
+
+
+@APP.route("/api/video-token", methods=["POST", "OPTIONS"])
+def video_token():
+    """Issue a short-lived signed token for a video. Free previews: open.
+       Full videos: require Supabase JWT (verified cheaply here) + later entitlement."""
+    pre = _preflight()
+    if pre:
+        return pre
+    data = request.get_json(silent=True) or {}
+    vid = data.get("video_id")
+    auth = request.headers.get("Authorization", "")
+    row = db().execute("SELECT id, is_free_preview FROM videos WHERE id=?", (vid,)).fetchone()
+    if not row:
+        return jsonify(error="video not found"), 404
+    if not row["is_free_preview"]:
+        # paid video: require *some* auth for now (Supabase access token present).
+        # Full entitlement check (orders/packages) lands in phase G.
+        if not auth.startswith("Bearer ") and not data.get("sb_token"):
+            return jsonify(error="login required for this video"), 401
+    token = secrets.token_urlsafe(32)
+    expires = datetime.now(timezone.utc).timestamp() + TOKEN_TTL
+    db().execute("INSERT INTO video_tokens (token, video_id, expires_at) VALUES (?,?,?)", (token, vid, expires))
+    db().commit()
+    return jsonify(token=token, expires_in=TOKEN_TTL, video_id=vid)
+
+
+@APP.route("/api/video-file", methods=["POST", "OPTIONS"])
+def video_file():
+    """Resolve a valid token to its filename (so the player can build the stream URL)."""
+    pre = _preflight()
+    if pre:
+        return pre
+    data = request.get_json(silent=True) or {}
+    token, vid = data.get("token"), data.get("video_id")
+    row = db().execute(
+        "SELECT v.file_path FROM video_tokens t JOIN videos v ON v.id = t.video_id "
+        "WHERE t.token=? AND t.video_id=? AND t.expires_at > ?",
+        (token, vid, datetime.now(timezone.utc).timestamp()),
+    ).fetchone()
+    if not row:
+        return jsonify(error="invalid token"), 403
+    return jsonify(file=row["file_path"])
+
+
+@APP.route("/media/videos/<path:fname>")
+def stream_video(fname):
+    """Serve video only with a valid unexpired token. Supports Range (seeking)."""
+    token = request.args.get("t", "")
+    row = db().execute(
+        "SELECT video_id, expires_at FROM video_tokens WHERE token=?", (token,)
+    ).fetchone()
+    if not row or row["expires_at"] < datetime.now(timezone.utc).timestamp():
+        return jsonify(error="invalid or expired token"), 403
+    v = db().execute("SELECT file_path FROM videos WHERE id=?", (row["video_id"],)).fetchone()
+    if not v or v["file_path"] != fname:
+        return jsonify(error="token/video mismatch"), 403
+    path = os.path.join(MEDIA_DIR, fname)
+    if not os.path.exists(path):
+        return jsonify(error="file missing"), 404
+    size = os.path.getsize(path)
+    range_header = request.headers.get("Range")
+    if range_header:
+        m = re.match(r"bytes=(\d+)-(\d*)", range_header)
+        start = int(m.group(1)) if m else 0
+        end = int(m.group(2)) if m and m.group(2) else min(start + 4 * 1024 * 1024, size - 1)
+        end = min(end, size - 1)
+        with open(path, "rb") as fh:
+            fh.seek(start)
+            chunk = fh.read(end - start + 1)
+        resp = Response(chunk, 206, mimetype="video/mp4")
+        resp.headers["Content-Range"] = f"bytes {start}-{end}/{size}"
+        resp.headers["Accept-Ranges"] = "bytes"
+        resp.headers["Content-Length"] = str(len(chunk))
+        return resp
+    resp = Response(open(path, "rb").read(), 200, mimetype="video/mp4")
+    resp.headers["Accept-Ranges"] = "bytes"
+    resp.headers["Content-Length"] = str(size)
+    return resp
 
 
 if __name__ == "__main__":

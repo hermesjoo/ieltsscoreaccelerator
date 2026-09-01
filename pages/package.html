@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Package Player — IELTS Score Accelerator</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .page-header {background:linear-gradient(135deg,#0d1226,#1a2142);color:#fff;padding:2.5rem 2rem;text-align:center;border-bottom:1px solid var(--border);}
+    .page-header h1 {font-size:2rem;margin-bottom:.4rem;}
+    .page-header p {color:#aab4d8;font-size:1rem;}
+    .wrap {max-width:1100px;margin:2.5rem auto;padding:0 1.5rem;display:grid;grid-template-columns:1.7fr 1fr;gap:1.5rem;align-items:start;}
+    .player-card {background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+    .video-shell {position:relative;background:#000;aspect-ratio:16/9;}
+    #player {width:100%;height:100%;display:block;}
+    .watermark {position:absolute;top:14px;right:14px;font-size:.75rem;color:rgba(255,255,255,.55);background:rgba(0,0,0,.35);padding:.2rem .55rem;border-radius:6px;pointer-events:none;user-select:none;}
+    .player-info {padding:1.4rem 1.6rem;}
+    .player-info h2 {font-size:1.15rem;margin-bottom:.3rem;}
+    .player-info .lvl {font-size:.78rem;color:#a5b4fc;font-weight:700;}
+    .playlist {background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem;}
+    .playlist h3 {font-size:1rem;margin-bottom:1rem;}
+    .pl-item {display:flex;align-items:center;gap:.7rem;width:100%;padding:.75rem .9rem;border-radius:10px;border:1px solid transparent;background:transparent;color:var(--text);cursor:pointer;font:inherit;text-align:left;transition:all .15s;margin-bottom:.35rem;}
+    .pl-item:hover {background:var(--bg-soft);}
+    .pl-item.active {border-color:var(--primary);background:rgba(99,102,241,.12);}
+    .pl-item .n {width:26px;height:26px;border-radius:8px;background:var(--bg-soft);border:1px solid var(--border-bright);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0;}
+    .pl-item .t {flex:1;font-size:.9rem;}
+    .pl-item .lock {font-size:.8rem;}
+    .locked-msg {background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.3);border-radius:12px;padding:1.4rem;text-align:center;color:var(--text-light);font-size:.92rem;line-height:1.8;}
+    .back-link {display:inline-block;margin-bottom:1rem;color:var(--text-light);font-size:.88rem;}
+    .back-link:hover {color:var(--text);}
+    @media (max-width:860px){ .wrap {grid-template-columns:1fr;} }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="../index.html" class="logo"><img src="../images/logo-color.png" alt="IELTS Score Accelerator" style="height:48px"></a>
+  <div class="nav-links">
+    <a href="reading.html">Reading</a>
+    <a href="listening.html">Listening</a>
+    <a href="packages.html">Packages</a>
+    <a href="library.html">Library</a>
+    <a href="test.html" class="btn btn-outline">Placement Test</a>
+    <a href="register.html" class="btn btn-primary">Sign Up</a>
+  </div>
+</nav>
+
+<section class="page-header" id="hdr">
+  <h1 id="hdrTitle">Loading…</h1>
+  <p id="hdrDesc"></p>
+</section>
+
+<div class="wrap">
+  <div class="player-card">
+    <div class="video-shell">
+      <video id="player" controls controlsList="nodownload" disablePictureInPicture playsinline></video>
+      <div class="watermark" id="wm"></div>
+    </div>
+    <div class="player-info">
+      <h2 id="videoTitle">—</h2>
+      <span class="lvl" id="videoLvl"></span>
+    </div>
+  </div>
+
+  <div class="playlist">
+    <h3>📚 Lessons</h3>
+    <div id="plList"></div>
+    <div id="lockedBox" style="display:none;margin-top:1rem;">
+      <div class="locked-msg">
+        🔒 This lesson needs <strong>package access</strong>.<br>
+        <a href="register.html" class="btn btn-primary" style="margin-top:.8rem;">Sign in / Get access</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-links" id="footerLinks"></div>
+  <p>&copy; 2026 IELTS Score Accelerator. All rights reserved.</p>
+</footer>
+
+<script src="../js/site-config.js"></script>
+<script>
+  var pkgId = new URLSearchParams(location.search).get("id");
+  var currentPkg = null;
+
+  function userEmail(){
+    try {
+      var u = JSON.parse(localStorage.getItem('user') || 'null');
+      return (u && (u.email || u.name)) || 'guest';
+    } catch(e){ return 'guest'; }
+  }
+
+  fetch(SITE.apiBase + '/api/packages').then(r=>r.json()).then(pkgs=>{
+    var pkg = pkgs.find(p=>String(p.id)===String(pkgId)) || pkgs[0];
+    if(!pkg){ document.getElementById('hdrTitle').textContent='Package not found'; return; }
+    currentPkg = pkg;
+    document.getElementById('hdrTitle').textContent = pkg.title;
+    document.getElementById('hdrDesc').textContent = pkg.description || '';
+    document.getElementById('wm').textContent = userEmail();
+    renderPlaylist(pkg.videos);
+  }).catch(()=>{ document.getElementById('hdrTitle').textContent='Could not load package'; });
+
+  function renderPlaylist(videos){
+    var box = document.getElementById('plList');
+    if(!videos.length){ box.innerHTML = '<p style="color:var(--text-light);font-size:.88rem;">No lessons uploaded yet.</p>'; return; }
+    box.innerHTML = videos.map(function(v,i){
+      var locked = !v.is_free_preview && !isAuthed();
+      return '<button class="pl-item" data-id="'+v.id+'" data-preview="'+v.is_free_preview+'" data-title="'+v.title.replace(/"/g,'&quot;')+'">'+
+        '<span class="n">'+(i+1)+'</span><span class="t">'+v.title+'</span>'+
+        '<span class="lock">'+(v.is_free_preview?'▶':'🔒')+'</span></button>';
+    }).join('');
+    box.onclick = function(e){
+      var b = e.target.closest('.pl-item'); if(!b) return;
+      var preview = b.dataset.preview === '1';
+      if(!preview && !isAuthed()){
+        document.getElementById('lockedBox').style.display='block';
+        return;
+      }
+      play(parseInt(b.dataset.id,10), b.dataset.title);
+      box.querySelectorAll('.pl-item').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+    };
+    // autoplay first preview
+    var first = box.querySelector('.pl-item[data-preview="1"]') || box.querySelector('.pl-item');
+    if(first){ first.click(); }
+  }
+
+  function isAuthed(){
+    // Supabase session (existing auth) or local fallback
+    try { return !!JSON.parse(localStorage.getItem('user') || 'null'); } catch(e){ return false; }
+  }
+
+  function play(vid, title){
+    document.getElementById('videoTitle').textContent = title;
+    document.getElementById('videoLvl').textContent = currentPkg ? currentPkg.level + ' · ' + currentPkg.title : '';
+    fetch(SITE.apiBase + '/api/video-token', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({video_id: vid, sb_token: localStorage.getItem('sb-access-token')||undefined})
+    }).then(r=>{ if(!r.ok) throw new Error('token denied'); return r.json(); })
+      .then(t=>{
+        var tf = fetch(SITE.apiBase + '/api/video-file', {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({video_id: vid, token: t.token})
+        }).then(r=>r.json());
+        return tf.then(d=>({file:d.file, token:t.token}));
+      }).then(d=>{
+        var pl = document.getElementById('player');
+        pl.src = SITE.apiBase + '/media/videos/' + d.file + '?t=' + d.token;
+        pl.load();
+      })
+      .catch(err=>{
+        document.getElementById('videoTitle').textContent = '🔒 Sign in required for this lesson';
+      });
+  }
+</script>
+<script src="../js/footer.js"></script>
+<script src="../js/nav.js"></script>
+</body>
+</html>
