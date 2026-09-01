@@ -728,6 +728,8 @@ function showResults() {
   var rs = document.getElementById('resultsScreen'); rs.innerHTML = h; rs.classList.add('visible');
   setTimeout(function() { var f = document.getElementById('resultProgressFill'); if (f) f.style.width = pct + '%'; }, 100);
   rs.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  try { if (window.PROGRESS) PROGRESS.record({type:'listening', score: (typeof scorePct !== 'undefined' && scorePct !== null) ? scorePct : Math.round(100*correct/(correct+incorrect+unanswered || 1)), label: document.title.split('—')[0].trim() || 'listening', level: (typeof resultLevel !== 'undefined') ? resultLevel : null, band: null}); } catch(e) {}
 }
 
 function startReview() {

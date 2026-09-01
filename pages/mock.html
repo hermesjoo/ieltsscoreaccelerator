@@ -121,6 +121,7 @@
 </footer>
 
 <script src="../js/site-config.js"></script>
+<script src="../js/progress.js"></script>
 <script src="../js/mock-data.js"></script>
 <script>
   // ---- state ----
@@ -404,7 +405,9 @@
     });
     document.getElementById('rReview').innerHTML = rev ? '<h3 style="margin:1rem 0 .6rem;">Review these</h3>'+rev : '<p style="color:var(--success);font-weight:700;margin:1rem 0;">Perfect score on L+R! 🏆</p>';
     window.scrollTo(0,0);
-  }
+  
+  try{ if(window.PROGRESS) PROGRESS.record({type:'mock', score: Math.round(100*(lright+rright)/80), label: 'Mock Test (L'+lright+'/40, R'+rright+'/40)', level: null, band: overall}); }catch(e){}
+}
 </script>
 <script src="../js/footer.js"></script>
 <script src="../js/nav.js"></script>

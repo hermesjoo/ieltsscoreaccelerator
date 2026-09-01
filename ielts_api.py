@@ -390,6 +390,63 @@ def stream_video(fname):
     return resp
 
 
+@APP.route("/api/progress", methods=["POST", "OPTIONS"])
+def save_progress():
+    pre = _preflight()
+    if pre:
+        return pre
+    data = request.get_json(silent=True) or {}
+    email = (data.get("user_email") or "guest").strip()[:120]
+    name = (data.get("user_name") or "Guest").strip()[:80]
+    typ = (data.get("type") or "?").strip()[:20]
+    if typ not in ("reading", "listening", "writing", "speaking", "vocab",
+                   "grammar", "placement", "mock"):
+        return jsonify(error="bad type"), 400
+    with sqlite3.connect(DB_PATH) as c:
+        c.execute(
+            "CREATE TABLE IF NOT EXISTS progress_events (id INTEGER PRIMARY KEY AUTOINCREMENT, "
+            "user_email TEXT, user_name TEXT, type TEXT, label TEXT, score INTEGER, "
+            "band REAL, level TEXT, created_at TEXT NOT NULL)"
+        )
+        c.execute(
+            "INSERT INTO progress_events (user_email, user_name, type, label, score, band, level, created_at) "
+            "VALUES (?,?,?,?,?,?,?,?)",
+            (email, name, typ, (data.get("label") or "")[:120],
+             data.get("score"), data.get("band"), data.get("level"),
+             datetime.now(timezone.utc).isoformat()),
+        )
+    return jsonify(ok=True), 201
+
+
+@APP.route("/api/admin/progress", methods=["GET", "OPTIONS"])
+def admin_progress():
+    pre = _preflight()
+    if pre:
+        return pre
+    if not secrets.compare_digest(request.headers.get("Authorization", ""), "Bearer " + ADMIN_PASS):
+        return jsonify(error="admin auth required"), 401
+    with sqlite3.connect(DB_PATH) as c:
+        c.row_factory = sqlite3.Row
+        rows = c.execute(
+            "SELECT * FROM progress_events ORDER BY id DESC LIMIT 500"
+        ).fetchall()
+    # aggregates
+    by_user = {}
+    by_type = {}
+    for r in rows:
+        d = dict(r)
+        u = by_user.setdefault(d["user_email"], {"name": d["user_name"], "events": 0, "avg": None, "types": {}})
+        u["events"] += 1
+        u["types"][d["type"]] = u["types"].get(d["type"], 0) + 1
+        by_type[d["type"]] = by_type.get(d["type"], 0) + 1
+    scored = [dict(r) for r in rows if r["score"] is not None]
+    for email, u in by_user.items():
+        rel = [r for r in scored if r["user_email"] == email]
+        if rel:
+            u["avg"] = round(sum(r["score"] for r in rel) / len(rel))
+    return jsonify({"recent": [dict(r) for r in rows[:100]], "by_user": by_user, "by_type": by_type})
+
+
 if __name__ == "__main__":
     with sqlite3.connect(DB_PATH) as c:
         c.executescript(SCHEMA)

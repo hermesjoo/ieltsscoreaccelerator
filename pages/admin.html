@@ -155,6 +155,7 @@
     <a href="#" onclick="showSection('users')"><span class="icon">👥</span> Users</a>
     <a href="#" onclick="showSection('content')"><span class="icon">📝</span> Content</a>
     <a href="#" onclick="showSection('packages'); renderAdminPackages()"><span class="icon">📦</span> Packages</a>
+    <a href="#" onclick="showSection('analytics'); renderAdminAnalytics()"><span class="icon">📊</span> Analytics</a>
     <a href="#" onclick="showSection('settings')"><span class="icon">⚙️</span> Settings</a>
   </nav>
   <div class="sidebar-footer">
@@ -329,6 +330,37 @@
         <table id="pkgTable">
           <thead><tr><th>Level</th><th>Title</th><th>Videos</th><th>Status</th><th>Actions</th></tr></thead>
           <tbody id="pkgBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Analytics (user activity) ===== -->
+  <div class="section" id="sec-analytics">
+    <div class="main-header">
+      <h2>User Analytics</h2>
+      <p>Learning activity across all users (progress events pushed from the site)</p>
+    </div>
+    <div class="panel">
+      <div class="panel-header"><h3>Activity by type</h3>
+        <button class="btn-primary" onclick="renderAdminAnalytics()" style="font-size:0.85rem;padding:0.5rem 1rem;">↻ Refresh</button></div>
+      <div class="panel-body"><div id="anTypeBoxes" style="display:flex;gap:1rem;flex-wrap:wrap;"></div></div>
+    </div>
+    <div class="panel">
+      <div class="panel-header"><h3>Users</h3></div>
+      <div class="panel-body">
+        <table id="anUsersTable">
+          <thead><tr><th>User</th><th>Events</th><th>Avg score</th><th>Activity mix</th></tr></thead>
+          <tbody id="anUsersBody"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-header"><h3>Recent events</h3></div>
+      <div class="panel-body">
+        <table id="anRecentTable">
+          <thead><tr><th>Time</th><th>User</th><th>Type</th><th>Label</th><th>Score</th><th>Level/Band</th></tr></thead>
+          <tbody id="anRecentBody"></tbody>
         </table>
       </div>
     </div>
@@ -533,6 +565,44 @@ function uploadVideo() {
   };
   xhr.onerror = function(){ btn.disabled=false; msg.textContent='❌ Upload failed — is the API server running?'; };
   xhr.send(fd);
+}
+
+// ===== Analytics (phase E) =====
+var TYPE_ICONS = {reading:'📖',listening:'🎧',writing:'✍️',speaking:'🗣️',vocab:'📚',grammar:'🔤',placement:'🎯',mock:'📝'};
+
+function renderAdminAnalytics() {
+  fetch(API + '/api/admin/progress', {headers: apiHeaders()})
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      // type boxes
+      var boxes = Object.keys(d.by_type).map(function(t){
+        return '<div style="flex:1;min-width:110px;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:0.9rem;text-align:center;">'+
+          '<div style="font-size:1.3rem;">'+(TYPE_ICONS[t]||'')+'</div>'+
+          '<div style="font-size:1.4rem;font-weight:800;">'+d.by_type[t]+'</div>'+
+          '<div style="font-size:0.75rem;color:var(--muted);">'+t+'</div></div>';
+      }).join('') || '<p style="color:var(--muted);">No events yet.</p>';
+      document.getElementById('anTypeBoxes').innerHTML = boxes;
+
+      // users table
+      var ub = document.getElementById('anUsersBody');
+      ub.innerHTML = Object.keys(d.by_user).map(function(em){
+        var u = d.by_user[em];
+        var mix = Object.keys(u.types).map(function(t){ return (TYPE_ICONS[t]||'')+' '+u.types[t]; }).join(' · ');
+        return '<tr><td><strong>'+u.name+'</strong><br><small style="color:var(--muted);">'+em+'</small></td>'+
+          '<td>'+u.events+'</td><td>'+(u.avg===null||u.avg===undefined?'—':u.avg+'%')+'</td>'+
+          '<td style="font-size:0.8rem;">'+mix+'</td></tr>';
+      }).join('') || '<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:1.5rem;">No users yet.</td></tr>';
+
+      // recent events
+      var rb = document.getElementById('anRecentBody');
+      rb.innerHTML = (d.recent||[]).slice(0,50).map(function(e){
+        return '<tr><td style="white-space:nowrap;">'+(e.created_at||'').replace('T',' ').slice(0,16)+'</td>'+
+          '<td>'+e.user_name+'</td><td>'+(TYPE_ICONS[e.type]||'')+' '+e.type+'</td>'+
+          '<td>'+(e.label||'—')+'</td><td>'+(e.score===null?'—':e.score+'%')+'</td>'+
+          '<td>'+(e.level||'')+(e.band?' · band '+e.band:'')+'</td></tr>';
+      }).join('') || '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:1.5rem;">No events yet.</td></tr>';
+    })
+    .catch(function(){ document.getElementById('anTypeBoxes').innerHTML = '<p style="color:var(--danger);">API unreachable — is ielts_api running?</p>'; });
 }
 
 // Check if already authenticated

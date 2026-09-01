@@ -92,6 +92,7 @@
 </footer>
 
 <script src="../js/site-config.js"></script>
+<script src="../js/progress.js"></script>
 <script src="../js/placement-bank.js"></script>
 <script>
   // adaptive: start mid (B1-ish). Track ability theta 0-3 (A1..B2).
@@ -187,7 +188,9 @@
       '<p>Based on '+askedCount+' answers, the '+recs[level]+' video package matches your current level. '+
       (level==='B2' ? 'You are also ready to start IELTS-specific practice alongside it.' : 'Finish it, take the test again, and step up to the next level.')+'</p>';
     document.getElementById('recLink').href = 'packages.html';
-  }
+  
+  try{ if(window.PROGRESS) PROGRESS.record({type:'placement', score: null, label: 'Placement: '+level, level: level, band: null}); }catch(e){}
+}
 </script>
 <script src="../js/footer.js"></script>
 <script src="../js/nav.js"></script>

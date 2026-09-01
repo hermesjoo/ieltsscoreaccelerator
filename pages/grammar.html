@@ -83,6 +83,7 @@
 </footer>
 
 <script src="../js/site-config.js"></script>
+<script src="../js/progress.js"></script>
 <script src="../js/grammar-banks.js"></script>
 <script>
   var TOPIC_NAMES = {tenses:'Verb Tenses', articles:'Articles', conditionals:'Conditionals', modals:'Modal Verbs',
@@ -156,7 +157,9 @@
       var r = perTopic[t], p = r.right/r.total;
       return '<div class="pt-row"><span>'+TOPIC_NAMES[t]+'</span><span class="'+(p>=0.7?'good':'weak')+'">'+r.right+'/'+r.total+'</span></div>';
     }).join('');
-  }
+  
+  try{ if(window.PROGRESS) PROGRESS.record({type:'grammar', score: (typeof scorePct!=='undefined')?scorePct:Math.round(100*score/total), label: topicsLabel||'grammar', level: null, band: null}); }catch(e){}
+}
 </script>
 <script src="../js/footer.js"></script>
 <script src="../js/nav.js"></script>

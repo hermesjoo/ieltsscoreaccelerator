@@ -1223,6 +1223,8 @@ function showResults() {
     if (fill) fill.style.width = pct + '%';
   }, 100);
   resultsScreen.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  try { if (window.PROGRESS) PROGRESS.record({type:'reading', score: (typeof scorePct !== 'undefined' && scorePct !== null) ? scorePct : Math.round(100*correct/(correct+incorrect+unanswered || 1)), label: document.title.split('—')[0].trim() || 'reading', level: (typeof resultLevel !== 'undefined') ? resultLevel : null, band: null}); } catch(e) {}
 }
 
 function startReview() {
